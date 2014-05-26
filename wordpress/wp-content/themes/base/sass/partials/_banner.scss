@@ -1,0 +1,28 @@
+.banner {
+    position: relative;
+}
+
+.bannertext {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 35%;
+    @include susy-breakpoint(55em, $desktop) {
+        top: 27%;
+    }
+}
+
+.banner span {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: inline-block;
+    width: 100%;
+}
+
+.banner span .inner {
+    /* height/width of image */
+    display: block;
+    height: 0;
+    padding-top: 57%;
+}

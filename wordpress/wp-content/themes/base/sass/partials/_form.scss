@@ -1,0 +1,129 @@
+fieldset {
+    border: 0;
+    padding: 0;
+    ol {
+        @include no-bullets;
+        li {
+            display: block;
+            margin-bottom: 1em;
+            margin: 0 0 0 -40px;
+        }
+    }
+}
+
+footer {
+    input[type="text"], input[type="email"] {
+        @include border-radius(5px);
+        border: 1px solid rgb(202, 203, 193);
+        padding: 0.50em;
+        width: 100%;
+        background: {
+            //image: image_url("newsletter-icons.png");
+            position: 95% -55px;
+            color: white;
+            repeat: no-repeat;
+        };
+        &:focus {
+            border: 1px solid rgb(54, 116, 187);
+            color: rgb(54, 116, 187);
+            outline: none;
+        }
+    }
+    input[type="submit"] {
+        @include sassy-button("flat", 5px, 18px, #4ba3cc);
+    }
+}
+
+$search-bar-background: #162a33;
+
+#search {
+    background-color: $search-bar-background;
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    &:target {
+        display: block;
+    }
+    .gsc-search-box {
+        margin: 0 auto;
+        max-width: 70%;
+        padding: 0;
+        position: relative;
+        .screen-reader-text {
+            display: none;
+        }
+        .gsc-input:before {
+            background: url("images/search-icon-before.png") no-repeat;
+            content: '';
+            height: 20px;
+            left: -25px;
+            position: absolute;
+            top: 35px;
+            width: 20px;
+        }
+        input#gsc-i-id1 {
+            background-color: $search-bar-background !important;
+            background-image: none !important;
+            border-color: transparent;
+            border: 0;
+            box-shadow: none;
+            color: white;
+            font-size: 2em;
+            margin-right: -70px;
+            outline-style: none;
+            width: 100%;
+            @include input-placeholder {
+                color: white;
+            }
+        }
+    }
+    .gsc-search-button, .gsc-clear-button {
+        display: none;
+    }
+}
+
+#___gcse_0 table {
+    border-collapse: separate;
+    border-spacing: 0 2em;
+}
+
+// Customizing Site Search Results
+#___gcse_1 {
+    table {
+        border-collapse: separate;
+        border-spacing: 0 2em;
+    }
+}
+
+.gsc-table-result {
+    font-size: 1.3em;
+    line-height: 2em;
+    .gs-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        line-height: 1.3em;
+        margin-bottom: 1em;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        a b {
+            text-decoration: none !important;
+        }
+        &:hover {
+            text-decoration: underline !important;
+        }
+    }
+}
+
+.gsc-table-cell-thumbnail {
+    padding-right: 30px !important;
+}
+
+.gs-no-results-result div.gs-snippet {
+    background: none !important;
+    border: none !important;
+    font-size: 2.2em !important;
+    font-style: italic !important;
+    line-height: 2.2em;
+    text-align: center !important;
+}

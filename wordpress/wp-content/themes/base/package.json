@@ -1,0 +1,19 @@
+{
+  "name": "base",
+  "version": "1.0.0",
+  "dependencies": {
+    "load-grunt-tasks": "~0.2.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-sass": "~0.7.3",
+    "grunt-contrib-compass": "~0.7.2",
+    "grunt-contrib-imagemin": "~0.7.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-clear": "~0.2.1",
+    "grunt-prettysass": "~0.2.3",
+    "grunt-notify": "~0.3.0"
+  }
+}
