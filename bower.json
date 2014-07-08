@@ -1,0 +1,10 @@
+{
+  "name": "Sojo",
+  "version": "0.0.1",
+  "dependencies": {
+    	"jquery": "latest",
+    	"normalize-scss": "latest",
+	"bourbon": "latest",
+	"neat": "latest"
+  	}
+}

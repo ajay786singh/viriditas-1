@@ -1,0 +1,45 @@
+nav {
+    @include span-columns(3);
+    float: right;
+    @include media($bp-large) {
+        padding-right: 5em;
+    }
+
+    ul {
+        float: right;
+        list-style-type: none;
+        margin-top: 2em;
+        li {
+            display: inline;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1em;
+            margin-left: 0;
+            @include media($bp-large) {
+                margin-left: .5em;
+            }
+
+            a {
+                color: $white;
+                padding: .7em;
+                @include media($bp-large) {
+                    @include border-top-radius(20px);
+                    @include border-bottom-radius(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                }
+
+                &:hover {
+                    background-color: $pink;
+                    color: $white;
+                    @include border-top-radius(20px);
+                    @include border-bottom-radius(20px);
+                }
+                &.current {
+                    background-color: $pink;
+                    @include border-top-radius(20px);
+                    @include border-bottom-radius(20px);
+                }
+            }
+        }
+    }
+}

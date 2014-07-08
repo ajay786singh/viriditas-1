@@ -1,0 +1,23 @@
+section[role=slider] {
+    //background: url(images/bg-banner.png) no-repeat top;
+    //background-size: cover;
+    background-color: $medium-gray;
+    min-height: 350px;
+    margin-bottom: 1em;
+    header {
+        @include outer-container;
+        @include clearfix;
+        color: $white;
+        hgroup {
+            @include media($bp-large) {
+                padding-top: 8em;
+                h1, h2 {
+                    text-align: center;
+                }
+            }
+        }
+    }
+    @include media($bp-large) {
+        min-height: 585px;
+    }
+}

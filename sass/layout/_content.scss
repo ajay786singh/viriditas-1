@@ -1,0 +1,20 @@
+section[role=main] {
+    @include outer-container;
+    article {
+        @include media($bp-large) {
+            @include span-columns(12);
+            padding: 1em 0 1em 0;
+        }
+
+        img {
+            @include media($bp-large) {
+                @include span-columns(4 of 12);
+            }
+        }
+        .content {
+            @include media($bp-large) {
+                @include span-columns(8 of 12);
+            }
+        }
+    }
+}

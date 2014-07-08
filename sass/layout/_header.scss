@@ -1,0 +1,18 @@
+section[role=banner] {
+    background-color: $dark-gray;
+    header {
+        @include outer-container;
+        color: $white;
+        height: 20%;
+        .logo {
+            @include span-columns(2);
+            @include media($bp-large) {
+                @include span-columns(2);
+            }
+        }
+        img {
+            @include padding(1em null 1em null);
+            height: 5.5em;
+        }
+    }
+}
