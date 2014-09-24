@@ -414,43 +414,52 @@ http://drinchev.github.io/monosocialiconsfont/
 */
 @font-face {
   font-family: 'Mono Social Icons Font';
+  font-style: normal;
+  font-weight: normal;
   src: url("fonts/MonoSocialIconsFont-1.10.eot");
   src: url("fonts/MonoSocialIconsFont-1.10.eot?#iefix") format("embedded-opentype"), url("fonts/MonoSocialIconsFont-1.10.woff") format("woff"), url("fonts/MonoSocialIconsFont-1.10.ttf") format("truetype"), url("fonts/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont") format("svg");
   src: url("fonts/MonoSocialIconsFont-1.10.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
-button,
-input[type="submit"] {
+footer {
+  background: #222222;
+}
+
+button {
   -webkit-font-smoothing: antialiased;
-  background-color: #477dca;
+  background-color: #5078C3;
   border-radius: 0.1875em;
   color: white;
   display: inline-block;
   font-size: 1em;
   font-weight: bold;
   line-height: 1;
-  padding: .75em 1em;
+  padding: 0.75em 1em;
   text-decoration: none;
 }
-button:hover,
-input[type="submit"]:hover {
-  background-color: #2c5999;
+button:hover {
+  background-color: #335494;
   color: white;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 fieldset {
-  background: white;
-  border: 1px solid #f2f2f2;
-  margin: 0 0 0.75em 0;
-  padding: 1.5em;
+  border: 0;
+  padding: 0;
+}
+fieldset ol li {
+  display: block;
+  margin-bottom: 1em;
+  margin: 0 0 0 -40px;
 }
 
 input,
 label,
 select {
   display: block;
-  font-family: Arial, "freight-sans-pro";
+  font-family: "adelle", serif;
   font-size: 2em;
 }
 
@@ -476,26 +485,54 @@ select[multiple=multiple] {
   transition: border-color;
   background-color: white;
   border-radius: 0.1875em;
-  border: 1px solid #f2f2f2;
+  border: 1px solid #cccccc;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
-  font-family: Arial, "freight-sans-pro";
-  font-size: 2em;
+  font-family: "adelle-sans", sans-serif;
+  font-size: 1.4em;
   margin-bottom: 0.75em;
+  margin-right: 10px;
   padding: 0.65217em 0.65217em;
   width: 100%;
-  margin-right: 10px;
 }
 textarea:hover,
 input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover,
 select[multiple=multiple]:hover {
-  border-color: #d8d8d8;
+  border-color: #b3b3b3;
 }
 textarea:focus,
 input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus,
 select[multiple=multiple]:focus {
-  border-color: #477dca;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(55, 112, 192, 0.7);
+  border-color: #5078C3;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(64, 106, 186, 0.7);
+  color: #3674bb;
   outline: none;
+}
+
+footer input[type="submit"] {
+  -webkit-font-smoothing: antialiased;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  background-color: #5078C3;
+  border-radius: 0.1875em;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "adelle-sans", sans-serif;
+  font-size: 1em;
+  font-size: 1.4em;
+  padding: .4em 2em;
+  text-decoration: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+footer input[type="submit"]:hover {
+  background-color: #335494;
+  color: white;
 }
 
 textarea {
@@ -527,53 +564,7 @@ select {
   width: auto;
 }
 
-table {
-  border-collapse: collapse;
-  margin: 0.75em 0;
-  table-layout: fixed;
-  width: 100%;
-}
-
-th {
-  border-bottom: 1px solid #cccccc;
-  font-weight: bold;
-  padding: 0.75em 0;
-  text-align: left;
-}
-
-td {
-  border-bottom: 1px solid #f2f2f2;
-  padding: 0.75em 0;
-}
-
-tr, td, th {
-  vertical-align: middle;
-}
-
-ul, ol {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.content ol {
-  list-style-type: decimal;
-  padding-left: 20px;
-  padding-bottom: 20px;
-}
-
-dl {
-  margin-bottom: 0.75em;
-}
-dl dt {
-  font-weight: bold;
-  margin-top: 0.75em;
-}
-dl dd {
-  margin: 0;
-}
-
-button,
-input[type="submit"] {
+button {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -584,6 +575,7 @@ input[type="submit"] {
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  margin: 1em;
 }
 
 * {
@@ -592,125 +584,152 @@ input[type="submit"] {
   box-sizing: border-box;
 }
 
-body:before {
-  content: '';
-  display: inline-block;
-  background-image: deprecated-webkit-gradient(linear, left top, left bottom, transparent 0, #cccccc 0, #cccccc 15.3188%, transparent 15.3188%, transparent 21.1703%, #cccccc 21.1703%, #cccccc 36.4891%, transparent 36.4891%, transparent 42.3406%, #cccccc 42.3406%, #cccccc 57.6594%, transparent 57.6594%, transparent 63.5109%, #cccccc 63.5109%, #cccccc 78.8297%, transparent 78.8297%, transparent 84.6812%, #cccccc 84.6812%, #cccccc 100%, transparent 100%);
-  background-image: -webkit-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 15.3188%, transparent 15.3188%, transparent 21.1703%, #cccccc 21.1703%, #cccccc 36.4891%, transparent 36.4891%, transparent 42.3406%, #cccccc 42.3406%, #cccccc 57.6594%, transparent 57.6594%, transparent 63.5109%, #cccccc 63.5109%, #cccccc 78.8297%, transparent 78.8297%, transparent 84.6812%, #cccccc 84.6812%, #cccccc 100%, transparent 100%);
-  background-image: -moz-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 15.3188%, transparent 15.3188%, transparent 21.1703%, #cccccc 21.1703%, #cccccc 36.4891%, transparent 36.4891%, transparent 42.3406%, #cccccc 42.3406%, #cccccc 57.6594%, transparent 57.6594%, transparent 63.5109%, #cccccc 63.5109%, #cccccc 78.8297%, transparent 78.8297%, transparent 84.6812%, #cccccc 84.6812%, #cccccc 100%, transparent 100%);
-  background-image: -ms-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 15.3188%, transparent 15.3188%, transparent 21.1703%, #cccccc 21.1703%, #cccccc 36.4891%, transparent 36.4891%, transparent 42.3406%, #cccccc 42.3406%, #cccccc 57.6594%, transparent 57.6594%, transparent 63.5109%, #cccccc 63.5109%, #cccccc 78.8297%, transparent 78.8297%, transparent 84.6812%, #cccccc 84.6812%, #cccccc 100%, transparent 100%);
-  background-image: -o-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 15.3188%, transparent 15.3188%, transparent 21.1703%, #cccccc 21.1703%, #cccccc 36.4891%, transparent 36.4891%, transparent 42.3406%, #cccccc 42.3406%, #cccccc 57.6594%, transparent 57.6594%, transparent 63.5109%, #cccccc 63.5109%, #cccccc 78.8297%, transparent 78.8297%, transparent 84.6812%, #cccccc 84.6812%, #cccccc 100%, transparent 100%);
-  background-image: linear-gradient(left, transparent 0, #cccccc 0, #cccccc 15.3188%, transparent 15.3188%, transparent 21.1703%, #cccccc 21.1703%, #cccccc 36.4891%, transparent 36.4891%, transparent 42.3406%, #cccccc 42.3406%, #cccccc 57.6594%, transparent 57.6594%, transparent 63.5109%, #cccccc 63.5109%, #cccccc 78.8297%, transparent 78.8297%, transparent 84.6812%, #cccccc 84.6812%, #cccccc 100%, transparent 100%);
-  height: 100%;
-  left: 0;
-  margin: 0 auto;
-  max-width: 80em;
-  opacity: 0.2;
-  position: fixed;
-  right: 0;
-  width: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
-@media screen and (min-width: 50em) {
-  body:before {
-    background-image: deprecated-webkit-gradient(linear, left top, left bottom, transparent 0, #cccccc 0, #cccccc 6.17215%, transparent 6.17215%, transparent 8.5298%, #cccccc 8.5298%, #cccccc 14.70196%, transparent 14.70196%, transparent 17.05961%, #cccccc 17.05961%, #cccccc 23.23176%, transparent 23.23176%, transparent 25.58941%, #cccccc 25.58941%, #cccccc 31.76157%, transparent 31.76157%, transparent 34.11922%, #cccccc 34.11922%, #cccccc 40.29137%, transparent 40.29137%, transparent 42.64902%, #cccccc 42.64902%, #cccccc 48.82117%, transparent 48.82117%, transparent 51.17883%, #cccccc 51.17883%, #cccccc 57.35098%, transparent 57.35098%, transparent 59.70863%, #cccccc 59.70863%, #cccccc 65.88078%, transparent 65.88078%, transparent 68.23843%, #cccccc 68.23843%, #cccccc 74.41059%, transparent 74.41059%, transparent 76.76824%, #cccccc 76.76824%, #cccccc 82.94039%, transparent 82.94039%, transparent 85.29804%, #cccccc 85.29804%, #cccccc 91.4702%, transparent 91.4702%, transparent 93.82785%, #cccccc 93.82785%, #cccccc 100.0%, transparent 100.0%);
-    background-image: -webkit-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 6.17215%, transparent 6.17215%, transparent 8.5298%, #cccccc 8.5298%, #cccccc 14.70196%, transparent 14.70196%, transparent 17.05961%, #cccccc 17.05961%, #cccccc 23.23176%, transparent 23.23176%, transparent 25.58941%, #cccccc 25.58941%, #cccccc 31.76157%, transparent 31.76157%, transparent 34.11922%, #cccccc 34.11922%, #cccccc 40.29137%, transparent 40.29137%, transparent 42.64902%, #cccccc 42.64902%, #cccccc 48.82117%, transparent 48.82117%, transparent 51.17883%, #cccccc 51.17883%, #cccccc 57.35098%, transparent 57.35098%, transparent 59.70863%, #cccccc 59.70863%, #cccccc 65.88078%, transparent 65.88078%, transparent 68.23843%, #cccccc 68.23843%, #cccccc 74.41059%, transparent 74.41059%, transparent 76.76824%, #cccccc 76.76824%, #cccccc 82.94039%, transparent 82.94039%, transparent 85.29804%, #cccccc 85.29804%, #cccccc 91.4702%, transparent 91.4702%, transparent 93.82785%, #cccccc 93.82785%, #cccccc 100.0%, transparent 100.0%);
-    background-image: -moz-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 6.17215%, transparent 6.17215%, transparent 8.5298%, #cccccc 8.5298%, #cccccc 14.70196%, transparent 14.70196%, transparent 17.05961%, #cccccc 17.05961%, #cccccc 23.23176%, transparent 23.23176%, transparent 25.58941%, #cccccc 25.58941%, #cccccc 31.76157%, transparent 31.76157%, transparent 34.11922%, #cccccc 34.11922%, #cccccc 40.29137%, transparent 40.29137%, transparent 42.64902%, #cccccc 42.64902%, #cccccc 48.82117%, transparent 48.82117%, transparent 51.17883%, #cccccc 51.17883%, #cccccc 57.35098%, transparent 57.35098%, transparent 59.70863%, #cccccc 59.70863%, #cccccc 65.88078%, transparent 65.88078%, transparent 68.23843%, #cccccc 68.23843%, #cccccc 74.41059%, transparent 74.41059%, transparent 76.76824%, #cccccc 76.76824%, #cccccc 82.94039%, transparent 82.94039%, transparent 85.29804%, #cccccc 85.29804%, #cccccc 91.4702%, transparent 91.4702%, transparent 93.82785%, #cccccc 93.82785%, #cccccc 100.0%, transparent 100.0%);
-    background-image: -ms-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 6.17215%, transparent 6.17215%, transparent 8.5298%, #cccccc 8.5298%, #cccccc 14.70196%, transparent 14.70196%, transparent 17.05961%, #cccccc 17.05961%, #cccccc 23.23176%, transparent 23.23176%, transparent 25.58941%, #cccccc 25.58941%, #cccccc 31.76157%, transparent 31.76157%, transparent 34.11922%, #cccccc 34.11922%, #cccccc 40.29137%, transparent 40.29137%, transparent 42.64902%, #cccccc 42.64902%, #cccccc 48.82117%, transparent 48.82117%, transparent 51.17883%, #cccccc 51.17883%, #cccccc 57.35098%, transparent 57.35098%, transparent 59.70863%, #cccccc 59.70863%, #cccccc 65.88078%, transparent 65.88078%, transparent 68.23843%, #cccccc 68.23843%, #cccccc 74.41059%, transparent 74.41059%, transparent 76.76824%, #cccccc 76.76824%, #cccccc 82.94039%, transparent 82.94039%, transparent 85.29804%, #cccccc 85.29804%, #cccccc 91.4702%, transparent 91.4702%, transparent 93.82785%, #cccccc 93.82785%, #cccccc 100.0%, transparent 100.0%);
-    background-image: -o-linear-gradient(left, transparent 0, #cccccc 0, #cccccc 6.17215%, transparent 6.17215%, transparent 8.5298%, #cccccc 8.5298%, #cccccc 14.70196%, transparent 14.70196%, transparent 17.05961%, #cccccc 17.05961%, #cccccc 23.23176%, transparent 23.23176%, transparent 25.58941%, #cccccc 25.58941%, #cccccc 31.76157%, transparent 31.76157%, transparent 34.11922%, #cccccc 34.11922%, #cccccc 40.29137%, transparent 40.29137%, transparent 42.64902%, #cccccc 42.64902%, #cccccc 48.82117%, transparent 48.82117%, transparent 51.17883%, #cccccc 51.17883%, #cccccc 57.35098%, transparent 57.35098%, transparent 59.70863%, #cccccc 59.70863%, #cccccc 65.88078%, transparent 65.88078%, transparent 68.23843%, #cccccc 68.23843%, #cccccc 74.41059%, transparent 74.41059%, transparent 76.76824%, #cccccc 76.76824%, #cccccc 82.94039%, transparent 82.94039%, transparent 85.29804%, #cccccc 85.29804%, #cccccc 91.4702%, transparent 91.4702%, transparent 93.82785%, #cccccc 93.82785%, #cccccc 100.0%, transparent 100.0%);
-    background-image: linear-gradient(left, transparent 0, #cccccc 0, #cccccc 6.17215%, transparent 6.17215%, transparent 8.5298%, #cccccc 8.5298%, #cccccc 14.70196%, transparent 14.70196%, transparent 17.05961%, #cccccc 17.05961%, #cccccc 23.23176%, transparent 23.23176%, transparent 25.58941%, #cccccc 25.58941%, #cccccc 31.76157%, transparent 31.76157%, transparent 34.11922%, #cccccc 34.11922%, #cccccc 40.29137%, transparent 40.29137%, transparent 42.64902%, #cccccc 42.64902%, #cccccc 48.82117%, transparent 48.82117%, transparent 51.17883%, #cccccc 51.17883%, #cccccc 57.35098%, transparent 57.35098%, transparent 59.70863%, #cccccc 59.70863%, #cccccc 65.88078%, transparent 65.88078%, transparent 68.23843%, #cccccc 68.23843%, #cccccc 74.41059%, transparent 74.41059%, transparent 76.76824%, #cccccc 76.76824%, #cccccc 82.94039%, transparent 82.94039%, transparent 85.29804%, #cccccc 85.29804%, #cccccc 91.4702%, transparent 91.4702%, transparent 93.82785%, #cccccc 93.82785%, #cccccc 100.0%, transparent 100.0%);
-  }
-}
-
 body {
   -webkit-font-smoothing: antialiased;
   background-color: white;
   color: #333333;
-  font-family: Arial, "freight-sans-pro";
+  font-family: "adelle", serif;
   font-size: 1em;
   line-height: 1.5;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, "freight-sans-pro";
-  line-height: 1em;
-  margin: 0;
+  font-family: "adelle-sans", sans-serif;
   text-rendering: optimizeLegibility;
 }
 
 h1 {
-  font-size: 3em;
-  margin-bottom: .2em;
+  font-size: 1em;
+  text-transform: uppercase;
 }
 @media screen and (min-width: 50em) {
   h1 {
-    font-size: 7.5em;
+    font-size: 4.125em;
+    line-height: 1.0909em;
+    margin-bottom: 0.3636em;
   }
+}
+.single h1 {
+  text-align: center;
 }
 
 h2 {
-  font-size: 2.5em;
-  margin-bottom: .4em;
+  font-size: 1em;
 }
 @media screen and (min-width: 50em) {
   h2 {
-    font-size: 4.5em;
+    font-size: 3.25em;
+    line-height: 1.3846em;
+    margin-bottom: 0.4615em;
   }
-}
-.about h2 {
-  margin-top: .7em;
 }
 
 h3 {
-  font-size: 2em;
-  margin-bottom: .4em;
+  font-size: 1em;
 }
 @media screen and (min-width: 50em) {
   h3 {
-    font-size: 2.75em;
+    font-size: 2.5625em;
+    line-height: 1.1707em;
+    margin-bottom: 0.5854em;
   }
 }
 
 h4 {
-  font-size: 1.5em;
+  font-size: 1em;
+}
+@media screen and (min-width: 50em) {
+  h4 {
+    font-size: 2em;
+    font-weight: 400;
+    letter-spacing: -1px;
+    line-height: 1.2em;
+    margin-bottom: 0.75em;
+  }
+}
+h4 a {
+  color: black;
 }
 
 h5 {
-  font-size: 1.25em;
+  font-size: 1em;
+}
+@media screen and (min-width: 50em) {
+  h5 {
+    font-size: 1.5625em;
+    line-height: 1.92em;
+    margin-bottom: 0.96em;
+  }
 }
 
 h6 {
   font-size: 1em;
 }
+@media screen and (min-width: 50em) {
+  h6 {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    margin-bottom: 1.2em;
+  }
+}
 
-p, li {
-  font-size: 1.2em;
-  margin: 0 0 0.75em;
+p, ul, ol {
+  font-size: 1em;
+  list-style-type: disc;
 }
 @media screen and (min-width: 50em) {
-  p, li {
-    font-size: 1.5em;
+  p, ul, ol {
+    font-size: 1.25em;
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
   }
+}
+footer p, footer ul, footer ol {
+  font-family: "adelle-sans", sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+  margin-bottom: 1.5em;
+}
+.archive p, .archive ul, .archive ol {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+li {
+  margin: 0 0 .5em 2.5em;
 }
 
 a {
   -webkit-transition: color 0.1s linear;
   -moz-transition: color 0.1s linear;
   transition: color 0.1s linear;
-  color: #477dca;
+  color: #5078C3;
   text-decoration: none;
 }
 a:hover {
-  color: #2c5999;
+  color: #335494;
 }
 a:active, a:focus {
-  color: #2c5999;
+  color: #335494;
+  outline: none;
+}
+
+footer a {
+  -webkit-transition: color 0.1s linear;
+  -moz-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+  border-bottom: 1px dotted #ccc;
+  color: white;
+}
+footer a:hover {
+  color: #ccc;
+}
+footer a:active, footer a:focus {
+  color: #335494;
   outline: none;
 }
 
 hr {
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid #cccccc;
   border-left: none;
   border-right: none;
   border-top: none;
@@ -723,7 +742,7 @@ img {
 }
 
 blockquote {
-  border-left: 2px solid #f2f2f2;
+  border-left: 2px solid #cccccc;
   color: #595959;
   margin: 1.5em 0;
   padding-left: 0.75em;
@@ -740,9 +759,6 @@ cite:before {
 .error {
   background: #fbe3e4;
   color: #96151b;
-  font-weight: bold;
-  margin-bottom: 0.75em;
-  padding: 0.75em;
   display: none;
 }
 .error a {
@@ -753,11 +769,11 @@ cite:before {
 }
 @media screen and (min-width: 50em) {
   .error {
+    margin-left: 42.3406%;
     float: left;
     display: block;
     margin-right: 2.35765%;
     width: 65.88078%;
-    margin-left: 17.05961%;
   }
   .error:last-child {
     margin-right: 0;
@@ -769,45 +785,85 @@ cite:before {
   text-align: center;
 }
 
+small {
+  font-family: "adelle-sans", sans-serif;
+  font-size: .9em;
+}
+
+nav {
+  font-family: "adelle-sans", sans-serif;
+}
+
+/*
+article p:first-of-type {
+    font-size: $base-font-size;
+    @include media($bp-large) {
+        font-size: $base-font-size * 2.5625;
+        // 16 * 2.5625 = 41px
+        line-height: 1.1707em;
+        margin-bottom: 0.5854em;
+    }
+}
+*/
+article ol {
+  border-top: 1px dotted #c5c9c9;
+  counter-reset: ordered-list;
+  margin: 50px 0 50px 0;
+  padding-left: 0px;
+}
+article ol li {
+  border-bottom: 1px dotted #c5c9c9;
+  list-style: none;
+  padding: 20px 20px 20px 70px;
+}
+article ol li:before {
+  color: #4ba3cc;
+  content: counter(ordered-list);
+  counter-increment: ordered-list;
+  display: block;
+  float: left;
+  margin-left: -80px;
+  padding: 0 30px;
+}
+
+.headline, .subhead {
+  color: white;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.headline {
+  font-size: 7em;
+  width: 90%;
+}
+
+.subhead {
+  font-size: 2.5em;
+}
+
+.wf-loading {
+  visibility: hidden;
+}
+
 section[role=banner] {
-  background-color: #333333;
+  background-color: white;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
 }
 section[role=banner] header {
-  max-width: 80em;
-  margin-left: auto;
-  margin-right: auto;
-  color: white;
-  height: 20%;
-}
-section[role=banner] header:after {
-  content: "";
-  display: table;
-  clear: both;
+  height: 90px;
 }
 section[role=banner] header .logo {
   float: left;
-  display: block;
-  margin-right: 5.85151%;
-  width: 36.4891%;
-}
-section[role=banner] header .logo:last-child {
-  margin-right: 0;
+  height: auto;
+  max-width: 175px;
+  padding: .8em 0 0 2em;
 }
 @media screen and (min-width: 50em) {
   section[role=banner] header .logo {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 14.70196%;
+    max-width: 250px;
   }
-  section[role=banner] header .logo:last-child {
-    margin-right: 0;
-  }
-}
-section[role=banner] header img {
-  padding-top: 1em;
-  padding-bottom: 1em;
-  height: 5.5em;
 }
 
 nav {
@@ -822,13 +878,13 @@ nav:last-child {
 }
 @media screen and (min-width: 50em) {
   nav {
-    padding-right: 5em;
+    padding-right: 2em;
   }
 }
 nav ul {
   float: right;
   list-style-type: none;
-  margin-top: 2em;
+  margin-top: 1.3em;
 }
 nav ul li {
   display: inline;
@@ -839,95 +895,68 @@ nav ul li {
 }
 @media screen and (min-width: 50em) {
   nav ul li {
-    margin-left: .5em;
+    margin-left: 2em;
   }
 }
 nav ul li a {
-  color: white;
-  padding: .7em;
-}
-@media screen and (min-width: 50em) {
-  nav ul li a {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
+  color: #5078C3;
 }
 nav ul li a:hover {
-  background-color: #eb3778;
-  color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-nav ul li a.current {
-  background-color: #eb3778;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  color: #999999;
 }
 
 section[role=main] {
+  padding: 50px 0 0 0;
+}
+
+.archive {
+  border-top: 1px solid #ccc;
+  text-align: center;
+}
+.paged-1 .archive:first-child {
+  background-color: #333;
+}
+.paged-1 .archive:first-child p, .paged-1 .archive:first-child h4, .paged-1 .archive:first-child a, .paged-1 .archive:first-child small, .paged-1 .archive:first-child .fa-clock-o {
+  color: white;
+}
+
+article {
   max-width: 80em;
   margin-left: auto;
   margin-right: auto;
 }
-section[role=main]:after {
+article:after {
   content: "";
   display: table;
   clear: both;
 }
-@media screen and (min-width: 50em) {
-  section[role=main] article {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 100%;
-    padding: 1em 0 1em 0;
-  }
-  section[role=main] article:last-child {
-    margin-right: 0;
-  }
+
+.inner {
+  padding: 2em;
 }
 @media screen and (min-width: 50em) {
-  section[role=main] article img {
+  .inner {
+    margin-left: 52.92575%;
     float: left;
     display: block;
     margin-right: 2.35765%;
-    width: 31.76157%;
+    width: 57.35098%;
+    padding: 50px 0 50px 0;
   }
-  section[role=main] article img:last-child {
-    margin-right: 0;
-  }
-}
-@media screen and (min-width: 50em) {
-  section[role=main] article .content {
-    float: left;
-    display: block;
-    margin-right: 2.35765%;
-    width: 65.88078%;
-  }
-  section[role=main] article .content:last-child {
+  .inner:last-child {
     margin-right: 0;
   }
 }
 
 footer {
-  color: white;
   background: #333333;
-}
-footer a {
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 footer .footer-inner {
   max-width: 80em;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 2em 0 2em;
 }
 footer .footer-inner:after {
   content: "";
@@ -935,8 +964,6 @@ footer .footer-inner:after {
   clear: both;
 }
 footer .footer-inner .content {
-  margin-bottom: 3em;
-  overflow: hidden;
   float: left;
   display: block;
   margin-right: 5.85151%;
@@ -967,42 +994,106 @@ footer .footer-inner .content:last-child {
   }
   footer .footer-inner .content:nth-of-type(3) {
     margin-left: 8.5298%;
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 23.23176%;
   }
+  footer .footer-inner .content:nth-of-type(3):last-child {
+    margin-right: 0;
+  }
+}
+footer .footer-inner ul {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
+  padding-top: 1em;
+}
+footer .footer-inner ul li {
+  margin: 0 auto 0.5em;
 }
 
 section[role=slider] {
-  background-color: #999999;
-  min-height: 350px;
-  margin-bottom: 1em;
+  background-color: white;
+  color: #000;
+  height: 100vh;
+  text-align: center;
+  text-transform: uppercase;
 }
 section[role=slider] header {
   max-width: 80em;
   margin-left: auto;
   margin-right: auto;
+}
+section[role=slider] header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+section[role=slider] header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+section[role=slider] header hgroup {
+  padding-top: 16vh;
+}
+section[role=slider] header hgroup h1 {
+  text-shadow: -5px 5px 0px #fff;
+}
+section[role=slider] figure {
+  height: auto;
+  margin: auto;
+  padding: 2em 0 2em 0;
+  width: 50px;
+}
+
+/* background setup */
+.background {
+  background-position: 50% 50% \9  !important;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+/* fullscreen setup */
+html, body {
+  /* give this to all tags from html to .fullscreen */
+  height: 100%;
+}
+
+.fullscreen,
+.content-a {
   color: white;
+  min-height: 100%;
+  width: 100%;
 }
-section[role=slider] header:after {
-  content: "";
-  display: table;
-  clear: both;
+
+.not-fullscreen,
+.not-fullscreen .content-a,
+.fullscreen.not-overflow,
+.fullscreen.not-overflow .content-a {
+  height: 100%;
+  overflow: hidden;
 }
-section[role=slider] header:after {
-  content: "";
+
+/* content centering styles */
+.content-a {
   display: table;
-  clear: both;
+}
+
+.content-b {
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
 }
 @media screen and (min-width: 50em) {
-  section[role=slider] header hgroup {
-    padding-top: 8em;
-  }
-  section[role=slider] header hgroup h1, section[role=slider] header hgroup h2 {
-    text-align: center;
+  .content-b {
+    padding: 0 25% 0 25%;
   }
 }
-@media screen and (min-width: 50em) {
-  section[role=slider] {
-    min-height: 585px;
-  }
+.content-b h1 {
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .symbol, a.symbol:before {
@@ -1072,6 +1163,44 @@ section[role=contentinfo] .inner .copyright p {
   font-size: 1em;
 }
 
+.down-arrow {
+  -webkit-animation-duration: 0.3s;
+  -moz-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  bottom: 30px;
+  height: 50px;
+  left: 0;
+  margin: 0 auto;
+  padding-top: 10px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 50px;
+}
+
+.down-arrow {
+  background: #ffffff;
+  color: #222;
+}
+
+.down-arrow a {
+  color: #222;
+}
+
+.down-arrow:hover {
+  -webkit-animation-duration: 0.3s;
+  -moz-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  background: none;
+  border: 2px solid #ffffff;
+}
+
+.down-arrow:hover a {
+  color: #ffffff !important;
+}
+
 /*!
 Animate.css - http://daneden.me/animate
 Licensed under the MIT license
@@ -1106,12 +1235,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   40% {
     -webkit-transform: translateY(-30px);
     transform: translateY(-30px);
   }
-
   60% {
     -webkit-transform: translateY(-15px);
     transform: translateY(-15px);
@@ -1123,13 +1250,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   40% {
     -webkit-transform: translateY(-30px);
     -ms-transform: translateY(-30px);
     transform: translateY(-30px);
   }
-
   60% {
     -webkit-transform: translateY(-15px);
     -ms-transform: translateY(-15px);
@@ -1145,7 +1270,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   0%, 50%, 100% {
     opacity: 1;
   }
-
   25%, 75% {
     opacity: 0;
   }
@@ -1154,7 +1278,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   0%, 50%, 100% {
     opacity: 1;
   }
-
   25%, 75% {
     opacity: 0;
   }
@@ -1170,12 +1293,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: scale(1);
     transform: scale(1);
   }
-
   50% {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
-
   100% {
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -1187,13 +1308,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: scale(1);
     transform: scale(1);
   }
-
   50% {
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);
   }
-
   100% {
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
@@ -1210,22 +1329,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: scale(1);
     transform: scale(1);
   }
-
   30% {
     -webkit-transform: scaleX(1.25) scaleY(0.75);
     transform: scaleX(1.25) scaleY(0.75);
   }
-
   40% {
     -webkit-transform: scaleX(0.75) scaleY(1.25);
     transform: scaleX(0.75) scaleY(1.25);
   }
-
   60% {
     -webkit-transform: scaleX(1.15) scaleY(0.85);
     transform: scaleX(1.15) scaleY(0.85);
   }
-
   100% {
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -1237,25 +1352,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: scale(1);
     transform: scale(1);
   }
-
   30% {
     -webkit-transform: scaleX(1.25) scaleY(0.75);
     -ms-transform: scaleX(1.25) scaleY(0.75);
     transform: scaleX(1.25) scaleY(0.75);
   }
-
   40% {
     -webkit-transform: scaleX(0.75) scaleY(1.25);
     -ms-transform: scaleX(0.75) scaleY(1.25);
     transform: scaleX(0.75) scaleY(1.25);
   }
-
   60% {
     -webkit-transform: scaleX(1.15) scaleY(0.85);
     -ms-transform: scaleX(1.15) scaleY(0.85);
     transform: scaleX(1.15) scaleY(0.85);
   }
-
   100% {
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
@@ -1272,12 +1383,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   10%, 30%, 50%, 70%, 90% {
     -webkit-transform: translateX(-10px);
     transform: translateX(-10px);
   }
-
   20%, 40%, 60%, 80% {
     -webkit-transform: translateX(10px);
     transform: translateX(10px);
@@ -1289,13 +1398,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   10%, 30%, 50%, 70%, 90% {
     -webkit-transform: translateX(-10px);
     -ms-transform: translateX(-10px);
     transform: translateX(-10px);
   }
-
   20%, 40%, 60%, 80% {
     -webkit-transform: translateX(10px);
     -ms-transform: translateX(10px);
@@ -1312,22 +1419,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: rotate(15deg);
     transform: rotate(15deg);
   }
-
   40% {
     -webkit-transform: rotate(-10deg);
     transform: rotate(-10deg);
   }
-
   60% {
     -webkit-transform: rotate(5deg);
     transform: rotate(5deg);
   }
-
   80% {
     -webkit-transform: rotate(-5deg);
     transform: rotate(-5deg);
   }
-
   100% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
@@ -1339,25 +1442,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: rotate(15deg);
     transform: rotate(15deg);
   }
-
   40% {
     -webkit-transform: rotate(-10deg);
     -ms-transform: rotate(-10deg);
     transform: rotate(-10deg);
   }
-
   60% {
     -webkit-transform: rotate(5deg);
     -ms-transform: rotate(5deg);
     transform: rotate(5deg);
   }
-
   80% {
     -webkit-transform: rotate(-5deg);
     -ms-transform: rotate(-5deg);
     transform: rotate(-5deg);
   }
-
   100% {
     -webkit-transform: rotate(0deg);
     -ms-transform: rotate(0deg);
@@ -1377,22 +1476,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: scale(1);
     transform: scale(1);
   }
-
   10%, 20% {
     -webkit-transform: scale(0.9) rotate(-3deg);
     transform: scale(0.9) rotate(-3deg);
   }
-
   30%, 50%, 70%, 90% {
     -webkit-transform: scale(1.1) rotate(3deg);
     transform: scale(1.1) rotate(3deg);
   }
-
   40%, 60%, 80% {
     -webkit-transform: scale(1.1) rotate(-3deg);
     transform: scale(1.1) rotate(-3deg);
   }
-
   100% {
     -webkit-transform: scale(1) rotate(0);
     transform: scale(1) rotate(0);
@@ -1404,25 +1499,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: scale(1);
     transform: scale(1);
   }
-
   10%, 20% {
     -webkit-transform: scale(0.9) rotate(-3deg);
     -ms-transform: scale(0.9) rotate(-3deg);
     transform: scale(0.9) rotate(-3deg);
   }
-
   30%, 50%, 70%, 90% {
     -webkit-transform: scale(1.1) rotate(3deg);
     -ms-transform: scale(1.1) rotate(3deg);
     transform: scale(1.1) rotate(3deg);
   }
-
   40%, 60%, 80% {
     -webkit-transform: scale(1.1) rotate(-3deg);
     -ms-transform: scale(1.1) rotate(-3deg);
     transform: scale(1.1) rotate(-3deg);
   }
-
   100% {
     -webkit-transform: scale(1) rotate(0);
     -ms-transform: scale(1) rotate(0);
@@ -1440,32 +1531,26 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0%);
     transform: translateX(0%);
   }
-
   15% {
     -webkit-transform: translateX(-25%) rotate(-5deg);
     transform: translateX(-25%) rotate(-5deg);
   }
-
   30% {
     -webkit-transform: translateX(20%) rotate(3deg);
     transform: translateX(20%) rotate(3deg);
   }
-
   45% {
     -webkit-transform: translateX(-15%) rotate(-3deg);
     transform: translateX(-15%) rotate(-3deg);
   }
-
   60% {
     -webkit-transform: translateX(10%) rotate(2deg);
     transform: translateX(10%) rotate(2deg);
   }
-
   75% {
     -webkit-transform: translateX(-5%) rotate(-1deg);
     transform: translateX(-5%) rotate(-1deg);
   }
-
   100% {
     -webkit-transform: translateX(0%);
     transform: translateX(0%);
@@ -1477,37 +1562,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0%);
     transform: translateX(0%);
   }
-
   15% {
     -webkit-transform: translateX(-25%) rotate(-5deg);
     -ms-transform: translateX(-25%) rotate(-5deg);
     transform: translateX(-25%) rotate(-5deg);
   }
-
   30% {
     -webkit-transform: translateX(20%) rotate(3deg);
     -ms-transform: translateX(20%) rotate(3deg);
     transform: translateX(20%) rotate(3deg);
   }
-
   45% {
     -webkit-transform: translateX(-15%) rotate(-3deg);
     -ms-transform: translateX(-15%) rotate(-3deg);
     transform: translateX(-15%) rotate(-3deg);
   }
-
   60% {
     -webkit-transform: translateX(10%) rotate(2deg);
     -ms-transform: translateX(10%) rotate(2deg);
     transform: translateX(10%) rotate(2deg);
   }
-
   75% {
     -webkit-transform: translateX(-5%) rotate(-1deg);
     -ms-transform: translateX(-5%) rotate(-1deg);
     transform: translateX(-5%) rotate(-1deg);
   }
-
   100% {
     -webkit-transform: translateX(0%);
     -ms-transform: translateX(0%);
@@ -1525,18 +1604,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: scale(0.3);
     transform: scale(0.3);
   }
-
   50% {
     opacity: 1;
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
   }
-
   70% {
     -webkit-transform: scale(0.9);
     transform: scale(0.9);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: scale(1);
@@ -1550,20 +1626,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: scale(0.3);
     transform: scale(0.3);
   }
-
   50% {
     opacity: 1;
     -webkit-transform: scale(1.05);
     -ms-transform: scale(1.05);
     transform: scale(1.05);
   }
-
   70% {
     -webkit-transform: scale(0.9);
     -ms-transform: scale(0.9);
     transform: scale(0.9);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: scale(1);
@@ -1582,18 +1655,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateY(30px);
     transform: translateY(30px);
   }
-
   80% {
     -webkit-transform: translateY(-10px);
     transform: translateY(-10px);
   }
-
   100% {
     -webkit-transform: translateY(0);
     transform: translateY(0);
@@ -1606,20 +1676,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateY(30px);
     -ms-transform: translateY(30px);
     transform: translateY(30px);
   }
-
   80% {
     -webkit-transform: translateY(-10px);
     -ms-transform: translateY(-10px);
     transform: translateY(-10px);
   }
-
   100% {
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -1637,18 +1704,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(-2000px);
     transform: translateX(-2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateX(30px);
     transform: translateX(30px);
   }
-
   80% {
     -webkit-transform: translateX(-10px);
     transform: translateX(-10px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -1661,20 +1725,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(-2000px);
     transform: translateX(-2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateX(30px);
     -ms-transform: translateX(30px);
     transform: translateX(30px);
   }
-
   80% {
     -webkit-transform: translateX(-10px);
     -ms-transform: translateX(-10px);
     transform: translateX(-10px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -1692,18 +1753,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(2000px);
     transform: translateX(2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateX(-30px);
     transform: translateX(-30px);
   }
-
   80% {
     -webkit-transform: translateX(10px);
     transform: translateX(10px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -1716,20 +1774,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(2000px);
     transform: translateX(2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateX(-30px);
     -ms-transform: translateX(-30px);
     transform: translateX(-30px);
   }
-
   80% {
     -webkit-transform: translateX(10px);
     -ms-transform: translateX(10px);
     transform: translateX(10px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -1747,18 +1802,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(2000px);
     transform: translateY(2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateY(-30px);
     transform: translateY(-30px);
   }
-
   80% {
     -webkit-transform: translateY(10px);
     transform: translateY(10px);
   }
-
   100% {
     -webkit-transform: translateY(0);
     transform: translateY(0);
@@ -1771,20 +1823,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(2000px);
     transform: translateY(2000px);
   }
-
   60% {
     opacity: 1;
     -webkit-transform: translateY(-30px);
     -ms-transform: translateY(-30px);
     transform: translateY(-30px);
   }
-
   80% {
     -webkit-transform: translateY(10px);
     -ms-transform: translateY(10px);
     transform: translateY(10px);
   }
-
   100% {
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -1801,18 +1850,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: scale(1);
     transform: scale(1);
   }
-
   25% {
     -webkit-transform: scale(0.95);
     transform: scale(0.95);
   }
-
   50% {
     opacity: 1;
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: scale(0.3);
@@ -1825,20 +1871,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: scale(1);
     transform: scale(1);
   }
-
   25% {
     -webkit-transform: scale(0.95);
     -ms-transform: scale(0.95);
     transform: scale(0.95);
   }
-
   50% {
     opacity: 1;
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: scale(0.3);
@@ -1856,13 +1899,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateY(-20px);
     transform: translateY(-20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(2000px);
@@ -1875,14 +1916,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateY(-20px);
     -ms-transform: translateY(-20px);
     transform: translateY(-20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(2000px);
@@ -1900,13 +1939,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateX(20px);
     transform: translateX(20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-2000px);
@@ -1919,14 +1956,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-2000px);
@@ -1944,13 +1979,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateX(-20px);
     transform: translateX(-20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(2000px);
@@ -1963,14 +1996,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateX(-20px);
     -ms-transform: translateX(-20px);
     transform: translateX(-20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(2000px);
@@ -1988,13 +2019,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateY(20px);
     transform: translateY(20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-2000px);
@@ -2007,14 +2036,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   20% {
     opacity: 1;
     -webkit-transform: translateY(20px);
     -ms-transform: translateY(20px);
     transform: translateY(20px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-2000px);
@@ -2031,7 +2058,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -2040,7 +2066,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -2056,7 +2081,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(-20px);
     transform: translateY(-20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2070,7 +2094,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(-20px);
     transform: translateY(-20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2089,7 +2112,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2103,7 +2125,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2122,7 +2143,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(-20px);
     transform: translateX(-20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2136,7 +2156,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(-20px);
     transform: translateX(-20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2155,7 +2174,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(-2000px);
     transform: translateX(-2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2169,7 +2187,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(-2000px);
     transform: translateX(-2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2188,7 +2205,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(20px);
     transform: translateX(20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2202,7 +2218,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(20px);
     transform: translateX(20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2221,7 +2236,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(2000px);
     transform: translateX(2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2235,7 +2249,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(2000px);
     transform: translateX(2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0);
@@ -2254,7 +2267,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(20px);
     transform: translateY(20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2268,7 +2280,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(20px);
     transform: translateY(20px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2287,7 +2298,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(2000px);
     transform: translateY(2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2301,7 +2311,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(2000px);
     transform: translateY(2000px);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
@@ -2318,7 +2327,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   0% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
@@ -2327,7 +2335,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   0% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
@@ -2343,7 +2350,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(20px);
@@ -2357,7 +2363,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(20px);
@@ -2376,7 +2381,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(2000px);
@@ -2390,7 +2394,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(2000px);
@@ -2409,7 +2412,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-20px);
@@ -2423,7 +2425,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-20px);
@@ -2442,7 +2443,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-2000px);
@@ -2456,7 +2456,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-2000px);
@@ -2475,7 +2474,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(20px);
@@ -2489,7 +2487,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(20px);
@@ -2508,7 +2505,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(2000px);
@@ -2522,7 +2518,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(2000px);
@@ -2541,7 +2536,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-20px);
@@ -2555,7 +2549,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-20px);
@@ -2574,7 +2567,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-2000px);
@@ -2588,7 +2580,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-2000px);
@@ -2608,28 +2599,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
   }
-
   40% {
     -webkit-transform: perspective(400px) translateZ(150px) rotateY(170deg) scale(1);
     transform: perspective(400px) translateZ(150px) rotateY(170deg) scale(1);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
   }
-
   50% {
     -webkit-transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
     transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
   }
-
   80% {
     -webkit-transform: perspective(400px) translateZ(0) rotateY(360deg) scale(0.95);
     transform: perspective(400px) translateZ(0) rotateY(360deg) scale(0.95);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
   }
-
   100% {
     -webkit-transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);
     transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);
@@ -2645,7 +2632,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
   }
-
   40% {
     -webkit-transform: perspective(400px) translateZ(150px) rotateY(170deg) scale(1);
     -ms-transform: perspective(400px) translateZ(150px) rotateY(170deg) scale(1);
@@ -2653,7 +2639,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
   }
-
   50% {
     -webkit-transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
     -ms-transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
@@ -2661,7 +2646,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
   }
-
   80% {
     -webkit-transform: perspective(400px) translateZ(0) rotateY(360deg) scale(0.95);
     -ms-transform: perspective(400px) translateZ(0) rotateY(360deg) scale(0.95);
@@ -2669,7 +2653,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
   }
-
   100% {
     -webkit-transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);
     -ms-transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);
@@ -2692,17 +2675,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateX(90deg);
     opacity: 0;
   }
-
   40% {
     -webkit-transform: perspective(400px) rotateX(-10deg);
     transform: perspective(400px) rotateX(-10deg);
   }
-
   70% {
     -webkit-transform: perspective(400px) rotateX(10deg);
     transform: perspective(400px) rotateX(10deg);
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateX(0deg);
     transform: perspective(400px) rotateX(0deg);
@@ -2716,19 +2696,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateX(90deg);
     opacity: 0;
   }
-
   40% {
     -webkit-transform: perspective(400px) rotateX(-10deg);
     -ms-transform: perspective(400px) rotateX(-10deg);
     transform: perspective(400px) rotateX(-10deg);
   }
-
   70% {
     -webkit-transform: perspective(400px) rotateX(10deg);
     -ms-transform: perspective(400px) rotateX(10deg);
     transform: perspective(400px) rotateX(10deg);
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateX(0deg);
     -ms-transform: perspective(400px) rotateX(0deg);
@@ -2750,17 +2727,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateY(90deg);
     opacity: 0;
   }
-
   40% {
     -webkit-transform: perspective(400px) rotateY(-10deg);
     transform: perspective(400px) rotateY(-10deg);
   }
-
   70% {
     -webkit-transform: perspective(400px) rotateY(10deg);
     transform: perspective(400px) rotateY(10deg);
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateY(0deg);
     transform: perspective(400px) rotateY(0deg);
@@ -2774,19 +2748,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateY(90deg);
     opacity: 0;
   }
-
   40% {
     -webkit-transform: perspective(400px) rotateY(-10deg);
     -ms-transform: perspective(400px) rotateY(-10deg);
     transform: perspective(400px) rotateY(-10deg);
   }
-
   70% {
     -webkit-transform: perspective(400px) rotateY(10deg);
     -ms-transform: perspective(400px) rotateY(10deg);
     transform: perspective(400px) rotateY(10deg);
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateY(0deg);
     -ms-transform: perspective(400px) rotateY(0deg);
@@ -2808,7 +2779,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateX(0deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateX(90deg);
     transform: perspective(400px) rotateX(90deg);
@@ -2822,7 +2792,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateX(0deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateX(90deg);
     -ms-transform: perspective(400px) rotateX(90deg);
@@ -2844,7 +2813,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateY(0deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateY(90deg);
     transform: perspective(400px) rotateY(90deg);
@@ -2858,7 +2826,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: perspective(400px) rotateY(0deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: perspective(400px) rotateY(90deg);
     -ms-transform: perspective(400px) rotateY(90deg);
@@ -2880,19 +2847,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: translateX(100%) skewX(-30deg);
     opacity: 0;
   }
-
   60% {
     -webkit-transform: translateX(-20%) skewX(30deg);
     transform: translateX(-20%) skewX(30deg);
     opacity: 1;
   }
-
   80% {
     -webkit-transform: translateX(0%) skewX(-15deg);
     transform: translateX(0%) skewX(-15deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: translateX(0%) skewX(0deg);
     transform: translateX(0%) skewX(0deg);
@@ -2906,21 +2870,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: translateX(100%) skewX(-30deg);
     opacity: 0;
   }
-
   60% {
     -webkit-transform: translateX(-20%) skewX(30deg);
     -ms-transform: translateX(-20%) skewX(30deg);
     transform: translateX(-20%) skewX(30deg);
     opacity: 1;
   }
-
   80% {
     -webkit-transform: translateX(0%) skewX(-15deg);
     -ms-transform: translateX(0%) skewX(-15deg);
     transform: translateX(0%) skewX(-15deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: translateX(0%) skewX(0deg);
     -ms-transform: translateX(0%) skewX(0deg);
@@ -2941,7 +2902,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: translateX(0%) skewX(0deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: translateX(100%) skewX(-30deg);
     transform: translateX(100%) skewX(-30deg);
@@ -2955,7 +2915,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: translateX(0%) skewX(0deg);
     opacity: 1;
   }
-
   100% {
     -webkit-transform: translateX(100%) skewX(-30deg);
     -ms-transform: translateX(100%) skewX(-30deg);
@@ -2978,7 +2937,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(-200deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: center center;
     transform-origin: center center;
@@ -2997,7 +2955,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(-200deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: center center;
     -ms-transform-origin: center center;
@@ -3021,7 +2978,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(-90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     transform-origin: left bottom;
@@ -3040,7 +2996,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(-90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     -ms-transform-origin: left bottom;
@@ -3064,7 +3019,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     transform-origin: right bottom;
@@ -3083,7 +3037,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     -ms-transform-origin: right bottom;
@@ -3107,7 +3060,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     transform-origin: left bottom;
@@ -3126,7 +3078,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     -ms-transform-origin: left bottom;
@@ -3150,7 +3101,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(-90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     transform-origin: right bottom;
@@ -3169,7 +3119,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(-90deg);
     opacity: 0;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     -ms-transform-origin: right bottom;
@@ -3193,7 +3142,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: center center;
     transform-origin: center center;
@@ -3212,7 +3160,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: center center;
     -ms-transform-origin: center center;
@@ -3236,7 +3183,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     transform-origin: left bottom;
@@ -3255,7 +3201,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     -ms-transform-origin: left bottom;
@@ -3279,7 +3224,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     transform-origin: right bottom;
@@ -3298,7 +3242,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     -ms-transform-origin: right bottom;
@@ -3322,7 +3265,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     transform-origin: left bottom;
@@ -3341,7 +3283,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: left bottom;
     -ms-transform-origin: left bottom;
@@ -3365,7 +3306,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     transform-origin: right bottom;
@@ -3384,7 +3324,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     transform: rotate(0);
     opacity: 1;
   }
-
   100% {
     -webkit-transform-origin: right bottom;
     -ms-transform-origin: right bottom;
@@ -3406,7 +3345,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
-
   100% {
     -webkit-transform: translateY(0);
     transform: translateY(0);
@@ -3419,7 +3357,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(-2000px);
     transform: translateY(-2000px);
   }
-
   100% {
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
@@ -3437,7 +3374,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(-2000px);
     transform: translateX(-2000px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -3450,7 +3386,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(-2000px);
     transform: translateX(-2000px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -3468,7 +3403,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(2000px);
     transform: translateX(2000px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -3481,7 +3415,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(2000px);
     transform: translateX(2000px);
   }
-
   100% {
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
@@ -3498,7 +3431,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-2000px);
@@ -3511,7 +3443,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(-2000px);
@@ -3529,7 +3460,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(2000px);
@@ -3542,7 +3472,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(2000px);
@@ -3560,7 +3489,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-2000px);
@@ -3573,7 +3501,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(-2000px);
@@ -3591,7 +3518,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(2000px);
     transform: translateY(2000px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(0);
@@ -3604,7 +3530,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(2000px);
     transform: translateY(2000px);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(0);
@@ -3622,7 +3547,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(2000px);
@@ -3635,7 +3559,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateY(0);
     transform: translateY(0);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateY(2000px);
@@ -3657,7 +3580,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
   }
-
   20%, 60% {
     -webkit-transform: rotate(80deg);
     transform: rotate(80deg);
@@ -3666,7 +3588,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
   }
-
   40% {
     -webkit-transform: rotate(60deg);
     transform: rotate(60deg);
@@ -3675,7 +3596,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
   }
-
   80% {
     -webkit-transform: rotate(60deg) translateY(0);
     transform: rotate(60deg) translateY(0);
@@ -3685,7 +3605,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     animation-timing-function: ease-in-out;
     opacity: 1;
   }
-
   100% {
     -webkit-transform: translateY(700px);
     transform: translateY(700px);
@@ -3703,7 +3622,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
   }
-
   20%, 60% {
     -webkit-transform: rotate(80deg);
     -ms-transform: rotate(80deg);
@@ -3714,7 +3632,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
   }
-
   40% {
     -webkit-transform: rotate(60deg);
     -ms-transform: rotate(60deg);
@@ -3725,7 +3642,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
   }
-
   80% {
     -webkit-transform: rotate(60deg) translateY(0);
     -ms-transform: rotate(60deg) translateY(0);
@@ -3737,7 +3653,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     animation-timing-function: ease-in-out;
     opacity: 1;
   }
-
   100% {
     -webkit-transform: translateY(700px);
     -ms-transform: translateY(700px);
@@ -3757,7 +3672,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(-100%) rotate(-120deg);
     transform: translateX(-100%) rotate(-120deg);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0px) rotate(0deg);
@@ -3771,7 +3685,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(-100%) rotate(-120deg);
     transform: translateX(-100%) rotate(-120deg);
   }
-
   100% {
     opacity: 1;
     -webkit-transform: translateX(0px) rotate(0deg);
@@ -3791,7 +3704,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -webkit-transform: translateX(0px) rotate(0deg);
     transform: translateX(0px) rotate(0deg);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(100%) rotate(120deg);
@@ -3805,7 +3717,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     -ms-transform: translateX(0px) rotate(0deg);
     transform: translateX(0px) rotate(0deg);
   }
-
   100% {
     opacity: 0;
     -webkit-transform: translateX(100%) rotate(120deg);
@@ -3817,3 +3728,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   -webkit-animation-name: rollOut;
   animation-name: rollOut;
 }
+
+/*# sourceMappingURL=style.css.map */

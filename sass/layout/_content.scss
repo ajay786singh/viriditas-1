@@ -1,20 +1,27 @@
 section[role=main] {
-    @include outer-container;
-    article {
-        @include media($bp-large) {
-            @include span-columns(12);
-            padding: 1em 0 1em 0;
-        }
+    padding: 50px 0 0 0;
+}
 
-        img {
-            @include media($bp-large) {
-                @include span-columns(4 of 12);
-            }
+.archive {
+    border-top: 1px solid #ccc;
+    text-align: center;
+    .paged-1 &:first-child {
+        background-color: #333;
+        p, h4, a, small, .fa-clock-o {
+            color: $white;
         }
-        .content {
-            @include media($bp-large) {
-                @include span-columns(8 of 12);
-            }
-        }
+    }
+}
+
+article {
+    @include outer-container;
+}
+
+.inner {
+    padding: 2em;
+    @include media($bp-large) {
+        @include shift(2.5);
+        @include span-columns(7);
+        padding: 50px 0 50px 0;
     }
 }

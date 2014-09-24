@@ -1,8 +1,8 @@
 // Library
-@import "../bower/normalize-scss/normalize";
-@import "../bower/bourbon/dist/bourbon";
+@import "../bower_components/normalize-scss/normalize";
+@import "../bower_components/bourbon/dist/bourbon";
 @import "base/base";
-@import "../bower/neat/app/assets/stylesheets/neat";
+@import "../bower_components/neat/app/assets/stylesheets/neat";
 
 // Typography
 @import "base/typography";
@@ -15,6 +15,7 @@
 @import "layout/hero";
 @import "layout/social-share";
 @import "layout/copyright";
+@import "layout/arrow";
 
 // Vendor
 @import "vendor/animate";

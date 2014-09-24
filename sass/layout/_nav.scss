@@ -2,13 +2,13 @@ nav {
     @include span-columns(3);
     float: right;
     @include media($bp-large) {
-        padding-right: 5em;
+        padding-right: 2em;
     }
 
     ul {
         float: right;
         list-style-type: none;
-        margin-top: 2em;
+        margin-top: 1.3em;
         li {
             display: inline;
             text-transform: uppercase;
@@ -16,29 +16,15 @@ nav {
             font-size: 1em;
             margin-left: 0;
             @include media($bp-large) {
-                margin-left: .5em;
+                margin-left: 2em;
             }
 
             a {
-                color: $white;
-                padding: .7em;
-                @include media($bp-large) {
-                    @include border-top-radius(20px);
-                    @include border-bottom-radius(20px);
-                    border: 1px solid rgba(255, 255, 255, 0.2);
-                }
-
+                color: $blue;
                 &:hover {
-                    background-color: $pink;
-                    color: $white;
-                    @include border-top-radius(20px);
-                    @include border-bottom-radius(20px);
+                    color: $medium-gray;
                 }
-                &.current {
-                    background-color: $pink;
-                    @include border-top-radius(20px);
-                    @include border-bottom-radius(20px);
-                }
+                &.current {}
             }
         }
     }

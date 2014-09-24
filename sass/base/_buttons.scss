@@ -1,5 +1,4 @@
-button,
-input[type="submit"] {
+button {
     @extend %button;
     @include appearance(none);
     border: none;
@@ -7,4 +6,5 @@ input[type="submit"] {
     user-select: none;
     vertical-align: middle;
     white-space: nowrap;
+    margin: 1em;
 }

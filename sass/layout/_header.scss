@@ -1,18 +1,18 @@
 section[role=banner] {
-    background-color: $dark-gray;
+    background-color: $white;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
     header {
-        @include outer-container;
-        color: $white;
-        height: 20%;
+        height: 90px;
         .logo {
-            @include span-columns(2);
+            float: left;
+            height: auto;
+            max-width: 175px;
+            padding: .8em 0 0 2em;
             @include media($bp-large) {
-                @include span-columns(2);
+                max-width: 250px;
             }
-        }
-        img {
-            @include padding(1em null 1em null);
-            height: 5.5em;
         }
     }
 }
