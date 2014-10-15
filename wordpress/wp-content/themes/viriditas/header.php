@@ -45,14 +45,8 @@
             <a href="#"><img src="http://placehold.it/350x100&text=Viriditas" alt=""></a>
         </div>
            <nav>
-            <ul>
-                <li><a href="#">Order</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Classes</a></li>
-                <li><a href="#">Appointment Booking & Forms</a></li>
-                <li><a href="#">Resources</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
+               <?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
+
         </nav>
     </header>
 </section>

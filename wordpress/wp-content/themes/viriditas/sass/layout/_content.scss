@@ -1,16 +1,10 @@
 section[role=main] {
-    padding: 50px 0 0 0;
+    padding: 90px 0 0 0;
 }
 
 .archive {
     border-top: 1px solid #ccc;
     text-align: center;
-    .paged-1 &:first-child {
-        background-color: #333;
-        p, h4, a, small, .fa-clock-o {
-            color: $white;
-        }
-    }
 }
 
 article {
@@ -20,8 +14,7 @@ article {
 .inner {
     padding: 2em;
     @include media($bp-large) {
-        @include shift(2.5);
         @include span-columns(7);
-        padding: 50px 0 50px 0;
+        @include shift(2.5);
     }
 }
