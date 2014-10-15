@@ -4,7 +4,16 @@ Template Name: Blog Archive
 */
 get_header(); ?>
 
-<section role="main" class="<?php if( !is_paged()) { echo 'paged-1'; }?>">
+
+<?php 
+    $args  = array(
+        'posts_per_page' => 10,
+        'paged' => $paged,
+    );
+    query_posts($args);
+?>
+
+<section role="main">
     
     <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
         <div class="archive">

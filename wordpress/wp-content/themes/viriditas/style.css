@@ -941,8 +941,7 @@ section[role=main] {
 }
 
 .archive {
-  border-top: 1px solid #ccc;
-  text-align: center;
+  text-align: left;
 }
 
 article {
