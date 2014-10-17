@@ -37,15 +37,18 @@ $course->add_meta_box(
             'description'   => 'Name of instructor',
             'type'          => 'select',
             'options'       => array(
-                'value1'    => 'John Redden',
+                'John Redden'  => 'John Redden',
             ),
-            'default_value' => 'value1'
+            'default_value' => 'John Redden'
         ),
         array(
             'name'          => 'deadline',
             'label'         => 'Registration Deadline',
             'description'   => 'Enter date when course registration ends',
             'type'          => 'date',
+        'args'       => array(
+            'date_format' => 'd M, Y'
+        )
         ),
         array(
             'name'          => 'course_start',
@@ -63,13 +66,13 @@ $course->add_meta_box(
             'name'          => 'time_start',
             'label'         => 'Start Time',
             'description'   => 'Time the course starts',
-            'type'          => 'time',
+            'type'          => 'time'
         ),
         array(
             'name'          => 'time_end',
             'label'         => 'End Time',
             'description'   => 'Time the course starts',
-            'type'          => 'time',
+            'type'          => 'time'
         ),
         array(
             'name'          => 'spots',
@@ -77,39 +80,57 @@ $course->add_meta_box(
             'description'   => 'Number of spots left in course',
             'type'          => 'select',
             'options'       => array(
-                'value1'    => '1',
-                'value2'    => '2',
-                'value3'    => '3',
-                'value4'    => '4',
-                'value5'    => '5',
-                'value6'    => '6',
-                'value7'    => '7',
-                'value8'    => '8',
-                'value9'    => '9',
-                'value10'    => '10',
-                'value11'    => '11',
-                'value12'    => '12',
-                'value13'    => '13',
-                'value14'    => '14',
-                'value15'    => '15',
-                'value16'    => '16',
-                'value17'    => '17',
-                'value18'    => '18',
-                'value19'    => '19',
-                'value20'    => '20',
-                'value21'    => '21',
-                'value22'    => '22',
-                'value23'    => '23',
-                'value24'    => '24',
-                'value25'    => '25',
-                'value26'    => '26',
-                'value27'    => '27',
-                'value28'    => '28',
-                'value29'    => '29',
-                'value30'    => '30',
+                '1'    => '1',
+                '2'    => '2',
+                '3'    => '3',
+                '4'    => '4',
+                '5'    => '5',
+                '6'    => '6',
+                '7'    => '7',
+                '8'    => '8',
+                '9'    => '9',
+                '10'    => '10',
+                '11'    => '11',
+                '12'    => '12',
+                '13'    => '13',
+                '14'    => '14',
+                '15'    => '15',
+                '16'    => '16',
+                '17'    => '17',
+                '18'    => '18',
+                '19'    => '19',
+                '20'    => '20',
+                '21'    => '21',
+                '22'    => '22',
+                '23'    => '23',
+                '24'    => '24',
+                '25'    => '25',
+                '26'    => '26',
+                '27'    => '27',
+                '28'    => '28',
+                '29'    => '29',
+                '30'    => '30',
             ),
-            'default_value' => 'value1'
+            'default_value' => '1'
         ),
     )
 );
+
+
+//Organize admin columns
+function course_columns( $cols ) {
+  $cols = array(
+    'cb'        => '<input type="checkbox" />',
+    'title'     => __( 'Title', 'trans' ),
+    //'tags'      => __( 'Tags', 'trans' ),
+    '_course_details_price' => __( 'Price', 'trans' ),
+    '_course_details_instructor' => __( 'Instructor', 'trans' ),
+    '_course_details_spots' => __( 'Availability', 'trans' ),
+    'date'      => __( 'Date', 'trans' )
+);
+  
+  return $cols;
+}
+
+add_filter( "manage_course_posts_columns", "course_columns" );
 ?>
