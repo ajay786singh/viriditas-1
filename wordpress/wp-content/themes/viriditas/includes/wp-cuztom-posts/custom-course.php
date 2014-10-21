@@ -11,7 +11,7 @@ $course = register_cuztom_post_type( 'Course', $args);
 
 $course->add_meta_box(
     'Course Details',
-    'course_details',
+    'course',
     array(
         array(
             'name'          => 'image',
@@ -20,7 +20,7 @@ $course->add_meta_box(
             'type'          => 'image',
         ),
         array(
-            'name'          => 'course_description',
+            'name'          => 'description',
             'label'         => 'Course Description',
             'description'   => 'Description of course',
             'type'          => 'wysiwyg',
@@ -51,13 +51,13 @@ $course->add_meta_box(
         )
         ),
         array(
-            'name'          => 'course_start',
+            'name'          => 'date_start',
             'label'         => 'Course Starts',
             'description'   => 'Course start date',
             'type'          => 'date'
         ),
         array(
-            'name'          => 'course_end',
+            'name'          => 'date_end',
             'label'         => 'Course Ends',
             'description'   => 'Course end date',
             'type'          => 'date'
