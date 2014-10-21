@@ -11,7 +11,7 @@ $course = register_cuztom_post_type( 'Course', $args);
 
 $course->add_meta_box(
     'Course Details',
-    'course',
+    'course_details',
     array(
         array(
             'name'          => 'image',
