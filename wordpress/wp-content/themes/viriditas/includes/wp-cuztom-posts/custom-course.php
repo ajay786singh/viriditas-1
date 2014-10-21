@@ -46,21 +46,27 @@ $course->add_meta_box(
             'label'         => 'Registration Deadline',
             'description'   => 'Enter date when course registration ends',
             'type'          => 'date',
-        'args'       => array(
-            'date_format' => 'd M, Y'
-        )
+                'args'       => array(
+                'date_format' => 'F d, Y'
+            )
         ),
         array(
             'name'          => 'date_start',
             'label'         => 'Course Starts',
             'description'   => 'Course start date',
-            'type'          => 'date'
+            'type'          => 'date',
+            'args'       => array(
+                'date_format' => 'F d, Y'
+            )
         ),
         array(
             'name'          => 'date_end',
             'label'         => 'Course Ends',
             'description'   => 'Course end date',
-            'type'          => 'date'
+            'type'          => 'date',
+            'args'       => array(
+                'date_format' => 'F d, Y'
+            )
         ),
         array(
             'name'          => 'time_start',

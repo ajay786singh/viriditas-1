@@ -940,19 +940,39 @@ section[role=main] {
   padding: 90px 0 0 0;
 }
 
-.archive {
-  text-align: left;
-}
-
 article {
   max-width: 80em;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 2em 0 2em;
 }
 article:after {
   content: "";
   display: table;
   clear: both;
+}
+@media screen and (min-width: 50em) {
+  article aside {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 31.76157%;
+    margin-left: 8.5298%;
+  }
+  article aside:last-child {
+    margin-right: 0;
+  }
+}
+@media screen and (min-width: 50em) {
+  article .description {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 57.35098%;
+  }
+  article .description:last-child {
+    margin-right: 0;
+  }
 }
 
 .inner {

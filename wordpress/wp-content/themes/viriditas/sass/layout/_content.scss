@@ -2,12 +2,20 @@ section[role=main] {
     padding: 90px 0 0 0;
 }
 
-.archive {
-    text-align: left;
-}
-
 article {
     @include outer-container;
+    @include pad(0 2em 0 2em);
+    aside {
+        @include media($bp-large) {
+            @include span-columns(4);
+            @include shift(1);
+        }
+    }
+    .description {
+        @include media($bp-large) {
+            @include span-columns(7);
+        }
+    }
 }
 
 .inner {
