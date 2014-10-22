@@ -11,7 +11,7 @@ $max-width: em(1280);
 $bp-large: new-breakpoint(min-width 50em 12);
 
 // Visual Grid view
-$visual-grid: true;
+$visual-grid: false;
 $visual-grid-color: #cccccc;
 $visual-grid-index: front;
 $visual-grid-opacity: 0.2;
