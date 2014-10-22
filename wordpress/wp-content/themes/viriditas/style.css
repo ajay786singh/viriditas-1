@@ -575,7 +575,6 @@ button {
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-  margin: 1em;
 }
 
 * {
@@ -825,38 +824,6 @@ nav {
   font-family: "adelle-sans", sans-serif;
 }
 
-/*
-article p:first-of-type {
-    font-size: $base-font-size;
-    @include media($bp-large) {
-        font-size: $base-font-size * 2.5625;
-        // 16 * 2.5625 = 41px
-        line-height: 1.1707em;
-        margin-bottom: 0.5854em;
-    }
-}
-*/
-article ol {
-  border-top: 1px dotted #c5c9c9;
-  counter-reset: ordered-list;
-  margin: 50px 0 50px 0;
-  padding-left: 0px;
-}
-article ol li {
-  border-bottom: 1px dotted #c5c9c9;
-  list-style: none;
-  padding: 20px 20px 20px 70px;
-}
-article ol li:before {
-  color: #4ba3cc;
-  content: counter(ordered-list);
-  counter-increment: ordered-list;
-  display: block;
-  float: left;
-  margin-left: -80px;
-  padding: 0 30px;
-}
-
 .headline, .subhead {
   color: white;
   text-align: center;
@@ -944,15 +911,27 @@ article {
   max-width: 80em;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 2em 0 2em;
+  padding: 0 2em 2em 2em;
 }
 article:after {
   content: "";
   display: table;
   clear: both;
 }
+article aside {
+  padding: 2em 0 0 0;
+}
+article aside ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+article aside ul li {
+  margin: 0 0 .5em 0em;
+}
 @media screen and (min-width: 50em) {
   article aside {
+    padding: 6.5em 0 0 0;
     float: left;
     display: block;
     margin-right: 2.35765%;

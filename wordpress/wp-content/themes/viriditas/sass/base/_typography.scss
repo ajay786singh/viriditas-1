@@ -187,38 +187,6 @@ nav {
     font-family: $sans-serif;
 }
 
-/*
-article p:first-of-type {
-    font-size: $base-font-size;
-    @include media($bp-large) {
-        font-size: $base-font-size * 2.5625;
-        // 16 * 2.5625 = 41px
-        line-height: 1.1707em;
-        margin-bottom: 0.5854em;
-    }
-}
-*/
-article ol {
-    border-top: 1px dotted #c5c9c9;
-    counter-reset: ordered-list;
-    margin: 50px 0 50px 0;
-    padding-left: 0px;
-    & li {
-        border-bottom: 1px dotted #c5c9c9;
-        list-style: none;
-        padding: 20px 20px 20px 70px;
-        &:before {
-            color: #4ba3cc;
-            content: counter(ordered-list);
-            counter-increment: ordered-list;
-            display: block;
-            float: left;
-            margin-left: -80px;
-            padding: 0 30px;
-        }
-    }
-}
-
 .headline, .subhead {
     color: $white;
     text-align: center;

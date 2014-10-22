@@ -34,7 +34,8 @@ get_header(); ?>
     ?>
     
     <?php if($imageUrl): ?>
-       <img src="<?php echo $imageUrl[0]; ?>">   
+        <div style="background-image:url(<?php echo $imageUrl[0]; ?>); background-size:cover; min-height:500px;">
+        </div>
     <?php endif ?>
 
     <article>
@@ -47,31 +48,32 @@ get_header(); ?>
         </div>
 
         <aside>
-                
-            <?php if($instructor):
-                echo '<p><i class="fa fa-graduation-cap" style="color: blue;"></i> ' . $instructor .'</p>';         
-            endif ?>
-            <?php if($deadline):
-                echo '<p><i class="fa fa-calendar-o" style="color: orange;"></i> ' . date($dateFormat, $deadline) .'</p>';         
-            endif ?>
-            <?php if($dateStart):
-                echo '<p><i class="fa fa-calendar" style="color: green;"></i> ' . date($dateFormat, $dateStart) .'</p>';         
-            endif ?>
-            <?php if($timeStart):
-                echo '<p><i class="fa fa-clock-o" style="color: green;"></i> ' . date($timeFormat, $timeStart) .'</p>';         
-            endif ?>
-            <?php if($dateEnd):
-                echo '<p><i class="fa fa-calendar" style="color: red;"></i> ' . date($dateFormat, $dateEnd) .'</p>';         
-            endif ?>
-            <?php if($timeEnd):
-                echo '<p><i class="fa fa-clock-o" style="color: red;"></i> ' . date($timeFormat, $timeEnd) .'</p>';         
-            endif ?>
-            <?php if($available):
-                echo '<p><i class="fa fa-users" style="color: purple;"></i> ' . $available .'</p>';         
-            endif ?>
-            <?php if($price):
-                echo '<p><i class="fa fa-usd" style="color: gray;"></i> ' . $price .'</p>';         
-            endif ?>
+            <ul>
+                <?php if($instructor):
+                    echo '<li><i class="fa fa-graduation-cap" style="color: blue;"></i> ' . $instructor .'</li>';         
+                endif ?>
+                <?php if($deadline):
+                    echo '<li><i class="fa fa-calendar-o" style="color: orange;"></i> ' . date($dateFormat, $deadline) .'</li>';         
+                endif ?>
+                <?php if($dateStart):
+                    echo '<li><i class="fa fa-calendar" style="color: green;"></i> ' . date($dateFormat, $dateStart) .'</li>';         
+                endif ?>
+                <?php if($timeStart):
+                    echo '<li><i class="fa fa-clock-o" style="color: green;"></i> ' . date($timeFormat, $timeStart) .'</li>';         
+                endif ?>
+                <?php if($dateEnd):
+                    echo '<li><i class="fa fa-calendar" style="color: red;"></i> ' . date($dateFormat, $dateEnd) .'</li>';         
+                endif ?>
+                <?php if($timeEnd):
+                    echo '<li><i class="fa fa-clock-o" style="color: red;"></i> ' . date($timeFormat, $timeEnd) .'</li>';         
+                endif ?>
+                <?php if($available):
+                    echo '<li><i class="fa fa-users" style="color: purple;"></i> ' . $available .'</li>';         
+                endif ?>
+                <?php if($price):
+                    echo '<li><i class="fa fa-usd" style="color: gray;"></i> ' . $price .'</li>';         
+                endif ?>
+            </ul>
         </aside>
     </article>
     <?php wp_reset_postdata(); ?>

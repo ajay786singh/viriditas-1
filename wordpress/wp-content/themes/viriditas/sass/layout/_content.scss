@@ -4,9 +4,19 @@ section[role=main] {
 
 article {
     @include outer-container;
-    @include pad(0 2em 0 2em);
+    @include pad(0 2em 2em 2em);
     aside {
+        ul {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            li {
+                margin: 0 0 .5em 0em;
+            }
+        }
+        @include pad(2em 0 0 0);
         @include media($bp-large) {
+            @include pad(6.5em 0 0 0);
             @include span-columns(4);
             @include shift(1);
         }
