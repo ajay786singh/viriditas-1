@@ -105,8 +105,7 @@ get_header(); ?>
         <?php if($imageUrl): ?>
             <div class="thumb">
                 <div style="background-image:url(<?php echo $imageUrl[0]; ?>); background-size:cover; min-height:250px;">
-        </div>
-                
+                </div>    
             </div>
         <?php endif ?>
         <div class="description">
@@ -129,29 +128,30 @@ get_header(); ?>
         );
         $query3 = new WP_Query( $args3 );
     ?>
-
-    <?php while ( $query3->have_posts() ) : $query3->the_post(); ?>
-
-    <?php
-        // Get custom meta values
-        $imageID        = get_post_meta($post->ID, '_course_details_image', true);
-        $imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
-        $description    = get_post_meta($post->ID, '_course_details_description', true);
-    ?>
-        
     <article>
         <hr>
         <h3>Past Courses</h3>
-        <div class="description">
-            <h4><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h4> 
-            <?php if($description):
-                echo '<p>' . $description .'</p>';         
-            endif ?>                
-        </div>
+            <?php while ( $query3->have_posts() ) : $query3->the_post(); ?>
+            <?php // Get custom meta values
+                $imageID        = get_post_meta($post->ID, '_course_details_image', true);
+                $imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
+                $description    = get_post_meta($post->ID, '_course_details_description', true);
+            ?>
+            <?php if($imageUrl): ?>
+                <div class="thumb">
+                    <div style="background-image:url(<?php echo $imageUrl[0]; ?>); background-size:cover; min-height:250px;">
+                    </div>   
+                    <h4><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h4> 
+                    <?php if($description):
+                        echo '<p>' . $description .'</p>';         
+                    endif ?>                 
+                </div>
+            <?php endif ?>
+    
+        <?php wp_reset_postdata(); ?>
+        <?php endwhile; ?>
     </article>
-    <?php wp_reset_postdata(); ?>
-    <?php endwhile; ?>
-  
+
 </section>
 
 <?php //pagination(); ?>
