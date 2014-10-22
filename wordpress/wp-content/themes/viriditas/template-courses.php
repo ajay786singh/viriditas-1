@@ -4,7 +4,7 @@ Template Name: Course Homepage
 */
 get_header(); ?>
 
-<section role="main" class="course">
+<section role="main">
 
     <?php
         $args1 =  array(
@@ -143,8 +143,10 @@ get_header(); ?>
                     </div>   
                     <h4><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h4> 
                     <?php if($description):
-                        echo '<p>' . $description .'</p>';         
-                    endif ?>                 
+                        echo '<p>' . wp_trim_words($description, 25, '...') . '<a href="'. get_permalink() . '"/>' . 'Learn More</a>' . '</p>';         
+                    endif ?> 
+
+                                    
                 </div>
             <?php endif ?>
     

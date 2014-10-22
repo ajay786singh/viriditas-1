@@ -16,7 +16,7 @@ require_once('includes/functions/first-image.php');
 require_once('includes/functions/image-support.php');
 require_once('includes/functions/page-excerpts.php');
 require_once('includes/functions/pagination.php');
-require_once('includes/functions/reading-time.php');
+//require_once('includes/functions/reading-time.php');
 require_once('includes/functions/recent-post.php');
 require_once('includes/functions/register-menu.php');
 //require_once('includes/functions/remove-header-meta.php');
