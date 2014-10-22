@@ -11,7 +11,7 @@
         // Get custom meta values
         $imageID        = get_post_meta($post->ID, '_course_details_image', true);
         $imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
-        $description    = get_post_meta($post->ID, '_course_details_description', true);
+        $description    = wpautop(get_post_meta($post->ID, '_course_details_description', true));
         $price          = get_post_meta($post->ID, '_course_details_price', true);
         $instructor     = get_post_meta($post->ID, '_course_details_instructor', true);
         $deadline       = get_post_meta($post->ID, '_course_details_deadline', true);
@@ -32,7 +32,7 @@
         <div class="description">
             <h4><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h4> 
             <?php if($description):
-                echo '<p>' . $description .'</p>';         
+                echo $description;         
             endif ?>
             <button>Register Now</button>                  
         </div>

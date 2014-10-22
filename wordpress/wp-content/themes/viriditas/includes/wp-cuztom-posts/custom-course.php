@@ -28,7 +28,7 @@ $course->add_meta_box(
         array(
             'name'          => 'price',
             'label'         => 'Price',
-            'description'   => 'Example: $899.00',
+            'description'   => 'Example: 899.00',
             'type'          => 'text',
         ),
         array(

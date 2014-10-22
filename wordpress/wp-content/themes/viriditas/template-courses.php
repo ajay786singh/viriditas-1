@@ -22,7 +22,7 @@ get_header(); ?>
         // Get custom meta values
         $imageID        = get_post_meta($post->ID, '_course_details_image', true);
         $imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
-        $description    = get_post_meta($post->ID, '_course_details_description', true);
+        $description    = wpautop(get_post_meta($post->ID, '_course_details_description', true));
         $price          = get_post_meta($post->ID, '_course_details_price', true);
         $instructor     = get_post_meta($post->ID, '_course_details_instructor', true);
         $deadline       = get_post_meta($post->ID, '_course_details_deadline', true);
@@ -96,7 +96,7 @@ get_header(); ?>
         // Get custom meta values
         $imageID        = get_post_meta($post->ID, '_course_details_image', true);
         $imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
-        $description    = get_post_meta($post->ID, '_course_details_description', true);
+        $description    = wpautop(get_post_meta($post->ID, '_course_details_description', true));
     ?>
         
     <article>
@@ -135,7 +135,7 @@ get_header(); ?>
             <?php // Get custom meta values
                 $imageID        = get_post_meta($post->ID, '_course_details_image', true);
                 $imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
-                $description    = get_post_meta($post->ID, '_course_details_description', true);
+                $description    = wpautop(get_post_meta($post->ID, '_course_details_description', true));
             ?>
             <?php if($imageUrl): ?>
                 <div class="thumb">
