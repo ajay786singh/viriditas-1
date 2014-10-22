@@ -100,13 +100,19 @@ get_header(); ?>
     ?>
         
     <article>
-        <aside>
-            asdf
-        </aside>
+        <hr>
+        <h3>Upcoming Course</h3>
+        <?php if($imageUrl): ?>
+            <div class="thumb">
+                <div style="background-image:url(<?php echo $imageUrl[0]; ?>); background-size:cover; min-height:250px;">
+        </div>
+                
+            </div>
+        <?php endif ?>
         <div class="description">
             <h4><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h4> 
             <?php if($description):
-                echo '<p>' . $description .'</p>';         
+                echo '<p>' . $description .'</p>';       
             endif ?>                
         </div>
     </article>
@@ -134,6 +140,8 @@ get_header(); ?>
     ?>
         
     <article>
+        <hr>
+        <h3>Past Courses</h3>
         <div class="description">
             <h4><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h4> 
             <?php if($description):

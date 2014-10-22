@@ -26,6 +26,12 @@ article {
             @include span-columns(7);
         }
     }
+    .thumb {
+        @include media($bp-large) {
+            @include pad(3em 0 0 0);
+            @include span-columns(4);
+        }
+    }
 }
 
 .inner {

@@ -953,6 +953,18 @@ article aside ul li {
     margin-right: 0;
   }
 }
+@media screen and (min-width: 50em) {
+  article .thumb {
+    padding: 3em 0 0 0;
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 31.76157%;
+  }
+  article .thumb:last-child {
+    margin-right: 0;
+  }
+}
 
 .inner {
   padding: 2em;
