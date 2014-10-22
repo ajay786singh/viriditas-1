@@ -98,5 +98,7 @@ jQuery(window).focus(backgroundResize);
 backgroundResize();
 
 </script>
+
+<?php wp_footer(); ?>
 </body>
 </html>
