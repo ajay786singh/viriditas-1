@@ -6,7 +6,7 @@
 
 <?php 
         // Date/Time Format
-        $dateFormat     = 'F m, Y';
+        $dateFormat     = 'F j Y';
         $timeFormat     =  'g:i a';
         // Get custom meta values
         $imageID        = get_post_meta($post->ID, '_course_details_image', true);
