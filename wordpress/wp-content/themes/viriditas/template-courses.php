@@ -44,7 +44,7 @@ get_header(); ?>
             <?php if($description):
                 echo '<p>' . $description .'</p>';         
             endif ?>
-            <button>Register Now</button>                  
+            <a href="<?php bloginfo('url');?>/course-registration"><button>Register Now</button></a>                   
         </div>
 
         <aside>

@@ -34,7 +34,7 @@
             <?php if($description):
                 echo $description;         
             endif ?>
-            <button>Register Now</button>                  
+            <a href="<?php bloginfo('url');?>/course-registration"><button>Register Now</button></a>               
         </div>
 
         <aside>
