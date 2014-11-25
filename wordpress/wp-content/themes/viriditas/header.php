@@ -37,16 +37,40 @@
     </script>
 
 </head>
-<body>
+<body <?php body_class();?>>
+<?php global $woocommerce; ?> 
 
-<section role="banner">
-    <header>
-        <div class="logo">
-            <a href="#"><img src="http://placehold.it/350x100&text=Viriditas" alt=""></a>
-        </div>
-           <nav>
-               <?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
+<!-- Pushy Menu -->
+<nav id="menu" class="menu-panel" role="navigation">
+    <?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>      
+</nav>
 
-        </nav>
-    </header>
-</section>
+<!-- Site Overlay for Pushy offcanvas to work -->
+<div class="site-overlay"></div>
+<!-- Header Starts Here -->
+<header class="wrap push">
+	<div class="container">
+		<div class="span-3 logo">
+			<a href="<?php bloginfo('url');?>"><img src="http://placehold.it/350x100&text=Viriditas" alt=""></a>
+		</div>
+		<div class="span-8">								            
+			<nav class="main-menu-desktop">
+				<div class="menu-main-menu-container">
+					<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
+				</div>	
+			</nav>
+		</div>
+		<div class="cart-button">
+			<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>">
+				<span class="icon-cart"></span>
+				<span class="icon-count"><?php echo sprintf(_n('%d', '%d', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?></span>
+			</a>
+		</div>
+		<div class="menu-btn">
+			<a id="nav-toggle" href="#menu"><span></span></a>
+		</div>
+	</div>
+</header>
+<!-- Header Ends Here -->
+<!-- Wrapper Starts Here -->
+<div class="wrapper push">

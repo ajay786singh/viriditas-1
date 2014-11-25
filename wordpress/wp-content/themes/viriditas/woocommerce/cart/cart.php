@@ -9,6 +9,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+global $woocommerce;
+
 wc_print_notices();
 
 do_action( 'woocommerce_before_cart' ); ?>
@@ -53,7 +55,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 							if ( ! $_product->is_visible() )
 								echo $thumbnail;
 							else
-								printf( '<a href="%s">%s</a>', $_product->get_permalink(), $thumbnail );
+								printf( '<a href="%s">%s</a>', '', $thumbnail );
 						?>
 					</td>
 
@@ -62,7 +64,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 							if ( ! $_product->is_visible() )
 								echo apply_filters( 'woocommerce_cart_item_name', $_product->get_title(), $cart_item, $cart_item_key );
 							else
-								echo apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', $_product->get_permalink(), $_product->get_title() ), $cart_item, $cart_item_key );
+								echo apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', '', $_product->get_title() ), $cart_item, $cart_item_key );
 
 							// Meta data
 							echo WC()->cart->get_item_data( $cart_item );
@@ -88,7 +90,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 									'input_name'  => "cart[{$cart_item_key}][qty]",
 									'input_value' => $cart_item['quantity'],
 									'max_value'   => $_product->backorders_allowed() ? '' : $_product->get_stock_quantity(),
-									'min_value'   => '0'
 								), $_product, false );
 							}
 
@@ -110,32 +111,28 @@ do_action( 'woocommerce_before_cart' ); ?>
 		?>
 		<tr>
 			<td colspan="6" class="actions">
+					<?php if ( WC()->cart->coupons_enabled() ) { ?>
+						<div class="coupon">
 
-				<?php if ( WC()->cart->coupons_enabled() ) { ?>
-					<div class="coupon">
+							<label for="coupon_code"><?php _e( 'Coupon', 'woocommerce' ); ?>:</label> <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php _e( 'Coupon code', 'woocommerce' ); ?>" /> <input type="submit" class="button" name="apply_coupon" value="<?php _e( 'Apply', 'woocommerce' ); ?>" />
 
-						<label for="coupon_code"><?php _e( 'Coupon', 'woocommerce' ); ?>:</label> <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php _e( 'Coupon code', 'woocommerce' ); ?>" /> <input type="submit" class="button" name="apply_coupon" value="<?php _e( 'Apply Coupon', 'woocommerce' ); ?>" />
+							<?php do_action('woocommerce_cart_coupon'); ?>
 
-						<?php do_action('woocommerce_cart_coupon'); ?>
-
-					</div>
-				<?php } ?>
-
-				<input type="submit" class="button" name="update_cart" value="<?php _e( 'Update Cart', 'woocommerce' ); ?>" /> <input type="submit" class="checkout-button button alt wc-forward" name="proceed" value="<?php _e( 'Proceed to Checkout', 'woocommerce' ); ?>" />
-
-				<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
+						</div>
+					<?php } ?>
+					<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
+					<input type="submit" class="button" name="update_cart" value="<?php _e( 'Update Cart', 'woocommerce' ); ?>" /> 
+				
 
 				<?php wp_nonce_field( 'woocommerce-cart' ); ?>
 			</td>
 		</tr>
 
-		<?php do_action( 'woocommerce_after_cart_contents' ); ?>
+		<?php  do_action( 'woocommerce_after_cart_contents' ); ?>
 	</tbody>
 </table>
 
 <?php do_action( 'woocommerce_after_cart_table' ); ?>
-
-</form>
 
 <div class="cart-collaterals">
 
@@ -147,4 +144,10 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 </div>
 
-<?php do_action( 'woocommerce_after_cart' ); ?>
+<table width="100%" >
+	<tr>
+		<td align="right"><br><input type="submit" class="checkout-button button alt wc-forward" name="proceed" value="<?php _e( 'Proceed to Checkout', 'woocommerce' ); ?>" /></td>	
+	</tr>	
+</table>
+	<?php do_action( 'woocommerce_after_cart' ); ?>
+</form>

@@ -619,7 +619,7 @@ abstract class GFPaymentAddOn extends GFFeedAddOn {
         }
 
         if ($trial_field == "enter_amount"){
-			$trial_amount = rgar($feed["meta"], "trial_amount") ? rgar($feed["meta"], "trial_amount") : 0;
+			$trial_amount = rgar($feed["meta"], "trial_amount") ? GFCommon::to_number(rgar($feed["meta"], "trial_amount")) : 0;
         }
 
         if(!empty($products["shipping"]["name"]) && !is_numeric($payment_field)){

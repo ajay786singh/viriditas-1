@@ -4,12 +4,10 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.2.6
+ * @version     2.1.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 ?>
 
 <?php wc_print_notices(); ?>
@@ -32,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<p class="form-row form-row-wide">
 				<label for="username"><?php _e( 'Username or email address', 'woocommerce' ); ?> <span class="required">*</span></label>
-				<input type="text" class="input-text" name="username" id="username" value="<?php if ( ! empty( $_POST['username'] ) ) echo esc_attr( $_POST['username'] ); ?>" />
+				<input type="text" class="input-text" name="username" id="username" />
 			</p>
 			<p class="form-row form-row-wide">
 				<label for="password"><?php _e( 'Password', 'woocommerce' ); ?> <span class="required">*</span></label>
@@ -86,19 +84,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 				<p class="form-row form-row-wide">
 					<label for="reg_password"><?php _e( 'Password', 'woocommerce' ); ?> <span class="required">*</span></label>
-					<input type="password" class="input-text" name="password" id="reg_password" />
+					<input type="password" class="input-text" name="password" id="reg_password" value="<?php if ( ! empty( $_POST['password'] ) ) echo esc_attr( $_POST['password'] ); ?>" />
 				</p>
 
 			<?php endif; ?>
 
 			<!-- Spam Trap -->
-			<div style="<?php echo ( ( is_rtl() ) ? 'right' : 'left' ); ?>: -999em; position: absolute;"><label for="trap"><?php _e( 'Anti-spam', 'woocommerce' ); ?></label><input type="text" name="email_2" id="trap" tabindex="-1" /></div>
+			<div style="left:-999em; position:absolute;"><label for="trap"><?php _e( 'Anti-spam', 'woocommerce' ); ?></label><input type="text" name="email_2" id="trap" tabindex="-1" /></div>
 
 			<?php do_action( 'woocommerce_register_form' ); ?>
 			<?php do_action( 'register_form' ); ?>
 
 			<p class="form-row">
-				<?php wp_nonce_field( 'woocommerce-register' ); ?>
+				<?php wp_nonce_field( 'woocommerce-register', 'register' ); ?>
 				<input type="submit" class="button" name="register" value="<?php _e( 'Register', 'woocommerce' ); ?>" />
 			</p>
 
@@ -112,3 +110,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php endif; ?>
 
 <?php do_action( 'woocommerce_after_customer_login_form' ); ?>
+<p class="return-to-shop"><a class="button wc-backward" href="<?php bloginfo('url');?>/products/">Let's go shopping!</a></p>

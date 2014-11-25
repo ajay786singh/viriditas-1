@@ -9,13 +9,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $post;
+global $woocommerce, $post;
 
 $heading = esc_html( apply_filters( 'woocommerce_product_description_heading', __( 'Product Description', 'woocommerce' ) ) );
 ?>
 
-<?php if ( $heading ): ?>
-  <h2><?php echo $heading; ?></h2>
-<?php endif; ?>
+<h2><?php echo $heading; ?></h2>
 
 <?php the_content(); ?>

@@ -1,5 +1,7 @@
+</div>
+<!-- Wrapper Ends Here -->
     <footer>
-    <div class="footer-inner">
+    <div class="container">
         <div class="content">
             <h5>Get important updates</h5>
             <p>We try and minimize our email time as much as you. Rest assured we'll only send you essential news: new products, office hour changes, class announcements, etc.</p>
@@ -31,7 +33,7 @@
             
         </div>  
     </div>
-    <div class="footer-inner">
+    <div class="container">
         <p class="small">&copy; 2014 Viriditas Inc. All Rights Reserved.</p>
     </div>
 </footer>

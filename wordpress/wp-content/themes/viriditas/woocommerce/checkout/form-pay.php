@@ -8,6 +8,8 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+global $woocommerce;
 ?>
 <form id="order_review" method="post">
 
@@ -19,6 +21,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<th class="product-total"><?php _e( 'Totals', 'woocommerce' ); ?></th>
 			</tr>
 		</thead>
+		<tfoot>
+		<?php
+			if ( $totals = $order->get_order_item_totals() ) foreach ( $totals as $total ) :
+				?>
+				<tr>
+					<th scope="row" colspan="2"><?php echo $total['label']; ?></th>
+					<td class="product-total"><?php echo $total['value']; ?></td>
+				</tr>
+				<?php
+			endforeach;
+		?>
+		</tfoot>
 		<tbody>
 			<?php
 			if ( sizeof( $order->get_items() ) > 0 ) :
@@ -33,23 +47,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			endif;
 			?>
 		</tbody>
-		<tfoot>
-		<?php
-			if ( $totals = $order->get_order_item_totals() ) foreach ( $totals as $total ) :
-				?>
-				<tr>
-					<th scope="row" colspan="2"><?php echo $total['label']; ?></th>
-					<td class="product-total"><?php echo $total['value']; ?></td>
-				</tr>
-				<?php
-			endforeach;
-		?>
-		</tfoot>
 	</table>
 
 	<div id="payment">
 		<?php if ( $order->needs_payment() ) : ?>
 		<h3><?php _e( 'Payment', 'woocommerce' ); ?></h3>
+		
 		<ul class="payment_methods methods">
 			<?php
 				if ( $available_gateways = WC()->payment_gateways->get_available_payment_gateways() ) {
