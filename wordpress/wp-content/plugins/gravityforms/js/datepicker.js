@@ -36,8 +36,8 @@ function gformInitDatepicker(){
                 dateFormat:      format,
                 changeMonth:     true,
                 changeYear:      true,
-                onSelect: function (){
-                    element.change().focus();
+                onClose: function () {
+                    element.closest('li').nextAll('li:visible:first').find(':input:first').focus();
                 }
             } );
         }
