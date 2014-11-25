@@ -59,9 +59,10 @@ html, body {
     display: table-cell;
     position: relative;
     text-align: center;
+    padding-bottom: 20%;
     vertical-align: middle;
     @include media($bp-large) {
-        padding: 0 25% 0 25%;
+        padding: 0 25% 15% 25%;
     }
 
     h1 {

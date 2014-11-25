@@ -7,15 +7,18 @@
 // Typography
 @import "base/typography";
 
+// Vendor
+@import "vendor/animate";
+
 // Layout
+@import "layout/grid";
 @import "layout/header";
-@import "layout/nav";
+@import "layout/menu";
 @import "layout/content";
 @import "layout/footer";
 @import "layout/hero";
+@import "layout/product-gallery";
 @import "layout/social-share";
 @import "layout/copyright";
 @import "layout/arrow";
-
-// Vendor
-@import "vendor/animate";
+@import "layout/woocommerce";

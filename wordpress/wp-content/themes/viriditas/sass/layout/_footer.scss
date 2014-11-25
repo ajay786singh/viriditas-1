@@ -1,9 +1,9 @@
 footer {
     background: $dark-gray;
     color: $white;
-    .footer-inner {
-        @include outer-container;
-        padding: 0 2em 0 2em;
+    .container {
+        //@include outer-container;
+        //padding: 0 2em 0 2em;
         .content {
             @include span-columns(5);
             @include media($bp-large) {

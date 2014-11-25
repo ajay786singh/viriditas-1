@@ -1,18 +1,25 @@
-section[role=banner] {
+header {
     background-color: $white;
     position: fixed;
     width: 100%;
-    z-index: 999;
-    header {
+    z-index: 9999;
+    height: 75px;
+    @include media($bp-large) {
         height: 90px;
-        .logo {
-            float: left;
-            height: auto;
-            max-width: 175px;
-            padding: .8em 0 0 2em;
-            @include media($bp-large) {
-                max-width: 250px;
-            }
+    }
+
+    border-bottom: 1px solid $medium-gray;
+    .logo {
+        float: left;
+        height: auto;
+        max-width: 175px;
+        padding: .8em 0 0 0em;
+        @include media($bp-large) {
+            max-width: 225px;
+        }
+
+        a {
+            display: block;
         }
     }
 }

@@ -7,9 +7,9 @@
  * @version     2.1
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+global $woocommerce;
 ?>
 <form id="add_payment_method" method="post">
 	<div id="payment">
