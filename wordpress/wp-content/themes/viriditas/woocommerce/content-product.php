@@ -38,9 +38,17 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 <li <?php post_class( $classes ); ?>>
 
 	<?php //do_action( 'woocommerce_before_shop_loop_item' ); ?>
-    <div class="product-img">
-		<a href="<?php the_permalink();?>"><?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?></a>
-    </div>
+    <?php	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'product-thumb' );
+			$img = $thumb['0']; 
+			if($img == '') {
+				$img="http://placehold.it/350x550&text=Viriditas";
+			}
+	?>
+	<a class="product-image" href="<?php the_permalink();?>">
+		<div class="product-img" style="background-image:url(<?php echo $img;?>);">
+			<img src="<?php echo $img;?>" />		
+		</div>
+	</a>
     <div class="product-title">    
         <div class="title">
             <a href="<?php the_permalink();?>"><?php the_title(); ?></a>

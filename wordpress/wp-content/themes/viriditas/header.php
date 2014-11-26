@@ -24,7 +24,9 @@
     <?php wp_head(); ?>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-    
+	<script type="text/javascript">
+		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+	</script>
 
     <script>
         (function(d) {

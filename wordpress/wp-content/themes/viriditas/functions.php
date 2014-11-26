@@ -18,6 +18,7 @@ require_once('includes/functions/register-menu.php');
 require_once('includes/functions/remove-menu-id.php');
 require_once('includes/functions/add-woocommerce-support.php');
 require_once('includes/functions/add-cart-link-header.php');
+require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/get-term-top-level-parent.php');
 
 //Load shortcodes
