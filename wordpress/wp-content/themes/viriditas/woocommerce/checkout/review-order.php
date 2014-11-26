@@ -148,9 +148,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 					}
 
 					foreach ( $available_gateways as $gateway ) {
-						if($gateway->title=='Credit card (Stripe)') {
-							//echo '<div class="card-wrapper"></div>';
-						}
 						?>
 						<li class="payment_method_<?php echo $gateway->id; ?>">
 							<input id="payment_method_<?php echo $gateway->id; ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />

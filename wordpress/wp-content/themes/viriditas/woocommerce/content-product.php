@@ -34,55 +34,20 @@ if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 
 	$classes[] = 'first';
 if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 	$classes[] = 'last';
-	
-$height_unit = '"';//get_option('woocommerce_dimension_unit');	
 ?>
-<li class="block-grid-4">
+<li <?php post_class( $classes ); ?>>
 
 	<?php //do_action( 'woocommerce_before_shop_loop_item' ); ?>
-	
-	<?php	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'product-thumb' );
-			$img = $thumb['0']; 
-			if($img == '') {
-				$img="http://placehold.it/350x550&text=Viriditas";
-			}
-	?>
-	<a href="<?php the_permalink(); ?>">
-		<div class="product-img" style="background-image:url(<?php echo $img;?>);">
-			<img src="<?php echo $img;?>" />		
-		</div>
-	</a>
-	<div class="product-details">
-		<h6 class="product-title"><?php the_title(); ?></h6>
-		<?php if ( $price_html = $product->get_price_html() ) : ?>
-			<?php echo "<span class='amount'>$".$price."</span>"; ?>
-		<?php else: ?>
-			<span class="amount">$0</span>
-		<?php endif; ?>
-	</div>	
+    <div class="product-img">
+		<a href="<?php the_permalink();?>"><?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?></a>
+    </div>
+    <div class="product-title">    
+        <div class="title">
+            <a href="<?php the_permalink();?>"><?php the_title(); ?></a>
+        </div>
+        <div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
+    </div>
     <div class="product-action">
-        <?php
-			$_product_height=get_post_meta($product->id,'_product_height',true);
-			$_product_stem=get_post_meta($product->id,'_product_stem',true);
-			$_product_price=get_post_meta($product->id,'_regular_price',true);
-		?>
-		
-				<?php 
-					if($_product_price) {
-				?>
-				<?php //do_action( 'woocommerce_after_shop_loop_item' ); ?>
-					<a href="<?php bloginfo('url');?>?add-to-cart=<?php the_ID();?>" rel="nofollow" data-product_id="<?php the_ID();?>" data-product_sku="<?php echo $_product_stem;?>" class="add_to_cart_button product_type_simple">
-						Pick Me!
-					</a>
-				<?php
-					}else {
-				?>
-					<a href="javascript:void(0);" rel="nofollow"  class="add_to_cart_button product_type_simple">
-						Pick Me!
-					</a>
-				<?php
-					}
-				?>
-				
+        <?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
     </div>
 </li>
