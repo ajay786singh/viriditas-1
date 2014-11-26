@@ -74,16 +74,7 @@ if ( $products->have_posts() ) : ?>
                             <div class="title">
                                 <a href="<?php the_permalink();?>"><?php the_title(); ?></a>
                             </div>
-                            <div class="price">
-								<?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?>
-								<?php
-									$_product_height=get_post_meta($product->id,'_height',true);
-									$_product_stem=get_post_meta($product->id,'_sku',true);
-
-										if($_product_height) echo '<span>Height: '.$_product_height.'"</span><br>';
-										if($_product_stem) echo '<span>Stems: '.$_product_stem.'</span>';
-								?>
-							</div>
+                            <div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
                     </div>
                     <div class="product-action">
                             <?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
