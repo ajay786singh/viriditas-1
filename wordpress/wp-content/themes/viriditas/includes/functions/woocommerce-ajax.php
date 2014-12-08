@@ -4,16 +4,23 @@
 	function load_products () {
 		global $wp_query;
 		$cat_id=$_POST['filter_type_category'];
+		
+		$paged = $_POST['paged'];
+		//$offset = (intval($_POST['offset']) != 0 ) ? $_POST['offset'] : 0;
+
 		$args=array(
 			'post_type' =>'product',
-			'posts_per_page' => 12,
-			'order' => 'DESC'
+			//'posts_per_page' => 12,
+			'order' => 'DESC',
+			'paged'=>$paged
 		);
 		if($cat_id !='') {
 			$taxonomy_cat='product_cat';
 			$term = get_term_by( 'id', $cat_id, $taxonomy_cat );
 			//print_r($term);
 			$args[$taxonomy_cat]= $term->slug;
+		}else {
+			$args[$taxonomy_cat]= 'single-herb-tincture';
 		}
 		ob_start ();
 		$query=new WP_Query($args);

@@ -8,6 +8,19 @@
         vertical-align: middle;
         white-space: nowrap;
     }
+    .loader {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        width: 100%;
+        text-align: center;
+        top: 40%;
+        .fa {
+            font-size: 3em;
+            &:before {
+                content: "\f110";
+            }
+        }
+    }
     .sidebar {
         h6 {
             font-size: 1.2em;
@@ -27,19 +40,21 @@
     }
 }
 
-.cart-contents {
-    display: inline-block;
-    padding-right: 20px;
-    .icon-cart {
-        background: url(images/icon-cart.png) no-repeat 0 0;
-        display: inline-block;
-        height: 18px;
-        margin-left: 5px;
-        margin-top: 5px;
-        width: 25px;
+.login-button {
+    a {
+        color: $blue;
+        &:hover {
+            color: $medium-gray;
+        }
     }
-    &:hover .icon-cart {
-        background-position: 0 -19px;
+}
+
+.cart-contents {
+    padding-right: 20px;
+    .icon-shopping-cart {
+        &:before {
+            content: "\f07a";
+        }
     }
 }
 

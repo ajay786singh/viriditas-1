@@ -202,3 +202,19 @@ $susy: (columns: 6, gutters: 1, gutter-position: inside);
         margin-right: 0;
     }
 }
+
+.login-button {
+    @include media($bp-large) {
+        //margin-right: 10%;
+        text-align: right;
+        margin-top: 2em;
+        width: 18.70196%;
+        margin-right: 0;
+    }
+
+    @media (min-width: 675px) and (max-width: 879px) {
+        margin-right: 15%;
+        text-align: right;
+        width: 50%;
+    }
+}

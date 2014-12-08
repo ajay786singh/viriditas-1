@@ -3,7 +3,7 @@
 		<h6 class="heading">Filter By Category</h6>
 	</div>
 	<?php 
-		$product_categories = get_terms('product_cat', 'orderby=count&hide_empty=0&hierarchical=0');
+		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0');
 		//print_r($product_categories);
 		if($product_categories) {
 	?>

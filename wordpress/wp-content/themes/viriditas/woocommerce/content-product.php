@@ -49,13 +49,15 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			<img src="<?php echo $img;?>" />		
 		</div>
 	</a>
-    <div class="product-title">    
-        <div class="title">
-            <a href="<?php the_permalink();?>"><?php the_title(); ?></a>
-        </div>
-        <div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
-    </div>
-    <div class="product-action">
-        <?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
-    </div>
+	<div class="product-meta">
+		<div class="product-title">    
+			<div class="title">
+				<a href="<?php the_permalink();?>"><?php the_title(); ?></a>
+			</div>
+			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
+		</div>
+		<div class="product-action">
+			<?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
+		</div>
+	</div>
 </li>

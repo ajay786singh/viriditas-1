@@ -28,9 +28,13 @@ get_header( 'shop' );
 				</div>
 				</div></div>
 				<!-- Include Products -->
+				
 				<div class="product-container">
 					<ul class="product-list equal-height-1">
 					</ul>
+					<div class="loader">
+						<button class="btn btn-default" type="button">Loading please wait...</button>
+					</div>
 				</div>
 			</div>
 		</div>
