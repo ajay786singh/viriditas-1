@@ -23,6 +23,10 @@
 
             a {
                 color: $blue;
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: 1em;
+                margin-left: 0;
                 &:hover {
                     color: $medium-gray;
                 }

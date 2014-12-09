@@ -3,7 +3,7 @@ header {
     position: fixed;
     width: 100%;
     z-index: 9999;
-    height: 75px;
+    height: 105px;
     @include media($bp-large) {
         height: 90px;
     }

@@ -4,7 +4,7 @@
   "dependencies": {
     	"jquery": "latest",
     	"normalize-scss": "latest",
-	"bourbon": "latest",
-	"neat": "latest"
+		"bourbon": "latest",
+		"neat": "latest"
   	}
 }
