@@ -13,6 +13,7 @@ var paged = 1;
 //var offset = 0;
 
 function displayRecords(paged) {
+	//alert(1);
 	var category=$('.by-category').val(); 
 	var body_system=$('.by-body_system').val(); 
 	var filter_action=$('.by-action').val(); 
@@ -41,7 +42,7 @@ function displayRecords(paged) {
 }
 
 jQuery(document).ready(function($){
-	
+	$('.filter').selecter();
 	// start to load the first set of data
 		if (busy == false) {
 		  busy = true;
@@ -63,11 +64,12 @@ jQuery(document).ready(function($){
           }
         });
 	
-	
-	$('.filter').change(function(){
+	//$(".filter").unbind('change');
+	$('.filter').unbind('change').change(function(e){
+		e.preventDefault();
 		paged=1;
 		$('.product-list').empty();
 		displayRecords(paged);
-		return false;
+		//return false;
 	});
 });
