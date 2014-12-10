@@ -39,10 +39,10 @@
 						'terms' => array($value),
 						'field' => 'slug',
 						)
-					);	
+				);	
 				
 			}
-		} elseif(count($filter_terms) > 1){
+		}else if(count($filter_terms) > 1){
 			$tax_query="";
 			$tax_query['relation'] = 'AND';
 			foreach ($filter_terms as $key => $value) {
