@@ -10,6 +10,7 @@
     overflow: hidden;
     padding-left: 0px;
     position: relative;
+    padding-bottom: 60px;
     li {
         @include row;
         @include omega;

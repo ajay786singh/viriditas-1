@@ -4398,6 +4398,7 @@ html, body {
   overflow: hidden;
   padding-left: 0px;
   position: relative;
+  padding-bottom: 60px;
 }
 .product-list li {
   display: block;
@@ -4638,6 +4639,7 @@ section[role=contentinfo] .inner .copyright p {
   width: 100%;
   text-align: center;
   top: 40%;
+  left: 0;
 }
 .woocommerce .loader .fa {
   font-size: 3em;
@@ -4649,15 +4651,6 @@ section[role=contentinfo] .inner .copyright p {
   font-size: 1.2em;
   text-transform: uppercase;
   line-height: 1.5em;
-}
-.woocommerce .filter {
-  list-style: none;
-  padding-left: 0;
-}
-.woocommerce .filter li {
-  margin-left: 0;
-  font-size: 0.8em;
-  border-bottom: 1px solid lightgrey;
 }
 
 .login-button a {
@@ -4681,6 +4674,18 @@ section[role=contentinfo] .inner .copyright p {
 
 .breadcrumb {
   margin-top: 0.5em;
+}
+
+.filter {
+  padding-left: 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.75em;
+  width: 100%;
+  font-family: "adelle-sans", sans-serif;
+  font-size: 1.2em;
+}
+.filter:nth-of-type(1) {
+  margin-top: 2em;
 }
 
 /*# sourceMappingURL=style.css.map */

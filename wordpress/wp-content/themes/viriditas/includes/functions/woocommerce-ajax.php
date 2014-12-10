@@ -4,23 +4,56 @@
 	function load_products () {
 		global $wp_query;
 		$cat_id=$_POST['filter_type_category'];
+		$body_system_id=$_POST['filter_type_body_system'];
+		$action_id=$_POST['filter_type_action'];
 		
 		$paged = $_POST['paged'];
-		//$offset = (intval($_POST['offset']) != 0 ) ? $_POST['offset'] : 0;
-
+		
 		$args=array(
 			'post_type' =>'product',
-			//'posts_per_page' => 12,
 			'order' => 'DESC',
 			'paged'=>$paged
 		);
+		
+		$product_cat="";
 		if($cat_id !='') {
-			$taxonomy_cat='product_cat';
-			$term = get_term_by( 'id', $cat_id, $taxonomy_cat );
-			//print_r($term);
-			$args[$taxonomy_cat]= $term->slug;
-		}else {
-			$args[$taxonomy_cat]= 'single-herb-tincture';
+			$cterm = get_term_by( 'id', $cat_id, 'product_cat' );
+			$filter_terms['product_cat'] = $cterm->slug;	
+		}
+		$body_system="";
+		if($body_system_id !='') {
+			$body_system_term = get_term_by( 'id', $body_system_id, 'body_system' );
+			$filter_terms['body_system'] = $body_system_term->slug;	
+		}
+		$action="";
+		if($action_id !='') {
+			$action_term = get_term_by( 'id', $action_id, 'actions' );
+			$filter_terms['actions'] = $action_term->slug;	
+		}
+		
+		if(count($filter_terms)== 1) {
+			foreach ($filter_terms as $key => $value) {
+				$args['tax_query'] = array(
+						array(
+						'taxonomy' => $key,
+						'terms' => array($value),
+						'field' => 'slug',
+						)
+					);	
+				
+			}
+		} elseif(count($filter_terms) > 1){
+			$tax_query="";
+			$tax_query['relation'] = 'AND';
+			foreach ($filter_terms as $key => $value) {
+				$tax_query[] = array(
+								'taxonomy' => $key,
+								'terms' => array($value),
+								'field' => 'slug',
+							);
+				
+			}
+			$args['tax_query'] = $tax_query;
 		}
 		ob_start ();
 		$query=new WP_Query($args);
