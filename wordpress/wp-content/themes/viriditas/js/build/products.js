@@ -16,6 +16,7 @@ function displayRecords(paged) {
 	//alert(1);
 	var category=$('.by-category').val(); 
 	var body_system=$('.by-body_system').val(); 
+	//alert(body_system);
 	var filter_action=$('.by-action').val(); 
 	var $results = $('.product-list');	
 	var $loader=$('.loader');
@@ -42,7 +43,7 @@ function displayRecords(paged) {
 }
 
 jQuery(document).ready(function($){
-	$('.filter').selecter();
+	$('.filter select').selecter();
 	// start to load the first set of data
 		if (busy == false) {
 		  busy = true;
@@ -65,9 +66,29 @@ jQuery(document).ready(function($){
         });
 	
 	//$(".filter").unbind('change');
-	$('.filter').unbind('change').change(function(e){
+	$('.by-category').unbind('change').change(function(e){
 		e.preventDefault();
 		paged=1;
+		$('.by-body_system').val('');
+		$('.filter-body_system .selecter-options .selecter-item').each(function(){
+			$(this).removeClass('selected');
+		});
+		$('.filter-body_system .selecter-options .selecter-item:first-child').addClass('selected');
+		$('.filter-body_system .selecter-selected').html('Select Body System');
+		$('.filter-actions').hide();
+		$('.product-list').empty();
+		displayRecords(paged);
+		//return false;
+	});
+	$('.by-body_system').unbind('change').change(function(e){
+		e.preventDefault();
+		paged=1;
+		$('.filter-actions').show();
+		if($(this).val()==''){
+			$('.filter-actions').hide();
+		}else {
+			$('.filter-actions').show();
+		}
 		$('.product-list').empty();
 		displayRecords(paged);
 		//return false;
