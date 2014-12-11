@@ -8,29 +8,35 @@
 		$actions = get_terms('actions', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0');
 		if($product_categories) {
 	?>
-	<select class="filter by-category">
-		<?php 
-		foreach($product_categories as $product_category) {
-			echo "<option value='".$product_category->term_id."'>".$product_category->name."</option>";
-		} ?>
-	</select>
+	
+	<div class="filter filter-category">
+		<select class="by-category">
+			<?php 
+			foreach($product_categories as $product_category) {
+				echo "<option value='".$product_category->term_id."'>".$product_category->name."</option>";
+			} ?>
+		</select>
+	</div>
 	<?php } ?>
 	<?php if($body_systems) { ?>
-	<select class="filter by-body_system">
-			<option value="">Select Body System</option>
-		<?php 
-		foreach($body_systems as $body_system) {
-			echo "<option value='".$body_system->term_id."'>".$body_system->name."</option>";
-		} ?>
-	</select>
+	<div class="filter filter-body_system">
+		<select class="by-body_system">
+				<option value="">Select Body System</option>
+			<?php 
+			foreach($body_systems as $body_system) {
+				echo "<option value='".$body_system->term_id."'>".$body_system->name."</option>";
+			} ?>
+		</select>
+	</div>
 	<?php } ?>
 	<?php if($actions) { ?>
-	<select class="filter by-action">
-		<option value="">Select Action</option>
-		<?php 
-		foreach($actions as $action) {
-			echo "<option value='".$action->term_id."'>".$action->name."</option>";
-		} ?>
-	</select>
+	<div class="filter filter-actions">
+		<h6>Select Action</h6>
+			<?php 
+				foreach($actions as $action) {
+					echo "<label><input type='checkbox' name='actions[]' value='".$action->term_id."'>".$action->name."</label>";
+				} 
+			?>
+	</div>
 	<?php } ?>
 </div>
