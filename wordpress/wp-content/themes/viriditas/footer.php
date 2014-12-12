@@ -38,8 +38,9 @@
     </div>
 </footer>
 
-<script src="<?php bloginfo('template_url' ); ?>/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="<?php bloginfo('template_url' ); ?>/js/app.min.js"></script>
+<?php /*<script src="<?php bloginfo('template_url' ); ?>/bower_components/jquery/dist/jquery.min.js"></script> 
+<script src="<?php bloginfo('template_url' ); ?>/js/app.min.js"></script>*/?>
+<?php wp_footer(); ?>
 
 <script>
     
@@ -100,7 +101,5 @@ jQuery(window).focus(backgroundResize);
 backgroundResize();
 
 </script>
-
-<?php wp_footer(); ?>
 </body>
 </html>

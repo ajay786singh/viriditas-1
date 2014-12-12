@@ -27,8 +27,17 @@
 		}
 		$action="";
 		if($action_id !='') {
-			$action_term = get_term_by( 'id', $action_id, 'actions' );
-			$filter_terms['actions'] = $action_term->slug;	
+			if(count($action_id)==1) {
+				$action_term = get_term_by( 'id', $action_id[0], 'actions' );
+				$filter_terms['actions'] = $action_term->slug;
+			}else {
+				$actions_slug='';
+				for($i=0;$i<count($action_id);$i++) {
+					$action_term = get_term_by( 'id', $action_id[$i], 'actions' );
+					$actions_slug[] = $action_term->slug;
+				}
+				$filter_terms['actions'] = implode(",",$actions_slug);
+			}
 		}
 		
 		if(count($filter_terms)== 1) {
@@ -36,7 +45,7 @@
 				$args['tax_query'] = array(
 						array(
 						'taxonomy' => $key,
-						'terms' => array($value),
+						'terms' => explode(',',$value),
 						'field' => 'slug',
 						)
 				);	
@@ -47,11 +56,10 @@
 			$tax_query['relation'] = 'AND';
 			foreach ($filter_terms as $key => $value) {
 				$tax_query[] = array(
-								'taxonomy' => $key,
-								'terms' => array($value),
-								'field' => 'slug',
-							);
-				
+						'taxonomy' => $key,
+						'terms' => explode(',',$value),
+						'field' => 'slug',
+					);				
 			}
 			$args['tax_query'] = $tax_query;
 		}
@@ -71,4 +79,43 @@
 	}
 	add_action( 'wp_ajax_load_products', 'load_products' );
 	add_action( 'wp_ajax_nopriv_load_products', 'load_products' );
+function load_actions() {
+	global $wp_query;
+	
+	$cat_id=$_POST['category'];
+	$body_system_id=$_POST['body_system'];
+	$args=array(
+			'post_type' => 'product',
+			'numberposts' => -1,
+			'tax_query' => array(
+				'relation'=>'AND',
+				array(
+					'taxonomy' => 'product_cat',
+					'field' => 'term_id',
+					'terms' => $cat_id
+				),
+				array(
+					'taxonomy' => 'body_system',
+					'field' => 'term_id',
+					'terms' => $body_system_id
+				)
+			)
+		);
+	$objects_ids='';	
+	$objects = get_posts( $args );
+	foreach ($objects as $object) {
+		$objects_ids[] = $object->ID;
+	}
+	$actions = wp_get_object_terms( $objects_ids, 'actions' );
+	if($actions) {
+		$result='<h6>Select Action</h6>';	
+		foreach($actions as $action) {
+			$result.="<label><input type='checkbox' name='actions[]' class='by-action' value='".$action->term_id."'>".$action->name."</label>";
+		}
+	}
+	echo $result;
+	die();
+}
+add_action( 'wp_ajax_load_actions', 'load_actions' );
+add_action( 'wp_ajax_nopriv_load_actions', 'load_actions' );	
 ?>

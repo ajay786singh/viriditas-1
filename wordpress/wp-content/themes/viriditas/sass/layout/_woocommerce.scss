@@ -9,12 +9,19 @@
         white-space: nowrap;
     }
     .loader {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        width: 100%;
+        margin: 50px auto;
         text-align: center;
         top: 40%;
         left: 0;
+        @extend %button;
+        @include appearance(none);
+        border: none;
+        cursor: pointer;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+        display: block;
+        width: 200px;
         .fa {
             font-size: 3em;
             &:before {

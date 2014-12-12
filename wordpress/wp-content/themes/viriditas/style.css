@@ -424,7 +424,7 @@ footer {
   background: #222222;
 }
 
-button, .woocommerce .button {
+button, .woocommerce .button, .woocommerce .loader {
   -webkit-font-smoothing: antialiased;
   background-color: #5078C3;
   border-radius: 0.1875em;
@@ -436,11 +436,11 @@ button, .woocommerce .button {
   padding: 0.75em 1em;
   text-decoration: none;
 }
-button:hover, .woocommerce .button:hover {
+button:hover, .woocommerce .button:hover, .woocommerce .loader:hover {
   background-color: #335494;
   color: white;
 }
-button:disabled, .woocommerce .button:disabled {
+button:disabled, .woocommerce .button:disabled, .woocommerce .loader:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -4931,12 +4931,22 @@ section[role=contentinfo] .inner .copyright p {
   white-space: nowrap;
 }
 .woocommerce .loader {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  width: 100%;
+  margin: 50px auto;
   text-align: center;
   top: 40%;
   left: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  display: block;
+  width: 200px;
 }
 .woocommerce .loader .fa {
   font-size: 3em;
