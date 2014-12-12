@@ -31,12 +31,13 @@
 	<?php } ?>
 	<?php if($actions) { ?>
 	<div class="filter filter-actions">
-		<h6>Select Action</h6>
+			<div class="filter-actions-items">
 			<?php 
-				foreach($actions as $action) {
-					echo "<label><input type='checkbox' name='actions[]' value='".$action->term_id."'>".$action->name."</label>";
-				} 
+				//foreach($actions as $action) {
+				//	echo "<label><input type='checkbox' name='actions[]' class='by-action' value='".$action->term_id."'>".$action->name."</label>";
+				//} 
 			?>
+			</div>
 	</div>
 	<?php } ?>
 </div>

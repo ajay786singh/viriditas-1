@@ -33,7 +33,7 @@ get_header( 'shop' );
 					<ul class="product-list equal-height-1">
 					</ul>
 					<div class="loader">
-						<button class="btn btn-default" type="button">Loading please wait...</button>
+						<div class="loading">Loading please wait...</div>
 					</div>
 				</div>
 			</div>

@@ -8,6 +8,7 @@ function my_scripts() {
 	wp_deregister_script('jquery');
 	wp_register_script('jquery', includes_url(). 'js/jquery/jquery.js', null, '',true);
 	wp_enqueue_script('jquery');
+	wp_enqueue_script( 'bower-js', get_template_directory_uri() . '/bower_components/jquery/dist/jquery.min.js', array('jquery'), '', true);
 	wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.min.js', array('jquery'), '', true);
 }
 
