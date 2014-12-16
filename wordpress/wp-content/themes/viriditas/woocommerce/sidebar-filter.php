@@ -4,8 +4,23 @@
 	</div>
 	<?php 
 		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0&exclude=8,118');
-		$body_systems = get_terms('body_system', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0');
-		$actions = get_terms('actions', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0');
+		$body_system_args=array(
+			'post_type' => 'product',
+			'numberposts' => -1,
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'product_cat',
+					'field' => 'term_id',
+					'terms' => array(7)
+				)
+			)
+		);
+		$objects_ids='';	
+		$objects = get_posts( $body_system_args );
+		foreach ($objects as $object) {
+			$objects_ids[] = $object->ID;
+		}
+		$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
 		if($product_categories) {
 	?>
 	
@@ -29,15 +44,8 @@
 		</select>
 	</div>
 	<?php } ?>
-	<?php if($actions) { ?>
 	<div class="filter filter-actions">
 			<div class="filter-actions-items">
-			<?php 
-				//foreach($actions as $action) {
-				//	echo "<label><input type='checkbox' name='actions[]' class='by-action' value='".$action->term_id."'>".$action->name."</label>";
-				//} 
-			?>
 			</div>
 	</div>
-	<?php } ?>
 </div>
