@@ -118,4 +118,40 @@ function load_actions() {
 }
 add_action( 'wp_ajax_load_actions', 'load_actions' );
 add_action( 'wp_ajax_nopriv_load_actions', 'load_actions' );	
+
+add_action( 'wp_ajax_load_body_systems', 'load_body_systems' );
+add_action( 'wp_ajax_nopriv_load_body_systems', 'load_body_systems' );	
+function load_body_systems() {
+	global $wp_query;
+	
+	$cat_id=$_POST['category'];
+	$args=array(
+			'post_type' => 'product',
+			'numberposts' => -1,
+			'tax_query' => array(
+				'relation'=>'AND',
+				array(
+					'taxonomy' => 'product_cat',
+					'field' => 'term_id',
+					'terms' => $cat_id
+				)
+			)
+		);
+	$objects_ids='';	
+	$objects = get_posts( $args );
+	foreach ($objects as $object) {
+		$objects_ids[] = $object->ID;
+	}
+	$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
+	if($body_systems) {
+		$result='<select class="by-body_system">';
+			$result.='<option value="">Select Body System</option>';
+		foreach($body_systems as $body_system) {
+			$result.="<option value='".$body_system->term_id."'>".$body_system->name."</option>";
+		}
+		$result.='</select>';	
+	}
+	echo $result;
+	die();
+}
 ?>

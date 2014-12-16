@@ -4999,9 +4999,6 @@ section[role=contentinfo] .inner .copyright p {
 .filter:nth-of-type(1) {
   margin-top: 2em;
 }
-.filter.filter-actions {
-  display: none;
-}
 .filter.filter-actions .selecter {
   margin-top: 15px;
 }

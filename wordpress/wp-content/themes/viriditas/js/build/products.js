@@ -49,9 +49,24 @@ function displayRecords(paged) {
 			}
 		});
 }
+function get_body_systems() {
+	var category=$('.by-category').val(); 
+	$('.filter-body_system').empty();
+	$('.filter-actions-items').empty();
+	$.ajax({
+		type: 'POST',
+		url: ajaxurl,
+		data:{action: 'load_body_systems','category':category },
+		success: function(html) {
+			$('.filter-body_system').html(html);
+			$('.filter select').selecter();
+		}
+	});	
+}
 function get_actions() {
 	var body_system=$('.by-body_system').val(); 
 	var category=$('.by-category').val(); 
+	$('.filter-actions-items').empty();
 	$.ajax({
 		type: 'POST',
 		url: ajaxurl,
@@ -88,40 +103,22 @@ jQuery(document).ready(function($){
 	$('.by-category').unbind('change').change(function(e){
 		e.preventDefault();
 		paged=1;
-		$('.by-body_system').val('');
-		$('.filter-body_system .selecter-options .selecter-item').each(function(){
-			$(this).removeClass('selected');
-		});
-		$('.filter-body_system .selecter-options .selecter-item:first-child').addClass('selected');
-		$('.filter-body_system .selecter-selected').html('Select Body System');
-		$('.filter-actions').hide();
-		$('.by-action').removeAttr('checked');
+		get_body_systems();
 		$('.product-list').empty();
 		displayRecords(paged);
 		//return false;
 	});
-	$('.by-body_system').unbind('change').change(function(e){
-		e.preventDefault();
+	jQuery("body").unbind('change').on("change", ".by-body_system", function(event){
 		paged=1;
-		if($(this).val()==''){
-			$('.filter-actions').hide();
-		}else {
-			get_actions();
-			$('.filter-actions').show();
-		}
+		get_actions();
 		$('.product-list').empty();
 		displayRecords(paged);
 		//return false;
 	});
-	// jQuery(".by-action").unbind('change').change(function(e){
-		//e.preventDefault();
-		// paged=1;
-		// $('.product-list').empty();
-		// displayRecords(paged);
-		// return false;
-	// });
-	jQuery("body").unbind('change').on("change", ".by-action", function(event){
+	
+	jQuery(".filter-actions").unbind('change').on("change", ".by-action", function(event){
 		paged=1;
+		event.stopPropagation();
 		$('.product-list').empty();
 		displayRecords(paged);
 		return false;
