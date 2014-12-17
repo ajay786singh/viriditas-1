@@ -33,8 +33,8 @@
 		</select>
 	</div>
 	<?php } ?>
-	<?php if($body_systems) { ?>
 	<div class="filter filter-body_system">
+	<?php if($body_systems) { ?>
 		<select class="by-body_system">
 				<option value="">Select Body System</option>
 			<?php 
@@ -42,8 +42,8 @@
 				echo "<option value='".$body_system->term_id."'>".$body_system->name."</option>";
 			} ?>
 		</select>
-	</div>
 	<?php } ?>
+	</div>
 	<div class="filter filter-actions">
 			<div class="filter-actions-items">
 			</div>
