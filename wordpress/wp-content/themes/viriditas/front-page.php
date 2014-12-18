@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="fullscreen background" style="background-image:url('<?php bloginfo('template_url' ); ?>/images/lemon-balm.jpg');" data-img-width="1400" data-img-height="800">
+<div class="fullscreen background" style="background-image:url('<?php bloginfo('template_url' ); ?>/dist/images/lemon-balm.jpg');" data-img-width="1400" data-img-height="800">
     <div class="content-a">
         <div class="content-b">
             <h1>Herbal Solutions</h1>
