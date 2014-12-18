@@ -29,7 +29,7 @@ var scriptList = [
 	'src/components/smooth-scroll/src/smoothscroll.js',
 	'src/components/equal-height/src/equal-height.js',
 	'src/components/jquery-custom-select/src/jquery.customSelect.js',
-	'src/components/woocommerce-product/src/products.js'
+	'src/components/woocommerce-product/src/products.js',
 ];
 
 var fontIcons = [

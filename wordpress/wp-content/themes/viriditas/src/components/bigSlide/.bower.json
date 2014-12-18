@@ -1,0 +1,32 @@
+{
+  "name": "bigSlide",
+  "version": "0.5.1",
+  "homepage": "http://ascott1.github.io/bigSlide.js/",
+  "authors": [
+    "Adam Scott <hello@adamdscott.com>"
+  ],
+  "description": "bigSlide is a tiny jQuery plugin for creating off-screen slide panel navigation",
+  "main": "dist/bigSlide.js",
+  "keywords": [
+    "UI",
+    "navigation",
+    "mobile"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "0.5.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.5.1",
+    "commit": "648f9fe724ff18903e7e3188738def089111050d"
+  },
+  "_source": "git://github.com/ascott1/bigSlide.js.git",
+  "_target": "*",
+  "_originalSource": "bigSlide"
+}
