@@ -11,6 +11,7 @@
     "gulp-jshint": "~1.9.0",
     "gulp-ruby-sass": "~0.7.1",
     "gulp-bower": "0.0.7",
-    "gulp-scss-lint": "^0.1.4"
+    "gulp-scss-lint": "^0.1.4",
+    "gulp-pretty-data": "^0.1.1"
   }
 }

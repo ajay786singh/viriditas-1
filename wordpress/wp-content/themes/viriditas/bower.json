@@ -7,8 +7,10 @@
 		"bourbon": "latest",
 		"neat": "latest",
 		"modernizer": "latest",
+		"mixitup2": "latest",
 		"fontawesome": "latest",
 		"bigSlide": "latest",
+		"monosocialiconsfont": "latest",
 		"SelectOrDie": "latest"
   	}
 }

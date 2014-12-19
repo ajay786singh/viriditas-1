@@ -25,10 +25,6 @@ var scriptList = [
 	'src/components/jquery/dist/jquery.js', 
 	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
 	'src/components/SelectOrDie/_src/selectordie.min.js',
-	// 'src/components/menu/src/menu.js',
-	// 'src/components/menu/src/menu-function.js',
-	// 'src/components/smooth-scroll/src/smoothscroll.js',
-	// 'src/components/equal-height/src/equal-height.js',
 	'src/js/custom/menu.js',
 	'src/js/custom/menu-function.js',
 	'src/js/custom/products.js',
@@ -45,8 +41,8 @@ var sassOptions = {
 };
 
 // Create image minification task
-gulp.task('images', function () {
-    return gulp.src('src/images/herbs.jpg')
+gulp.task('imagemin', function () {
+    return gulp.src('src/images/*')
     	//.pipe(cache())
         .pipe(imagemin({
             progressive: true,
@@ -95,10 +91,10 @@ gulp.task('bower', function() {
 gulp.task('watch', function() {
 	gulp.watch('src/js/**/*.js', ['js']);
 	gulp.watch('src/sass/**/*.scss', ['sass']);
-	gulp.watch('src/images/*', ['images']);
+	gulp.watch('src/images/*', ['imagemin']);
 	livereload.listen();
 	gulp.watch('*.php').on('change', livereload.changed);
 });
 
 // Create default task so you can gulp whenever you don't want to watch
-gulp.task('default', ['js', 'sass', 'images', 'icons', 'bower', 'watch']);
+gulp.task('default', ['js', 'sass', 'imagemin', 'icons', 'bower', 'watch']);
