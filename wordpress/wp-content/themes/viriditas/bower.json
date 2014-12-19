@@ -7,13 +7,8 @@
 		"bourbon": "latest",
 		"neat": "latest",
 		"modernizer": "latest",
-		"mixitup2": "latest",
-		"viewport-units-buggyfill": "latest",
-		"jquery-viewport-checker": "latest",
-		"video.js": "latest",
-		"fitvids": "latest",
 		"fontawesome": "latest",
 		"bigSlide": "latest",
-		"monosocialiconsfont": "latest"
+		"SelectOrDie": "latest"
   	}
 }

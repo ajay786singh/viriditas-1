@@ -59,7 +59,7 @@ function get_body_systems() {
 		data:{action: 'load_body_systems','category':category },
 		success: function(html) {
 			$('.filter-body_system').html(html);
-			$('.filter select').selecter();
+			$('.filter select').selectOrDie();
 		}
 	});	
 }
@@ -77,7 +77,7 @@ function get_actions() {
 	});	
 }
 jQuery(document).ready(function($){
-	$('.filter select').selecter();
+	$('.filter select').selectOrDie();
 	// start to load the first set of data
 		if (busy == false) {
 		  busy = true;
