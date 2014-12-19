@@ -28,6 +28,6 @@ require_once('includes/functions/get-term-top-level-parent.php');
 //require_once('includes/shortcodes/content.php');
 //require_once('includes/shortcodes/content-sidebar.php');
 //require_once('includes/shortcodes/readmore.php');
-//require_once('includes/shortcodes/tab.php');
+require_once('includes/shortcodes/tab.php');
 
 ?>

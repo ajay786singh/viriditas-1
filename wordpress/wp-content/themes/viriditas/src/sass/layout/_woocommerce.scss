@@ -1,4 +1,9 @@
 .woocommerce {
+    &.single-product {
+        section[role=main] {
+            padding: 20px 0 50px;
+        }
+    }
     .button {
         @extend %button;
         @include appearance(none);

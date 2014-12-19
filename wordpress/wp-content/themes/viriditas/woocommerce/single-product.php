@@ -12,9 +12,9 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 get_header( 'shop' ); ?>
-
+<section role="main">
 <div class="container content">
-	<div class="span-10 center">
+		<div class="span-11 center">
 	<?php
 		/**
 		 * woocommerce_before_main_content hook
@@ -52,4 +52,5 @@ get_header( 'shop' ); ?>
 	?>
 </div>
 </div>
+</section>
 <?php get_footer( 'shop' ); ?>
