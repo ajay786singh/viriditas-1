@@ -24,12 +24,11 @@ var outputDir = 'dist';
 var scriptList = [
 	'src/components/jquery/dist/jquery.js', 
 	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
-	'src/components/menu/src/menu.js',
-	'src/components/menu/src/menu-function.js',
-	'src/components/smooth-scroll/src/smoothscroll.js',
-	'src/components/equal-height/src/equal-height.js',
-	'src/components/jquery-custom-select/src/jquery.customSelect.js',
-	'src/components/woocommerce-product/src/products.js',
+	'src/components/SelectOrDie/_src/selectordie.min.js',
+	'src/js/custom/menu.js',
+	'src/js/custom/menu-function.js',
+	'src/js/custom/products.js',
+	'src/js/custom/tabs.js',
 ];
 
 var fontIcons = [

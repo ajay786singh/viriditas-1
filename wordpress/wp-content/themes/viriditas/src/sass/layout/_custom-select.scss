@@ -1,300 +1,240 @@
-/* 
- * Selecter v3.2.3 - 2014-11-25 
- * A jQuery plugin for replacing default select elements. Part of the Formstone Library. 
- * http://formstone.it/selecter/ 
- * 
- * Copyright 2014 Ben Plum; MIT Licensed 
- */
+/* ===========================================================
+ *
+ *  Name:          selectordie_dev.css
+ *  Updated:       2014-10-10
+ *  Created by:    Per V @ Vst.mn
+ *  What?:         Base CSS for Select or Die
+ *
+ *  Copyright (c) 2014 Per Vestman
+ *  Dual licensed under the MIT and GPL licenses.
+ *
+ *  No, I don't usually comment my CSS, but in this
+ *  case it might "help" someone.
+ *
+ *  Oddny | Cogs 'n Kegs
+ * =========================================================== */
 
-.selecter {
-    position: relative;
-    display: block;
-    margin: 25px 0;
-    z-index: 1;
-    max-width: 100%;
-}
+/* Remove, change to fit your needs */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,700);
 
-.selecter:focus {
-    box-shadow: none;
-    outline: none;
-}
-
-.selecter,
-.selecter * {
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-}
-
-.selecter,
-.selecter *,
-.selecter *:before,
-.selecter *:after {
-    box-sizing: border-box;
-}
-
-.selecter-element {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    z-index: -1;
-}
-
-.selecter-element,
-.selecter-element:focus {
-    outline: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.no-opacity .selecter-element {
-    left: -999999px;
-}
-
-.selecter-selected {
-    position: relative;
-    background: #ffffff;
-    border: 1px solid #cccccc;
-    color: #222222;
-    cursor: pointer;
-    display: block;
-    font-size: 13px;
-    margin: 0;
-    overflow: hidden;
-    padding: 10px 15px;
-    text-overflow: clip;
-    z-index: 2;
-    border-radius: 3px;
-}
-
-.selecter-selected:after {
-    height: 0;
-    width: 0;
-    position: absolute;
-    top: 0;
-    right: 15px;
-    bottom: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #cccccc;
-    content: '';
-    display: block;
-    margin: auto 0;
-}
-
-.no-touch .selecter-selected:hover {
-    color: #333333;
-}
-
-.no-touch .selecter.disabled .selecter-selected:hover {
-    color: #cccccc;
-}
-
-.selecter-options {
-    width: 100%;
-    max-height: 260px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    border: 1px solid #cccccc;
-    border-width: 0 1px 1px;
-    background-color: #ffffff;
-    display: none;
-    margin: 0;
-    overflow: auto;
-    overflow-x: hidden;
-    padding: 0;
-    z-index: 50;
-    border-radius: 0 0 3px 3px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-}
-
-.selecter-options.scroller {
-    position: absolute;
-}
-
-.no-opacity .selecter-options {
-    width: auto;
-}
-
-.selecter-group {
-    border-bottom: 1px solid #cccccc;
-    color: #999999;
-    display: block;
-    font-size: 11px;
-    padding: 10px 15px;
-    text-transform: uppercase;
-}
-
-.selecter-item {
-    width: 100%;
-    background: #ffffff;
-    border-bottom: 1px solid #cccccc;
-    color: #222222;
-    cursor: pointer;
-    display: block;
-    font-size: 13px;
-    margin: 0;
-    overflow: hidden;
-    padding: 10px 15px;
-    text-decoration: none;
-    text-overflow: ellipsis;
-}
-
-.selecter-item.placeholder {
-    display: none;
-}
-
-.selecter-item.selected {
-    background: #eeeeee;
-}
-
-.selecter-item.disabled {
-    color: #999999;
-    cursor: default;
-}
-
-.selecter-item:first-child {
-    border-radius: 0;
-}
-
-.selecter-item:last-child {
-    border-bottom: 0;
-    border-radius: 0 0 2px 2px;
-}
-
-.no-touch .selecter-item:hover,
-.no-touch .selecter-item.selected:hover {
-    color: #333333;
-    background-color: #cccccc;
-}
-
-.selecter-item.disabled,
-.no-touch .selecter-item.disabled:hover {
-    color: #cccccc;
-    background-color: #ffffff;
-}
-
-.selecter.open {
-    z-index: 3;
-}
-
-.selecter.open .selecter-selected {
-    z-index: 51;
-    border-radius: 3px 3px 0 0;
-}
-
-.selecter.open .selecter-selected,
-.selecter.focus .selecter-selected {
-    background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.selecter.cover .selecter-options {
-    border-width: 1px;
-    top: 0;
-    border-radius: 3px;
-}
-
-.selecter.cover .selecter-options .selecter-item.first {
-    border-radius: 3px 3px 0 0;
-}
-
-.selecter.cover.open .selecter-selected {
-    z-index: 49;
-    border-radius: 3px 3px 0 0;
-}
-
-.selecter.bottom .selecter-options {
-    top: auto;
-    bottom: 100%;
-    border-width: 1px 1px 0;
-}
-
-.selecter.bottom .selecter-item:last-child {
-    border: none;
-}
-
-.selecter.bottom.open .selecter-selected {
-    border-radius: 0 0 3px 3px;
-}
-
-.selecter.bottom.open .selecter-options {
-    border-radius: 3px 3px 0 0;
-}
-
-.selecter.bottom .cover .selecter-options {
-    top: auto;
-    bottom: 0;
-}
-
-.selecter.bottom .cover.open .selecter-selected {
-    border-radius: 3px;
-}
-
-.selecter.bottom .cover.open .selecter-options {
-    border-radius: 3px;
-}
-
-.selecter.multiple .selecter-options {
-    width: 100%;
-    position: static;
-    border-width: 1px;
-    display: block;
-    border-radius: 3px;
-    box-shadow: none;
-}
-
-.selecter.disabled .selecter-selected {
-    background: #ffffff;
-    border-color: #cccccc;
-    color: #cccccc;
-    cursor: default;
-}
-
-.selecter.disabled .selecter-options {
-    background: #ffffff;
-    border-color: #cccccc;
-}
-
-.selecter.disabled .selecter-group,
-.selecter.disabled .selecter-item {
-    border-color: #cccccc;
-    color: #cccccc;
-    cursor: default;
-}
-
-.selecter.disabled .selecter-item.selected,
-.no-touch .selecter.disabled .selecter-item.selected:hover {
-    background: #fafafa;
-}
-
-.selecter.disabled .selecter-item,
-.no-touch .selecter.disabled .selecter-item:hover {
-    color: #cccccc;
-    background-color: #ffffff;
-}
-
-.selecter-options.scroller {
-    overflow: hidden;
-}
-
-.selecter-options.scroller .scroller-content {
-    max-height: 260px;
-    padding: 0;
-}
-
-@media screen and (max-width: 740px) {
-    .selecter {
-        max-width: 40%;
+.sod_select,
+.sod_select *
+    {
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+     -webkit-touch-callout: none;
+       -webkit-user-select: none;
+          -moz-user-select: none;
+           -ms-user-select: none;
+               user-select: none;
     }
-}
 
-@media screen and (max-width: 500px) {
-    .selecter {
-        max-width: 100%;
+/* The SoD - Please keep this first three lines intact, otherwise all hell will break looooooose */
+.sod_select
+    {
+        display: inline-block;
+        position: relative;
+        line-height: 1;
+		margin-top:8px;
+        width: 100%;
+        background: #ffffff;
+        color: #444444;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+        outline: 0;
+        outline-offset: -2px; /* Opera */
+        cursor: default;
     }
-}
+
+    /* Up/Down arrows */
+    .sod_select:before,
+    .sod_select:after
+        {
+            content: "\25B2";
+            position: absolute;
+            right: 10px;
+            top: 12px;
+            font-size: 7px;
+        }
+
+        /* Down arrow */
+        .sod_select:after
+            {
+                content: "\25BC";
+                top: auto;
+                bottom: 12px;
+            }
+
+    /* Change the border color on hover, focus and when open */
+    .sod_select:hover,
+    .sod_select.open,
+    .sod_select.focus { /*border-color: #000000;*/ }
+
+        .sod_select.open { color: #919191; }
+        .sod_select.focus { /*box-shadow: 0 0 5px rgba(0,0,0,.2); */}
+
+    /* When the entire SoD is disabled, go crazy! */
+    .sod_select.disabled
+        {
+            border-color: #828282;
+            color: #b2b2b2;
+            cursor: not-allowed;
+        }
+
+    /* The "label", or whatever we should call it. Keep the first three lines for truncating. */
+    .sod_select .sod_label
+        {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+			padding: 15px 10px;
+			border: 1px solid #5e5e5e;
+            padding-right: 15px;
+        }
+
+        .sod_select .sod_prefix { /* Use this if you're using a prefix and want to style it */ }
+        .sod_select .sod_placeholder { /* Use this if you're using a placeholder and want to style it */ }
+
+
+
+    /* Options list wrapper */
+    .sod_select .sod_list_wrapper
+        {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            height: auto;
+            width: 100%;
+			margin: 0 0 0 0px;
+			background: #ffffff;
+            border: 1px solid #000000;
+            border-top: none;
+            color: #444444;
+            font-weight: 300;
+            z-index: 1;
+        }
+
+        /* Shows the option list (don't edit) */
+        .sod_select.open .sod_list_wrapper { display: block;  }
+
+        /* Don't display the options when  */
+        .sod_select.disabled.open .sod_list_wrapper { display: none;  }
+
+        /* When the option list is displayed above the SoD */
+        .sod_select.above .sod_list_wrapper
+            {
+                top: auto;
+                bottom: 100%;
+                border-top: 1px solid #000000;
+                border-bottom: none;
+            }
+
+    /* Options list container */
+    .sod_select .sod_list
+        {
+            display: block;
+            overflow-y: auto;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* All the options. Keep the first three lines for truncating... */
+        .sod_select .sod_option
+            {
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                position: relative;
+                padding: 10px 10px;
+                list-style-type: none;
+            }
+
+            /* Optgroups */
+            .sod_select .sod_option.optgroup,
+            .sod_select .sod_option.optgroup.disabled
+                {
+                    background: inherit;
+                    color: #939393;
+                    font-size: 10px;
+                    font-style: italic;
+                }
+
+                /* Children of an optgroup */
+                .sod_select .sod_option.groupchild { padding-left: 20px; }
+
+            /* Used together with placeholderOption / data-placeholder-option */
+            .sod_select .sod_option.is-placeholder {
+                display: none;
+            }
+
+            /* Disabled option */
+            .sod_select .sod_option.disabled
+                {
+                    background: inherit;
+                    color: #cccccc;
+                }
+
+            /* Hover state for options, also used when a user uses his/hers up/down keys */
+            .sod_select .sod_option.active
+                {
+                    background: #f7f7f7;
+                    color: #333333;
+                }
+
+            /*Make room for the check mark */
+            .sod_select .sod_option.selected
+                {
+                    font-weight: 700;
+                    padding-right: 25px;
+                }
+
+                /* Displays a check mark for the selected option */
+                .sod_select .sod_option.selected:before
+                    {
+                        content: "";
+                        position: absolute;
+                        right: 10px;
+                        top: 50%;
+                        -webkit-transform: translateY(-50%);
+                            -ms-transform: translateY(-50%);
+                                transform: translateY(-50%);
+                        display: inline-block;
+                        color: #808080;
+                        height: 9px;
+                        width: 10px;
+                        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTAgOSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAgOSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8Zz4NCgk8cGF0aCBmaWxsPSIjRDlEOUQ4IiBkPSJNNCw2LjdDMy42LDYuMywzLjUsNi4xLDMuMSw1LjdDMi42LDUuMiwyLDQuNiwxLjUsNC4xYy0wLjgtMC44LTIsMC40LTEuMiwxLjJjMC45LDAuOSwxLjksMS45LDIuOCwyLjgNCgkJYzAuNywwLjcsMS4zLDEsMiwwQzYuNyw2LDguMywzLjcsOS44LDEuNUMxMC41LDAuNSw5LTAuMyw4LjMsMC42bDAsMEM2LjcsMi45LDUuNyw0LjQsNCw2LjciLz4NCjwvZz4NCjwvc3ZnPg0K);
+                    }
+
+                /* Add a .no_highlight class to you SoD to hide the check mark and don't bold the option */
+                .sod_select.no_highlight .sod_option.selected { font-weight: 300; }
+                .sod_select.no_highlight .sod_option.selected:before { display: none; }
+
+            .sod_select .sod_option.link { /* If data-link is set on a specific option */ }
+            .sod_select .sod_option.linkexternal { /* If data-link-external is set on a specific option */ }
+
+
+
+    /* Hide native select */
+    .sod_select select { display: none !important; }
+
+        /* The native select in touch mode. Keep this first line. Sorry, keep everything. */
+        .sod_select.touch select
+            {
+                -webkit-appearance: menulist-button;
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block !important;
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                z-index: 1;
+            }
