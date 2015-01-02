@@ -13,12 +13,10 @@ var paged = 1;
 //var offset = 0;
 
 function displayRecords(paged) {
-	//alert(1);
+
+	var body_system;
 	var category=$('.by-category').val(); 
-	var body_system=$('.by-body_system').val(); 
-	//alert(body_system);
-	//var filter_action=$('.by-action').val(); 
-	//var filter_action=$( ".filter-actions input:checkbox" ).map(function() { return this.id;}).get().join();
+	body_system=$('.by-body_system').val(); 
 	var filter_action = new Array();
 	var n = jQuery(".by-action:checked").length;
 	if (n > 0){
@@ -41,7 +39,7 @@ function displayRecords(paged) {
 			success: function(html) {
 				$loader.hide();
 				$results.append(html);
-				$results.find('li .product-title').equalHeights();	
+				//$results.find('li .product-title').equalHeights();	
 				if (html == "") {
 				  $loader.html('<div class="loading">No more records.</div>').show()
 				} 
@@ -59,7 +57,8 @@ function get_body_systems() {
 		data:{action: 'load_body_systems','category':category },
 		success: function(html) {
 			$('.filter-body_system').html(html);
-			$('.filter select').selectOrDie();
+			//$('.filter select').selectOrDie();
+			Select.init({selector: '.filter select'});
 		}
 	});	
 }
@@ -77,7 +76,8 @@ function get_actions() {
 	});	
 }
 jQuery(document).ready(function($){
-	$('.filter select').selectOrDie();
+	//$('.filter select').selectOrDie();
+	Select.init({selector: '.filter select'});
 	// start to load the first set of data
 		if (busy == false) {
 		  busy = true;

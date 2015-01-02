@@ -1,21 +1,18 @@
-/*! Pushy - v0.9.1 - 2013-9-16 */
 .main-menu-desktop {
-    display: none;
-    @include media($bp-large) {
-        display: block;
-        text-align: right;
-    }
-
+	display:none;
+	@include media($bp-large) {
+		display:block;
+	}
+    float: right;
     ul {
         float: right;
         list-style-type: none;
-        margin-top: 1.4em;
-        margin-bottom: 0px;
+        margin-top: 1.3em;
         li {
             display: inline;
             text-transform: uppercase;
             font-weight: 700;
-            font-size: 1em;
+            font-size: 0.8em;
             margin-left: 0;
             @include media($bp-large) {
                 margin-left: 2em;
@@ -23,10 +20,6 @@
 
             a {
                 color: $blue;
-                text-transform: uppercase;
-                font-weight: 700;
-                font-size: 1em;
-                margin-left: 0;
                 &:hover {
                     color: $medium-gray;
                 }

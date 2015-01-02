@@ -22,21 +22,21 @@
 		}
 		$body_system="";
 		if($body_system_id !='') {
-			$body_system_term = get_term_by( 'id', $body_system_id, 'body_system' );
-			$filter_terms['body_system'] = $body_system_term->slug;	
+			$body_system_term = get_term_by( 'id', $body_system_id, 'pa_body-system' );
+			$filter_terms['pa_body-system'] = $body_system_term->slug;	
 		}
 		$action="";
 		if($action_id !='') {
 			if(count($action_id)==1) {
-				$action_term = get_term_by( 'id', $action_id[0], 'actions' );
-				$filter_terms['actions'] = $action_term->slug;
+				$action_term = get_term_by( 'id', $action_id[0], 'pa_actions' );
+				$filter_terms['pa_actions'] = $action_term->slug;
 			}else {
 				$actions_slug='';
 				for($i=0;$i<count($action_id);$i++) {
-					$action_term = get_term_by( 'id', $action_id[$i], 'actions' );
+					$action_term = get_term_by( 'id', $action_id[$i], 'pa_actions' );
 					$actions_slug[] = $action_term->slug;
 				}
-				$filter_terms['actions'] = implode(",",$actions_slug);
+				$filter_terms['pa_actions'] = implode(",",$actions_slug);
 			}
 		}
 		
@@ -95,7 +95,7 @@ function load_actions() {
 					'terms' => $cat_id
 				),
 				array(
-					'taxonomy' => 'body_system',
+					'taxonomy' => 'pa_body-system',
 					'field' => 'term_id',
 					'terms' => $body_system_id
 				)
@@ -106,7 +106,7 @@ function load_actions() {
 	foreach ($objects as $object) {
 		$objects_ids[] = $object->ID;
 	}
-	$actions = wp_get_object_terms( $objects_ids, 'actions' );
+	$actions = wp_get_object_terms( $objects_ids, 'pa_actions' );
 	if($actions) {
 		$result='<h6>Select Action</h6>';	
 		foreach($actions as $action) {
@@ -142,7 +142,7 @@ function load_body_systems() {
 	foreach ($objects as $object) {
 		$objects_ids[] = $object->ID;
 	}
-	$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
+	$body_systems = wp_get_object_terms( $objects_ids, 'pa_body-system' );
 	if($body_systems) {
 		$result='<select class="by-body_system">';
 			$result.='<option value="">Select Body System</option>';
