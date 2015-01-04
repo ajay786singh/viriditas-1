@@ -20,7 +20,7 @@
 		foreach ($objects as $object) {
 			$objects_ids[] = $object->ID;
 		}
-		$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
+		$body_systems = wp_get_object_terms( $objects_ids, 'pa_body-system' );
 		if($product_categories) {
 	?>
 	
