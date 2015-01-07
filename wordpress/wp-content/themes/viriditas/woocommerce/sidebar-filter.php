@@ -11,7 +11,7 @@
 				array(
 					'taxonomy' => 'product_cat',
 					'field' => 'term_id',
-					'terms' => array(7)
+					'terms' => array(327)
 				)
 			)
 		);
@@ -20,7 +20,7 @@
 		foreach ($objects as $object) {
 			$objects_ids[] = $object->ID;
 		}
-		$body_systems = wp_get_object_terms( $objects_ids, 'pa_body-system' );
+		$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
 		if($product_categories) {
 	?>
 	
