@@ -6,15 +6,19 @@
 		$cat_id=$_POST['filter_type_category'];
 		$body_system_id=$_POST['filter_type_body_system'];
 		$action_id=$_POST['filter_type_action'];
-		
+		$sort_by_name=$_POST['sort_by_name'];
 		$paged = $_POST['paged'];
 		
 		$args=array(
 			'post_type' =>'product',
 			'order' => 'DESC',
-			'paged'=>$paged
+			'paged'=>$paged,
+			'posts_per_page'=>12
 		);
-		
+		if($sort_by_name!=''){
+			$args['orderby']='title';
+			$args['order']=$sort_by_name;
+		}
 		$product_cat="";
 		if($cat_id !='') {
 			$cterm = get_term_by( 'id', $cat_id, 'product_cat' );
@@ -101,7 +105,10 @@ function load_actions() {
 				)
 			)
 		);
-	$objects_ids='';	
+	$objects_ids='';
+	$body_system_term = get_term_by( 'id', $body_system_id, 'body_system' );
+	$body_match = explode(" ",$body_system_term->name);	
+	
 	$objects = get_posts( $args );
 	foreach ($objects as $object) {
 		$objects_ids[] = $object->ID;
@@ -110,7 +117,10 @@ function load_actions() {
 	if($actions) {
 		$result='<h6>Select Action</h6>';	
 		foreach($actions as $action) {
-			$result.="<label><input type='checkbox' name='actions[]' class='by-action' value='".$action->term_id."'>".$action->name."</label>";
+			$action_match = explode(" ",$action->name);	
+			if($action_match[0]==$body_match[0]) {
+				$result.="<label><input type='checkbox' name='actions[]' class='by-action' value='".$action->term_id."'><span>".$action->name."</span></label>";
+			}
 		}
 	}
 	echo $result;

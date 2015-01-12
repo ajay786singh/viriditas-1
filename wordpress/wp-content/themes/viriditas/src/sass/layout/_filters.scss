@@ -6,6 +6,9 @@
     &:nth-of-type(1) {
         margin-top: 2em;
     }
+	.filter-title {
+		font-size:em(13px);
+	}
     &.filter-actions {
         //display: none;
         .selecter {
