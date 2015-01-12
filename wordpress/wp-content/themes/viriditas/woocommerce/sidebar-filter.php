@@ -1,6 +1,6 @@
 <div class="span-3 sidebar">
 	<div class="shop-header">
-		<h6 class="heading">Filter By Category</h6>
+		<h6 class="heading">Filter Products</h6>
 	</div>
 	<?php 
 		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0&exclude=8,118');
@@ -23,7 +23,6 @@
 		$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
 		if($product_categories) {
 	?>
-	
 	<div class="filter filter-category">
 		<select class="by-category">
 			<?php 
@@ -48,4 +47,14 @@
 			<div class="filter-actions-items">
 			</div>
 	</div>
+	<div class="shop-header">
+		<h6 class="heading">Sort Products</h6>
+	</div>
+	<div class="filter sort-product">
+		<select class="sort-by-name">
+			<option value="">Sort By Name</option>
+			<option value="asc">Sort By Name ASC</option>
+			<option value="desc">Sort By Name DESC</option>
+		</select>
+	</div>	
 </div>

@@ -14,9 +14,11 @@ var paged = 1;
 
 function displayRecords(paged) {
 
-	var body_system;
-	var category=$('.by-category').val(); 
+	var body_system,category,sort_by_name;
+	category=$('.by-category').val();
 	body_system=$('.by-body_system').val(); 
+	sort_by_name=$('.sort-by-name').val();
+	
 	var filter_action = new Array();
 	var n = jQuery(".by-action:checked").length;
 	if (n > 0){
@@ -31,7 +33,7 @@ function displayRecords(paged) {
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data:{action: 'load_products','filter_type_category':category,'filter_type_body_system':body_system,'filter_type_action':filter_action,'paged':paged },
+			data:{action: 'load_products','filter_type_category':category,'filter_type_body_system':body_system,'filter_type_action':filter_action,'sort_by_name':sort_by_name,'paged':paged },
 			beforeSend: function() {
 				//$loader.html("").hide();
 				$loader.show();
@@ -117,6 +119,13 @@ jQuery(document).ready(function($){
 	});
 	
 	jQuery(".filter-actions").unbind('change').on("change", ".by-action", function(event){
+		paged=1;
+		event.stopPropagation();
+		$('.product-list').empty();
+		displayRecords(paged);
+		return false;
+	});
+	jQuery(".sort-product").unbind('change').on("change", ".sort-by-name", function(event){
 		paged=1;
 		event.stopPropagation();
 		$('.product-list').empty();
