@@ -1,9 +1,9 @@
 <div class="span-3 sidebar">
 	<div class="shop-header">
-		<h6 class="heading">Filter Products</h6>
+		<h6 class="heading">Filter by category</h6>
 	</div>
 	<?php 
-		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=0&hierarchical=0&parent=0&exclude=8,118');
+		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0&exclude=8,118');
 		$body_system_args=array(
 			'post_type' => 'product',
 			'numberposts' => -1,
@@ -47,6 +47,28 @@
 			<div class="filter-actions-items">
 			</div>
 	</div>
+	<!-- Filter By Indication -->
+	<?php 
+		$indications = get_terms('indication', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0');
+		if($indications) { 
+	?>
+			<div class="shop-header">
+				<h6 class="heading">Filter by Indication</h6>
+			</div>
+			<div class="filter filter-indication">
+				<select class="by-indication">
+					<option value="">Select Indication</option>
+					<?php 
+						foreach($indications as $indication) {
+							echo "<option value='".$indication->term_id."'>".$indication->name."</option>";
+						} 
+					?>
+				</select>
+			</div>
+	<?php
+		}
+	?>	
+	<!-- Sort Products By Name -->
 	<div class="shop-header">
 		<h6 class="heading">Sort Products</h6>
 	</div>
