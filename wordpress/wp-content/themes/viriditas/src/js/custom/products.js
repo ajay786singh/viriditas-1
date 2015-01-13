@@ -14,9 +14,10 @@ var paged = 1;
 
 function displayRecords(paged) {
 
-	var body_system,category,sort_by_name;
+	var body_system,category,indication,sort_by_name;
 	category=$('.by-category').val();
 	body_system=$('.by-body_system').val(); 
+	indication=$('.by-indication').val(); 
 	sort_by_name=$('.sort-by-name').val();
 	
 	var filter_action = new Array();
@@ -33,7 +34,7 @@ function displayRecords(paged) {
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data:{action: 'load_products','filter_type_category':category,'filter_type_body_system':body_system,'filter_type_action':filter_action,'sort_by_name':sort_by_name,'paged':paged },
+			data:{action: 'load_products','filter_type_category':category,'filter_type_body_system':body_system,'filter_type_action':filter_action,'filter_type_indication':indication,'sort_by_name':sort_by_name,'paged':paged },
 			beforeSend: function() {
 				//$loader.html("").hide();
 				$loader.show();
@@ -119,6 +120,13 @@ jQuery(document).ready(function($){
 	});
 	
 	jQuery(".filter-actions").unbind('change').on("change", ".by-action", function(event){
+		paged=1;
+		event.stopPropagation();
+		$('.product-list').empty();
+		displayRecords(paged);
+		return false;
+	});
+	jQuery(".filter-indication").unbind('change').on("change", ".by-indication", function(event){
 		paged=1;
 		event.stopPropagation();
 		$('.product-list').empty();

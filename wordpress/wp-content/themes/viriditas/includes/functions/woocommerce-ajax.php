@@ -6,6 +6,7 @@
 		$cat_id=$_POST['filter_type_category'];
 		$body_system_id=$_POST['filter_type_body_system'];
 		$action_id=$_POST['filter_type_action'];
+		$indication_id=$_POST['filter_type_indication'];
 		$sort_by_name=$_POST['sort_by_name'];
 		$paged = $_POST['paged'];
 		
@@ -42,6 +43,12 @@
 				}
 				$filter_terms['actions'] = implode(",",$actions_slug);
 			}
+		}
+		
+		$indication="";
+		if($indication_id !='') {
+			$indication_term = get_term_by( 'id', $indication_id, 'indication' );
+			$filter_terms['indication'] = $indication_term->slug;	
 		}
 		
 		if(count($filter_terms)== 1) {
