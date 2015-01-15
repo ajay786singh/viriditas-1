@@ -20,7 +20,10 @@ get_header( 'shop' );
 			<?php get_template_part( 'woocommerce/sidebar-filter', 'woocommerce'); ?>
 			<div class="span-9">
 				<div class="shop-header">
-					<h6 class="heading">Shop</h6>
+					<h6 class="heading" style="width:10%; float:left;">Shop</h6>				
+					<div class="sort-product" style="float:right;">
+						<a href="#" class="sort_by_name">Sort By Name</a>
+					</div>
 				</div>
 				<!-- Include Breadcrumbs -->
 				<div class="breadcrumb">

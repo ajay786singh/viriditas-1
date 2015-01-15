@@ -68,15 +68,4 @@
 	<?php
 		}
 	?>	
-	<!-- Sort Products By Name -->
-	<div class="shop-header">
-		<h6 class="heading">Sort Products</h6>
-	</div>
-	<div class="filter sort-product">
-		<select class="sort-by-name">
-			<option value="">Sort By Name</option>
-			<option value="asc">Sort By Name ASC</option>
-			<option value="desc">Sort By Name DESC</option>
-		</select>
-	</div>	
 </div>

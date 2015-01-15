@@ -41,7 +41,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
     <?php	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'product-thumb' );
 			$img = $thumb['0']; 
 			if($img == '') {
-				$img="http://placehold.it/350x550&text=".get_the_title();
+				$img=get_bloginfo('template_url')."/dist/images/product_default.jpg";
 			}
 	?>
 	<a class="product-image" href="<?php the_permalink();?>">
