@@ -18,8 +18,9 @@ function displayRecords(paged) {
 	category=$('.by-category').val();
 	body_system=$('.by-body_system').val(); 
 	indication=$('.by-indication').val(); 
-	sort_by_name=$('.sort-by-name').val();
-	
+	if(jQuery('.sort_by_name').hasClass('active-sort')==true) {
+		sort_by_name='ASC';
+	}
 	var filter_action = new Array();
 	var n = jQuery(".by-action:checked").length;
 	if (n > 0){
@@ -133,11 +134,19 @@ jQuery(document).ready(function($){
 		displayRecords(paged);
 		return false;
 	});
-	jQuery(".sort-product").unbind('change').on("change", ".sort-by-name", function(event){
+	jQuery(".sort-product a").click(function(e){
+		jQuery(this).toggleClass('active-sort');
 		paged=1;
 		event.stopPropagation();
 		$('.product-list').empty();
 		displayRecords(paged);
 		return false;
 	});
+	// jQuery(".sort-product").unbind('change').on("change", ".sort-by-name", function(event){
+		// paged=1;
+		// event.stopPropagation();
+		// $('.product-list').empty();
+		// displayRecords(paged);
+		// return false;
+	// });
 });
