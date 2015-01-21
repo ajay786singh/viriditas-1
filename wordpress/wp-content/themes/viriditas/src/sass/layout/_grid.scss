@@ -13,9 +13,9 @@ $susy: (columns: 6, gutters: 1, gutter-position: inside);
     overflow: hidden;
     position: relative;
     width: 100%;
-    padding-top: 75px;
+    //padding-top: 75px;
     @include media($bp-large) {
-        padding-top: 90px;
+        //padding-top: 90px;
     }
 }
 
@@ -204,9 +204,8 @@ $susy: (columns: 6, gutters: 1, gutter-position: inside);
 
 .login-button {
     @include media($bp-large) {
-        //margin-right: 10%;
         text-align: right;
-        margin-top: 2em;
+        margin-top: 1.8em;
         width: 18.70196%;
         margin-right: 0;
     }

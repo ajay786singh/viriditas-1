@@ -50,34 +50,45 @@
 <!-- Site Overlay for Pushy offcanvas to work -->
 <div class="site-overlay"></div>
 <!-- Header Starts Here -->
-<header class="wrap push">
+<?php 
+	$header_class="wrap push";
+	if(is_page()) {
+		$header_class.=" active-header";
+	}
+?>
+
+<header class="<?php echo $header_class;?>">
 	<div class="container">
-		<div class="span-3 logo">
-			<a href="<?php bloginfo('url');?>"><img src="http://placehold.it/350x100&text=Viriditas" alt=""></a>
-		</div>
-		<div class="span-7">								            
-			<nav class="main-menu-desktop">
-				<div class="menu-main-menu-container">
-					<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
-				</div>	
-			</nav>
-		</div>
-		<div class="span-2 login-button">
-			<?php global $woocommerce; ?> 
-			<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>">
-				<span class="count"><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?></span>
-				<span class="fa icon-shopping-cart"></span>
-			</a>
-			<?php if ( is_user_logged_in() ) { ?>
-				<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile /','woothemes'); ?></a> 
-				<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a>
-			 <?php } 
-			 else { ?>
-				<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Login / Sign up','woothemes'); ?>"><?php _e('Login / Sign up','woothemes'); ?></a>
-			 <?php } ?>
-		</div>
-		<div class="menu-btn">
-			<a id="nav-toggle" href="#menu"><span></span></a>
+		<div class="header-content">
+			<div class="span-3 logo">
+				<a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""></a>
+			</div>
+			<div class="span-9">								            
+				<nav class="main-menu-desktop">
+					<div class="menu-main-menu-container">
+						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
+					</div>	
+				</nav>
+			</div>
+			<?php /*
+			<div class="span-2 login-button">
+				<?php global $woocommerce; ?> 
+				<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>">
+					<span class="count"><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?></span>
+					<span class="fa icon-shopping-cart"></span>
+				</a>
+				<?php if ( is_user_logged_in() ) { ?>
+					<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile /','woothemes'); ?></a> 
+					<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a>
+				 <?php } 
+				 else { ?>
+					<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Login / Sign up','woothemes'); ?>"><?php _e('Login / Sign up','woothemes'); ?></a>
+				 <?php } ?>
+			</div>
+			*/?>
+			<div class="menu-btn">
+				<a id="nav-toggle" href="#menu"><span></span></a>
+			</div>
 		</div>
 	</div>
 </header>

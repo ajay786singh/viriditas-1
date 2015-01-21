@@ -1,0 +1,23 @@
+section[role=banner] {
+	background-repeat:no-repeat;
+	background-size:cover;
+	color:$white;
+	position: relative;
+	&:before {
+		content: '';
+		background-color: rgba(82,56,95,0.5);
+		height: 100%;
+		width: 100%;
+		position: absolute;
+	}
+	.banner-content {
+		padding:150px 0 75px;		
+		@include media($bp-large) {
+			padding:250px 0 150px;
+		}
+		overflow:hidden;
+	}
+	.button {
+		color:$white;
+	}
+}	

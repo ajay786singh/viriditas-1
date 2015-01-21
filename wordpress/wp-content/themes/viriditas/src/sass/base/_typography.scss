@@ -16,9 +16,9 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: $base-font-size;
-    text-transform: uppercase;
+	font-weight: normal;
     @include media($bp-large) {
-        font-size: $base-font-size * 4.125;
+        font-size: em(52px);
         // 16 * 4.125 = 66px
         line-height: 1.0909em;
         margin-bottom: 0.3636em;
@@ -89,8 +89,7 @@ p, ul, ol {
     font-size: $base-font-size;
     list-style-type: disc;
     @include media($bp-large) {
-        font-size: $base-font-size * 1.25;
-        // 16 * 1.25 = 20px
+        font-size: em(16px);
         line-height: 1.5em;
         margin-bottom: 1.5em;
     }
@@ -124,17 +123,19 @@ a {
     }
 }
 
-footer a {
-    @include transition(color 0.1s linear);
-    border-bottom: 1px dotted #ccc;
-    color: $white;
-    &:hover {
-        color: #ccc;
-    }
-    &:active, &:focus {
-        color: $hover-link-color;
-        outline: none;
-    }
+footer {
+	a {
+		@include transition(color 0.1s linear);
+		border-bottom: 1px dotted #ccc;
+		color: $white;
+		&:hover {
+			color: #ccc;
+		}
+		&:active, &:focus {
+			color: $hover-link-color;
+			outline: none;
+		}
+	}
 }
 
 hr {
@@ -185,7 +186,7 @@ small {
 }
 
 nav {
-    font-family: $sans-serif;
+    font-family: $serif;
 }
 
 .headline, .subhead {
