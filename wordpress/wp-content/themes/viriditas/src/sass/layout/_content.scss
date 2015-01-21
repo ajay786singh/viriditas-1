@@ -2,6 +2,18 @@ section[role=main] {
     padding: 90px 0 0 0;
 }
 
+section[role=content] {
+    padding: 75px 0;
+	overflow:hidden;
+	& h1, h2, h3, h4, h5, h6 {
+		color: $purple;
+		font-weight: normal;
+		&:first-child {
+			margin-top:0px;
+		}
+	}
+}
+
 article {
     @include outer-container;
     @include pad(0 2em 2em 2em);

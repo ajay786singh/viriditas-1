@@ -9,3 +9,19 @@ button {
     //margin: 1em;
     margin-bottom: 0.5em;
 }
+.button {
+	@include border-radius(30px);
+	border:2px solid $white;
+	padding: 10px 40px;
+	float: left;
+	margin: 20px 0;
+	&:hover {
+		background:$light-purple;
+		border-color:$light-purple;
+	}
+	&.purple {
+		background:$purple;
+		border:2px solid $purple;
+		color:$white;
+	}
+}

@@ -5,6 +5,8 @@ include('includes/wp-cuztom-helper/cuztom.php');
 //Include post custom posts type. Dependent on /wp-cuztom-helper classes.
 include('includes/wp-cuztom-posts/custom-course.php');
 include('includes/wp-cuztom-posts/custom-product.php');
+include('includes/wp-cuztom-posts/custom-team.php');
+include('includes/wp-cuztom-posts/custom-services.php');
 
 //Load custom functions
 require_once('includes/functions/add-classes-to-body.php');
