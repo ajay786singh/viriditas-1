@@ -37,7 +37,7 @@
         <p class="small">&copy; 2014 Viriditas Inc. All Rights Reserved.</p>
     </div>
 </footer>
-
+</div>
 <?php /*<script src="<?php bloginfo('template_url' ); ?>/bower_components/jquery/dist/jquery.min.js"></script> 
 <script src="<?php bloginfo('template_url' ); ?>/js/app.min.js"></script>*/?>
 <?php wp_footer(); ?>

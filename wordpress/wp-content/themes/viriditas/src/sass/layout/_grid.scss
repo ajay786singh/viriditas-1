@@ -1,6 +1,11 @@
 //Mobile first - Global Settings
 $susy: (columns: 6, gutters: 1, gutter-position: inside);
 
+body {
+	&.mm-menu-open {
+	  overflow: hidden;
+	}
+}
 .container {
     @include outer-container;
     overflow: hidden;
@@ -13,10 +18,11 @@ $susy: (columns: 6, gutters: 1, gutter-position: inside);
     overflow: hidden;
     position: relative;
     width: 100%;
-    //padding-top: 75px;
-    @include media($bp-large) {
-        //padding-top: 90px;
-    }
+    z-index: 5;
+    @include transition(transform 0.5s);
+    &.mm-menu-open {
+	 	@include transform(translateX(-300px));
+	}
 }
 
 .span-2 {
