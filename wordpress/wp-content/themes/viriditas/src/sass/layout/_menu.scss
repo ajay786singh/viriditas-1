@@ -53,7 +53,7 @@ $color--primary-dark: #7B1FA2;
 $color--primary: #9C27B0;
 $color--primary-light: #E1BEE7;
 
-$toggle-button-color: $white; // also for icons
+$toggle-button-color: $purple; // also for icons
 $color--text-secondary: #727272;
 $color--divider: #B6B6B6;
 
@@ -89,6 +89,10 @@ button.mm-menu-toggle {
 	font-size: 0;
 	text-indent: -9999px;
 	@include transition(all 0.5s);
+	display: block;
+	@include media($bp-large) {
+		display: none;
+	}
 	&::before {
 		display: block;
 		position: absolute;
@@ -207,7 +211,7 @@ button.mm-menu-toggle {
 .mm-menu__header {
   position: relative;
   width: 100%;
-  height: 188px;
+  height: 130px;
   background-color: $color--accent;
 }
 
