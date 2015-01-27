@@ -27,115 +27,236 @@
     }
 }
 
-/* Site Overlay */
 
-.site-overlay {
-    bottom: 0;
-    display: none;
-    position: fixed;
-    right: 15.625em;
-    top: 0;
-    width: 100%;
-    z-index: 9999;
+/* =============================================================================
+  MM - MATERIAL MENU
+============================================================================= */
+
+/**
+ * MM - Material Menu
+ *
+ * All the styles for the material menu here! I've prefixed them all with "mm",
+ * which means material menu.
+ */
+
+/**
+ * Toggle Button
+ *
+ * a.k.a. hamburger icon. See the "resets" section for global button resets.
+ */
+
+ // =============================================================================
+//  COLOURS
+// =============================================================================
+
+$color--primary-dark: #7B1FA2;
+$color--primary: #9C27B0;
+$color--primary-light: #E1BEE7;
+
+$toggle-button-color: $white; // also for icons
+$color--text-secondary: #727272;
+$color--divider: #B6B6B6;
+
+$color--accent: #CDDC39;
+
+// =============================================================================
+//  FONTS
+// =============================================================================
+
+$font-family--primary: "Roboto", sans-serif;
+
+$font-size--small: 16px;
+$font-size--medium: 22px;
+$font-size--large: 36px;
+
+$line-height--small: 1;
+$line-height--medium: 1.6;
+  
+$menu-toggle-width: 24px;
+$menu-toggle-height: 18px;
+$menu-toggle-layer-thickness: 4px;
+$menu-gradient-stop-1: $menu-toggle-height/2 - $menu-toggle-layer-thickness/2;
+$menu-gradient-stop-2: $menu-gradient-stop-1 + $menu-toggle-layer-thickness;
+
+button.mm-menu-toggle {
+	position: fixed;
+	top: 33px; 
+	right: 4.67%;
+	z-index: 21001;
+	width: $menu-toggle-width;
+	height: $menu-toggle-height;
+	background: linear-gradient(0deg, rgba($toggle-button-color,0), rgba($toggle-button-color,0) $menu-gradient-stop-1, $toggle-button-color $menu-gradient-stop-1, $toggle-button-color $menu-gradient-stop-2, rgba($toggle-button-color,0) $menu-gradient-stop-2, rgba($toggle-button-color,0) $menu-toggle-height);
+	font-size: 0;
+	text-indent: -9999px;
+	@include transition(all 0.5s);
+	&::before {
+		display: block;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: $menu-toggle-layer-thickness;
+		background-color: $toggle-button-color;
+		content: "";
+		top: 0;
+		transform-origin: bottom left;
+	}
+	&::after {
+		display: block;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: $menu-toggle-layer-thickness;
+		background-color: $toggle-button-color;
+		content: "";		
+		bottom: 0;
+		transform-origin: top left;
+	}  
+	&.active {
+		transform: rotate(180deg);
+		&::before {
+			width: 75%;
+			transform: translateY(7px) rotate(-45deg);
+		}
+		&::after {
+			width: 75%;
+			transform: translateY(-7px) rotate(45deg);
+		}
+	}
+	&:hover {
+		background-color:none;
+	}
+	&:focus {
+		background-color:none;
+		border:none;
+		outline:none;
+	}
+	&:active {
+		background-color:none;
+		border:none;
+		outline:none;
+	}
 }
 
-/*
-Nav Panel
-======================================
-*/
 
-.menu-panel {
-    -webkit-overflow-scrolling: touch;
-    background: #333332;
-    height: 100%;
-    overflow: auto;
-    padding-top: 75px;
-    position: fixed;
-    right: -15.625em;
-    top: 0;
-    width: 15em;
-    z-index: 9999;
-    ul {
-        margin: 0;
-        padding-left: 0;
-        li {
-            a {
-                color: #b3b3b1;
-                display: block;
-                padding: 10px 30px 10px 0;
-                text-decoration: none;
-                text-transform: uppercase;
-                &:hover {
-                    color: $white;
-                }
-            }
-        }
-    }
+/**
+ * The actual menu
+ *
+ * Here be all the stuff for the menu itself.
+ */
+
+.mm-menu {
+	position: fixed;
+	top: 0; 
+	right: 0;
+	z-index: 21000;
+	background-color: #fff;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	box-shadow: 0;
+	transform: translateX(100%);
+	transition: transform 0.5s, box-shadow 0.5s;
+	ul {
+		list-style: none;
+		margin: 20px 0 0;
+		padding: 0;
+		li {
+			display: block;
+			//width: 100%;
+			opacity: 0;
+			@include transform(translateX(-50%));
+			&.in-view {
+				opacity: 1;
+				transform: translateX(0);
+			}
+			$delay: 0.1;
+			@for $i from 1 through 20 {
+			  &.item-#{$i} {
+				transition: opacity 0.5s #{$delay}s, transform 0.5s #{$delay}s;
+			  }
+			  $delay: $delay + 0.1;
+			}
+			a {
+				display: block;
+				position: relative;
+				overflow: hidden;
+				margin: 4px 0;
+				padding: 12px;
+				color: $color--text-secondary;
+				font-size: $font-size--small;
+				text-decoration: none;
+				transition: background 0.5s, color 0.5s;
+			}
+		}
+	}
+	&.active {
+		box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+		transform: translateX(0);
+	}
 }
 
-#nav-toggle {
-    cursor: pointer;
-    display: block;
-    padding: 10px 35px 16px 0px;
-    position: absolute;
-    right: 30px;
-    top: 25%;
-    @include media($bp-large) {
-        display: none;
-    }
-
-    span {
-        background: $purple;
-        content: '';
-        cursor: pointer;
-        display: block;
-        height: 5px;
-        position: absolute;
-        width: 35px;
-    }
+@media all and ( min-width: 300px ) {
+  .mm-menu {
+    width: 300px;
+    transform: translateX(300px);
+  }
 }
 
-#nav-toggle span:before, #nav-toggle span:after {
-    background: $purple;
-    content: '';
-    cursor: pointer;
-    display: block;
-    height: 5px;
-    position: absolute;
-    width: 35px;
+/* header */
+
+.mm-menu__header {
+  position: relative;
+  width: 100%;
+  height: 188px;
+  background-color: $color--accent;
 }
 
-#nav-toggle span:before {
-    top: -10px;
+.mm-menu__title {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-size: $font-size--medium;
 }
 
-#nav-toggle span:after {
-    bottom: -10px;
+/* the touch effect, for when a link is touched */
+
+.mm-menu__link--touch-effect {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  width: 0; height: 0;
+  border-radius: 100%;
+  background-color: $color--divider;
+  transform: scale(0);
+  transform-origin: 50% 50%;
 }
 
-#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
-    @include transition(all 500ms ease-in-out);
+.mm-menu__link--touch-effect.animating {
+  transform: scale(1);
+  transition: transform 0.5s;
 }
 
-#nav-toggle.active span {
-    background-color: transparent;
-}
+/**
+ * Menu mask
+ *
+ * A mask that comes in and covers the wrapper when the menu is active.
+ */
 
-#nav-toggle.active span:before, #nav-toggle.active span:after {
-    background: $purple;
-    top: 0;
-}
-
-#nav-toggle.active span:before {
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-#nav-toggle.active span:after {
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+.mm-menu-mask {
+	display: block;
+	position: fixed;
+	top: 0; left: 0;
+	z-index: 8;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.8);
+	visibility: hidden;
+	opacity: 0;
+	@include transition(opacity 0.5s, visibility 0.5s);
+	&.active {
+		visibility: visible;
+		opacity: 1;
+	}
 }

@@ -41,14 +41,14 @@
 </head>
 <body <?php body_class();?>>
 <?php global $woocommerce; ?> 
-
-<!-- Pushy Menu -->
-<nav id="menu" class="menu-panel" role="navigation">
-    <?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>      
-</nav>
-
-<!-- Site Overlay for Pushy offcanvas to work -->
-<div class="site-overlay"></div>
+<button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu</button>
+  <nav id="mm-menu" class="mm-menu">
+    <div class="mm-menu__header">
+      <h2 class="mm-menu__title">Viriditas</h2>
+    </div>
+	<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>      
+  </nav><!-- /nav -->
+<div id="wrapper" class="wrapper">
 <!-- Header Starts Here -->
 <?php 
 	$header_class="wrap push";
@@ -94,4 +94,4 @@
 </header>
 <!-- Header Ends Here -->
 <!-- Wrapper Starts Here -->
-<div class="wrapper push">
+<div id="content-wrapper">
