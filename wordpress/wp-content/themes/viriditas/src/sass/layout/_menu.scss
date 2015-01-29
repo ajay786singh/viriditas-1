@@ -81,7 +81,7 @@ $menu-gradient-stop-2: $menu-gradient-stop-1 + $menu-toggle-layer-thickness;
 button.mm-menu-toggle {
 	position: fixed;
 	top: 33px; 
-	right: 4.67%;
+	right: 30px;
 	z-index: 21001;
 	width: $menu-toggle-width;
 	height: $menu-toggle-height;
@@ -216,12 +216,24 @@ button.mm-menu-toggle {
 }
 
 .mm-menu__title {
-  position: absolute;
-  bottom: 12px; left: 12px;
-  margin: 0;
-  padding: 0;
-  color: #fff;
-  font-size: $font-size--medium;
+	position: absolute;
+	bottom: 12px; left: 12px;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-size: $font-size--medium;
+	img {
+		float: left;
+	}
+	span {
+		display:block;
+		vertical-align: top;
+		margin-top:25px;
+		margin-left:10px;
+		color:$white;
+		float: left;
+		font-size:em(16px);
+	}
 }
 
 /* the touch effect, for when a link is touched */

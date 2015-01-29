@@ -15,11 +15,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: $base-font-size;
+    font-size: em(36px);
+	line-height: 1.0909em;
 	font-weight: normal;
     @include media($bp-large) {
         font-size: em(52px);
-        // 16 * 4.125 = 66px
         line-height: 1.0909em;
         margin-bottom: 0.3636em;
     }
@@ -96,7 +96,7 @@ p, ul, ol {
 
     footer & {
         font-family: $sans-serif;
-        font-size: $base-font-size;
+        font-size: 0.9em;
         line-height: $base-line-height;
         margin-bottom: $base-line-height;
     }
@@ -126,7 +126,7 @@ a {
 footer {
 	a {
 		@include transition(color 0.1s linear);
-		border-bottom: 1px dotted #ccc;
+		border-bottom: none;
 		color: $white;
 		&:hover {
 			color: #ccc;

@@ -19,4 +19,16 @@
             font-weight: normal;
         }
     }
+	.by-category {
+		position:relative;
+		z-index:10;
+	}
+	.by-body_system {
+		z-index:9;
+		position:relative;
+	}
+	.by-indication {
+		z-index:8;
+		position:relative;
+	}
 }

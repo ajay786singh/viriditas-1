@@ -1,31 +1,29 @@
 footer {
-    background: url(../images/footer-bg.png);
+	background: url(../images/footer-bg.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding:30px 0 70px;
     color: $white;
-    .container {
-        //@include outer-container;
-        //padding: 0 2em 0 2em;
-        .content {
-            @include span-columns(5);
-            @include media($bp-large) {
-                @include span-columns(3);
-                &:nth-of-type(2) {
-                    @include shift(1);
-                    @include span-columns(4);
-                }
-                &:nth-of-type(3) {
-                    @include shift(1);
-                    @include span-columns(3);
-                }
-            }
-        }
-        ul {
-            list-style-type: none;
-            margin-left: 0px;
-            padding-left: 0px;
-            padding-top: 1em;
-            li {
-                margin: 0 auto 0.5em;
-            }
-        }
-    }
+	.footer-logo {
+		img {
+			@include media($bp-large) {
+				float:left;
+			}
+		}
+		.newsletter-box {
+			display:block;
+			width:100%;
+			@include media($bp-large) {
+				width: 75%;
+				margin-left: 120px;
+			}
+		}
+	}
+	h6 {
+		margin-bottom:em(20px);
+		margin-top:em(20px);
+	}
+	p {
+		margin-bottom:0;
+	}
 }

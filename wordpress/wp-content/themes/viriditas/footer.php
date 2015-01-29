@@ -1,43 +1,43 @@
 </div>
 <!-- Wrapper Ends Here -->
     <footer>
-    <div class="container">
-        <div class="content">
-            <h5>Get important updates</h5>
-            <p>We try and minimize our email time as much as you. Rest assured we'll only send you essential news: new products, office hour changes, class announcements, etc.</p>
-            <form action="#" method="post">
-            <input type="hidden" value="2" name="group[2][2]" id="mce-group[2]-2-1">
-            <fieldset>
-                <ol>
-                <li><input name="EMAIL" placeholder="you@yourdomain.com" type="email" value=""  id="mce-EMAIL" required></li>
-                <li><input type="submit" value="Yes"></li>
-              </ol>
-            </fieldset>
-          </form>
-        </div>
-        <div class="content">
-            <h5>Resources</h5>
-            <p>A hollistic approach starts with the mind. Our writings, and DIY herbal recipes and therapeutics are open source because we encourage continued learning. <br><a href="#">Learn more</a></p>
-        </div>
-        
-        <div class="content">
-            <h5>Contact</h5>
-            <p><b>Viriditas</b><br>
-                2775 Dundas West Street<br>
-                Toronto, Ontario, M6P 1Y4<br>
-                <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/d9dEl">Map</a></p>
-
-            <p><i class="fa fa-phone"></i> 416-767-3428<br>
-                <i class="fa fa-fax"></i> 416-767-1215<br>
-                <i class="fa fa-envelope"></i> <a href="mailto: redden@viriditasherbalproducts.com">Email us</a>
-            
-        </div>  
-    </div>
-    <div class="container">
-        <p class="small">&copy; 2014 Viriditas Inc. All Rights Reserved.</p>
-    </div>
-</footer>
-</div>
+		<div class="container">
+			<div class="span-11 center">
+				<div class="span-6 footer-logo">
+					<img src="<?php bloginfo('template_url');?>/dist/images/logo@2x.png">
+					<div class="newsletter-box">
+						<h6>Viriditas</h6>
+						<p>Echo Park ugh umami pug messenger bag.</p>
+						<form action="#" method="post">
+							<input type="hidden" value="2" name="group[2][2]" id="mce-group[2]-2-1">
+							<fieldset>
+								<ol>
+									<li><input name="EMAIL" placeholder="you@yourdomain.com" type="email" value=""  id="mce-EMAIL" required></li>
+									<li><input type="submit" value="Yes"></li>
+								</ol>
+							</fieldset>
+					  </form>
+					</div>
+				</div>
+				<div class="span-6">
+					<div class="span-6">
+						<h6>Resources</h6>
+						<p>Austin 3 wolf moon disrupt church-key stumptown butcher swag. XOXO health goth  Austin, messenger bag photo booth migas plaid post-ironic church-key. Direct trade Carles health goth four dollar toast.</p>
+					</div>
+					<div class="span-6">
+						<h6>Contact</h6>
+						<p>
+							2775 Dundas St. West<br>
+							Toronto, ON, M6P 1Y4<br>
+							Tel: 416-767-3428<br>
+							Fax: 416-767-1215<br>
+							<a href="mailto: redden@viriditasherbalproducts.com">redden@viriditasherbalproducts.com</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+    </footer>
 <?php /*<script src="<?php bloginfo('template_url' ); ?>/bower_components/jquery/dist/jquery.min.js"></script> 
 <script src="<?php bloginfo('template_url' ); ?>/js/app.min.js"></script>*/?>
 <?php wp_footer(); ?>

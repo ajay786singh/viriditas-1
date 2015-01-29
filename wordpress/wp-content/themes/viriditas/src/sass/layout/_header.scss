@@ -16,6 +16,7 @@ header {
 	
 	.header-content {
 		overflow: hidden;
+		padding-bottom: 10px;
 		border-bottom:2px solid $white;
 	}
     .logo {
@@ -26,13 +27,28 @@ header {
         @include media($bp-large) {
             max-width: 225px;
         }
-
+		
         a {
             display: block;
+			color:$white;
+			img {
+				float: left;
+			}
+			span {
+				display:block;
+				vertical-align: top;
+				margin-top:25px;
+				margin-left:10px;
+				float: left;
+				font-size:em(20px);
+			}
         }
     }
 	&.active-header {
 		background-color: $white;
+		& .logo a {
+			color:$purple;
+		}
 		.header-content {
 			border-bottom:2px solid $purple;
 			.main-menu-desktop {
