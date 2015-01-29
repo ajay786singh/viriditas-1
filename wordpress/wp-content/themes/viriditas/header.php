@@ -44,15 +44,15 @@
 <button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu</button>
   <nav id="mm-menu" class="mm-menu">
     <div class="mm-menu__header">
-      <h2 class="mm-menu__title">Viriditas</h2>
+      <h2 class="mm-menu__title"><a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""><span>Viriditas</span></a></h2>
     </div>
 	<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>      
   </nav><!-- /nav -->
 <div id="wrapper" class="wrapper">
 <!-- Header Starts Here -->
 <?php 
-	$header_class="wrap push";
-	if(is_page()) {
+	$header_class="";
+	if(is_page() || is_archive()) {
 		$header_class.=" active-header";
 	}
 ?>
@@ -61,7 +61,7 @@
 	<div class="container">
 		<div class="header-content">
 			<div class="span-3 logo">
-				<a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""></a>
+				<a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""><span>Viriditas</span></a>
 			</div>
 			<div class="span-9">								            
 				<nav class="main-menu-desktop">
@@ -86,12 +86,7 @@
 				 <?php } ?>
 			</div>
 			*/?>
-			<div class="menu-btn">
-				<a id="nav-toggle" href="#menu"><span></span></a>
-			</div>
 		</div>
 	</div>
 </header>
 <!-- Header Ends Here -->
-<!-- Wrapper Starts Here -->
-<div id="content-wrapper">

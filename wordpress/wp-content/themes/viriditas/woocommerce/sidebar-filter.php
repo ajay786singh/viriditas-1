@@ -24,7 +24,7 @@
 		if($product_categories) {
 	?>
 	<div class="filter filter-category">
-		<select class="by-category">
+		<select class="cs-select cs-skin-border by-category">
 			<?php 
 			foreach($product_categories as $product_category) {
 				echo "<option value='".$product_category->term_id."'>".$product_category->name."</option>";
@@ -34,7 +34,7 @@
 	<?php } ?>
 	<div class="filter filter-body_system">
 	<?php if($body_systems) { ?>
-		<select class="by-body_system">
+		<select class="cs-select cs-skin-border by-body_system">
 				<option value="">Select Body System</option>
 			<?php 
 			foreach($body_systems as $body_system) {
@@ -56,7 +56,7 @@
 				<h6 class="heading">Filter by Indication</h6>
 			</div>
 			<div class="filter filter-indication">
-				<select class="by-indication">
+				<select class="cs-select cs-skin-border by-indication">
 					<option value="">Select Indication</option>
 					<?php 
 						foreach($indications as $indication) {

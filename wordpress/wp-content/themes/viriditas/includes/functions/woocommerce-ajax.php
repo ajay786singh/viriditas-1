@@ -3,12 +3,14 @@
 	//AJAX Category Filter
 	function load_products () {
 		global $wp_query;
-		$cat_id=$_POST['filter_type_category'];
+		$cat=$_POST['filter_type_category'];
 		$body_system_id=$_POST['filter_type_body_system'];
 		$action_id=$_POST['filter_type_action'];
 		$indication_id=$_POST['filter_type_indication'];
 		$sort_by_name=$_POST['sort_by_name'];
 		$paged = $_POST['paged'];
+		$category = get_term_by('name', $cat, 'product_cat');
+		$cat_id=$category->term_id;
 		
 		$args=array(
 			'post_type' =>'product',
@@ -93,7 +95,9 @@
 function load_actions() {
 	global $wp_query;
 	
-	$cat_id=$_POST['category'];
+	$cat=$_POST['category'];
+	$category = get_term_by('name', $cat, 'product_cat');
+	
 	$body_system_id=$_POST['body_system'];
 	$args=array(
 			'post_type' => 'product',
@@ -103,7 +107,7 @@ function load_actions() {
 				array(
 					'taxonomy' => 'product_cat',
 					'field' => 'term_id',
-					'terms' => $cat_id
+					'terms' => $category->term_id
 				),
 				array(
 					'taxonomy' => 'body_system',
@@ -161,7 +165,7 @@ function load_body_systems() {
 	}
 	$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
 	if($body_systems) {
-		$result='<select class="by-body_system">';
+		$result='<select class="cs-select cs-skin-border by-body_system">';
 			$result.='<option value="">Select Body System</option>';
 		foreach($body_systems as $body_system) {
 			$result.="<option value='".$body_system->term_id."'>".$body_system->name."</option>";
