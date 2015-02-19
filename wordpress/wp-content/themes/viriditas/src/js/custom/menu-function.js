@@ -4,10 +4,10 @@ jQuery(document).ready(function() {
 	jQuery(window).scroll(function() {		
 		var banner_height=jQuery('section[role=banner]').height();		
 		if (jQuery(this).scrollTop() > banner_height-100){  		
-			jQuery('body').addClass("active-header");		
+			jQuery('header').addClass("active-header");		
 		}		
 		else{		
-			jQuery('body').removeClass("active-header");		
+			jQuery('header').removeClass("active-header");		
 		}		
 	});
 
