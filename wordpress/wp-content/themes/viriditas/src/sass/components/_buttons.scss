@@ -1,0 +1,31 @@
+button {
+    @extend %button;
+    @include appearance(none);
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    margin-bottom: 0.5em;
+}
+.button {
+	background: $button-bg;
+	padding: 8px 15px;
+	float: left;
+	margin: 20px 0;
+	color:$white;
+	&:hover {
+		background: $button-bg-hover;
+		border-color: $light-purple;
+		color:$white;
+	}
+	.banner-content & {
+		border:2px solid $white;
+		background:none;
+		&:hover {
+			background: $button-bg-hover;
+			color:$white;
+			border-color:$button-bg-hover;
+		}
+	}
+}

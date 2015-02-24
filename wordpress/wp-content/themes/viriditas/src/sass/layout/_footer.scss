@@ -15,15 +15,8 @@ footer {
 			width:100%;
 			@include media($bp-large) {
 				width: 75%;
-				margin-left: 120px;
+				margin-left: 180px;
 			}
 		}
-	}
-	h6 {
-		margin-bottom:em(20px);
-		margin-top:em(20px);
-	}
-	p {
-		margin-bottom:0;
 	}
 }

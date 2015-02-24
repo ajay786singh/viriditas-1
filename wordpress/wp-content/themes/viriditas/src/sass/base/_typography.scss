@@ -12,6 +12,13 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: $header-font-family;
     text-rendering: optimizeLegibility;
+	font-weight: normal;	
+	section[role=content] & {
+		color:$heading;
+		&:first-child {
+			margin-top:0px;
+		}
+	}
 }
 
 h1 {
@@ -19,18 +26,17 @@ h1 {
 	line-height: 1.0909em;
 	font-weight: normal;
     @include media($bp-large) {
-        font-size: em(52px);
+        font-size: em(50px);
         line-height: 1.0909em;
         margin-bottom: 0.3636em;
     }
-
     .single & {
         text-align: center;
     }
 }
 
 h2 {
-    font-size: $base-font-size;
+    font-size: $base-font-size * 1.5;
     @include media($bp-large) {
         font-size: $base-font-size * 3.25;
         // 16 * 3.25 = 52px
@@ -93,17 +99,6 @@ p, ul, ol {
         line-height: 1.5em;
         margin-bottom: 1.5em;
     }
-
-    footer & {
-        font-family: $sans-serif;
-        font-size: 0.9em;
-        line-height: $base-line-height;
-        margin-bottom: $base-line-height;
-    }
-    .archive & {
-        //color: rgba(0, 0, 0, 0.6);
-   
-    }
 }
 
 li {
@@ -121,21 +116,6 @@ a {
         color: $hover-link-color;
         outline: none;
     }
-}
-
-footer {
-	a {
-		@include transition(color 0.1s linear);
-		border-bottom: none;
-		color: $white;
-		&:hover {
-			color: #ccc;
-		}
-		&:active, &:focus {
-			color: $hover-link-color;
-			outline: none;
-		}
-	}
 }
 
 hr {
@@ -206,4 +186,48 @@ nav {
 
 .wf-loading {
     visibility: hidden;
+}
+
+.thumb {
+	text-align:center;
+}
+
+
+footer {
+	a {
+		@include transition(color 0.1s linear);
+		border-bottom: none;
+		color: $white;
+		&:hover {
+			color: #ccc;
+		}
+		&:active, &:focus {
+			color: $hover-link-color;
+			outline: none;
+		}
+	}
+	& ul, ol {
+		font-family: $sans-serif;
+        font-size: 0.9em;
+        line-height: $base-line-height;
+        margin-bottom: 0.5em;
+	}
+	h5 {
+		margin-bottom:em(0px);
+		margin-top:em(15px);
+	}
+	h6 {
+		margin-bottom:em(20px);
+		margin-top:em(20px);
+	}
+	p {
+		font-family: $sans-serif;
+        font-size: 0.9em;
+        line-height: $base-line-height;
+        margin-bottom:0;
+	}
+	& .copyright p {
+		font-family: $serif;
+		margin-top: 0;
+	}
 }

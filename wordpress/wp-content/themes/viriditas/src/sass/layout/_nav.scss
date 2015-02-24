@@ -1,13 +1,18 @@
 .main-menu-desktop {
 	display:none;
 	@include media($bp-large) {
-		display:block;
+    	display:block;
 	}
-    float: right;
     ul {
-        float: right;
         list-style-type: none;
-        margin-top: 1.8em;
+        margin-top: 1.5em;
+		margin-bottom: 0em;
+		width: 100%;
+		font-family:$sans-serif;
+		text-align: right;
+		&:nth-child(2) {
+			margin-bottom: 1.5em;
+		}
         li {
             display: inline;
             font-weight: normal;
@@ -26,7 +31,6 @@
         }
     }
 }
-
 
 /* =============================================================================
   MM - MATERIAL MENU
@@ -79,15 +83,11 @@ body.mm-menu-open {
 	cursor:pointer;
 	width: $menu-toggle-width;
 	height: $menu-toggle-height;
-	color:$purple;
-	.mm-menu-open & {
-		color:$white;
-	}
+	color:$white;
 	font-size: 1.25em;
 	line-height: 1.5em;
-	font-weight: 600;
 	&:after {
-		background: url(dist/images/menu-buttons.png) 0 -32px no-repeat;
+		background: url(dist/images/menu-buttons.png) 0 0 no-repeat;
 		.active-header & {
 			background-position:0 -32px;
 		}

@@ -13,11 +13,11 @@ http://drinchev.github.io/monosocialiconsfont/
 }
 @font-face {
 	font-family: 'icomoon';
-	src:url('dist/fonts/icomoon.eot?-rdnm34');
-	src:url('dist/fonts/icomoon.eot?#iefix-rdnm34') format('embedded-opentype'),
-		url('dist/fonts/icomoon.woff?-rdnm34') format('woff'),
-		url('dist/fonts/icomoon.ttf?-rdnm34') format('truetype'),
-		url('dist/fonts/icomoon.svg?-rdnm34#icomoon') format('svg');
+	src:url('../fonts/icomoon.eot?-rdnm34');
+	src:url('../fonts/icomoon.eot?#iefix-rdnm34') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?-rdnm34') format('woff'),
+		url('../fonts/icomoon.ttf?-rdnm34') format('truetype'),
+		url('../fonts/icomoon.svg?-rdnm34#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -25,7 +25,7 @@ http://drinchev.github.io/monosocialiconsfont/
 $icon-font: "Mono Social Icons Font";
 $sans-serif: "adelle-sans", sans-serif;
 $serif: "adelle", serif;
-$base-font-family: $serif;
+$base-font-family: $sans-serif;
 $header-font-family: $serif;
 
 // Sizes
@@ -38,13 +38,14 @@ $header-line-height: $base-font-size * 1.25;
 $base-border-radius: em(3);
 
 // Colors
-$blue: #5078C3;
-$dark-gray: #727272;
+$blue: #3a3877;
+$light-blue: #4e4d89;
+$dark-gray: #828282;
 $medium-gray: #999999;
 $light-gray: #f2f2f2;
 $light-red: #fbe3e4;
 $light-yellow: #fff6bf;
-$light-green: #e6efc2;
+$light-green: #99bc62;
 $white: white;
 $purple: #52335c;
 $light-purple: #311f39;
@@ -61,6 +62,7 @@ $white: rgba(255, 255, 255, 1);
 $light-gray: rgba(204, 204, 204, 1);
 $body_font: rgba(61, 61, 61, 1);
 $body_bg: rgba(246, 245, 242, 1);
+$heading:#3d3777;
 $header_link: rgba(0, 0, 0, 1);
 $header_link_hover: rgba(102, 102, 102, 1);
 
@@ -70,6 +72,9 @@ footer {
 
 // Background Color
 $base-background-color: white;
+$header-bg: $blue;
+$button-bg: $light-blue; 
+$button-bg-hover: rgba(64,58,102,1);
 
 // Font Colors
 $base-font-color: $dark-gray;
@@ -83,6 +88,8 @@ $hover-button-color: $hover-link-color;
 
 // Border color
 $base-border-color: $light-gray;
+$header-border: $white;
+$header-active-border: $purple;
 
 // Flash Colors
 $alert-color: $light-yellow;
