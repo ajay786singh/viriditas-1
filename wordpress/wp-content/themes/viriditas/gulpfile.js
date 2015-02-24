@@ -12,11 +12,9 @@ var gulp 		= require('gulp'),
 	sass 		= require('gulp-ruby-sass'),
 	imagemin 	= require('gulp-imagemin'),
 	pngquant 	= require('imagemin-pngquant'),
-	cache 		= require('gulp-cached'),
 	livereload 	= require('gulp-livereload'),
 	notify 		= require('gulp-notify'),
-	jshint 		= require('gulp-jshint'),
-	bower 		= require('gulp-bower');
+	jshint 		= require('gulp-jshint');
 
 // Create custom variables to make life easier
 var outputDir = 'dist';
@@ -24,7 +22,6 @@ var outputDir = 'dist';
 var scriptList = [
 	'src/components/jquery/dist/jquery.js', 
 	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
-	//'src/components/select/select.min.js',
 	'src/js/custom/jquery.classie.js',
 	'src/js/custom/jquery.customSelect.js',
 	'src/js/custom/menu.js',
@@ -39,8 +36,17 @@ var fontIcons = [
 ];
 
 var sassOptions = {
-	style: 'compressed'
+	style: 'nested'
 };
+
+// Create sass compile task
+gulp.task('sass', function() {
+    return sass('src/sass/style.scss', sassOptions) 
+    .on('error', function (err) { console.error('Error!', err.message); })
+    .pipe(gulp.dest(''))
+    .pipe(livereload())
+    .pipe(notify("sass task finished"));
+});
 
 // Create image minification task
 gulp.task('imagemin', function () {
@@ -68,25 +74,10 @@ gulp.task('js', function() {
 });
 
 
-// Create sass compile task
-gulp.task('sass', function() {
-	return gulp.src('src/sass/style.scss')
-		.pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
-		.pipe(sass(sassOptions))
-		.pipe(gulp.dest(outputDir + '/css'))
-		.pipe(livereload())
-		.pipe(notify("sass task finished"));
-}); 
-
 // Create fonticons compile task
 gulp.task('icons', function() { 
     return gulp.src(fontIcons) 
         .pipe(gulp.dest(outputDir + '/fonts')); 
-});
-
-// Create bower update and install task
-gulp.task('bower', function() {
-  	return bower();
 });
 
 // Create watch task
@@ -99,4 +90,4 @@ gulp.task('watch', function() {
 });
 
 // Create default task so you can gulp whenever you don't want to watch
-gulp.task('default', ['js', 'sass', 'imagemin', 'icons', 'bower', 'watch']);
+gulp.task('default', ['js', 'sass', 'imagemin', 'icons']);

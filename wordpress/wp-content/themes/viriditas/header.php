@@ -63,11 +63,19 @@
 			<div class="span-3 logo">
 				<a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""><span>Viriditas</span></a>
 			</div>
-			<div class="span-9">								            
+			<div class="span-9">								         
 				<nav class="main-menu-desktop">
-					<div class="menu-main-menu-container">
+					<?php global $woocommerce; ?> 
+						<ul>
+							<?php if ( is_user_logged_in() ) { ?>
+								<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile |','woothemes'); ?></a> 
+								<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
+							<?php } 
+							else { ?>
+								<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Login / Sign up','woothemes'); ?>"><?php _e('Login | Sign up','woothemes'); ?></a></li>
+						<?php } ?>
+						</ul>
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
-					</div>	
 				</nav>
 			</div>
 			<?php /*

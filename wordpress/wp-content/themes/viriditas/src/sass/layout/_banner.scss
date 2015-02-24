@@ -1,14 +1,17 @@
+$banner-bg: rgba(58,56,119,0.5);
+$banner-text-color: $white;
+
 section[role=banner] {
 	background-repeat:no-repeat;
 	background-size:cover;
-	color:$white;
+	color:$banner-text-color;
 	position: relative;
 	&:before {
+		background-color: $banner-bg;
 		content: '';
-		background-color: rgba(82,56,95,0.5);
 		height: 100%;
-		width: 100%;
 		position: absolute;
+		width: 100%;
 	}
 	.banner-content {
 		padding:150px 0 75px;		
@@ -18,6 +21,6 @@ section[role=banner] {
 		overflow:hidden;
 	}
 	.button {
-		color:$white;
+		color: $banner-text-color;
 	}
-}	
+}

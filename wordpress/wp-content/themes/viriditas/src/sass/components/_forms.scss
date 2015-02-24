@@ -60,15 +60,15 @@ select[multiple=multiple] {
 footer input[type="submit"] {
     -webkit-font-smoothing: antialiased;
     @include appearance(none);
-    background-color: $medium-gray;
-    //border-radius: $base-border-radius;
+    background-color: $light-green;
     border: none;
     color: $white;
     cursor: pointer;
     font-family: $sans-serif;
     font-size: $base-font-size;
     font-size: 1.15em;
-    padding: .4em 1em;
+    padding: .425em 1em 0.425em;
+	margin-left:-5px;
     text-decoration: none;
     user-select: none;
     vertical-align: middle;
