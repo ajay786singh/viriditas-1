@@ -87,7 +87,7 @@ body.mm-menu-open {
 	line-height: 1.5em;
 	font-weight: 600;
 	&:after {
-		background: url(../../dist/images/menu-buttons.png) 0 -32px no-repeat;
+		background: url(dist/images/menu-buttons.png) 0 -32px no-repeat;
 		.active-header & {
 			background-position:0 -32px;
 		}

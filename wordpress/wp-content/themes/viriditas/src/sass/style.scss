@@ -1,1 +1,43 @@
-@import "settings";
+/*!
+ * Theme Name: Viriditas
+ * Theme URI: http://github.com/hypenotic/viriditas
+ * Author: Hypenotic
+ * Author URI: http://hypenotic.com
+ * Description: Custom WordPress theme created for MaRS' Social Finance Forum by Hypenotic
+ * Version: 0.1
+*/
+
+// ONE FILE TO RULE THEM ALL :)
+
+// Library
+@import "../components/normalize-scss/normalize";
+@import "../components/bourbon/app/assets/stylesheets/bourbon";
+
+// Neat Settings -- uncomment if using Neat -- must be imported before Neat
+@import "layout/grid-settings";
+@import "../components/neat/app/assets/stylesheets/neat";
+
+@import "helpers/variables";
+@import "helpers/extends/button";
+@import "helpers/extends/clearfix";
+@import "helpers/extends/hide-text";
+@import "helpers/extends/flashes";
+
+
+@import "base/typography";
+@import "base/wp_core";
+
+@import "layout/header";
+@import "layout/nav";
+@import "layout/banner";
+@import "layout/content";
+@import "layout/woocommerce";
+@import "layout/filters";
+@import "layout/product-gallery";
+@import "layout/arrow";
+@import "layout/footer";
+
+@import "components/forms";
+@import "components/buttons";
+@import "components/custom-select";
+@import "components/tabs";

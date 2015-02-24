@@ -1,15 +1,11 @@
 header {
-    //background-color: $white;
     position: fixed;
     width: 100%;
     z-index: 9999;
-    height: 105px;
-	 -webkit-transition: all 2s ease; // Chrome
-    -moz-transition: all 2s  ease; // Mozilla
-    -o-transition: all 2s  ease; // Opera
-    transition: all 2s  ease;
+    height: 84px;
+    @include transition(all 2s  ease);
     @include media($bp-large) {
-        height: 90px;
+        height: 89px;
     }
 
     //border-bottom: 1px solid $medium-gray;
