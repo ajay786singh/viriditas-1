@@ -1,4 +1,4 @@
-<div class="span-3 sidebar">
+<div class="column-3 sidebar">
 	<div class="shop-header">
 		<h6 class="heading">Filter by category</h6>
 	</div>

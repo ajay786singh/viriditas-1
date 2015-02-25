@@ -1,9 +1,11 @@
+$footer-text-color:$white;
+
 footer {
 	background: url(dist/images/footer-bg.png);
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding:30px 0 70px;
-    color: $white;
+    color: $footer-text-color;
 	.footer-logo {
 		img {
 			@include media($bp-large) {

@@ -13,49 +13,32 @@
         vertical-align: middle;
         white-space: nowrap;
     }
-    .loader {
+    .loading {
+        @include appearance(none);
+        display: block;
+		left: 0;
         margin: 50px auto;
         text-align: center;
         top: 40%;
-        left: 0;
-        @extend %button;
-        @include appearance(none);
-        border: none;
-        cursor: pointer;
         user-select: none;
         vertical-align: middle;
         white-space: nowrap;
-        display: block;
-        width: 200px;
-        .fa {
-            font-size: 3em;
-            &:before {
-                content: "\f110";
-            }
-        }
+        width: 100%;
     }
+	.no-records {
+		@include appearance(none);
+		display:none;
+		left: 0;
+        margin: 50px auto;
+        text-align: center;
+        top: 40%;
+        user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 100%;
+	}
     .sidebar {
         padding-bottom: 80px;
-        h6 {
-            font-size: 1.2em;
-            text-transform: uppercase;
-            line-height: 1.5em;
-        }
-        .filter-actions {
-            h6 {
-                font-size: 0.8em;
-                margin-top: 0px;
-            }
-        }
-    }
-}
-
-.login-button {
-    a {
-        color: $white;
-        &:hover {
-            color: $medium-gray;
-        }
     }
 }
 

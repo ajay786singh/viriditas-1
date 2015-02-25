@@ -13,11 +13,11 @@ http://drinchev.github.io/monosocialiconsfont/
 }
 @font-face {
 	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot?-rdnm34');
-	src:url('../fonts/icomoon.eot?#iefix-rdnm34') format('embedded-opentype'),
-		url('../fonts/icomoon.woff?-rdnm34') format('woff'),
-		url('../fonts/icomoon.ttf?-rdnm34') format('truetype'),
-		url('../fonts/icomoon.svg?-rdnm34#icomoon') format('svg');
+	src:url('dist/fonts/icomoon.eot?-rdnm34');
+	src:url('dist/fonts/icomoon.eot?#iefix-rdnm34') format('embedded-opentype'),
+		url('dist/fonts/icomoon.woff?-rdnm34') format('woff'),
+		url('dist/fonts/icomoon.ttf?-rdnm34') format('truetype'),
+		url('dist/fonts/icomoon.svg?-rdnm34#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -40,9 +40,9 @@ $base-border-radius: em(3);
 // Colors
 $blue: #3a3877;
 $light-blue: #4e4d89;
-$dark-gray: #828282;
-$medium-gray: #999999;
-$light-gray: #f2f2f2;
+$dark-grey: #828282;
+$medium-grey: #999999;
+$light-grey: #d8d8d8;
 $light-red: #fbe3e4;
 $light-yellow: #fff6bf;
 $light-green: #99bc62;
@@ -59,7 +59,6 @@ $yellow: #ffdd22;
 //need to fix
 $black: rgba(0, 0, 0, 1);
 $white: rgba(255, 255, 255, 1);
-$light-gray: rgba(204, 204, 204, 1);
 $body_font: rgba(61, 61, 61, 1);
 $body_bg: rgba(246, 245, 242, 1);
 $heading:#3d3777;
@@ -77,8 +76,9 @@ $button-bg: $light-blue;
 $button-bg-hover: rgba(64,58,102,1);
 
 // Font Colors
-$base-font-color: $dark-gray;
+$base-font-color: $dark-grey;
 $base-accent-color: $blue;
+$sub_heading: $light-grey;
 
 // Link Colors
 $base-link-color: $base-accent-color;
@@ -87,10 +87,10 @@ $base-button-color: $base-link-color;
 $hover-button-color: $hover-link-color;
 
 // Border color
-$base-border-color: $light-gray;
+$base-border-color: $light-grey;
 $header-border: $white;
 $header-active-border: $purple;
-
+$team-designation-border:#473e53;
 // Flash Colors
 $alert-color: $light-yellow;
 $error-color: $light-red;
@@ -106,3 +106,8 @@ $form-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px rgba(darken($form-border-color-focus, 5), 0.7);
 $form-font-size: 2em;
 $form-font-family: $base-font-family;
+
+//Menu 
+$menu-color: $white;
+$menu-color-hover: $medium-grey;
+$menu-color-active: $medium-grey;

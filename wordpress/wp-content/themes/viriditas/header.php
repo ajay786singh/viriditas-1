@@ -22,8 +22,7 @@
     <?php wp_reset_query(); ?>
     
     <?php wp_head(); ?>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
+    
 	<script type="text/javascript">
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 	</script>
@@ -60,7 +59,7 @@
 <header class="<?php echo $header_class;?>">
 	<div class="container">
 		<div class="header-content">
-			<div class="span-3 logo">
+			<div class="column-3 logo">
 				<a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""><span>Viriditas</span></a>
 			</div>
 			<div class="span-9">								         
