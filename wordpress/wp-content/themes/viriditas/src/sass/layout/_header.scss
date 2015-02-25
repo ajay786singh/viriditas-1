@@ -17,21 +17,6 @@ header {
 			max-width: 225px;
 			padding: .8em 0 0;
         }
-        a {
-            display: block;
-			color:$white;
-			img {
-				float: left;
-			}
-			span {
-				display:block;
-				vertical-align: top;
-				margin-top:25px;
-				margin-left:10px;
-				float: left;
-				font-size:em(20px);
-			}
-        }
     }
 	&.active-header {
 		background-color: $header-bg;

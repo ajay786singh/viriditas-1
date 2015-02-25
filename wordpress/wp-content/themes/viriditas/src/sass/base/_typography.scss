@@ -231,3 +231,141 @@ footer {
 		margin-top: 0;
 	}
 }
+.content-grid {
+	text-align:center;
+	.sub-heading { 
+		color: $sub_heading;
+	}
+}
+
+.main-menu-desktop {
+	display:none;
+	@include media($bp-large) {
+    	display:block;
+	}
+    ul {
+        font-family:$sans-serif;
+		list-style-type: none;
+        margin-top: 1.5em;
+		margin-bottom: 0em;
+		text-align: right;
+		width: 100%;
+		&:nth-child(2) {
+			margin-bottom: 1.5em;
+		}
+        li {
+            display: inline;
+            font-size: em(16px);
+            font-weight: normal;
+            margin-left: 0;
+            @include media($bp-large) {
+                margin-left: 2em;
+            }
+            a {
+                color: $menu-color;
+                &:hover {
+                    color: $menu-color-hover;
+                }
+            }			
+			&.current-menu-item {
+				a {
+					color:$menu-color-active;
+					font-weight:600;
+				}
+			}
+        }
+    }
+}
+.team {
+	.content {
+		h5 {
+			margin-bottom:0;
+		}
+		& p:nth-of-type(1) {
+			margin-top:0;
+			padding-top:0;
+		}
+		& p:nth-of-type(2) {
+			position:relative;
+			margin-top:40px;
+			&:before {
+				border: 1px solid $team-designation-border;
+				content: "";
+				position: absolute;
+				top: -10px;
+				width: 50px;
+			}
+		}
+	}
+}
+.no-records {	
+	font-family:$serif;
+	font-size:em(20px);
+	color:$heading;
+}
+.woocommerce {
+	.sidebar {
+		h6 {
+            font-size: 1.2em;
+            text-transform: uppercase;
+            line-height: 1.5em;
+        }
+        .filter-actions {
+            h6 {
+                font-size: 0.8em;
+                margin-top: 0px;
+            }
+        }
+	}
+}
+
+.login-button {
+    a {
+        color: $white;
+        &:hover {
+            color: $medium-grey;
+        }
+    }
+}
+
+header {
+	.logo {
+		a {
+            display: block;
+			color:$white;
+			img {
+				float: left;
+			}
+			span {
+				display:block;
+				vertical-align: top;
+				margin-top:25px;
+				margin-left:10px;
+				float: left;
+				font-size:em(20px);
+			}
+        }
+	}
+}
+
+.mm-menu {
+	ul {
+        list-style: none;
+        margin: 20px 0 0;
+        padding: 0;
+		li {
+			margin-left:0;
+			padding-left:40px;
+			a {
+				display: block;
+				position: relative;
+				overflow: hidden;
+				margin: 4px 0;
+				padding: 12px;
+				color: $menu-color-hover;
+				text-decoration: none;
+				@include transition(background 0.5s, color 0.5s);
+			}
+		}
+	}
+}

@@ -15,29 +15,30 @@ get_header( 'shop' );
 ?>
 <section role="main">
 	<div class="container content">
-		<div class="span-11 center">
-			<!-- Include Sidebar -->
-			<?php get_template_part( 'woocommerce/sidebar-filter', 'woocommerce'); ?>
-			<div class="span-9">
-				<div class="shop-header">
-					<h6 class="heading" style="width:10%; float:left;">Shop</h6>				
-					<div class="sort-product" style="float:right;">
-						<a href="#" class="sort_by_name">Sort By Name</a>
-					</div>
+		<!-- Include Sidebar -->
+		<?php get_template_part( 'woocommerce/sidebar-filter', 'woocommerce'); ?>
+		<div class="column-9">
+			<div class="shop-header">
+				<h6 class="heading" style="width:10%; float:left;">Shop</h6>				
+				<div class="sort-product" style="float:right;">
+					<a href="#" class="sort_by_name">Sort By Name</a>
 				</div>
-				<!-- Include Breadcrumbs -->
-				<div class="breadcrumb">
-					<?php do_action( 'woocommerce_before_main_content' );?>
+			</div>
+			<!-- Include Breadcrumbs -->
+			<div class="breadcrumb">
+				<?php do_action( 'woocommerce_before_main_content' );?>
+			</div>
+			</div></div>
+			<!-- Include Products -->
+			
+			<div class="product-container">
+				<ul class="product-list">
+				</ul>
+				<div class="loading">
+					<img src="<?php bloginfo('template_url');?>/dist/images/loader.gif">
 				</div>
-				</div></div>
-				<!-- Include Products -->
-				
-				<div class="product-container">
-					<ul class="product-list equal-height-1">
-					</ul>
-					<div class="loader">
-						<div class="loading">Loading please wait...</div>
-					</div>
+				<div class="no-records">
+					No Records Found.
 				</div>
 			</div>
 		</div>

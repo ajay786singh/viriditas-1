@@ -28,23 +28,26 @@ function displayRecords(paged) {
 		});
 	}
 	var $results = $('.product-list');	
-	var $loader=$('.loader');
+	var $loader=$('.loading');
+	var $no_records=$('.no-records');
 	//$loader;	
-		$loader.html('<div class="loading">Loading please wait...</div>').show();
+		$loader.show();
+		$no_records.hide();
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
 			data:{action: 'load_products','filter_type_category':category,'filter_type_body_system':body_system,'filter_type_action':filter_action,'filter_type_indication':indication,'sort_by_name':sort_by_name,'paged':paged },
 			beforeSend: function() {
-				//$loader.html("").hide();
 				$loader.show();
+				$no_records.hide();
 			},
 			success: function(html) {
 				$loader.hide();
 				$results.append(html);
 				//$results.find('li .product-title').equalHeights();	
 				if (html == "") {
-				  $loader.html('<div class="loading">No more records.</div>').show()
+				  	
+				  $no_records.show();
 				} 
 				window.busy = false;
 			}

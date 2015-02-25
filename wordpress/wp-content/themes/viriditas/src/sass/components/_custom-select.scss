@@ -1,4 +1,8 @@
 /* Inspired From: http://tympanus.net/Development/SelectInspiration */
+
+$arrow-icon-color:$light-grey;
+$arrow-icon-size:10px;
+
 .cs-select {
 	display: inline-block;
 	vertical-align: middle;
@@ -66,17 +70,17 @@
 		padding-right: 3em;
 		border: 1px solid #000;
 		border-color: inherit;
-		-webkit-transition: background 0.2s, border-color 0.2s;
-		transition: background 0.2s, border-color 0.2s;
+		@include transition(background 0.2s, border-color 0.2s);
 		&::after {
-			font-family: 'icomoon';
-			content: '\e000';
+			content: '';
 			right: 1em;
 			speak: none;
 			position: absolute;
 			top: 50%;
-			-webkit-transform: translateY(-50%);
-			transform: translateY(-50%);
+			border-left: $arrow-icon-size solid transparent;
+			border-right: $arrow-icon-size solid transparent;
+			border-top: $arrow-icon-size solid $arrow-icon-color;
+			@include transform(translateY(-50%));
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 		}
@@ -92,91 +96,21 @@
 		.cs-options {
 			display:block;
 		}
-	}
-	.cs-selected {
 		span { 
 			&::after {
-				font-family: 'icomoon';
-				content: '\e000';
+				content: '';
+				border-bottom: $arrow-icon-size solid $arrow-icon-color;
+				border-left: $arrow-icon-size solid transparent;
+				border-right: $arrow-icon-size solid transparent;
+				border-top: none;
 				margin-left: 1em;
-				speak: none;
 				position: absolute;
+				speak: none;
 				top: 50%;
-				-webkit-transform: translateY(-50%);
-				transform: translateY(-50%);
+				@include transform(translateY(-50%));
 				-webkit-font-smoothing: antialiased;
 				-moz-osx-font-smoothing: grayscale;
 			}
 		}
 	}
-}
-
-
-div.cs-skin-border {
-	background: transparent;
-	font-size: 1em;
-	line-height: 1em;
-	max-width: 600px;
-}
-
-@media screen and (max-width: 30em) {
-	div.cs-skin-border { font-size: 1em; }
-}
-
-.cs-skin-border > span {
-	border: 1px solid #000;
-	border-color: inherit;
-	-webkit-transition: background 0.2s, border-color 0.2s;
-	transition: background 0.2s, border-color 0.2s;
-}
-
-.cs-skin-border > span::after,
-.cs-skin-border .cs-selected span::after {
-	font-family: 'icomoon';
-	content: '\e000';
-}
-
-.cs-skin-border ul span::after {
-	content: '';
-	opacity: 0;
-}
-
-.cs-skin-border .cs-selected span::after {
-	content: '\e00e';
-	color: #ddd9c9;
-	font-size: 1.5em;
-	opacity: 1;
-	-webkit-transition: opacity 0.2s;
-	transition: opacity 0.2s;
-}
-
-.cs-skin-border.cs-active > span {
-	background: #fff;
-	//border-color: #fff;
-	color: #2980b9;
-}
-
-.cs-skin-border .cs-options {
-	color: #2980b9;
-	font-size: 0.75em;
-	opacity: 0;
-	-webkit-transition: opacity 0.2s, visibility 0s 0.2s;
-	transition: opacity 0.2s, visibility 0s 0.2s;
-}
-
-.cs-skin-border.cs-active .cs-options {
-	opacity: 1;
-	-webkit-transition: opacity 0.2s;
-	transition: opacity 0.2s;
-}
-
-.cs-skin-border ul span {
-	padding: 1em 2em;
-	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-
-.cs-skin-border .cs-options li span:hover,
-.cs-skin-border li.cs-focus span {
-	background: #f5f3ec;
 }

@@ -3,33 +3,6 @@
 	@include media($bp-large) {
     	display:block;
 	}
-    ul {
-        list-style-type: none;
-        margin-top: 1.5em;
-		margin-bottom: 0em;
-		width: 100%;
-		font-family:$sans-serif;
-		text-align: right;
-		&:nth-child(2) {
-			margin-bottom: 1.5em;
-		}
-        li {
-            display: inline;
-            font-weight: normal;
-            font-size: em(16px);
-            margin-left: 0;
-            @include media($bp-large) {
-                margin-left: 2em;
-            }
-            a {
-                color: $white;
-                &:hover {
-                    color: $medium-gray;
-                }
-                &.current {}
-            }
-        }
-    }
 }
 
 /* =============================================================================
@@ -127,25 +100,6 @@ body.mm-menu-open {
 	box-shadow: 0;
 	@include transform(translateX(-100%));
 	@include transition(transform 0.5s, box-shadow 0.5s);
-	ul {
-        list-style: none;
-        margin: 20px 0 0;
-        padding: 0;
-		li {
-			margin-left:0;
-			padding-left:40px;
-			a {
-				display: block;
-				position: relative;
-				overflow: hidden;
-				margin: 4px 0;
-				padding: 12px;
-				color: $dark-gray;
-				text-decoration: none;
-				@include transition(background 0.5s, color 0.5s);
-			}
-		}
-	}
 	&.active {
 		box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 		@include transform(translateX(0));

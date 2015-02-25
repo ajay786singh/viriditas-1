@@ -57,7 +57,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
 		</div>
 		<div class="product-action">
-			<?php do_action( 'woocommerce_after_shop_loop_item' ); ?>
+			<?php //do_action( 'woocommerce_after_shop_loop_item' ); ?>
 		</div>
 	</div>
 </li>

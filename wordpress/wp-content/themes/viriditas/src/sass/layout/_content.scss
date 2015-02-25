@@ -1,3 +1,4 @@
+$oddeven-background: $light-grey;
 .container {
     @include outer-container;
     overflow: hidden;
@@ -17,7 +18,27 @@
 	}
 }
 
-.span-3 {
+.content-grid {
+    width:100%;
+    overflow: hidden;
+    position: relative;
+    @include media($bp-large) {
+        width:75%;
+    }	
+	float: none;
+	margin: 0 auto;
+}
+
+.secondary {
+    @include span-columns(5);
+    overflow: hidden;
+    position: relative;
+    @include media($bp-large) {
+        @include span-columns(6 of 12);
+    }
+}
+
+.column-3 {
     @include span-columns(5);
     position: relative;
     @include media($bp-large) {
@@ -25,134 +46,12 @@
     }
 }
 
-.span-4 {
+.column-9 {
     @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(4 of 12);
-    }
-}
-
-.span-5 {
-    @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(5 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.span-6 {
-    @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(6 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.span-7 {
-    @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(7 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.span-8 {
-    @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(8 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.span-9 {
-    @include span-columns(5);
-    overflow: hidden;
     position: relative;
     @include media($bp-large) {
         @include span-columns(9 of 12);
     }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-    header & {
-        margin-right: 0;
-		float: right;
-    }
-}
-
-.span-10 {
-    @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(10 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.span-11 {
-    @include span-columns(5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(11 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.span-12 {
-    @include span-columns(4.5);
-    overflow: hidden;
-    position: relative;
-    @include media($bp-large) {
-        @include span-columns(12 of 12);
-    }
-
-    &.center {
-        float: none;
-        margin: 0 auto;
-    }
-}
-
-.center {
-    float: none;
-    margin: 0 auto;
 }
 
 .block-grid-2 {
@@ -175,8 +74,7 @@
     @include media($bp-large) {
         @include span-columns(4 of 12);
     }
-
-    &:nth-child(3n) {
+    &:nth-child(3n+1) {
         margin-right: 0;
     }
 }
@@ -201,6 +99,9 @@ section[role=main] {
 section[role=content] {
     padding: 75px 0;
 	overflow:hidden;
+	.page & {
+		padding: 250px 0 75px;
+	}
 }
 
 article {
@@ -240,5 +141,57 @@ article {
     @include media($bp-large) {
         @include span-columns(7);
         @include shift(2.5);
+    }
+}
+.oddeven {
+	padding:50px 0 20px;
+	@include row();
+	&:nth-of-type(1) {
+		margin-top:1.5em;
+	}
+	&.team {
+		&:nth-of-type(odd) {
+			background: none;	
+		}	
+	}
+	&:nth-of-type(odd) {
+		background: $oddeven-background;	
+		.image {
+			@include media($bp-large) {
+				float: left;
+				padding-right:1em;
+			}
+		}
+		.content {
+			@include media($bp-large) {
+				float: right;
+			}
+		}
+	}
+	&:nth-of-type(even) {	
+		.image {
+			@include media($bp-large) {
+				float: right;
+				padding-left:1em;
+				img {
+					float:right;
+				}
+			}
+		}
+		.content {
+			@include media($bp-large) {
+				float: left;
+			}
+		}
+	}
+	.image {
+		width: 50%;
+		img {
+			border:5px solid $white;
+		}
+	}	
+    .content {
+		width: 50%;
+		padding-top:20px;
     }
 }
