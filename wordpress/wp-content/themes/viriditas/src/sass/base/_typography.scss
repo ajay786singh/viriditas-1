@@ -123,7 +123,8 @@ hr {
     border-left: none;
     border-right: none;
     border-top: none;
-    margin: $base-line-height 0;
+    margin: 20px 0 10px;
+	width:100px;
 }
 
 img {
@@ -369,3 +370,27 @@ header {
 		}
 	}
 }
+
+.contact {
+	.secondary {
+		color:$base-font-color;
+		a {
+			color:$base-font-color;
+			&.button {
+				color:$white;
+			}
+		}
+		p {
+			margin:0;
+			span {
+				color:$heading;
+				font-weight:bold;
+			}
+		}
+		h4 {
+			color:$heading;
+			margin-bottom: 0.2em;
+			padding-bottom: 0;
+		}
+	}
+}	

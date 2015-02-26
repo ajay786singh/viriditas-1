@@ -18,8 +18,20 @@ section[role=banner] {
 		@include media($bp-large) {
 			padding:250px 0 150px;
 		}
-		overflow:hidden;
 	}
+	.contact {
+		.secondary {
+			background-color:$white;
+			bottom:0;
+			@include media($bp-large) {
+				left:30%;
+				width:40%;
+				position:absolute;
+			}	
+			margin:0 auto;
+			padding:0 40px 0px;
+		}
+	}	
 	.button {
 		color: $banner-text-color;
 	}
