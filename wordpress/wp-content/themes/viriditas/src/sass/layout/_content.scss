@@ -1,4 +1,5 @@
 $oddeven-background: $light-grey;
+
 .container {
     @include outer-container;
     overflow: hidden;
@@ -111,6 +112,11 @@ section[role=content] {
 	.page & {
 		padding: 250px 0 75px;
 	}
+	.column-9 {
+		@include media($bp-large) {
+			border-right:1px solid $base-border-color;
+		}	
+	}
 }
 
 article {
@@ -203,4 +209,14 @@ article {
 		width: 50%;
 		padding-top:20px;
     }
+}
+.app_services_dropdown {
+	min-height: 185px;
+	position: relative;
+}
+.app_services_dropdown_select, 
+.app_workers_dropdown_select, 
+.app_service_locations_dropdown, 
+.app_provider_locations_dropdown {
+	padding:0;
 }

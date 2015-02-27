@@ -114,3 +114,11 @@ $arrow-icon-size:10px;
 		}
 	}
 }
+
+.app_select_services {
+	width:250px;
+	@include media($bp-large) {
+		width:300px;
+	}
+	@extend .cs-select;
+}

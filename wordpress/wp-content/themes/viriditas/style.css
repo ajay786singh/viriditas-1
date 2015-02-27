@@ -405,7 +405,7 @@ http://drinchev.github.io/monosocialiconsfont/
   src: url("dist/fonts/icomoon.eot?#iefix-rdnm34") format("embedded-opentype"), url("dist/fonts/icomoon.woff?-rdnm34") format("woff"), url("dist/fonts/icomoon.ttf?-rdnm34") format("truetype"), url("dist/fonts/icomoon.svg?-rdnm34#icomoon") format("svg");
   font-weight: normal;
   font-style: normal; }
-.woocommerce .button, button {
+.woocommerce .button, .woocommerce .app_services_dropdown_select input[type="button"], .app_services_dropdown_select .woocommerce input[type="button"], button {
   -webkit-font-smoothing: antialiased;
   background-color: #3a3877;
   border-radius: 0.1875em;
@@ -416,10 +416,10 @@ http://drinchev.github.io/monosocialiconsfont/
   line-height: 1;
   padding: 0.75em 1em;
   text-decoration: none; }
-  .woocommerce .button:hover, button:hover {
+  .woocommerce .button:hover, .woocommerce .app_services_dropdown_select input[type="button"]:hover, .app_services_dropdown_select .woocommerce input[type="button"]:hover, button:hover {
     background-color: #212043;
     color: white; }
-  .woocommerce .button:disabled, button:disabled {
+  .woocommerce .button:disabled, .woocommerce .app_services_dropdown_select input[type="button"]:disabled, .app_services_dropdown_select .woocommerce input[type="button"]:disabled, button:disabled {
     cursor: not-allowed;
     opacity: 0.5; }
 
@@ -431,7 +431,10 @@ body {
   font-size: 1em;
   line-height: 1.5; }
 
-h1, h2, h3, h4, h5, h6 {
+pre {
+  overflow: visible; }
+
+h1, h2, h3, .appointments-wrapper h3, .appointments-confirmation-wrapper h3, h4, h5, h6 {
   font-family: "adelle", serif;
   text-rendering: optimizeLegibility;
   font-weight: normal; }
@@ -460,11 +463,11 @@ h2 {
       line-height: 1.3846em;
       margin-bottom: 0.4615em; } }
 
-h3 {
+h3, .appointments-wrapper h3, .appointments-confirmation-wrapper h3 {
   font-size: 1em; }
   @media screen and (min-width: 50em) {
-    h3 {
-      font-size: 2.5625em;
+    h3, .appointments-wrapper h3, .appointments-confirmation-wrapper h3 {
+      font-size: 1.2em;
       line-height: 1.1707em;
       margin-bottom: 0.5854em; } }
 
@@ -737,6 +740,21 @@ header .logo a {
     color: #3d3777;
     margin-bottom: 0.2em;
     padding-bottom: 0; }
+
+.app_services .app_services_dropdown {
+  font-family: "adelle-sans", sans-serif; }
+  .app_services .app_services_dropdown .app_services_dropdown_title {
+    color: #3d3777;
+    font-family: "adelle", serif;
+    font-weight: normal; }
+
+.appointments-wrapper, .appointments-confirmation-wrapper {
+  font-family: "adelle-sans", sans-serif; }
+  .appointments-wrapper h3, .appointments-confirmation-wrapper h3 {
+    text-transform: none; }
+
+.app_monthly_schedule_wrapper table th {
+  padding: 15px; }
 
 img {
   max-width: 100%; }
@@ -1177,7 +1195,7 @@ section[role=banner] {
         left: 30%;
         width: 40%;
         position: absolute; } }
-  section[role=banner] .button {
+  section[role=banner] .button, section[role=banner] .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=banner] input[type="button"] {
     color: white; }
 
 .container {
@@ -1358,6 +1376,9 @@ section[role=content] {
   overflow: hidden; }
   .page section[role=content] {
     padding: 250px 0 75px; }
+  @media screen and (min-width: 50em) {
+    section[role=content] .column-9 {
+      border-right: 1px solid #d8d8d8; } }
 
 article {
   max-width: 80em;
@@ -1453,9 +1474,19 @@ article {
     width: 50%;
     padding-top: 20px; }
 
+.app_services_dropdown {
+  min-height: 185px;
+  position: relative; }
+
+.app_services_dropdown_select,
+.app_workers_dropdown_select,
+.app_service_locations_dropdown,
+.app_provider_locations_dropdown {
+  padding: 0; }
+
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
-.woocommerce .button {
+.woocommerce .button, .woocommerce .app_services_dropdown_select input[type="button"], .app_services_dropdown_select .woocommerce input[type="button"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -1683,7 +1714,7 @@ label {
     display: none; }
 
 textarea,
-input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="time"], input[type="week"],
+input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea,
 select[multiple=multiple] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1702,11 +1733,11 @@ select[multiple=multiple] {
   padding: 5px 15px;
   width: 100%; }
   textarea:hover,
-  input[type="email"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="url"]:hover, input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="month"]:hover, input[type="time"]:hover, input[type="week"]:hover,
+  input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="email"]:hover, input[type="month"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="time"]:hover, input[type="url"]:hover, input[type="week"]:hover, textarea:hover,
   select[multiple=multiple]:hover {
     border-color: #bfbfbf; }
   textarea:focus,
-  input[type="email"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="url"]:focus, input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus,
+  input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, textarea:focus,
   select[multiple=multiple]:focus {
     border-color: #3a3877;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(50, 48, 102, 0.7);
@@ -1774,26 +1805,34 @@ button {
   white-space: nowrap;
   margin-bottom: 0.5em; }
 
-.button {
+.button, .app_services_dropdown_select input[type="button"] {
   background: #4e4d89;
   padding: 8px 15px;
   float: left;
   margin: 20px 0;
   color: white; }
-  .button:hover {
+  .button:hover, .app_services_dropdown_select input[type="button"]:hover {
     background: #403a66;
     border-color: #311f39;
     color: white; }
-  .banner-content .button {
+  .banner-content .button, .banner-content .app_services_dropdown_select input[type="button"], .app_services_dropdown_select .banner-content input[type="button"] {
     border: 2px solid white;
     background: none; }
-    .banner-content .button:hover {
+    .banner-content .button:hover, .banner-content .app_services_dropdown_select input[type="button"]:hover, .app_services_dropdown_select .banner-content input[type="button"]:hover {
       background: #403a66;
       color: white;
       border-color: #403a66; }
 
+.app_services_dropdown_select input[type="button"] {
+  border: none;
+  bottom: 0;
+  font-size: 0.8em;
+  font-weight: normal;
+  text-transform: uppercase;
+  position: absolute; }
+
 /* Inspired From: http://tympanus.net/Development/SelectInspiration */
-.cs-select {
+.cs-select, .app_select_services {
   display: inline-block;
   vertical-align: middle;
   position: relative;
@@ -1812,34 +1851,34 @@ button {
   font-size: 1em;
   line-height: 1em;
   max-width: 600px; }
-  .cs-select select {
+  .cs-select select, .app_select_services select {
     display: none; }
-  .cs-select ul {
+  .cs-select ul, .app_select_services ul {
     list-style: none;
     margin: 0;
     padding: 0;
     width: 100%;
     max-height: 300px; }
     @media screen and (min-width: 50em) {
-      .cs-select ul {
+      .cs-select ul, .app_select_services ul {
         max-height: 500px; } }
-    .cs-select ul span {
+    .cs-select ul span, .app_select_services ul span {
       padding: 1em; }
-      .cs-select ul span::after {
+      .cs-select ul span::after, .app_select_services ul span::after {
         content: '';
         opacity: 0; }
-    .cs-select ul li {
+    .cs-select ul li, .app_select_services ul li {
       margin-left: 0;
       border-left: 1px solid #999;
       border-right: 1px solid #999;
       border-bottom: 1px solid #999;
       margin-bottom: 0; }
-      .cs-select ul li.cs-focus span {
+      .cs-select ul li.cs-focus span, .app_select_services ul li.cs-focus span {
         background-color: #ddd; }
-  .cs-select:focus {
+  .cs-select:focus, .app_select_services:focus {
     outline: none;
     /* For better accessibility add a style for this in your skin */ }
-  .cs-select span {
+  .cs-select span, .app_select_services span {
     display: block;
     position: relative;
     cursor: pointer;
@@ -1847,14 +1886,14 @@ button {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
-  .cs-select > span {
+  .cs-select > span, .app_select_services > span {
     padding-right: 3em;
     border: 1px solid #000;
     border-color: inherit;
     -webkit-transition: background 0.2s, border-color 0.2s;
     -moz-transition: background 0.2s, border-color 0.2s;
     transition: background 0.2s, border-color 0.2s; }
-    .cs-select > span::after {
+    .cs-select > span::after, .app_select_services > span::after {
       content: '';
       right: 1em;
       speak: none;
@@ -1870,15 +1909,15 @@ button {
       transform: translateY(-50%);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale; }
-  .cs-select .cs-options {
+  .cs-select .cs-options, .app_select_services .cs-options {
     position: absolute;
     overflow: hidden;
     width: 100%;
     background: #fff;
     display: none; }
-  .cs-select.cs-active .cs-options {
+  .cs-select.cs-active .cs-options, .cs-active.app_select_services .cs-options {
     display: block; }
-  .cs-select.cs-active span::after {
+  .cs-select.cs-active span::after, .cs-active.app_select_services span::after {
     content: '';
     border-bottom: 10px solid #d8d8d8;
     border-left: 10px solid transparent;
@@ -1895,6 +1934,12 @@ button {
     transform: translateY(-50%);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
+
+.app_select_services {
+  width: 250px; }
+  @media screen and (min-width: 50em) {
+    .app_select_services {
+      width: 300px; } }
 
 .tabs .tab-header {
   list-style: none;

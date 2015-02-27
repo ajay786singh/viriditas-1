@@ -8,7 +8,9 @@
 }
 
 //Modular scale based on: http://modularscale.com/scale/?px1=20&px2=734&ra1=1.618&ra2=0
-
+pre {
+	overflow: visible;
+}
 h1, h2, h3, h4, h5, h6 {
     font-family: $header-font-family;
     text-rendering: optimizeLegibility;
@@ -48,8 +50,7 @@ h2 {
 h3 {
     font-size: $base-font-size;
     @include media($bp-large) {
-        font-size: $base-font-size * 2.5625;
-        // 16 * 2.5625 = 41px
+        font-size: $base-font-size * 1.2;
         line-height: 1.1707em;
         margin-bottom: 0.5854em;
     }
@@ -394,3 +395,24 @@ header {
 		}
 	}
 }	
+
+.app_services {
+	.app_services_dropdown {
+		font-family: $base-font-family;
+		.app_services_dropdown_title {
+			color: $heading;
+			font-family: $header-font-family;
+			font-weight: normal;
+		}
+	}
+}
+.appointments-wrapper,.appointments-confirmation-wrapper {
+	font-family:$base-font-family;
+	h3 {
+		@extend h3;
+		text-transform:none;
+	}
+}
+.app_monthly_schedule_wrapper table th {
+	padding:15px;
+}
