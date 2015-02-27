@@ -24,6 +24,7 @@ var scriptList = [
 	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
 	'src/js/custom/jquery.classie.js',
 	'src/js/custom/jquery.customSelect.js',
+	'src/js/custom/custom-select.js',
 	'src/js/custom/menu.js',
 	'src/js/custom/menu-function.js',
 	'src/js/custom/products.js',

@@ -29,3 +29,15 @@ button {
 		}
 	}
 }
+
+.app_services_dropdown_select {
+	input[type="button"] {
+		@extend .button;
+		border:none;
+		bottom:0;
+		font-size:0.8em;
+		font-weight:normal;
+		text-transform:uppercase;
+		position: absolute;
+	}
+}
