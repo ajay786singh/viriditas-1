@@ -246,6 +246,7 @@ footer {
     	display:block;
 	}
     ul {
+        color: $menu-color;
         font-family:$sans-serif;
 		list-style-type: none;
         margin-top: 1.5em;
@@ -341,7 +342,7 @@ header {
 			span {
 				display:block;
 				vertical-align: top;
-				margin-top:25px;
+				margin-top:65px;
 				margin-left:10px;
 				float: left;
 				font-size:em(20px);
