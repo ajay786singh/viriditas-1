@@ -427,7 +427,7 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: white;
   color: #828282;
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1em;
   line-height: 1.5; }
 
@@ -435,7 +435,7 @@ pre {
   overflow: visible; }
 
 h1, h2, h3, .appointments-wrapper h3, .appointments-confirmation-wrapper h3, h4, h5, h6 {
-  font-family: "adelle", serif;
+  font-family: "Playfair Display", serif;
   text-rendering: optimizeLegibility;
   font-weight: normal; }
   section[role=content] h1, section[role=content] h2, section[role=content] h3, section[role=content] h4, section[role=content] h5, section[role=content] h6 {
@@ -570,11 +570,11 @@ cite {
   text-align: center; }
 
 small {
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: .9em; }
 
 nav {
-  font-family: "adelle", serif; }
+  font-family: "Playfair Display", serif; }
 
 .headline, .subhead {
   color: white;
@@ -606,7 +606,7 @@ footer a {
     color: #212043;
     outline: none; }
 footer ul, footer ol {
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 0.9em;
   line-height: 1.5em;
   margin-bottom: 0.5em; }
@@ -617,12 +617,12 @@ footer h6 {
   margin-bottom: 1.25em;
   margin-top: 1.25em; }
 footer p {
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 0.9em;
   line-height: 1.5em;
   margin-bottom: 0; }
 footer .copyright p {
-  font-family: "adelle", serif;
+  font-family: "Playfair Display", serif;
   margin-top: 0; }
 
 .content-grid {
@@ -636,7 +636,8 @@ footer .copyright p {
     .main-menu-desktop {
       display: block; } }
   .main-menu-desktop ul {
-    font-family: "adelle-sans", sans-serif;
+    color: white;
+    font-family: "Roboto", sans-serif;
     list-style-type: none;
     margin-top: 1.5em;
     margin-bottom: 0em;
@@ -676,7 +677,7 @@ footer .copyright p {
     width: 50px; }
 
 .no-records {
-  font-family: "adelle", serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.25em;
   color: #3d3777; }
 
@@ -701,7 +702,7 @@ header .logo a {
   header .logo a span {
     display: block;
     vertical-align: top;
-    margin-top: 25px;
+    margin-top: 65px;
     margin-left: 10px;
     float: left;
     font-size: 1.25em; }
@@ -742,14 +743,14 @@ header .logo a {
     padding-bottom: 0; }
 
 .app_services .app_services_dropdown {
-  font-family: "adelle-sans", sans-serif; }
+  font-family: "Roboto", sans-serif; }
   .app_services .app_services_dropdown .app_services_dropdown_title {
     color: #3d3777;
-    font-family: "adelle", serif;
+    font-family: "Playfair Display", serif;
     font-weight: normal; }
 
 .appointments-wrapper, .appointments-confirmation-wrapper {
-  font-family: "adelle-sans", sans-serif; }
+  font-family: "Roboto", sans-serif; }
   .appointments-wrapper h3, .appointments-confirmation-wrapper h3 {
     text-transform: none; }
 
@@ -833,7 +834,7 @@ header {
     float: left;
     height: auto;
     max-width: 175px;
-    font-family: "adelle", serif;
+    font-family: "Playfair Display", serif;
     padding: .8em 0 0.8em; }
     @media screen and (min-width: 50em) {
       header .logo {
@@ -1672,7 +1673,7 @@ article {
     color: black; }
 
 footer {
-  background: url(dist/images/footer-bg.png);
+  background: url(dist/images/footer-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   padding: 30px 0 70px;
@@ -1702,7 +1703,7 @@ input,
 label,
 select {
   display: block;
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 2em; }
 
 label {
@@ -1725,7 +1726,7 @@ select[multiple=multiple] {
   background-color: white;
   border: 1px solid #d8d8d8;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.2em;
   line-height: 1.5em;
   margin-bottom: 0.75em;
@@ -1755,7 +1756,7 @@ footer input[type="submit"] {
   border: none;
   color: white;
   cursor: pointer;
-  font-family: "adelle-sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1em;
   font-size: 1.15em;
   padding: .425em 1em 0.425em;

@@ -67,11 +67,11 @@
 					<?php global $woocommerce; ?> 
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
-								<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile |','woothemes'); ?></a> 
+								<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
 								<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 
 							else { ?>
-								<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Login / Sign up','woothemes'); ?>"><?php _e('Login | Sign up','woothemes'); ?></a></li>
+								<li><a href="<?php echo get_bloginfo('url');?>/login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a></li>
 						<?php } ?>
 						</ul>
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
