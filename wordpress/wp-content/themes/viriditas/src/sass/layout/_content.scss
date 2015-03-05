@@ -117,6 +117,10 @@ section[role=content] {
 			border-right:1px solid $base-border-color;
 		}	
 	}
+	.secondary:nth-of-type(1) {
+		margin-left: 0;
+		padding-left: 0;
+	}
 }
 
 article {

@@ -29,6 +29,7 @@ var scriptList = [
 	'src/js/custom/menu-function.js',
 	'src/js/custom/products.js',
 	'src/js/custom/tabs.js',
+	'src/js/custom/header-scroll.js',
 ];
 
 var fontIcons = [

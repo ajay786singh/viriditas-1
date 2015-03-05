@@ -10,9 +10,12 @@
 <section role="content">
     <div class="container">
 		<article class="secondary">
-			<?php //the_title("<h1>","</h1>");?>
-			<h1>Account Setup</h1>
-			<?php the_content();?>
+			<?php if(is_page('login')) { ?> 
+				<?php the_title("<h1>","</h1>");?>
+			<?php } else { ?>
+				<h1>Account Setup</h1>
+			<?php } ?>
+				<?php the_content();?>
 		</article>	
 	</div>
 </section>
