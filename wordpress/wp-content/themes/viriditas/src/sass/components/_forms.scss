@@ -20,7 +20,8 @@ select {
 }
 
 label {
-    font-weight: bold;
+    font-size:1em;
+	font-weight: normal;
     margin-bottom: $base-line-height / 4;
     &.required:after {
         content: "*";
@@ -32,50 +33,52 @@ label {
 
 textarea,
 #{$all-text-inputs},
-select[multiple=multiple] {
+select {
     @include box-sizing(border-box);
     @include transition(border-color);
     background-color: white;
-    //border-radius: $form-border-radius;
+    border-radius: $form-border-radius;
     border: 1px solid $form-border-color;
     box-shadow: $form-box-shadow;
     font-family: $sans-serif;
     font-size: 1.2em;
+	color:$form-text-color;
 	line-height: 1.5em;
     margin-bottom: $base-line-height / 2;
     margin-right: 10px;
-    padding: 5px 15px;
+    padding: 3px 15px;
     width: 100%;
     &:hover {
         border-color: $form-border-color-hover;
     }
     &:focus {
-        border-color: $form-border-color-focus;
+        border: 1px solid $form-border-color;
+		//border-color: $form-border-color-focus;
         box-shadow: $form-box-shadow-focus;
         color: rgb(54, 116, 187);
         outline: none;
     }
 }
 
-footer input[type="submit"] {
+input[type="submit"] {
     -webkit-font-smoothing: antialiased;
     @include appearance(none);
-    background-color: $light-green;
+    background: $light-green;
     border: none;
-    color: $white;
+	color: $form-submit-button-color;
     cursor: pointer;
     font-family: $sans-serif;
     font-size: $base-font-size;
     font-size: 1.15em;
-    padding: .425em 1em 0.425em;
-	margin-left:-5px;
+    padding: 6px 15px 7px;
+	margin-left:-4px;
     text-decoration: none;
     user-select: none;
     vertical-align: middle;
     white-space: nowrap;
     &:hover {
-        background-color: $hover-button-color;
-        color: white;
+        background: $hover-button-color;
+        color: $form-submit-button-color;
     }
 }
 
@@ -102,4 +105,38 @@ select {
     margin-bottom: $base-line-height;
     max-width: 100%;
     width: auto;
+}
+footer {
+	& input[type="text"],input[type="email"] {
+		border-radius: 0; 
+	}
+}
+
+.account-form {
+	ul {
+		margin-left:0;
+		list-style:none;
+		padding-left:0;
+		li {
+			margin-left:0;
+		}
+	}
+	select {
+		width: 100%;
+	}
+	.form-group {
+		overflow:hidden;
+	}
+	.form-heading {
+		padding-top: 50px;
+		overflow: hidden;
+		width: 100%;
+	}
+	.btn-primary {
+		background:$button-bg;
+		margin-top:20px;
+		padding:5px 20px;
+		text-transform:uppercase;
+		font-size: 1em;
+	}
 }
