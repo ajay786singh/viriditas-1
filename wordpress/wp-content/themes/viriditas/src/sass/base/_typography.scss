@@ -424,3 +424,73 @@ header {
 .app_monthly_schedule_wrapper table th {
 	padding:15px;
 }
+section[role=content] {
+	.course_heading {
+		border-bottom:1px solid $base-border-color;
+		margin-bottom:30px;
+		overflow:hidden;
+		h3 {
+			color:$base-font-color;
+			display:inline-block;
+			float:left;
+			margin-bottom:0.4em;
+		}
+		.button {
+			float:right;
+			display:inline-block;
+			font-size:0.8em;
+			margin-top:0;
+			@include media($bp-large){
+				margin:0;
+			}
+		}
+	}
+}
+.post-course {
+	overflow: hidden;
+	width: 100%;
+	margin-bottom:30px;
+	h4 {
+		margin-bottom: 0.2em;
+		margin-top: 0;
+	}
+}
+.post-list {
+	padding-left:0;
+	list-style:none;
+	li {
+		margin-left:0;
+		a {
+			color: $base-font-color;
+			&:hover {
+				color: $hover-link-color;
+			}
+		}
+	}
+}
+.meta {
+	overflow:hidden;
+	ul {
+		padding-left:0;
+		list-style:none;
+		li {
+			margin-left:0;
+			float:left;
+			padding-right:20px;
+			position:relative;
+			font-size:0.8em;
+			&:last-child {
+				margin-right:0px;
+				&:after {
+					content:"";
+				}
+			}
+			&:after {
+				content:"\00B7";
+				position:absolute;
+				right: 8px;
+				font-size:1.5em;
+			}
+		}
+	}
+}

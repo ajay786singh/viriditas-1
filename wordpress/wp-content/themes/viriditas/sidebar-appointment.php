@@ -1,3 +1,3 @@
 <aside class="column-3">
-	A
+	<?php dynamic_sidebar('Sidebar: Appointments');?>
 </aside>

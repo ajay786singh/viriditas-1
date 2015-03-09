@@ -25,6 +25,8 @@ require_once('includes/functions/add-cart-link-header.php');
 require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/get-term-top-level-parent.php');
 require_once('includes/login-register/register.php');
+require_once('includes/functions/register-widgets.php');
+require_once('includes/functions/courses.php');
 //Load shortcodes
 //require_once('includes/shortcodes/button.php');
 //require_once('includes/shortcodes/content.php');
