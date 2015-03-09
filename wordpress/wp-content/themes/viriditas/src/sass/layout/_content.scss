@@ -56,6 +56,14 @@ $oddeven-background: $light-grey;
     }
 }
 
+.column-7 {
+    @include span-columns(5);
+    position: relative;
+    @include media($bp-large) {
+        @include span-columns(7 of 12);
+    }
+}
+
 .column-9 {
     @include span-columns(5);
     position: relative;

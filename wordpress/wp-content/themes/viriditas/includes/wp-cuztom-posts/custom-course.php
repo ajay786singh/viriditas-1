@@ -8,6 +8,7 @@ $args = array(
     );
 
 $course = register_cuztom_post_type( 'Course', $args);
+$course->add_taxonomy( 'Courses type' );
 
 $course->add_meta_box(
     'Course Details',
@@ -128,7 +129,6 @@ function course_columns( $cols ) {
   $cols = array(
     'cb'        => '<input type="checkbox" />',
     'title'     => __( 'Title', 'trans' ),
-    //'tags'      => __( 'Tags', 'trans' ),
     '_course_details_price' => __( 'Price', 'trans' ),
     '_course_details_instructor' => __( 'Instructor', 'trans' ),
     '_course_details_spots' => __( 'Availability', 'trans' ),

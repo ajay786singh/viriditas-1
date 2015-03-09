@@ -1,0 +1,39 @@
+.accordion {
+	margin-bottom:4em;	
+	.accordion-panel {
+		.accordion-panel-header {
+			border-bottom:1px solid $base-border-color;
+			cursor:pointer;
+			font-size:1.25em;
+			line-height:1.25;
+			text-transform:none;
+			@include media($bp-large) {
+				font-size: 1.5em;
+				padding: 1em 0;
+			}
+			-webkit-user-select:none;
+			-moz-user-select:none;
+			-ms-user-select:none;
+			user-select:none;
+			margin:0;
+			padding:1em 10px;
+		}
+		.accordion-panel-content {
+			padding-top:2em;
+			display:none;
+			&:first-child {
+				display:block;
+			}
+			margin:0 auto; 
+			img {
+				display: inline-block;
+				width: 45%;
+				@include media($bp-large) {
+					width: 28%;
+				}
+				margin: 0 2% 2em;
+				vertical-align: middle;
+			}
+		}
+	}	
+}
