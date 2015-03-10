@@ -9,8 +9,6 @@ get_header(); ?>
 		<?php get_sidebar('courses');?>
 		<div class="column-7">
 				<?php get_courses();?>
-				<br>
-				<br>
 				<?php 
 					$post_type='course';
 					$before_date = date('F d, Y');

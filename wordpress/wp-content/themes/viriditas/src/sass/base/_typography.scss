@@ -425,7 +425,7 @@ header {
 	padding:15px;
 }
 section[role=content] {
-	.course_heading {
+	.course-heading {
 		border-bottom:1px solid $base-border-color;
 		margin-bottom:30px;
 		overflow:hidden;
@@ -443,6 +443,11 @@ section[role=content] {
 			@include media($bp-large){
 				margin:0;
 			}
+		}
+	}
+	.past-courses {
+		.course-heading {
+			margin-bottom:0px;
 		}
 	}
 }
