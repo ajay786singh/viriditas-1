@@ -765,23 +765,25 @@ header .logo a {
 .app_monthly_schedule_wrapper table th {
   padding: 15px; }
 
-section[role=content] .course_heading {
+section[role=content] .course-heading {
   border-bottom: 1px solid #d8d8d8;
   margin-bottom: 30px;
   overflow: hidden; }
-  section[role=content] .course_heading h3 {
+  section[role=content] .course-heading h3 {
     color: #828282;
     display: inline-block;
     float: left;
     margin-bottom: 0.4em; }
-  section[role=content] .course_heading .button, section[role=content] .course_heading .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=content] .course_heading input[type="button"] {
+  section[role=content] .course-heading .button, section[role=content] .course-heading .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=content] .course-heading input[type="button"] {
     float: right;
     display: inline-block;
     font-size: 0.8em;
     margin-top: 0; }
     @media screen and (min-width: 50em) {
-      section[role=content] .course_heading .button, section[role=content] .course_heading .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=content] .course_heading input[type="button"] {
+      section[role=content] .course-heading .button, section[role=content] .course-heading .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=content] .course-heading input[type="button"] {
         margin: 0; } }
+section[role=content] .past-courses .course-heading {
+  margin-bottom: 0px; }
 
 .post-course {
   overflow: hidden;
@@ -1783,16 +1785,29 @@ footer {
     font-size: 1.25em;
     line-height: 1.25;
     text-transform: none;
+    margin: 0;
+    padding: 0.75em 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
-    margin: 0;
-    padding: 1em 10px; }
+    user-select: none; }
     @media screen and (min-width: 50em) {
       .accordion .accordion-panel .accordion-panel-header {
-        font-size: 1.5em;
-        padding: 1em 0; } }
+        font-size: 1.5em; } }
+    .accordion .accordion-panel .accordion-panel-header:after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #3d3777;
+      float: right;
+      margin-top: 10px; }
+    .accordion .accordion-panel .accordion-panel-header.active-header:after {
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: none;
+      border-bottom: 10px solid #3d3777; }
   .accordion .accordion-panel .accordion-panel-content {
     padding-top: 2em;
     display: none;

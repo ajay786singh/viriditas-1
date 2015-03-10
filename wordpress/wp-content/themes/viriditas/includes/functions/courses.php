@@ -22,26 +22,28 @@ function past_posts($post_type='post',$before_date=false) {
 	$query = new WP_Query( $args );
 	if($query->have_posts()):
 	?>
-		<div class="course_heading">
+	<div class="past-courses">
+		<div class="course-heading">
 			<h3>Past Courses</h3>
 		</div>
 		<div class="accordion">
-	<?php
-		while($query->have_posts()):$query->the_post();
-		$id=get_the_ID();
-		$description    = wpautop(get_post_meta($id, '_course_details_description', true));
-			echo "<div class='accordion-panel'>";
-				echo '<h5 class="accordion-panel-header">'.get_the_title().'</h5>';		
-				echo "<div class='accordion-panel-content'>";
-					if($description):
-						echo $description;         
-					endif;
+		<?php
+			while($query->have_posts()):$query->the_post();
+			$id=get_the_ID();
+			$description    = wpautop(get_post_meta($id, '_course_details_description', true));
+				echo "<div class='accordion-panel'>";
+					echo '<h5 class="accordion-panel-header">'.get_the_title().'</h5>';		
+					echo "<div class='accordion-panel-content'>";
+						if($description):
+							echo $description;         
+						endif;
+					echo "</div>";
 				echo "</div>";
-			echo "</div>";
-		endwhile;
-	endif;
-	?>
-	</div>
+			endwhile;
+		endif;
+		?>
+		</div>
+	</div>	
 <?php	
 	wp_reset_query();
 }
@@ -90,7 +92,7 @@ function get_courses() {
 			$course=$course_type->name;
 			$course_slug=$course_type->slug;
 	?>
-			<div class="course_heading">
+			<div class="course-heading">
 				<h3><?php echo $course;?></h3>
 				<a href="<?php bloginfo('url');?>/course-registration" class="button">Register Now</a>
 			</div>
