@@ -51,12 +51,13 @@
         }
         .product-title {
             padding: 0.75em 1em;
-            font-size: .8em;
-            //min-height: 84px;
+            font-size: 1em;
+            min-height: 80px;
         }
         span.amount {
-            font-size: em(18);
+            font-size: em(16);
             font-weight: bold;
+			color:$heading;
         }
         .product-action {
 			height:40px;

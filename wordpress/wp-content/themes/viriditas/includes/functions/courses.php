@@ -59,7 +59,11 @@ function get_sidebar_courses(){
 			foreach($courses_type as $course_type) {
 				$course=$course_type->name;
 				$course_slug=$course_type->slug;
+				$course_description=$course_type->description;
 				echo "<h5>".$course."</h5>";
+				if($course_description) {
+					echo "<h6>".$course_description."</h6>";
+				}
 				$args['tax_query'] = array(
 					array(
 						'taxonomy' => $tax,
@@ -69,7 +73,7 @@ function get_sidebar_courses(){
 				);
 				$query = new WP_Query($args);
 				if($query->have_posts()):
-					echo "<ul class='post-list'>";
+					echo "<ul>";
 						while($query->have_posts()):$query->the_post();
 						$id="post-".$course_slug."-".get_the_ID();
 						echo "<li><a href='#' rel='".$id."'>".get_the_title()."</a></li>";
@@ -118,6 +122,9 @@ function get_courses() {
 					$price          = get_post_meta($id, '_course_details_price', true);
 					$instructor     = get_post_meta($id, '_course_details_instructor', true);
 					$deadline       = get_post_meta($id, '_course_details_deadline', true);
+					$course_in_week       = get_post_meta($id, '_course_details_course_in_week', true);
+					$duration       = get_post_meta($id, '_course_details_duration', true);
+					$schedule       = get_post_meta($id, '_course_details_schedule', true);
 					$dateStart      = get_post_meta($id, '_course_details_date_start', true);
 					$dateEnd        = get_post_meta($id, '_course_details_date_end', true);
 					$timeStart      = get_post_meta($id, '_course_details_time_start', true);
@@ -129,34 +136,22 @@ function get_courses() {
 						<?php the_title("<h4>","</h4>");?>
 						<div class="meta">
 							<ul>
-								<?php if($instructor):
-									echo '<li><i class="fa fa-graduation-cap" style="color: blue;"></i> ' . $instructor .'</li>';         
+								<?php if($course_in_week):
+									echo '<li>'.$course_in_week.'</li>';         
 								endif ?>
-								<?php if($deadline):
-									echo '<li><i class="fa fa-calendar-o" style="color: orange;"></i> ' . date($dateFormat, $deadline) .'</li>';         
+								<?php if($duration):
+									echo '<li>'.$duration.'</li>';         
 								endif ?>
-								<?php if($dateStart):
-									echo '<li><i class="fa fa-calendar" style="color: green;"></i> ' . date($dateFormat, $dateStart) .'</li>';         
-								endif ?>
-								<?php if($timeStart):
-									echo '<li><i class="fa fa-clock-o" style="color: green;"></i> ' . date($timeFormat, $timeStart) .'</li>';         
-								endif ?>
-								<?php if($dateEnd):
-									echo '<li><i class="fa fa-calendar" style="color: red;"></i> ' . date($dateFormat, $dateEnd) .'</li>';
-								endif ?>
-								<?php if($timeEnd):
-									echo '<li><i class="fa fa-clock-o" style="color: red;"></i> ' . date($timeFormat, $timeEnd) .'</li>';    
-								endif ?>
-								<?php if($available):
-									echo '<li><i class="fa fa-users" style="color: purple;"></i> ' . $available .'</li>';         
+								<?php if($schedule):
+									echo '<li>'.$schedule.'</li>';         
 								endif ?>
 								<?php if($price):
-									echo '<li><i class="fa fa-usd" style="color: gray;"></i> ' . $price .'</li>';         
+									echo '<li>$'.$price.'</li>';         
 								endif ?>
 							</ul>
 						</div>
 						 <?php if($description):
-							echo $description;         
+							echo "<div class='content'>".$description."</div>";         
 						endif ?>
 					</div>
 			<?php
