@@ -12,7 +12,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $product;
 ?>
-<div class="single-product-content-section">
+<div class="single-product-content-section column-9">
 <?php
 	/**
 	 * woocommerce_before_single_product hook
@@ -83,33 +83,37 @@ global $product;
 			$thumb_url = wp_get_attachment_image_src($thumb_id,'full', true);
 			$img = $thumb_url[0];
 			?>
-			<div class="span-5 images">
+			<div class="secondary images">
 				<img src="<?php echo $img;?>" class="attachment-shop_single wp-post-image" alt="beef osso bucco" title="Beef Osso Bucco">
 			</div>
 			<?php
 		}else {
 	?>
-		<div class="span-5 images">
+		<div class="secondary images">
 			<?php echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<img src="%s" alt="Placeholder" />', woocommerce_placeholder_img_src() ), $post->ID ); ?>
 		</div>
 	<?php  } ?>
-		<div class="span-7">
-			<?php the_excerpt();?>
+		<div class="secondary">
+			<?php the_title("<h4>","</h4>");?>
 			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
+			<hr>
+			<?php the_content();?>
+			<?php
+				/*$tab_1_title="Description";
+				
+				$tab_1_content="<h5>Product Description</h5>";
+				$tab_1_content.=get_the_content();
+				
+				$tab_2_title="Review (0)";
+				$tab_2_content="";
+			?>
+			<div class="woocommerce-tabs">
+			<?php echo do_shortcode('[tabsgroup][tab title="'.$tab_1_title.'"]'.$tab_1_content.'[/tab][tab title="'.$tab_2_title.'"]'.$tab_2_content.'[/tab][/tabsgroup]');?>
+			</div>
+			*/ ?>
+
 		</div>
 </div>		
 </div>
-</div>
-<div class="span-11 center woocommerce-tabs">
-	<?php
-		$tab_1_title="Description";
-		
-		$tab_1_content="<h5>Product Description</h5>";
-		$tab_1_content.=get_the_content();
-		
-		$tab_2_title="Review (0)";
-		$tab_2_content="Ajay 2";
-	?>
-	<?php echo do_shortcode('[tabsgroup][tab title="'.$tab_1_title.'"]'.$tab_1_content.'[/tab][tab title="'.$tab_2_title.'"]'.$tab_2_content.'[/tab][/tabsgroup]');?>
 </div>
 <?php do_action( 'woocommerce_after_single_product' ); ?>

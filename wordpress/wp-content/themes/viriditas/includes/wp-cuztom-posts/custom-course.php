@@ -51,6 +51,24 @@ $course->add_meta_box(
                 'date_format' => 'F d, Y'
             )
         ),
+		array(
+            'name'          => 'course_in_week',
+            'label'         => 'Course no. of days in week',
+            'description'   => 'Enter course no. of days in week',
+            'type'          => 'text'
+        ),
+		array(
+            'name'          => 'duration',
+            'label'         => 'Course Duration',
+            'description'   => 'Enter period when course ends',
+            'type'          => 'text'
+        ),
+		array(
+            'name'          => 'schedule',
+            'label'         => 'Course schedule',
+            'description'   => 'Enter schedule/season',
+            'type'          => 'text'
+        ),
         array(
             'name'          => 'date_start',
             'label'         => 'Course Starts',

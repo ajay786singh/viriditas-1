@@ -22,6 +22,8 @@ var outputDir = 'dist';
 var scriptList = [
 	'src/components/jquery/dist/jquery.js', 
 	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
+	'src/components/readmore/readmore.js',
+	'src/js/custom/readmore.js',
 	'src/js/custom/jquery.classie.js',
 	'src/js/custom/jquery.customSelect.js',
 	'src/js/custom/custom-select.js',

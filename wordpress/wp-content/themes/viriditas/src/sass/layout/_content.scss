@@ -120,9 +120,15 @@ section[role=content] {
 	.page & {
 		padding: 250px 0 75px;
 	}
+	.single & {
+		padding: 250px 0 75px;
+	}
 	.column-9 {
 		@include media($bp-large) {
 			border-right:1px solid $base-border-color;
+			&.single-product-content-section {
+				border:none;
+			}
 		}	
 	}
 	.secondary:nth-of-type(1) {
