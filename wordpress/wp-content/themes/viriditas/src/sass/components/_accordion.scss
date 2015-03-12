@@ -17,9 +17,7 @@
 			-ms-user-select:none;
 			user-select:none;
 			&:after {
-				border-left: 10px solid transparent;
-				border-right: 10px solid transparent;
-				border-top: 10px solid $heading;
+				@include arrow(bottom,$heading,10px);
 				content:"";
 				float:right;
 				margin-top:10px;
@@ -28,10 +26,7 @@
 				}
 			}
 			&.active-header:after {
-				border-bottom: 10px solid $heading;
-				border-left: 10px solid transparent;
-				border-right: 10px solid transparent;
-				border-top: none;
+				@include arrow(top,$heading,10px);
 			}
 		}
 		.accordion-panel-content {
