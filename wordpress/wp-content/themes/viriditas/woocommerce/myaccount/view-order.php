@@ -6,7 +6,7 @@
  *
  * @author    WooThemes
  * @package   WooCommerce/Templates
- * @version   2.0.15
+ * @version   2.2.0
  */
 
 echo '<p class="order-info">' . sprintf( __( 'Order <mark class="order-number">%s</mark> was placed on <mark class="order-date">%s</mark> and is currently <mark class="order-status">%s</mark>.', 'woocommerce' ), $order->get_order_number(), date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ), __( $status->name, 'woocommerce' ) ) . '</p>';

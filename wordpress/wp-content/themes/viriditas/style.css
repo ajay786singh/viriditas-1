@@ -405,7 +405,7 @@ http://drinchev.github.io/monosocialiconsfont/
   src: url("dist/fonts/icomoon.eot?#iefix-rdnm34") format("embedded-opentype"), url("dist/fonts/icomoon.woff?-rdnm34") format("woff"), url("dist/fonts/icomoon.ttf?-rdnm34") format("truetype"), url("dist/fonts/icomoon.svg?-rdnm34#icomoon") format("svg");
   font-weight: normal;
   font-style: normal; }
-.woocommerce .button, .woocommerce .app_services_dropdown_select input[type="button"], .app_services_dropdown_select .woocommerce input[type="button"], button {
+.woocommerce .button, .woocommerce input[type="button"], button {
   -webkit-font-smoothing: antialiased;
   background-color: #3a3877;
   border-radius: 0.1875em;
@@ -416,10 +416,10 @@ http://drinchev.github.io/monosocialiconsfont/
   line-height: 1;
   padding: 0.75em 1em;
   text-decoration: none; }
-  .woocommerce .button:hover, .woocommerce .app_services_dropdown_select input[type="button"]:hover, .app_services_dropdown_select .woocommerce input[type="button"]:hover, button:hover {
+  .woocommerce .button:hover, .woocommerce input[type="button"]:hover, button:hover {
     background-color: #212043;
     color: white; }
-  .woocommerce .button:disabled, .woocommerce .app_services_dropdown_select input[type="button"]:disabled, .app_services_dropdown_select .woocommerce input[type="button"]:disabled, button:disabled {
+  .woocommerce .button:disabled, .woocommerce input[type="button"]:disabled, button:disabled {
     cursor: not-allowed;
     opacity: 0.5; }
 
@@ -770,13 +770,13 @@ section[role=content] .course-heading h3 {
   display: inline-block;
   float: left;
   margin-bottom: 0.4em; }
-section[role=content] .course-heading .button, section[role=content] .course-heading .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=content] .course-heading input[type="button"] {
+section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"] {
   float: right;
   display: inline-block;
   font-size: 0.8em;
   margin-top: 0; }
   @media screen and (min-width: 50em) {
-    section[role=content] .course-heading .button, section[role=content] .course-heading .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=content] .course-heading input[type="button"] {
+    section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"] {
       margin: 0; } }
 
 .post-course {
@@ -1289,7 +1289,7 @@ section[role=banner] {
         left: 30%;
         width: 40%;
         position: absolute; } }
-  section[role=banner] .button, section[role=banner] .app_services_dropdown_select input[type="button"], .app_services_dropdown_select section[role=banner] input[type="button"] {
+  section[role=banner] .button, section[role=banner] input[type="button"] {
     color: white; }
 
 .container {
@@ -1614,7 +1614,7 @@ article {
 
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
-.woocommerce .button, .woocommerce .app_services_dropdown_select input[type="button"], .app_services_dropdown_select .woocommerce input[type="button"] {
+.woocommerce .button, .woocommerce input[type="button"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -1875,6 +1875,12 @@ fieldset {
       display: inline-block;
       margin-bottom: 1em;
       margin: 0; }
+  fieldset legend h3, fieldset legend .appointments-wrapper h3, .appointments-wrapper fieldset legend h3, fieldset legend .appointments-confirmation-wrapper h3, .appointments-confirmation-wrapper fieldset legend h3 {
+    font-size: 1.5em; }
+  .appointments-confirmation-wrapper fieldset {
+    border: none;
+    margin-top: 50px;
+    padding: 20px 0; }
 
 input,
 label,
@@ -2010,23 +2016,30 @@ button {
   white-space: nowrap;
   margin-bottom: 0.5em; }
 
-.button, .app_services_dropdown_select input[type="button"] {
+.button, input[type="button"], .app_services_dropdown_select input[type="button"] {
   background: #4e4d89;
   padding: 8px 15px;
   float: left;
   margin: 20px 0;
   color: white; }
-  .button:hover, .app_services_dropdown_select input[type="button"]:hover {
+  .button:hover, input[type="button"]:hover {
     background: #403a66;
     border-color: #311f39;
     color: white; }
-  .banner-content .button, .banner-content .app_services_dropdown_select input[type="button"], .app_services_dropdown_select .banner-content input[type="button"] {
+  .banner-content .button, .banner-content input[type="button"] {
     border: 2px solid white;
     background: none; }
-    .banner-content .button:hover, .banner-content .app_services_dropdown_select input[type="button"]:hover, .app_services_dropdown_select .banner-content input[type="button"]:hover {
+    .banner-content .button:hover, .banner-content input[type="button"]:hover {
       background: #403a66;
       color: white;
       border-color: #403a66; }
+
+input[type="button"] {
+  border: none;
+  font-size: 0.8em;
+  font-weight: normal;
+  margin-right: 10px;
+  text-transform: uppercase; }
 
 .app_services_dropdown_select input[type="button"] {
   border: none;
