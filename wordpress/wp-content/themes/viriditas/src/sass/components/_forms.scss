@@ -9,6 +9,16 @@ fieldset {
             margin:0;
         }
     }
+	legend {
+		h3 {
+			font-size:1.5em;
+		}
+	}
+	.appointments-confirmation-wrapper & {
+		border: none;
+		margin-top: 50px;
+		padding: 20px 0;
+	}
 }
 
 input,
