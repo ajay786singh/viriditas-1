@@ -131,8 +131,8 @@ function get_courses() {
 					$timeEnd        = get_post_meta($id, '_course_details_time_end', true);
 					$available      = get_post_meta($id, '_course_details_spots', true);
 			?>
+					<a href="" id="<?php echo $row_id;?>"></a>
 					<div class="post-course">
-						<a href="" id="<?php echo $row_id;?>"></a>
 						<?php the_title("<h4>","</h4>");?>
 						<div class="meta">
 							<ul>

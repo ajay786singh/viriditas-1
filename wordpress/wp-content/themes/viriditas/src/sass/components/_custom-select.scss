@@ -1,124 +1,130 @@
-/* Inspired From: http://tympanus.net/Development/SelectInspiration */
+.dk-select, 
+.dk-select *, 
+.dk-select *:before, 
+.dk-select *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box; 
+}
 
-$arrow-icon-color:$light-grey;
-$arrow-icon-size:10px;
-
-.cs-select {
-	display: inline-block;
-	vertical-align: middle;
+.dk-select {
+	border-bottom: 1px solid $base-border-color;
+	cursor: pointer; 
+	display: block;
+	line-height: 1.5em;
+	margin-top:0.75em;
+	margin-bottom:0.75em;
 	position: relative;
-	text-align: left;
-	z-index: 100;
-	margin-top:10px;
-	margin-bottom:20px;
 	width: 100%;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background:white;
-	font-size: 1em;
-	line-height:1em;
-	max-width: 600px;
-	select {
+	.dk-select-options {
+		background-color: white;
 		display: none;
-	}
-	ul {
 		list-style: none;
 		margin: 0;
-		padding: 0;
-		width: 100%;
-		max-height:300px;
-		@include media($bp-large) {
-			max-height:500px;
-		}
-		span {
-			padding: 1em;
-			&::after {
-				content: '';
-				opacity: 0;
-			}
-		}
-		li {
-			margin-left:0;
-			border-left: 1px solid #999;
-			border-right: 1px solid #999;
-			border-bottom: 1px solid #999;
-			margin-bottom: 0;
-			&.cs-focus {
-				span {
-					background-color: #ddd;
-				}	
-			}
-		}
+		//max-height: 10.5em;
+		min-width: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding: 0.25em 0;
+		width: auto;
+		z-index: 100; 	
+		margin-top: 5px;
 	}
-	&:focus {
-		outline: none; /* For better accessibility add a style for this in your skin */
-	}
-	span {
-		display: block;
-		position: relative;
-		cursor: pointer;
-		padding: 1em;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	> span {
-		padding-right: 3em;
-		border: 1px solid #000;
-		border-color: inherit;
-		@include transition(background 0.2s, border-color 0.2s);
-		&::after {
-			content: '';
-			right: 1em;
-			speak: none;
-			position: absolute;
-			top: 50%;
-			border-left: $arrow-icon-size solid transparent;
-			border-right: $arrow-icon-size solid transparent;
-			border-top: $arrow-icon-size solid $arrow-icon-color;
-			@include transform(translateY(-50%));
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-		}
-	}
-	.cs-options {
-		position: absolute;
-		overflow: hidden;
-		width: 100%;
-		background: #fff;
-		display:none;
-	}
-	&.cs-active {
-		.cs-options {
+	&.dk-select-open-up {
+		.dk-select-options {
 			display:block;
 		}
-		span { 
-			&::after {
-				content: '';
-				border-bottom: $arrow-icon-size solid $arrow-icon-color;
-				border-left: $arrow-icon-size solid transparent;
-				border-right: $arrow-icon-size solid transparent;
-				border-top: none;
-				margin-left: 1em;
-				position: absolute;
-				speak: none;
-				top: 50%;
-				@include transform(translateY(-50%));
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-			}
+	}
+	&.dk-select-open-down {
+		.dk-select-options {
+			display:block;
 		}
 	}
 }
 
-.app_select_services {
-	width:250px;
-	@include media($bp-large) {
-		width:300px;
+.dk-selected {
+	font-family:$header-font-family;
+	color:$heading;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	position: relative;
+	padding: 5px 10px 5px 0;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis; 
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		right: 0; 
+		top: 50%;
+		@include arrow(bottom,$base-border-color,10px);
+		margin: -0.125em 0.5em 0 0; 
 	}
-	@extend .cs-select;
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		right: 0; 
+		top: 0;
+		height: 100%;
+		margin: -0.75em 0.5em 0 0; 
+	}
+	&:focus {
+		outline:none;
+	}
+	.dk-select-open-down & {
+		&:before {
+			border:none;
+		}	
+	}
+	.dk-select-open-up & {
+		&:before {
+			border:none;
+		}
+	}
+}
+
+.dk-option-selected {
+	color:$heading;
+	border-bottom:1px solid $heading;
+}
+
+.dk-option {
+	padding: 0.5em 0 0; 
+}
+
+.dk-select-open-up .dk-selected:after, .dk-select-open-down .dk-selected:after {
+	@include arrow(top,$base-border-color,10px);
+}
+
+select[data-dkcacheid] {
+	display: none; 
+}
+  
+.dk-search {
+	width: 100%;
+	display: none;
+	.dk-select-open-up & {
+		display: block;
+	}
+	.dk-select-open-down & {
+		display: block;
+	}
+}
+
+.dk-search-input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	font: inherit;
+	display: block;
+	padding: 0 0.25em; 
+	&:focus {
+		box-shadow:none;
+		outline: none; 
+	}
+}
+.dk-option.hidden-option {
+  display: none;
 }
