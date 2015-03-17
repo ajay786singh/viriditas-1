@@ -115,21 +115,10 @@ section[role=main] {
 }
 
 section[role=content] {
-    padding: 75px 0;
+	padding: 250px 0 75px;
 	overflow:hidden;
-	.page & {
-		padding: 250px 0 75px;
-	}
-	.single & {
-		padding: 250px 0 75px;
-	}
-	.column-9 {
-		@include media($bp-large) {
-			border-right:1px solid $base-border-color;
-			&.single-product-content-section {
-				border:none;
-			}
-		}	
+	.home {
+		padding: 75px 0;
 	}
 	.secondary:nth-of-type(1) {
 		margin-left: 0;
@@ -252,4 +241,13 @@ article {
 .app_service_locations_dropdown, 
 .app_provider_locations_dropdown {
 	padding:0;
+}
+.border-right {
+	@include media($bp-large) {
+		border-right:1px solid $base-border-color;
+	}
+}
+.single-product-content {
+	margin-top:30px;
+	overflow:hidden;
 }

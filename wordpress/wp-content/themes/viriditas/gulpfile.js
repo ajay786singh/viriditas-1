@@ -26,6 +26,7 @@ var scriptList = [
 	'src/js/custom/readmore.js',
 	'src/js/custom/jquery.classie.js',
 	'src/js/custom/jquery.customSelect.js',
+	'src/js/custom/dropkick.js',
 	'src/js/custom/custom-select.js',
 	'src/js/custom/menu.js',
 	'src/js/custom/menu-function.js',

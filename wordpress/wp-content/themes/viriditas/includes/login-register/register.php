@@ -173,6 +173,10 @@ class Hype_registration_form {
             return new WP_Error('email', 'Email Already in use');
         }
 		
+		if ($this->email !='' && ($this->email != $this->c_email)) {
+            return new WP_Error('email_invalid', "Email doesn't match with confirm email.");
+        }
+		
         if (!empty($website)) {
             if (!filter_var($this->website, FILTER_VALIDATE_URL)) {
                 return new WP_Error('website', 'Website is not a valid URL');
@@ -247,6 +251,7 @@ class Hype_registration_form {
         if ($_POST['reg_submit']) {
             $this->username = $_POST['reg_name'];
             $this->email = $_POST['reg_email'];
+            $this->c_email = $_POST['reg_c_email'];
             $this->password = $_POST['reg_password'];
 			$this->c_password = $_POST['reg_c_password'];
             $this->first_name = $_POST['reg_fname'];

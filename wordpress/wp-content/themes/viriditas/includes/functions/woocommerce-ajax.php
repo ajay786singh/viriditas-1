@@ -1,16 +1,30 @@
 <?php
 	add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+	function get_product_categories($exclude=false) {
+		//8,118
+		$reslut="";
+		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0&exclude='.$exclude);
+		if($product_categories) {	
+			$result='<div class="shop-header">';
+				$result.='<h6 class="heading">Filter by category</h6>';
+			$result.='</div>';
+			$result.='<select class="by-category">';
+				foreach($product_categories as $product_category) {
+					$result.="<option value='".$product_category->term_id."'>".$product_category->name."</option>";
+				}
+			$result.='</select>';
+		}
+		echo $result;
+	}
 	//AJAX Category Filter
 	function load_products () {
 		global $wp_query;
-		$cat=$_POST['filter_type_category'];
+		$cat_id=$_POST['filter_type_category'];
 		$body_system_id=$_POST['filter_type_body_system'];
 		$action_id=$_POST['filter_type_action'];
 		$indication_id=$_POST['filter_type_indication'];
 		$sort_by_name=$_POST['sort_by_name'];
 		$paged = $_POST['paged'];
-		$category = get_term_by('name', $cat, 'product_cat');
-		$cat_id=$category->term_id;
 		
 		$args=array(
 			'post_type' =>'product',
@@ -78,13 +92,18 @@
 		}
 		ob_start ();
 		$query=new WP_Query($args);
+		$max_pages=$query->max_num_pages;
 		if($query->have_posts()):
 			while($query->have_posts()):$query->the_post();
 		?>	
+			<li id="product-<?php echo get_the_ID();?>">
+			<input type="hidden" name="max_pages" class="max_pages" value="<?php echo $max_pages;?>">		
 			<?php get_template_part( 'woocommerce/content-product', 'woocommerce'); ?>
+			</li>
 		<?php
 			endwhile;
-		endif;wp_reset_query();
+		endif;
+		wp_reset_query();
 		$response = ob_get_contents();
 		ob_end_clean();
 		echo $response;
@@ -107,7 +126,7 @@ function load_actions() {
 				array(
 					'taxonomy' => 'product_cat',
 					'field' => 'term_id',
-					'terms' => $category->term_id
+					'terms' => $cat
 				),
 				array(
 					'taxonomy' => 'body_system',
@@ -140,9 +159,9 @@ function load_actions() {
 add_action( 'wp_ajax_load_actions', 'load_actions' );
 add_action( 'wp_ajax_nopriv_load_actions', 'load_actions' );	
 
-add_action( 'wp_ajax_load_body_systems', 'load_body_systems' );
-add_action( 'wp_ajax_nopriv_load_body_systems', 'load_body_systems' );	
-function load_body_systems() {
+add_action( 'wp_ajax_get_body_systems', 'get_body_systems' );
+add_action( 'wp_ajax_nopriv_get_body_systems', 'get_body_systems' );	
+function get_body_systems() {
 	global $wp_query;
 	
 	$cat_id=$_POST['category'];
@@ -165,8 +184,8 @@ function load_body_systems() {
 	}
 	$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
 	if($body_systems) {
-		$result='<select class="cs-select cs-skin-border by-body_system">';
-			$result.='<option value="">Select Body System</option>';
+		$result='<select class="by-body_system">';
+			$result.='<option value="" class="hidden-option">Select Body System</option>';
 		foreach($body_systems as $body_system) {
 			$result.="<option value='".$body_system->term_id."'>".$body_system->name."</option>";
 		}
@@ -175,4 +194,62 @@ function load_body_systems() {
 	echo $result;
 	die();
 }
-?>
+
+function get_indications() {
+	global $wp_query;
+	$cat_id=$_POST['category'];
+	if($cat_id ==''){
+		$cat_id = 327;
+	}
+	$args=array(
+		'post_type' => 'product',
+		'numberposts' => -1,
+		'tax_query' => array(
+			array(
+				'taxonomy' => 'product_cat',
+				'field' => 'term_id',
+				'terms' => array($cat_id)
+			)
+		)
+	);
+	$objects_ids='';	
+	$objects = get_posts( $args );
+	foreach ($objects as $object) {
+		$objects_ids[] = $object->ID;
+	}
+	$indications = wp_get_object_terms( $objects_ids, 'indication');
+	if($indications) { 
+		$result='<div class="filter filter-indication">';
+		$result.='<div class="shop-header">';
+		$result.='<h6 class="heading">Filter by Indication</h6>';
+		$result.='</div>';
+		$result.='<select class="by-indication">';
+		$result.='<option value="" class="hidden-option">Select Indication</option>';
+		foreach($indications as $indication) {
+			$result.="<option value='".$indication->term_id."'>".$indication->name."</option>";
+		} 
+		$result.='</select>';
+		$result.='</div>';
+	}
+	echo $result;
+	if($_POST['category']) {
+		die(0);
+	}
+}
+
+add_action( 'wp_ajax_get_indications', 'get_indications' );
+add_action( 'wp_ajax_nopriv_get_indications', 'get_indications' );	
+
+add_action( 'wp_ajax_get_product_detail', 'get_product_detail' );
+add_action( 'wp_ajax_nopriv_get_product_detail', 'get_product_detail' );	
+function get_product_detail() {
+	global $wp_query;
+	$post_id=$_POST['product_id'];
+	$args = array( 'p' => $post_id,'post_type'=>'product' );
+	$post_query = new WP_Query( $args );
+		while( $post_query->have_posts() ) : $post_query->the_post();
+			get_template_part( 'woocommerce/content-single-product', 'woocommerce');
+		endwhile; wp_reset_query();
+	die(0);
+}
+

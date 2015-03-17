@@ -35,8 +35,8 @@ if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 
 if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 	$classes[] = 'last';
 ?>
-<li <?php post_class( $classes ); ?>>
-
+<div <?php post_class( $classes ); ?>>
+	
 	<?php //do_action( 'woocommerce_before_shop_loop_item' ); ?>
     <?php	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'product-thumb' );
 			$img = $thumb['0']; 
@@ -44,7 +44,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 				$img=get_bloginfo('template_url')."/dist/images/product_default.jpg";
 			}
 	?>
-	<a class="product-image" href="<?php the_permalink();?>">
+	<a class="product-image" rel="<?php the_ID();?>" href="<?php the_permalink();?>">
 		<div class="product-img" style="background-image:url(<?php echo $img;?>);">
 			<img src="<?php echo $img;?>" />		
 		</div>
@@ -52,7 +52,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 	<div class="product-meta">
 		<div class="product-title">    
 			<div class="title">
-				<a href="<?php the_permalink();?>"><?php the_title(); ?></a>
+				<a href="<?php the_permalink();?>" rel="<?php the_ID();?>"><?php the_title(); ?></a>
 			</div>
 			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
 		</div>
@@ -62,4 +62,4 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 		</div>
 		*/ ?>
 	</div>
-</li>
+</div>

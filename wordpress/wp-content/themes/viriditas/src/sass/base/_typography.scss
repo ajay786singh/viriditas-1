@@ -295,15 +295,9 @@ footer {
 }
 .woocommerce {
 	.sidebar {
-		h6 {
-            font-size: 1.2em;
-            text-transform: uppercase;
-            line-height: 1.5em;
-        }
         .filter-actions {
             h6 {
-                font-size: 0.8em;
-                margin-top: 0px;
+                margin-bottom: 0.5em;
             }
         }
 	}
@@ -510,4 +504,17 @@ section[role=content] {
 			}
 		}
 	}
+}
+
+.shop-header {
+    border-bottom: 1px solid $base-border-color;
+	overflow: hidden;
+	.heading {
+		color: $heading;
+		font-family:$header-font-family;
+		font-size: 1.2em;
+		line-height: 1.5em;
+		margin: 0 0 0.5em;
+		text-transform: uppercase;
+    }
 }
