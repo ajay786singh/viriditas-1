@@ -93,16 +93,24 @@
 		ob_start ();
 		$query=new WP_Query($args);
 		$max_pages=$query->max_num_pages;
-		if($query->have_posts()):
+		if($query->have_posts()){
+			$next = get_next_posts_link('Older', $max_pages);
+			echo '<ul>';
 			while($query->have_posts()):$query->the_post();
 		?>	
-			<li id="product-<?php echo get_the_ID();?>">
-			<input type="hidden" name="max_pages" class="max_pages" value="<?php echo $max_pages;?>">		
-			<?php get_template_part( 'woocommerce/content-product', 'woocommerce'); ?>
+			<li id="product-<?php echo get_the_ID();?>">		
+				<?php get_template_part( 'woocommerce/content-product', 'woocommerce'); ?>
 			</li>
 		<?php
 			endwhile;
-		endif;
+			echo "</ul>";
+				if($next!='' && $paged < $max_pages) {
+					echo "<input type='hidden' id='current-page' value='".$paged."'>";
+					echo "<div class='load-more'><a href='#'>Load more products</a></div>";
+				}
+		} else {
+			echo "1";
+		}
 		wp_reset_query();
 		$response = ob_get_contents();
 		ob_end_clean();
