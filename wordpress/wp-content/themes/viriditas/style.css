@@ -1702,19 +1702,17 @@ article {
   width: 100%;
   height: 200px; }
 
-.product-container {
-  min-height: 200px; }
-
-.product-list {
+.product-list ul {
   display: block;
   list-style: none;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 0;
   overflow: hidden;
   padding-left: 0px;
   position: relative;
-  padding-bottom: 60px; }
-  .product-list li {
+  padding-bottom: 0px; }
+  .product-list ul li {
     display: block;
     margin-right: 0;
     float: left;
@@ -1726,72 +1724,72 @@ article {
     -webkit-transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     -moz-transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
     transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     margin-left: 0; }
-    .product-list li::after {
+    .product-list ul li::after {
       clear: both;
       content: "";
       display: table; }
-    .product-list li:last-child {
+    .product-list ul li:last-child {
       margin-right: 0; }
     @media screen and (min-width: 50em) {
-      .product-list li {
+      .product-list ul li {
         float: left;
         display: block;
         margin-right: 5.88235%;
         width: 29.41176%;
         margin-right: 4.35765%;
         width: 29.76157%; }
-        .product-list li:last-child {
+        .product-list ul li:last-child {
           margin-right: 0; } }
-    .product-list li:nth-child(3n) {
+    .product-list ul li:nth-child(3n) {
       margin-right: 0; }
-    .product-list li h6.product-title {
+    .product-list ul li h6.product-title {
       font-size: 1.125em;
       font-weight: normal;
       margin-bottom: 0.1em;
       margin-top: 0; }
-    .product-list li .product-image {
+    .product-list ul li .product-image {
       display: block; }
-      .product-list li .product-image .product-img {
+      .product-list ul li .product-image .product-img {
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
         height: 250px;
         overflow: hidden;
         position: relative; }
-        .product-list li .product-image .product-img img {
+        .product-list ul li .product-image .product-img img {
           height: 100%;
           width: 100%; }
-    .product-list li .product-title {
+    .product-list ul li .product-title {
       padding: 0.75em 1em 0.75em 0;
       font-size: 1em;
       min-height: 80px; }
-      .product-list li .product-title a {
+      .product-list ul li .product-title a {
         color: #828282; }
-    .product-list li span.amount {
+    .product-list ul li span.amount {
       font-size: 1em;
       font-weight: bold;
       color: #3d3777; }
-    .product-list li .product-action {
+    .product-list ul li .product-action {
       height: 40px; }
-      .product-list li .product-action a {
+      .product-list ul li .product-action a {
         width: 100%;
         border-radius: 0px;
         margin-left: 0;
         font-size: 1em;
         margin-bottom: 0; }
-    .product-list li:hover {
+    .product-list ul li:hover {
       z-index: 200; }
-      .product-list li:hover .product-img .overlay {
+      .product-list ul li:hover .product-img .overlay {
         color: #6e6b8f;
         background: #f7f7f7;
         height: 100%; }
-        .product-list li:hover .product-img .overlay .overlay-content {
+        .product-list ul li:hover .product-img .overlay .overlay-content {
           display: block; }
-      .product-list li:hover .product-img .details {
+      .product-list ul li:hover .product-img .details {
         display: none; }
-      .product-list li:hover .product-meta {
+      .product-list ul li:hover .product-meta {
         display: block; }
 
 .shop-header {
@@ -1802,16 +1800,14 @@ article {
     margin-bottom: 0.5em;
     text-transform: uppercase; }
 
-.sort-product a {
-  text-transform: uppercase;
-  margin-top: 10px;
-  display: block;
-  font-size: 1.2em; }
-  .sort-product a.active-sort {
-    color: black; }
-
-.sidebar-loader {
-  display: none; }
+.load-more {
+  text-align: center;
+  padding: 10px 0;
+  overflow: hidden; }
+  .load-more a {
+    background: #d8d8d8;
+    color: black;
+    padding: 10px 20px; }
 
 footer {
   background: url(dist/images/footer-bg.jpg);

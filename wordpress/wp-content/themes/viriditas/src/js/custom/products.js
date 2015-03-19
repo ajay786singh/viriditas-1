@@ -21,7 +21,7 @@ jQuery.urlParam = function(name){
             indication   : '',
 			action 		 : '',
 			sort_by_name : '',
-			loader    	 : $('.loading')
+			loader    	 : $('.message')
         }, options);
 		settings.loader.loaderShow();
 		$.ajax({
@@ -41,18 +41,33 @@ jQuery.urlParam = function(name){
 			},
 			success: function(html) {
 				settings.loader.loaderHide();
-				if(html) {
+				if(html!='' && html!=1) {
 					settings.container.append(html);
 					settings.container.showProduct();
+					$('.load-more').loadMore();
+				}else if(html==1) {
+					settings.loader.html("<h6>No records found.</h6>");
 				}
 			}
 		});	
     },
 	$.fn.loaderShow = function() {
-		$(this).show();
+		$(this).addClass('loader');
 	},
 	$.fn.loaderHide = function() {
-		$(this).hide();
+		$(this).removeClass('loader');
+	},
+	$.fn.loadMore = function() {
+		var $this=$(this), page=0;
+		$this.find('a').click(function(){
+				page = $('#current-page').val();
+				page++;
+				alert(page);
+				$('#current-page').val(page);
+				$('.product-list').displayProducts({page:page});
+				$this.remove();
+			return false;
+		});
 	},
 	$.fn.filterCategory = function() {
 		$(this).change(function(e){
@@ -126,15 +141,15 @@ jQuery.urlParam = function(name){
 		$this.find('li a').click(function(){
 			var product_id=$(this).attr('rel');
 			$('.list-products').hide();
-			$('.single-product-detail').show().addClass('loader');
+			$('.single-product-detail').show().loaderShow();
 			$.ajax({
 				type: 'POST',
 				url: ajaxurl,
 				data:{action: 'get_product_detail','product_id':product_id },
 				success: function(html) {
-					//$this.removeClass('small-loader');
 					if(html!=''){
-						$('.single-product-detail').removeClass('loader').append(html);
+						$('.single-product-detail').loaderHide();
+						$('.single-product-detail').html(html);
 						$('.back-to-results').click(function(){												
 							$('.list-products').show();
 							$('.single-product-detail').empty().hide();

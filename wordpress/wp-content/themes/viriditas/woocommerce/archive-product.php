@@ -32,16 +32,9 @@ get_header( 'shop' );
 				</div>
 				</div> */?>
 				<!-- Include Products -->
-				<div class="product-container">
-					<ul class="product-list">
-					</ul>
-					<div class="loading">
-						<img src="<?php bloginfo('template_url');?>/dist/images/loader.gif">
-					</div>
-					<div class="no-records">
-						No Records Found.
-					</div>
+				<div class="product-list">
 				</div>
+				<div class="message"></div>
 			</div>
 			<!-- Container for single product -->
 			<div class="single-product-detail">
