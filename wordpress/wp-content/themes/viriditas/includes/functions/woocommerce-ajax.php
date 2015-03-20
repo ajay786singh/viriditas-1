@@ -1,7 +1,6 @@
 <?php
 	add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 	function get_product_categories($exclude=false) {
-		//8,118
 		$reslut="";
 		$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0&exclude='.$exclude);
 		if($product_categories) {	
@@ -119,7 +118,7 @@
 	}
 	add_action( 'wp_ajax_load_products', 'load_products' );
 	add_action( 'wp_ajax_nopriv_load_products', 'load_products' );
-function load_actions() {
+function get_actions() {
 	global $wp_query;
 	
 	$cat=$_POST['category'];
@@ -153,19 +152,22 @@ function load_actions() {
 	}
 	$actions = wp_get_object_terms( $objects_ids, 'actions' );
 	if($actions) {
-		$result='<h6>Select Action</h6>';	
+		$result='<h6>Select Action</h6>';
+		$result.='<ul>';
+			
 		foreach($actions as $action) {
 			$action_match = explode(" ",$action->name);	
 			if($action_match[0]==$body_match[0]) {
-				$result.="<label><input type='checkbox' name='actions[]' class='by-action' value='".$action->term_id."'><span>".$action->name."</span></label>";
+				$result.="<li><a href='#' data-value='".$action->term_id."'>".$action->name."</a></li>";
 			}
 		}
+		$result.='</ul>';
 	}
 	echo $result;
 	die();
 }
-add_action( 'wp_ajax_load_actions', 'load_actions' );
-add_action( 'wp_ajax_nopriv_load_actions', 'load_actions' );	
+add_action( 'wp_ajax_get_actions', 'get_actions' );
+add_action( 'wp_ajax_nopriv_get_actions', 'get_actions' );	
 
 add_action( 'wp_ajax_get_body_systems', 'get_body_systems' );
 add_action( 'wp_ajax_nopriv_get_body_systems', 'get_body_systems' );	

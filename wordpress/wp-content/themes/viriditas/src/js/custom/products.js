@@ -62,9 +62,15 @@ jQuery.urlParam = function(name){
 		$this.find('a').click(function(){
 				page = $('#current-page').val();
 				page++;
-				alert(page);
 				$('#current-page').val(page);
-				$('.product-list').displayProducts({page:page});
+				var body_system='',indication='';
+				if($('.by-body_system .dk-select-options .dk-option-selected').length){
+					body_system=$('.by-body_system .dk-select-options .dk-option-selected').attr('data-value');
+				}
+				if($('.by-indication .dk-select-options .dk-option-selected').length){
+					indication=$('.by-indication .dk-select-options .dk-option-selected').attr('data-value');
+				}
+				$('.product-list').displayProducts({page:page,body_system:body_system,indication:indication});
 				$this.remove();
 			return false;
 		});
@@ -92,7 +98,7 @@ jQuery.urlParam = function(name){
 	$.fn.fetchBodysystems = function(category) {
 		var $this = $(this);
 		$this.empty();
-		$('.filter-actions-items').empty();
+		$('section[role="actions"]').empty();
 		$this.addClass('small-loader');
 		$.ajax({
 			type: 'POST',
@@ -106,9 +112,41 @@ jQuery.urlParam = function(name){
 						mobile: true,
 						change:function() {
 							var dk = this;
+							$('section[role="actions"]').fetchActions(category,dk.value);
 							$this.filterBodysystems(dk.value);
 						}
 					});
+				}	
+			}
+		});			
+	},
+	$.fn.fetchActions = function(category,body_system) {
+		var $this = $(this);
+		$this.empty();
+		$this.addClass('small-loader');
+		$.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data:{action: 'get_actions','category':category,'body_system':body_system },
+			success: function(html) {
+				$this.removeClass('small-loader');
+				if(html!=''){
+					$this.append(html);
+					 $this.find('ul li a').click(function(){
+						$(this).toggleClass('checked');
+						var actions = [];
+						$this.find('ul li a').each(function(){
+							if($(this).hasClass('checked')==true) {
+								var val=$(this).attr('data-value');
+								actions.push(val);
+							}
+						});
+						if(actions !='') {
+							$('.product-list').empty();
+							$('.product-list').displayProducts({category:category,body_system:body_system,action:actions,page:1});
+						}
+						return false;
+					 });
 				}	
 			}
 		});			
