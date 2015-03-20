@@ -1686,11 +1686,22 @@ article {
     margin-top: 2em; }
   .filter .filter-title {
     font-size: 0.8125em; }
-  .filter.filter-actions .selecter {
-    margin-top: 15px; }
-  .filter.filter-actions label {
-    font-size: 1em;
-    font-weight: normal; }
+
+section[role="actions"] ul li a {
+  display: block;
+  line-height: 1.25em;
+  padding-left: 25px; }
+  section[role="actions"] ul li a:before {
+    background: url(dist/images/checkbox.png) no-repeat;
+    content: "";
+    left: 0;
+    height: 18px;
+    position: absolute;
+    width: 18px; }
+  section[role="actions"] ul li a:hover:before {
+    background-position: -19px 0px; }
+  section[role="actions"] ul li a.checked:before {
+    background-position: -19px 0px; }
 
 .small-loader {
   background: url(dist/images/loader-small.gif) no-repeat;

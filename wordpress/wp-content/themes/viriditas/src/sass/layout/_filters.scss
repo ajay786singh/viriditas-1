@@ -8,16 +8,36 @@
     }
 	.filter-title {
 		font-size:em(13px);
+	}	
+}
+section[role="actions"] {
+	ul {
+		li {
+			a {
+				display: block;
+				line-height:1.25em;
+				padding-left: 25px;
+				&:before {
+					background:url(dist/images/checkbox.png) no-repeat;
+					content:"";
+					left: 0;
+					height: 18px;
+					position: absolute;
+					width: 18px;
+				}
+				&:hover {
+					&:before {
+						background-position:-19px 0px;
+					}
+				}
+				&.checked {
+					&:before {
+						background-position:-19px 0px;
+					}
+				}
+			}
+		}
 	}
-    &.filter-actions {
-        .selecter {
-            margin-top: 15px;
-        }
-        label {
-            font-size: 1em;
-            font-weight: normal;
-        }
-    }
 }
 .small-loader {
 	background:url(dist/images/loader-small.gif) no-repeat;
