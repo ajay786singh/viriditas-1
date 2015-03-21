@@ -650,8 +650,6 @@ footer .copyright p {
     margin-bottom: 0em;
     text-align: right;
     width: 100%; }
-    .main-menu-desktop ul:nth-child(2) {
-      margin-bottom: 1.5em; }
     .main-menu-desktop ul li {
       display: inline;
       font-size: 1em;
@@ -667,6 +665,10 @@ footer .copyright p {
       .main-menu-desktop ul li.current-menu-item a {
         color: #999999;
         font-weight: 600; }
+    .main-menu-desktop ul:nth-child(1) li {
+      font-size: 0.875em; }
+    .main-menu-desktop ul:nth-child(2) {
+      margin-bottom: 1.5em; }
 
 .team .content h5 {
   margin-bottom: 0; }
