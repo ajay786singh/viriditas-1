@@ -1824,6 +1824,18 @@ section[role="actions"] ul li a {
     color: black;
     padding: 10px 20px; }
 
+.back-to-results {
+  padding-left: 15px; }
+  .back-to-results:before {
+    border-top: 8px solid transparent;
+    border-right: 8px solid #3d3777;
+    border-bottom: 8px solid transparent;
+    border-left: none;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: 6px; }
+
 footer {
   background: url(dist/images/footer-bg.jpg);
   background-repeat: no-repeat;
