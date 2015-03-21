@@ -24,19 +24,25 @@
 	</article>	
 	<article class="container divider">
 		<div class="thumb">
-			<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
-			<h5>Order Product</h5>
-			<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
+			<a href="<?php bloginfo('url');?>/shop">
+				<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
+				<h5>Order Product</h5>
+				<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
+			</a>
 		</div>
 		<div class="thumb">
-			<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
-			<h5>Clinic Appointment</h5>
-			<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
+			<a href="<?php bloginfo('url');?>/appointments">
+				<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
+				<h5>Clinic Appointment</h5>
+				<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
+			</a>
 		</div>
 		<div class="thumb">
-			<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
-			<h5>Courses</h5>
-			<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
+			<a href="<?php bloginfo('url');?>/courses">
+				<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
+				<h5>Courses</h5>
+				<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
+			</a>	
 		</div>
 	</article>
 </section>

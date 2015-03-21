@@ -523,6 +523,8 @@ a {
   a:active, a:focus {
     color: #212043;
     outline: none; }
+  a p {
+    color: #828282; }
 
 hr {
   border-bottom: 1px solid #d8d8d8;

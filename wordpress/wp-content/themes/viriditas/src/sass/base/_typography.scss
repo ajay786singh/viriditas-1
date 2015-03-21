@@ -114,6 +114,9 @@ a {
         color: $hover-link-color;
         outline: none;
     }
+	p {
+		color:$base-font-color;
+	}
 }
 hr {
     border-bottom: 1px solid $base-border-color;
