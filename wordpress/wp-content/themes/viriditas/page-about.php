@@ -20,10 +20,11 @@
 		</div>	
 	</div>
 
-	<div class="container divider">
+	<div class="container divider" id="services">
 		<div class="content-grid">
 			<?php
-				query_posts('post_type=page&p=1014');
+				$services_page_id=1014;
+				query_posts('post_type=page&p='.$services_page_id);
 				if(have_posts()):
 					while(have_posts()):the_post();
 						the_title("<h1>","</h1>");
