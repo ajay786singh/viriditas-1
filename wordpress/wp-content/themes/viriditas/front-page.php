@@ -5,7 +5,7 @@
 			<div class="secondary">
 				<h1>We teach, cure, and make herbal solutions with a holistic approach.</h1>
 				<p>Synth butcher jean shorts wolf sustainable Bansky. Fixie wayfarers swag hoodie Pitchfork, single-origin coffee tofu food truck leggings.</p>
-				<a href="" class="button">Learn more</a>
+				<a href="<?php bloginfo('url');?>/about" class="button">Learn more</a>
 			</div>
         </div>
     </div>
