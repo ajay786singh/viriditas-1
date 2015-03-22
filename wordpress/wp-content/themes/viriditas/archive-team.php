@@ -1,7 +1,9 @@
-<?php get_header();?>
-
-<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
+<?php
+/*
+Template Name: Team Archive
+*/
+	get_header(); 
+?>
 <section role="content">
     <div class="container">
 		<div class="content-grid">
@@ -104,9 +106,10 @@
 		<?php	endwhile;
 			endif; wp_reset_query();	
 		?>
-	</div>				
+	</div>			
+	
+	
+	
+	
 </section>
-
-<?php endwhile; endif; ?>
-
 <?php get_footer(); ?>

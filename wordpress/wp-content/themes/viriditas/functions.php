@@ -33,5 +33,4 @@ require_once('includes/functions/courses.php');
 //require_once('includes/shortcodes/content-sidebar.php');
 //require_once('includes/shortcodes/readmore.php');
 require_once('includes/shortcodes/tab.php');
-
 ?>

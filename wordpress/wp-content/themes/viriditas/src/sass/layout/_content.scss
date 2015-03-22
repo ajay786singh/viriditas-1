@@ -115,7 +115,7 @@ section[role=main] {
 }
 
 section[role=content] {
-	padding: 250px 0 75px;
+	padding: 195px 0 75px;
 	overflow:hidden;
 	.home {
 		padding: 75px 0;
@@ -183,9 +183,6 @@ article {
 .oddeven {
 	padding:50px 0 20px;
 	@include row();
-	&:nth-of-type(1) {
-		margin-top:1.5em;
-	}
 	&.team {
 		&:nth-of-type(odd) {
 			background: none;	
@@ -224,7 +221,7 @@ article {
 	.image {
 		width: 50%;
 		img {
-			border:5px solid $white;
+			border:10px solid $white;
 		}
 	}	
     .content {
