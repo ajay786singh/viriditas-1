@@ -3,4 +3,7 @@
 	margin-bottom: 45px;
 	margin-top: 50px;
 	padding-top: 130px;
+	.home & {
+		margin-bottom: 0px;
+	}
 }

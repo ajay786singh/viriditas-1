@@ -14,11 +14,17 @@
 			?>
 		</div>	
 	</div>
-
+</section>
+<?php 
+$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+?>
+<img src="<?php echo $image[0];?>" />
+<section role="content">
 	<div class="container divider">
 		<div class="content-grid">
 			<?php 
-				$team_category = get_term_by('id', 1362, 'team_category');
+				$clinic_team_category_id=1362;
+				$team_category = get_term_by('id', $clinic_team_category_id, 'team_category');
 			?>
 				<h1><?php echo $team_category->name;?></h1>
 				<p><?php echo $team_category->description; ?></p>
@@ -41,10 +47,18 @@
 		if($query->have_posts()):
 			while($query->have_posts()):$query->the_post();
 		?>							
-			<div class="oddeven team">
+			<div class="oddeven team-member">
 				<div class="container">
 					<span class="image">
-						<?php echo get_the_post_thumbnail($post->ID, 'full'); ?>
+						<?php 
+							$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+							if($image=="") {
+								$img="http://placehold.it/700x400&text=No%20Preview";
+							}else{
+								$img=$image[0];
+							}
+						?>
+						<img src="<?php echo $img;?>">
 					</span>
 					<span class="content">
 						<h5><?php the_title(); ?></h5>
@@ -65,7 +79,8 @@
 	<div class="container divider">
 		<div class="content-grid">
 			<?php 
-				$team_category = get_term_by('id', 1363, 'team_category');
+				$production_team_category_id=1363;
+				$team_category = get_term_by('id', $production_team_category_id, 'team_category');
 			?>
 				<h1><?php echo $team_category->name;?></h1>
 				<p><?php echo $team_category->description; ?></p>
@@ -86,9 +101,17 @@
 			if($query->have_posts()):
 				while($query->have_posts()):$query->the_post();
 			?>							
-				<div class="block-grid-3 team">
+				<div class="block-grid-3 team-member">
 					<span class="image">
-						<?php echo get_the_post_thumbnail($post->ID, 'full'); ?>
+						<?php 
+							$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+							if($image=="") {
+								$img="http://placehold.it/600x300&text=No%20Preview";
+							}else{
+								$img=$image[0];
+							}
+						?>
+						<img src="<?php echo $img;?>">
 					</span>
 					<span class="content">
 						<h5><?php the_title(); ?></h5>
@@ -106,7 +129,5 @@
 		?>
 	</div>				
 </section>
-
 <?php endwhile; endif; ?>
-
 <?php get_footer(); ?>
