@@ -635,7 +635,9 @@ footer .copyright p {
 .content-grid {
   text-align: center; }
   .content-grid .sub-heading {
-    color: #d8d8d8; }
+    color: #d8d8d8;
+    margin-top: 0;
+    margin-bottom: 0.925em; }
 
 .main-menu-desktop {
   display: none; }
@@ -670,15 +672,15 @@ footer .copyright p {
     .main-menu-desktop ul:nth-child(2) {
       margin-bottom: 1.5em; }
 
-.team .content h5 {
+.team-member .content h5 {
   margin-bottom: 0; }
-.team .content p:nth-of-type(1) {
+.team-member .content p:nth-of-type(1) {
   margin-top: 0;
   padding-top: 0; }
-.team .content p:nth-of-type(2) {
+.team-member .content p:nth-of-type(2) {
   position: relative;
   margin-top: 40px; }
-  .team .content p:nth-of-type(2):before {
+  .team-member .content p:nth-of-type(2):before {
     border: 1px solid #473e53;
     content: "";
     position: absolute;
@@ -1493,10 +1495,12 @@ section[role=main] {
   padding: 150px 0 0 0; }
 
 section[role=content] {
-  padding: 250px 0 75px;
+  padding: 195px 0 75px;
   overflow: hidden; }
-  section[role=content] .home {
-    padding: 75px 0; }
+  .home section[role=content] {
+    padding: 60px 0; }
+  section[role=content]:nth-of-type(2) {
+    padding-top: 0; }
   section[role=content] .secondary:nth-of-type(1) {
     margin-left: 0;
     padding-left: 0; }
@@ -1548,7 +1552,6 @@ article {
         margin-right: 0; } }
   @media screen and (min-width: 50em) {
     article .thumb {
-      padding: 3em 0 0 0;
       float: left;
       display: block;
       margin-right: 5.88235%;
@@ -1575,8 +1578,6 @@ article {
     clear: both;
     content: "";
     display: table; }
-  .oddeven:nth-of-type(1) {
-    margin-top: 1.5em; }
   .oddeven.team:nth-of-type(odd) {
     background: none; }
   .oddeven:nth-of-type(odd) {
@@ -1600,7 +1601,7 @@ article {
   .oddeven .image {
     width: 50%; }
     .oddeven .image img {
-      border: 5px solid white; }
+      border: 10px solid white; }
   .oddeven .content {
     width: 50%;
     padding-top: 20px; }
@@ -1622,6 +1623,12 @@ article {
 .single-product-content {
   margin-top: 30px;
   overflow: hidden; }
+
+.team-member {
+  padding-top: 50px; }
+  .team-member .image {
+    display: block;
+    margin-bottom: 10px; }
 
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
@@ -1823,6 +1830,18 @@ section[role="actions"] ul li a {
     background: #d8d8d8;
     color: black;
     padding: 10px 20px; }
+
+.back-to-results {
+  padding-left: 15px; }
+  .back-to-results:before {
+    border-top: 8px solid transparent;
+    border-right: 8px solid #3d3777;
+    border-bottom: 8px solid transparent;
+    border-left: none;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: 6px; }
 
 footer {
   background: url(dist/images/footer-bg.jpg);
@@ -2205,5 +2224,8 @@ select[data-dkcacheid] {
 
 .divider {
   background: transparent url(dist/images/divider.jpg) no-repeat top center;
-  padding-top: 100px;
-  margin-top: 50px; }
+  margin-bottom: 45px;
+  margin-top: 50px;
+  padding-top: 130px; }
+  .home .divider {
+    margin-bottom: 0px; }

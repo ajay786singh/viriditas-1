@@ -115,10 +115,13 @@ section[role=main] {
 }
 
 section[role=content] {
-	padding: 250px 0 75px;
+	padding: 195px 0 75px;
 	overflow:hidden;
-	.home {
-		padding: 75px 0;
+	.home & {
+		padding: 60px 0;
+	}
+	&:nth-of-type(2) {
+		padding-top: 0;
 	}
 	.secondary:nth-of-type(1) {
 		margin-left: 0;
@@ -167,7 +170,7 @@ article {
     }
     .thumb {
         @include media($bp-large) {
-            @include pad(3em 0 0 0);
+            //@include pad(3em 0 0 0);
             @include span-columns(4);
         }
     }
@@ -183,9 +186,6 @@ article {
 .oddeven {
 	padding:50px 0 20px;
 	@include row();
-	&:nth-of-type(1) {
-		margin-top:1.5em;
-	}
 	&.team {
 		&:nth-of-type(odd) {
 			background: none;	
@@ -224,7 +224,7 @@ article {
 	.image {
 		width: 50%;
 		img {
-			border:5px solid $white;
+			border:10px solid $white;
 		}
 	}	
     .content {
@@ -250,4 +250,11 @@ article {
 .single-product-content {
 	margin-top:30px;
 	overflow:hidden;
+}
+.team-member {
+	padding-top:50px;
+	.image {
+		display: block;
+		margin-bottom:10px;
+	}
 }

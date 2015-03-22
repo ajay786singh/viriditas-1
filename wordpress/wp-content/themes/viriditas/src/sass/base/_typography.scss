@@ -228,6 +228,8 @@ footer {
 	text-align:center;
 	.sub-heading { 
 		color: $sub_heading;
+		margin-top:0;
+		margin-bottom:0.925em;
 	}
 }
 .main-menu-desktop {
@@ -274,7 +276,7 @@ footer {
 		}
     }	
 }
-.team {
+.team-member {
 	.content {
 		h5 {
 			margin-bottom:0;

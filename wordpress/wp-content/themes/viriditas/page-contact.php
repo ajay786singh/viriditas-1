@@ -20,7 +20,7 @@
 			<p><span>p:</span> 416-767-3427</p>	
 			<p><span>f:</span> 416-767-1215</p>	
 			<p><a href="mailto://redden@viriditasherbalproducts.com">redden@viriditasherbalproducts.com</a></p>
-			<a href="" class="button">Book Appointment</a>
+			<a href="<?php bloginfo('url');?>/appointments" class="button">Book Appointment</a>
 		</div>
 	</article>
 </section>	

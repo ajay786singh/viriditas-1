@@ -115,3 +115,13 @@
 		padding:10px 20px;
 	}
 }
+.back-to-results {
+	padding-left:15px;
+	&:before {
+		@include arrow(left, $heading, 8px);
+		content:"";
+		left: 0;
+		position: absolute;
+		top: 6px;
+	}
+}
