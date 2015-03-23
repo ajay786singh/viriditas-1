@@ -35,6 +35,7 @@ var scriptList = [
 	'src/js/custom/header-scroll.js',
 	'src/js/custom/courses.js',
 	'src/js/custom/accordion.js',
+	'src/js/custom/login.js',
 ];
 
 var fontIcons = [

@@ -269,6 +269,7 @@ footer {
 		&:nth-child(1) {
 			li {
 				font-size: em(14px);
+				position:relative;
 			}
 		}
 		&:nth-child(2) {
@@ -527,4 +528,19 @@ section[role=content] {
 		margin: 0 0 0.5em;
 		text-transform: uppercase;
     }
+}
+
+.login-box {
+	img {
+		display: block;
+		margin:0 auto;
+	}
+	h5 {
+		color:$heading;
+		text-align:center;
+	}
+	a.lost {
+		color:$heading;
+		float:left;
+	}
 }

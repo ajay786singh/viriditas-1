@@ -405,7 +405,7 @@ http://drinchev.github.io/monosocialiconsfont/
   src: url("dist/fonts/icomoon.eot?#iefix-rdnm34") format("embedded-opentype"), url("dist/fonts/icomoon.woff?-rdnm34") format("woff"), url("dist/fonts/icomoon.ttf?-rdnm34") format("truetype"), url("dist/fonts/icomoon.svg?-rdnm34#icomoon") format("svg");
   font-weight: normal;
   font-style: normal; }
-.woocommerce .button, .woocommerce input[type="button"], button {
+.woocommerce .button, .woocommerce input[type="button"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], button {
   -webkit-font-smoothing: antialiased;
   background-color: #3a3877;
   border-radius: 0.1875em;
@@ -416,10 +416,10 @@ http://drinchev.github.io/monosocialiconsfont/
   line-height: 1;
   padding: 0.75em 1em;
   text-decoration: none; }
-  .woocommerce .button:hover, .woocommerce input[type="button"]:hover, button:hover {
+  .woocommerce .button:hover, .woocommerce input[type="button"]:hover, .woocommerce #login-form input[type="submit"]:hover, #login-form .woocommerce input[type="submit"]:hover, button:hover {
     background-color: #212043;
     color: white; }
-  .woocommerce .button:disabled, .woocommerce input[type="button"]:disabled, button:disabled {
+  .woocommerce .button:disabled, .woocommerce input[type="button"]:disabled, .woocommerce #login-form input[type="submit"]:disabled, #login-form .woocommerce input[type="submit"]:disabled, button:disabled {
     cursor: not-allowed;
     opacity: 0.5; }
 
@@ -668,7 +668,8 @@ footer .copyright p {
         color: #999999;
         font-weight: 600; }
     .main-menu-desktop ul:nth-child(1) li {
-      font-size: 0.875em; }
+      font-size: 0.875em;
+      position: relative; }
     .main-menu-desktop ul:nth-child(2) {
       margin-bottom: 1.5em; }
 
@@ -771,13 +772,13 @@ section[role=content] .course-heading h3 {
   display: inline-block;
   float: left;
   margin-bottom: 0.4em; }
-section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"] {
+section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"] {
   float: right;
   display: inline-block;
   font-size: 0.8em;
   margin-top: 0; }
   @media screen and (min-width: 50em) {
-    section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"] {
+    section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"] {
       margin: 0; } }
 
 .post-course {
@@ -861,6 +862,16 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
     margin: 0 0 0.5em;
     text-transform: uppercase; }
 
+.login-box img {
+  display: block;
+  margin: 0 auto; }
+.login-box h5 {
+  color: #3d3777;
+  text-align: center; }
+.login-box a.lost {
+  color: #3d3777;
+  float: left; }
+
 img {
   max-width: 100%; }
 
@@ -932,8 +943,8 @@ header {
   -moz-transition: all 2s ease;
   transition: all 2s ease; }
   header .header-content {
-    overflow: hidden;
-    border-bottom: 2px solid white; }
+    border-bottom: 2px solid white;
+    height: 125px; }
   header .logo {
     float: left;
     height: auto;
@@ -944,6 +955,8 @@ header {
       header .logo {
         max-width: 225px;
         padding: .8em 0 0; } }
+  header .container {
+    overflow: visible; }
   header.active-header {
     background-color: #3a3877; }
     header.active-header .header-content {
@@ -1301,7 +1314,7 @@ section[role=banner] {
         left: 30%;
         width: 40%;
         position: absolute; } }
-  section[role=banner] .button, section[role=banner] input[type="button"] {
+  section[role=banner] .button, section[role=banner] input[type="button"], section[role=banner] #login-form input[type="submit"], #login-form section[role=banner] input[type="submit"] {
     color: white; }
 
 .container {
@@ -1497,10 +1510,10 @@ section[role=main] {
 section[role=content] {
   padding: 195px 0 75px;
   overflow: hidden; }
-  .home section[role=content] {
-    padding: 60px 0; }
   section[role=content]:nth-of-type(2) {
     padding-top: 0; }
+    .home section[role=content]:nth-of-type(2) {
+      padding: 60px 0; }
   section[role=content] .secondary:nth-of-type(1) {
     margin-left: 0;
     padding-left: 0; }
@@ -1632,7 +1645,7 @@ article {
 
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
-.woocommerce .button, .woocommerce input[type="button"] {
+.woocommerce .button, .woocommerce input[type="button"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -2045,6 +2058,33 @@ footer input[type="text"], footer input[type="email"] {
   text-transform: uppercase;
   font-size: 1em; }
 
+.login-box {
+  background: white;
+  display: none;
+  left: -108px;
+  padding: 20px 25px;
+  position: absolute;
+  top: 30px;
+  width: 225px;
+  z-index: 999; }
+  .login-box #login-form {
+    margin-bottom: 0.5em;
+    overflow: hidden; }
+  .login-box .status {
+    color: #3d3777;
+    display: none;
+    margin-bottom: 0.5em;
+    text-align: left; }
+  .login-box:before {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+    border-top: none;
+    content: "";
+    left: 118px;
+    position: absolute;
+    top: -10px; }
+
 button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -2058,20 +2098,20 @@ button {
   white-space: nowrap;
   margin-bottom: 0.5em; }
 
-.button, input[type="button"], .app_services_dropdown_select input[type="button"] {
+.button, input[type="button"], .app_services_dropdown_select input[type="button"], #login-form input[type="submit"] {
   background: #4e4d89;
   padding: 8px 15px;
   float: left;
   margin: 20px 0;
   color: white; }
-  .button:hover, input[type="button"]:hover {
+  .button:hover, input[type="button"]:hover, #login-form input[type="submit"]:hover {
     background: #403a66;
     border-color: #311f39;
     color: white; }
-  .banner-content .button, .banner-content input[type="button"] {
+  .banner-content .button, .banner-content input[type="button"], .banner-content #login-form input[type="submit"], #login-form .banner-content input[type="submit"] {
     border: 2px solid white;
     background: none; }
-    .banner-content .button:hover, .banner-content input[type="button"]:hover {
+    .banner-content .button:hover, .banner-content input[type="button"]:hover, .banner-content #login-form input[type="submit"]:hover, #login-form .banner-content input[type="submit"]:hover {
       background: #403a66;
       color: white;
       border-color: #403a66; }
@@ -2090,6 +2130,10 @@ input[type="button"] {
   font-weight: normal;
   text-transform: uppercase;
   position: absolute; }
+
+#login-form input[type="submit"] {
+  width: 100%;
+  margin: 0; }
 
 .dk-select,
 .dk-select *,
