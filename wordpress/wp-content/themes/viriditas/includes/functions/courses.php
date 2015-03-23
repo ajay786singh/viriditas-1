@@ -121,16 +121,9 @@ function get_courses() {
 					$imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
 					$description    = wpautop(get_post_meta($id, '_course_details_description', true));
 					$price          = get_post_meta($id, '_course_details_price', true);
-					$instructor     = get_post_meta($id, '_course_details_instructor', true);
-					$deadline       = get_post_meta($id, '_course_details_deadline', true);
 					$course_in_week       = get_post_meta($id, '_course_details_course_in_week', true);
 					$duration       = get_post_meta($id, '_course_details_duration', true);
 					$schedule       = get_post_meta($id, '_course_details_schedule', true);
-					$dateStart      = get_post_meta($id, '_course_details_date_start', true);
-					$dateEnd        = get_post_meta($id, '_course_details_date_end', true);
-					$timeStart      = get_post_meta($id, '_course_details_time_start', true);
-					$timeEnd        = get_post_meta($id, '_course_details_time_end', true);
-					$available      = get_post_meta($id, '_course_details_spots', true);
 			?>
 					<a href="" id="<?php echo $row_id;?>"></a>
 					<div class="post-course">
@@ -156,7 +149,7 @@ function get_courses() {
 								echo $description;
 								echo "<div class='course-action'>";
 								if($price):
-									echo "<h4>".$price."+tax</h4>";
+									echo "<h4>$".$price."+tax</h4>";
 								endif;
 									echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
 								echo "</div>";
