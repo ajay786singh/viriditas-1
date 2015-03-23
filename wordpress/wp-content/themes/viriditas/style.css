@@ -872,6 +872,14 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   color: #3d3777;
   float: left; }
 
+.course-action {
+  padding: 20px 0 30px; }
+  .course-action h4 {
+    float: left; }
+  .course-action .button, .course-action input[type="button"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"] {
+    margin-left: 30px;
+    margin-top: 0; }
+
 img {
   max-width: 100%; }
 
@@ -2104,7 +2112,7 @@ button {
   float: left;
   margin: 20px 0;
   color: white; }
-  .button:hover, input[type="button"]:hover, #login-form input[type="submit"]:hover {
+  .button:hover, input[type="button"]:hover, #login-form input[type="submit"]:hover, .button:focus, input[type="button"]:focus, #login-form input[type="submit"]:focus {
     background: #403a66;
     border-color: #311f39;
     color: white; }
