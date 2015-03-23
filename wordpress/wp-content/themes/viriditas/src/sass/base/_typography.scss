@@ -400,6 +400,9 @@ header {
 			font-family: $header-font-family;
 			font-weight: normal;
 		}
+		select {
+			width:250px;
+		}
 	}
 }
 .appointments-wrapper,.appointments-confirmation-wrapper {
@@ -552,5 +555,25 @@ section[role=content] {
 	.button {
 		margin-left:30px;
 		margin-top:0;
+	}
+}
+.appointment-sidebar {
+	h5 {
+		&:after {
+			background:url(dist/images/pdf-icon.jpg) 15px 0px no-repeat;
+			content:'';
+			height:35px;
+			width:60px;
+			position:absolute;
+		}
+	}
+	ul {
+		li {
+			a {
+				color:$heading;
+				font-weight:500;
+				text-decoration:underline;
+			}
+		}
 	}
 }

@@ -758,6 +758,8 @@ header .logo a {
     color: #3d3777;
     font-family: "Playfair Display", serif;
     font-weight: normal; }
+  .app_services .app_services_dropdown select {
+    width: 250px; }
 
 .appointments-wrapper, .appointments-confirmation-wrapper {
   font-family: "Roboto", sans-serif; }
@@ -879,6 +881,17 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   .course-action .button, .course-action input[type="button"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"] {
     margin-left: 30px;
     margin-top: 0; }
+
+.appointment-sidebar h5:after {
+  background: url(dist/images/pdf-icon.jpg) 15px 0px no-repeat;
+  content: '';
+  height: 35px;
+  width: 60px;
+  position: absolute; }
+.appointment-sidebar ul li a {
+  color: #3d3777;
+  font-weight: 500;
+  text-decoration: underline; }
 
 img {
   max-width: 100%; }
