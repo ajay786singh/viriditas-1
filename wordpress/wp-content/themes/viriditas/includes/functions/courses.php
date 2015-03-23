@@ -95,10 +95,11 @@ function get_courses() {
 		foreach($courses_type as $course_type) {
 			$course=$course_type->name;
 			$course_slug=$course_type->slug;
+			$course_register_url=get_bloginfo('url').'/course-registration';
 	?>
 			<div class="course-heading">
 				<h3><?php echo $course;?></h3>
-				<a href="<?php bloginfo('url');?>/course-registration" class="button">Register Now</a>
+				<a href="<?php echo $course_register_url;?>" class="button">Register Now</a>
 			</div>
 			<?php 
 				$args['tax_query'] = array(
@@ -151,7 +152,15 @@ function get_courses() {
 							</ul>
 						</div>
 						 <?php if($description):
-							echo "<div class='content'>".$description."</div>";         
+							echo "<div class='content'>";
+								echo $description;
+								echo "<div class='course-action'>";
+								if($price):
+									echo "<h4>".$price."+tax</h4>";
+								endif;
+									echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
+								echo "</div>";
+							echo "</div>";
 						endif ?>
 					</div>
 			<?php
