@@ -241,14 +241,13 @@ footer {
         color: $menu-color;
         font-family:$sans-serif;
 		list-style-type: none;
-        margin-top: 1.5em;
 		margin-bottom: 0em;
 		text-align: right;
 		width: 100%;
 		li {
             display: inline;
             font-size: em(16px);
-            font-weight: normal;
+            font-weight: 300;
             margin-left: 0;
             @include media($bp-large) {
                 margin-left: 2em;
@@ -262,18 +261,20 @@ footer {
 			&.current-menu-item {
 				a {
 					color:$menu-color-active;
-					font-weight:600;
+					font-weight:400;
 				}
 			}
         }		
 		&:nth-child(1) {
+			margin-top: 1.5em;
 			li {
-				font-size: em(14px);
+				font-size: em(13px);
 				position:relative;
 			}
 		}
 		&:nth-child(2) {
-			margin-bottom: 1.5em;
+			margin-bottom: 1em;
+			margin-top: 0.5em;
 		}
     }	
 }
@@ -337,7 +338,7 @@ header {
 					display:block;
 				}					
 				vertical-align: top;
-				margin-top:60px;
+				margin-top:32px;
 				margin-left:10px;
 				float: left;
 				font-size:em(25px);

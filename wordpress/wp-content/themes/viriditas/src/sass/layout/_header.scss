@@ -5,7 +5,7 @@ header {
     @include transition(all 2s ease);
     .header-content {
 		border-bottom:2px solid $header-border;
-		height: 125px;
+		height: 110px;
     }
     .logo {
         float: left;

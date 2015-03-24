@@ -648,14 +648,13 @@ footer .copyright p {
     color: white;
     font-family: "Roboto", sans-serif;
     list-style-type: none;
-    margin-top: 1.5em;
     margin-bottom: 0em;
     text-align: right;
     width: 100%; }
     .main-menu-desktop ul li {
       display: inline;
       font-size: 1em;
-      font-weight: normal;
+      font-weight: 300;
       margin-left: 0; }
       @media screen and (min-width: 50em) {
         .main-menu-desktop ul li {
@@ -666,12 +665,15 @@ footer .copyright p {
           color: #999999; }
       .main-menu-desktop ul li.current-menu-item a {
         color: #999999;
-        font-weight: 600; }
-    .main-menu-desktop ul:nth-child(1) li {
-      font-size: 0.875em;
-      position: relative; }
+        font-weight: 400; }
+    .main-menu-desktop ul:nth-child(1) {
+      margin-top: 1.5em; }
+      .main-menu-desktop ul:nth-child(1) li {
+        font-size: 0.8125em;
+        position: relative; }
     .main-menu-desktop ul:nth-child(2) {
-      margin-bottom: 1.5em; }
+      margin-bottom: 1em;
+      margin-top: 0.5em; }
 
 .team-member .content h5 {
   margin-bottom: 0; }
@@ -709,7 +711,7 @@ header .logo a {
   header .logo a span {
     display: none;
     vertical-align: top;
-    margin-top: 60px;
+    margin-top: 32px;
     margin-left: 10px;
     float: left;
     font-size: 1.5625em; }
@@ -975,7 +977,7 @@ header {
   transition: all 2s ease; }
   header .header-content {
     border-bottom: 2px solid white;
-    height: 125px; }
+    height: 110px; }
   header .logo {
     float: left;
     height: auto;
