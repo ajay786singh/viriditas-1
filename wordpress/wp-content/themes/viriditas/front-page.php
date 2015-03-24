@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <?php 
-	$welcome_page_id=1068;
+	$welcome_page_id=1102;
 	query_posts('post_type=page&p='.$welcome_page_id);
 	if(have_posts()):while(have_posts()):the_post();
 	$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
@@ -27,7 +27,7 @@
 <section role="content">
 	<article class="container">
 		<?php 
-			$whatwedo_page_id=1070;
+			$whatwedo_page_id=1105;
 			query_posts('post_type=page&p='.$whatwedo_page_id);
 			if(have_posts()):while(have_posts()):the_post();
 			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
