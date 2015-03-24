@@ -19,7 +19,10 @@ $resource->add_meta_box(
             'name'          => 'composition',
             'label'         => 'Composition',
             'description'   => '',
-            'type'          => 'wysiwyg',
+            'type'          => 'post_checkboxes',
+			'args'       => array(
+				'post_type' => 'product'
+			)
         ),
 		array(
             'name'          => 'preparation',
@@ -36,6 +39,12 @@ $resource->add_meta_box(
 		array(
             'name'          => 'contradictions',
             'label'         => 'Contradictions, Warnings and Interactions',
+            'description'   => '',
+            'type'          => 'wysiwyg',
+        ),
+		array(
+            'name'          => 'dosage',
+            'label'         => 'Dosage',
             'description'   => '',
             'type'          => 'wysiwyg',
         ),
