@@ -402,6 +402,20 @@ header {
 		}
 		select {
 			width:250px;
+			margin-bottom:0;
+		}
+	}
+}
+.app_workers {
+	.app_workers_dropdown {
+		font-family: $base-font-family;
+		.app_workers_dropdown_title {
+			color: $heading;
+			font-family: $header-font-family;
+			font-weight: normal;
+		}
+		select {
+			width:250px;
 		}
 	}
 }

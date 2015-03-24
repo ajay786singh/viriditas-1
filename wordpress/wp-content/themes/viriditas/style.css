@@ -759,6 +759,16 @@ header .logo a {
     font-family: "Playfair Display", serif;
     font-weight: normal; }
   .app_services .app_services_dropdown select {
+    width: 250px;
+    margin-bottom: 0; }
+
+.app_workers .app_workers_dropdown {
+  font-family: "Roboto", sans-serif; }
+  .app_workers .app_workers_dropdown .app_workers_dropdown_title {
+    color: #3d3777;
+    font-family: "Playfair Display", serif;
+    font-weight: normal; }
+  .app_workers .app_workers_dropdown select {
     width: 250px; }
 
 .appointments-wrapper, .appointments-confirmation-wrapper {
@@ -1641,14 +1651,17 @@ article {
     padding-top: 20px; }
 
 .app_services_dropdown {
-  min-height: 185px;
-  position: relative; }
+  position: relative;
+  min-height: 160px; }
 
 .app_services_dropdown_select,
 .app_workers_dropdown_select,
 .app_service_locations_dropdown,
 .app_provider_locations_dropdown {
   padding: 0; }
+
+.app_workers {
+  min-height: 180px; }
 
 @media screen and (min-width: 50em) {
   .border-right {
