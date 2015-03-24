@@ -1,50 +1,80 @@
 <?php get_header(); ?>
-<section role="banner" style="background-image:url('<?php bloginfo('template_url' ); ?>/dist/images/home-banner.jpg');">
+<?php 
+	$welcome_page_id=1068;
+	query_posts('post_type=page&p='.$welcome_page_id);
+	if(have_posts()):while(have_posts()):the_post();
+	$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+	$redirect_url=get_post_meta($post->ID,'_content_block_redirect_url',true);
+?>
+
+<section role="banner" style="background-image:url('<?php echo $image[0];?>');">
     <div class="container">
         <div class="banner-content">
 			<div class="secondary">
-				<h1>We teach, cure, and make herbal solutions with a holistic approach.</h1>
-				<p>Synth butcher jean shorts wolf sustainable Bansky. Fixie wayfarers swag hoodie Pitchfork, single-origin coffee tofu food truck leggings.</p>
-				<a href="<?php bloginfo('url');?>/about" class="button">Learn more</a>
+				<?php 
+					$sub_heading=get_post_meta($welcome_page_id,'_content_block_sub_heading',true);
+					if($sub_heading) {
+						echo "<h1>".$sub_heading."</h1>";
+					}
+				?>
+				<?php the_content();?>
+				<a href="<?php echo $redirect_url;?>" class="button">Learn more</a>
 			</div>
         </div>
     </div>
 </section>
-
+<?php endwhile;endif;wp_reset_query();?>
 <section role="content">
 	<article class="container">
+		<?php 
+			$whatwedo_page_id=1070;
+			query_posts('post_type=page&p='.$whatwedo_page_id);
+			if(have_posts()):while(have_posts()):the_post();
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+			$redirect_url=get_post_meta($post->ID,'_content_block_redirect_url',true);
+			if($image) {
+		?>
 		<div class="secondary">
-			<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
+			<img src="<?php echo $image[0];?>">
 		</div>
+		<?php } ?>
 		<div class="secondary">
-			<h2>What we do</h2>
-			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-			<p><a href="<?php bloginfo('url');?>/about#services" class="button purple">Learn more</a></p>
+			<?php the_title("<h2>","</h2>");?>
+			<?php the_content();?>
+			<p><a href="<?php echo $redirect_url;?>" class="button purple">Learn more</a></p>
 		</div>
+		<?php endwhile;endif;wp_reset_query();?>
 	</article>	
 	<article class="container divider">
-		<div class="thumb">
-			<a href="<?php bloginfo('url');?>/shop">
-				<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
-				<h5>Order Product</h5>
-				<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
-			</a>
-		</div>
-		<div class="thumb">
-			<a href="<?php bloginfo('url');?>/appointments">
-				<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
-				<h5>Clinic Appointment</h5>
-				<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
-			</a>
-		</div>
-		<div class="thumb">
-			<a href="<?php bloginfo('url');?>/courses">
-				<img src="<?php bloginfo('template_url');?>/dist/images/what-we-do.png">
-				<h5>Courses</h5>
-				<p>Cronut Vice tilde paleo Wes Anderson bicycle rights irony keytar migas.</p>
-			</a>	
-		</div>
+		<?php 
+			$args = array(
+				'sort_order' => 'ASC',
+				'sort_column' => 'menu_order',
+				'child_of' => $welcome_page_id,
+				'parent' => $welcome_page_id,
+				'post_type' => 'page',
+				'post_status' => 'publish'
+			); 
+			$pages = get_pages($args); 
+			if($pages ) {
+				foreach ( $pages as $page ) {				
+					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $page->ID ), 'full' );
+					$content = $page->post_content;
+					if ( ! $content ) // Check for empty page
+						continue;
+					$content = apply_filters( 'the_content', $content );
+					$redirect_url=get_post_meta($page->ID,'_content_block_redirect_url',true);
+		?>
+						<div class="thumb">
+							<a href="<?php echo $redirect_url;?>">
+								<img src="<?php echo $image[0];?>">
+								<h5><?php echo $page->post_title;?></h5>
+								<?php echo $content;?>
+							</a>
+						</div>
+		<?php } 
+		}
+		?>
 	</article>
 </section>
-
 <?php get_footer(); ?>
