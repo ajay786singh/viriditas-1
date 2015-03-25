@@ -95,7 +95,6 @@ function get_courses() {
 		foreach($courses_type as $course_type) {
 			$course=$course_type->name;
 			$course_slug=$course_type->slug;
-			$course_register_url=get_bloginfo('url').'/course-registration';
 	?>
 			<div class="course-heading">
 				<h3><?php echo $course;?></h3>
@@ -124,9 +123,11 @@ function get_courses() {
 					$course_in_week       = get_post_meta($id, '_course_details_course_in_week', true);
 					$duration       = get_post_meta($id, '_course_details_duration', true);
 					$schedule       = get_post_meta($id, '_course_details_schedule', true);
+					$register_open       = get_post_meta($id, '_course_details_register_open', true);
+					$register_form_id       = get_post_meta($id, '_course_details_register_form_id', true);
+					$course_register_url=get_bloginfo('url').'/course-registration?form='.$register_form_id;
 			?>
-					<a href="" id="<?php echo $row_id;?>"></a>
-					<div class="post-course">
+					<div class="post-course" id="<?php echo $row_id;?>">
 						<?php the_title("<h4>","</h4>");?>
 						<div class="meta">
 							<ul>
@@ -151,7 +152,11 @@ function get_courses() {
 								if($price):
 									echo "<h4>$".$price."+tax</h4>";
 								endif;
-									echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
+									if($register_open=='on') {
+										echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
+									}else {
+										echo '<a href="#" class="button">Register Soon</a>';
+									}									
 								echo "</div>";
 							echo "</div>";
 						endif ?>
@@ -161,3 +166,17 @@ function get_courses() {
 		}
 	}
 }
+
+add_action( 'wp_ajax_get_course', 'get_course' );
+add_action( 'wp_ajax_nopriv_get_course', 'get_course' );
+function get_course() {
+	global $wp_query;
+	$id=$_POST['id'];
+	query_posts('post_type=course&p='.$id);
+	if(have_posts()):while(have_posts()):the_post();
+		$price = get_post_meta(get_the_ID(), '_course_details_price', true);
+		echo json_encode(array('title'=>get_the_title(), 'price'=>$price));
+	endwhile;endif;wp_reset_query();
+	die();
+}
+?>

@@ -472,7 +472,8 @@ h3, .appointments-wrapper h3, .appointments-confirmation-wrapper h3 {
       margin-bottom: 0.5854em; } }
 
 h4 {
-  font-size: 1em; }
+  font-size: 1em;
+  margin-top: 0; }
   @media screen and (min-width: 50em) {
     h4 {
       font-size: 2em;
@@ -480,8 +481,6 @@ h4 {
       letter-spacing: -1px;
       line-height: 1.2em;
       margin-bottom: 0.75em; } }
-  h4 a {
-    color: black; }
 
 h5 {
   font-size: 1em; }
@@ -648,14 +647,13 @@ footer .copyright p {
     color: white;
     font-family: "Roboto", sans-serif;
     list-style-type: none;
-    margin-top: 1.5em;
     margin-bottom: 0em;
     text-align: right;
     width: 100%; }
     .main-menu-desktop ul li {
       display: inline;
       font-size: 1em;
-      font-weight: normal;
+      font-weight: 300;
       margin-left: 0; }
       @media screen and (min-width: 50em) {
         .main-menu-desktop ul li {
@@ -666,27 +664,33 @@ footer .copyright p {
           color: #999999; }
       .main-menu-desktop ul li.current-menu-item a {
         color: #999999;
-        font-weight: 600; }
-    .main-menu-desktop ul:nth-child(1) li {
-      font-size: 0.875em;
-      position: relative; }
+        font-weight: 400; }
+    .main-menu-desktop ul:nth-child(1) {
+      margin-top: 1.5em; }
+      .main-menu-desktop ul:nth-child(1) li {
+        font-size: 0.8125em;
+        position: relative; }
     .main-menu-desktop ul:nth-child(2) {
-      margin-bottom: 1.5em; }
+      margin-bottom: 1em;
+      margin-top: 0.5em; }
 
 .team-member .content h5 {
   margin-bottom: 0; }
 .team-member .content p:nth-of-type(1) {
   margin-top: 0;
   padding-top: 0; }
-.team-member .content p:nth-of-type(2) {
+.team-member .content p.designation {
   position: relative;
-  margin-top: 40px; }
-  .team-member .content p:nth-of-type(2):before {
+  margin-bottom: 40px; }
+  .team-member .content p.designation:after {
     border: 1px solid #473e53;
+    bottom: -30px;
     content: "";
+    left: 0px;
     position: absolute;
-    top: -10px;
     width: 50px; }
+.team-member .content .team-content {
+  max-height: 5.75em; }
 
 .no-records {
   font-family: "Playfair Display", serif;
@@ -709,7 +713,7 @@ header .logo a {
   header .logo a span {
     display: none;
     vertical-align: top;
-    margin-top: 60px;
+    margin-top: 32px;
     margin-left: 10px;
     float: left;
     font-size: 1.5625em; }
@@ -759,6 +763,16 @@ header .logo a {
     font-family: "Playfair Display", serif;
     font-weight: normal; }
   .app_services .app_services_dropdown select {
+    width: 250px;
+    margin-bottom: 0; }
+
+.app_workers .app_workers_dropdown {
+  font-family: "Roboto", sans-serif; }
+  .app_workers .app_workers_dropdown .app_workers_dropdown_title {
+    color: #3d3777;
+    font-family: "Playfair Display", serif;
+    font-weight: normal; }
+  .app_workers .app_workers_dropdown select {
     width: 250px; }
 
 .appointments-wrapper, .appointments-confirmation-wrapper {
@@ -877,9 +891,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
 .course-action {
   padding: 20px 0 30px; }
   .course-action h4 {
-    float: left; }
+    float: left;
+    margin-right: 30px; }
   .course-action .button, .course-action input[type="button"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"] {
-    margin-left: 30px;
     margin-top: 0; }
 
 .appointment-sidebar h5:after {
@@ -965,7 +979,7 @@ header {
   transition: all 2s ease; }
   header .header-content {
     border-bottom: 2px solid white;
-    height: 125px; }
+    height: 110px; }
   header .logo {
     float: left;
     height: auto;
@@ -1552,8 +1566,7 @@ section[role=content] {
 article {
   max-width: 80em;
   margin-left: auto;
-  margin-right: auto;
-  padding: 0 2em 2em 2em; }
+  margin-right: auto; }
   article::after {
     clear: both;
     content: "";
@@ -1594,7 +1607,7 @@ article {
         margin-right: 0; } }
 
 .inner {
-  padding: 2em; }
+  padding: 0 0 2em; }
   @media screen and (min-width: 50em) {
     .inner {
       float: left;
@@ -1641,14 +1654,17 @@ article {
     padding-top: 20px; }
 
 .app_services_dropdown {
-  min-height: 185px;
-  position: relative; }
+  position: relative;
+  min-height: 160px; }
 
 .app_services_dropdown_select,
 .app_workers_dropdown_select,
 .app_service_locations_dropdown,
 .app_provider_locations_dropdown {
   padding: 0; }
+
+.app_workers {
+  min-height: 180px; }
 
 @media screen and (min-width: 50em) {
   .border-right {

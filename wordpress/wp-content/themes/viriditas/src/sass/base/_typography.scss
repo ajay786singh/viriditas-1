@@ -57,17 +57,13 @@ h3 {
 
 h4 {
     font-size: $base-font-size;
+	margin-top:0;
     @include media($bp-large) {
         font-size: $base-font-size * 2;
         font-weight: 400;
         letter-spacing: -1px;
-        // 16 * 2 = 32px
         line-height: 1.2em;
         margin-bottom: 0.75em;
-    }
-
-    a {
-        color: rgba(0, 0, 0, 1);
     }
 }
 
@@ -241,14 +237,13 @@ footer {
         color: $menu-color;
         font-family:$sans-serif;
 		list-style-type: none;
-        margin-top: 1.5em;
 		margin-bottom: 0em;
 		text-align: right;
 		width: 100%;
 		li {
             display: inline;
             font-size: em(16px);
-            font-weight: normal;
+            font-weight: 300;
             margin-left: 0;
             @include media($bp-large) {
                 margin-left: 2em;
@@ -262,18 +257,20 @@ footer {
 			&.current-menu-item {
 				a {
 					color:$menu-color-active;
-					font-weight:600;
+					font-weight:400;
 				}
 			}
         }		
 		&:nth-child(1) {
+			margin-top: 1.5em;
 			li {
-				font-size: em(14px);
+				font-size: em(13px);
 				position:relative;
 			}
 		}
 		&:nth-child(2) {
-			margin-bottom: 1.5em;
+			margin-bottom: 1em;
+			margin-top: 0.5em;
 		}
     }	
 }
@@ -286,16 +283,20 @@ footer {
 			margin-top:0;
 			padding-top:0;
 		}
-		& p:nth-of-type(2) {
+		& p.designation {
 			position:relative;
-			margin-top:40px;
-			&:before {
+			margin-bottom:40px;
+			&:after {
 				border: 1px solid $team-designation-border;
+				bottom: -30px;
 				content: "";
+				left: 0px;
 				position: absolute;
-				top: -10px;
 				width: 50px;
 			}
+		}
+		.team-content {
+			max-height:5.75em;
 		}
 	}
 }
@@ -337,7 +338,7 @@ header {
 					display:block;
 				}					
 				vertical-align: top;
-				margin-top:60px;
+				margin-top:32px;
 				margin-left:10px;
 				float: left;
 				font-size:em(25px);
@@ -396,6 +397,20 @@ header {
 	.app_services_dropdown {
 		font-family: $base-font-family;
 		.app_services_dropdown_title {
+			color: $heading;
+			font-family: $header-font-family;
+			font-weight: normal;
+		}
+		select {
+			width:250px;
+			margin-bottom:0;
+		}
+	}
+}
+.app_workers {
+	.app_workers_dropdown {
+		font-family: $base-font-family;
+		.app_workers_dropdown_title {
 			color: $heading;
 			font-family: $header-font-family;
 			font-weight: normal;
@@ -551,9 +566,9 @@ section[role=content] {
 	padding:20px 0 30px;
 	h4 {
 		float:left;
+		margin-right:30px;
 	}
 	.button {
-		margin-left:30px;
 		margin-top:0;
 	}
 }

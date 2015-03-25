@@ -10,7 +10,13 @@ $page->add_meta_box(
             'description'   => 'This will display under Heading.',
             'type'          => 'textarea',
             
-        )        
+        ),
+		array(
+			'name'          => 'redirect_url',
+			'label'         => 'Redirect URL',
+			'description'   => 'This will redirect page to mentioned url.',
+			'type'          => 'text',
+		)        
     )
 );
 ?>
