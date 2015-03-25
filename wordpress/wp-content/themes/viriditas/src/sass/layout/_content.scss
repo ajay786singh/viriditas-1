@@ -146,7 +146,7 @@ section[role=content] {
 
 article {
     @include outer-container;
-    @include pad(0 2em 2em 2em);
+    //@include pad(0 2em 2em 2em);
     aside {
         ul {
             margin: 0px;
@@ -177,7 +177,7 @@ article {
 }
 
 .inner {
-    padding: 2em;
+    padding: 0 0 2em;
     @include media($bp-large) {
         @include span-columns(7);
         @include shift(2.5);
