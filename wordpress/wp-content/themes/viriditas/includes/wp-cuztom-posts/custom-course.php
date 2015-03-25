@@ -14,6 +14,19 @@ $course->add_meta_box(
     'Course Details',
     'course_details',
     array(
+		array(
+            'name'          => 'register_open',
+            'label'         => 'Registration Open',
+            'description'   => 'Please select this to make registration open for this course.(Default is closed.)',
+			'type'          => 'checkbox',
+			'default_value' => 'off'
+        ),
+		array(
+            'name'          => 'register_form_id',
+            'label'         => 'Registration Form ID',
+            'description'   => 'Please enter gravity form id.',
+			'type'          => 'text'
+        ),
         array(
             'name'          => 'image',
             'label'         => 'Course Banner Image',

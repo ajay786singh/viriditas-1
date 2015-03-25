@@ -889,9 +889,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
 .course-action {
   padding: 20px 0 30px; }
   .course-action h4 {
-    float: left; }
+    float: left;
+    margin-right: 30px; }
   .course-action .button, .course-action input[type="button"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"] {
-    margin-left: 30px;
     margin-top: 0; }
 
 .appointment-sidebar h5:after {
