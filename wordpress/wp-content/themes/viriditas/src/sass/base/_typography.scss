@@ -490,6 +490,12 @@ section[role=content] {
 		list-style:none;
 		li {
 			margin-left:0;
+			&.current-cat {
+				a {
+					color:$heading;
+					font-weight:500;
+				}
+			}
 			a {
 				color: $base-font-color;
 				&:hover {

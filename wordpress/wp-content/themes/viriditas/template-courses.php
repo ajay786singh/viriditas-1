@@ -18,5 +18,4 @@ get_header(); ?>
 	</div>
 </section>
 
-<?php //pagination(); ?>
 <?php get_footer(); ?>

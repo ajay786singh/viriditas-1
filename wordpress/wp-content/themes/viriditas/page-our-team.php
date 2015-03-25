@@ -28,7 +28,6 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 			?>
 				<h1><?php echo $team_category->name;?></h1>
 				<p><?php echo $team_category->description; ?></p>
-	
 		</div>	
 	</div>			
 	<?php

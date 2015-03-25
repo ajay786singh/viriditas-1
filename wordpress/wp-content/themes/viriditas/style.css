@@ -835,6 +835,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   list-style: none; }
   .sidebar ul li {
     margin-left: 0; }
+    .sidebar ul li.current-cat a {
+      color: #3d3777;
+      font-weight: 500; }
     .sidebar ul li a {
       color: #828282; }
       .sidebar ul li a:hover {
@@ -2310,3 +2313,15 @@ select[data-dkcacheid] {
   padding-top: 130px; }
   .home .divider {
     margin-bottom: 0px; }
+
+#pagination {
+  padding-top: 100px; }
+  #pagination a {
+    text-decoration: none;
+    border-bottom: 1px solid; }
+    #pagination a:hover {
+      border-bottom: none; }
+    #pagination a.older {
+      float: right; }
+    #pagination a.newer {
+      float: left; }
