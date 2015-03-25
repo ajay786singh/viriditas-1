@@ -65,10 +65,12 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 						<?php
 							$designation=get_post_meta($post->ID,'_content_block_designation',true);
 							if($designation) {
-								echo "<p>".$designation."</p>";
+								echo "<p class='designation'>".$designation."</p>";
 							}
 						?>
-						<?php the_excerpt();?>
+						<div class="team-content">
+							<?php the_content();?>
+						</div>
 					</span>  
 				</div>	
 			</div>
@@ -118,10 +120,12 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 						<?php
 							$designation=get_post_meta($post->ID,'_content_block_designation',true);
 							if($designation) {
-								echo "<p>".$designation."</p>";
+								echo "<p class='designation'>".$designation."</p>";
 							}
 						?>
-						<?php the_excerpt();?>
+						<div class="team-content">
+							<?php the_content();?>
+						</div>
 					</span> 
 				</div>
 		<?php	endwhile;

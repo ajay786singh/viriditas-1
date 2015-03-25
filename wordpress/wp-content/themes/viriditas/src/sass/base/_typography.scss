@@ -287,16 +287,20 @@ footer {
 			margin-top:0;
 			padding-top:0;
 		}
-		& p:nth-of-type(2) {
+		& p.designation {
 			position:relative;
-			margin-top:40px;
-			&:before {
+			margin-bottom:40px;
+			&:after {
 				border: 1px solid $team-designation-border;
+				bottom: -30px;
 				content: "";
+				left: 0px;
 				position: absolute;
-				top: -10px;
 				width: 50px;
 			}
+		}
+		.team-content {
+			max-height:5.75em;
 		}
 	}
 }

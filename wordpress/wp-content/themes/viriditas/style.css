@@ -680,15 +680,18 @@ footer .copyright p {
 .team-member .content p:nth-of-type(1) {
   margin-top: 0;
   padding-top: 0; }
-.team-member .content p:nth-of-type(2) {
+.team-member .content p.designation {
   position: relative;
-  margin-top: 40px; }
-  .team-member .content p:nth-of-type(2):before {
+  margin-bottom: 40px; }
+  .team-member .content p.designation:after {
     border: 1px solid #473e53;
+    bottom: -30px;
     content: "";
+    left: 0px;
     position: absolute;
-    top: -10px;
     width: 50px; }
+.team-member .content .team-content {
+  max-height: 5.75em; }
 
 .no-records {
   font-family: "Playfair Display", serif;
