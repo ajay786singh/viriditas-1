@@ -70,7 +70,7 @@ class Hype_registration_form {
 				
 				<div class="form-group">
 					<label for="reg-clinic-name">Clinic Name</label>
-					<input name="reg_clinic_name" type="text" class="form-control login-field"	value="<?php echo(isset($_POST['reg_clinic_name']) ? $_POST['reg_clinic_name'] : null); ?>" id="reg-clinic-name" />
+					<input name="billing_company" type="text" class="form-control login-field"	value="<?php echo(isset($_POST['billing_company']) ? $_POST['billing_company'] : null); ?>" id="reg-clinic-name" />
                 </div>
 				
 				<div class="form-group">
@@ -81,12 +81,12 @@ class Hype_registration_form {
                 
 				<div class="form-group">
 					<label for="reg-country">Country</label>
-					<select name="reg_country" onchange="print_state('reg_province', this.selectedIndex);" id="reg-country">
-						<?php if(isset($_POST['reg_country'])){ ?>
-							<option value="<?php echo $_POST['reg_country'];?>"><?php echo $_POST['reg_country'];?></option>
+					<select name="billing_country" onchange="print_state('billing_state', this.selectedIndex);" id="reg-country">
+						<?php if(isset($_POST['billing_country'])){ ?>
+							<option value="<?php echo $_POST['billing_country'];?>"><?php echo $_POST['billing_country'];?></option>
 						<?php } ?>
 					</select>
-					<?php if(!isset($_POST['reg_country'])){ ?>
+					<?php if(!isset($_POST['billing_country'])){ ?>
 						<script language="javascript">print_country("reg-country");</script>
 					 <?php } ?>
                 </div>
@@ -94,21 +94,21 @@ class Hype_registration_form {
 				<div class="form-group">
 					<div class="secondary">
 						<label for="reg-city">City</label>
-						<input name="reg_city" type="text" value="<?php echo(isset($_POST['reg_city']) ? $_POST['reg_city'] : null); ?>" id="reg-city" />
+						<input name="billing_city" type="text" value="<?php echo(isset($_POST['billing_city']) ? $_POST['billing_city'] : null); ?>" id="reg-city" />
 					</div>
 					
 					<div class="secondary">
 						<div class="secondary">
 							<label for="reg-province">Province/State</label>
-							<select name="reg_province" id="reg_province">
-								<?php if(isset($_POST['reg_province'])){ ?>
-									<option value="<?php echo $_POST['reg_province'];?>"><?php echo $_POST['reg_province'];?></option>
+							<select name="billing_state" id="billing_state">
+								<?php if(isset($_POST['billing_state'])){ ?>
+									<option value="<?php echo $_POST['billing_state'];?>"><?php echo $_POST['billing_state'];?></option>
 								<?php } ?>
 							</select>
 						</div>
 						<div class="secondary">
 							<label for="reg-postal">Postal/Zip Code</label>
-							<input name="reg_postal" type="text" value="<?php echo(isset($_POST['reg_postal']) ? $_POST['reg_postal'] : null); ?>" id="reg-postal" />
+							<input name="billing_postcode" type="text" value="<?php echo(isset($_POST['billing_postcode']) ? $_POST['billing_postcode'] : null); ?>" id="reg-postal" />
 						</div>
 					</div>
                 </div>
@@ -208,12 +208,15 @@ class Hype_registration_form {
         );
 		
 		$usermeta =array(
-			'clinic_name' => esc_attr($this->clinic_name),
-			'address' => esc_attr($this->address),
-			'country' => esc_attr($this->country),
-			'city' => esc_attr($this->city),
-			'province' => esc_attr($this->province),
-			'postal' => esc_attr($this->postal),
+			'billing_first_name' => esc_attr($this->first_name),
+			'billing_last_name' => esc_attr($this->last_name),
+			'billing_company' => esc_attr($this->billing_company),
+			'billing_address_1' => esc_attr($this->billing_address_1),
+			'billing_address_2' => esc_attr($this->billing_address_2),
+			'billing_country' => esc_attr($this->billing_country),
+			'billing_city' => esc_attr($this->billing_city),
+			'billing_state' => esc_attr($this->billing_state),
+			'billing_postcode' => esc_attr($this->billing_postcode),
 			'degree_speciality' => esc_attr($this->degree_speciality),
 			'school_attended' => esc_attr($this->school_attended),
 			'year_graduated' => esc_attr($this->year_graduated),
@@ -256,12 +259,13 @@ class Hype_registration_form {
 			$this->c_password = $_POST['reg_c_password'];
             $this->first_name = $_POST['reg_fname'];
             $this->last_name = $_POST['reg_lname'];
-            $this->clinic_name = $_POST['reg_clinic_name'];
-			$this->address = $_POST['billing_address_1']." ".$_POST['billing_address_2'];
-			$this->country = $_POST['reg_country'];
-			$this->city = $_POST['reg_city'];
-			$this->province = $_POST['reg_province'];
-			$this->postal = $_POST['reg_postal'];
+            $this->billing_company = $_POST['billing_company'];
+			$this->billing_address_1 = $_POST['billing_address_1'];
+			$this->billing_address_2 = $_POST['billing_address_2'];
+			$this->billing_country = $_POST['billing_country'];
+			$this->billing_city = $_POST['billing_city'];
+			$this->billing_state = $_POST['billing_state'];
+			$this->billing_postcode = $_POST['billing_postcode'];
 			$this->degree_speciality = $_POST['reg_degree_speciality'];
 			$this->school_attended = $_POST['reg_school_attended'];
 			$this->year_graduated = $_POST['reg_year_graduated'];
