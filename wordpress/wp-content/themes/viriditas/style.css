@@ -910,6 +910,10 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   font-weight: 500;
   text-decoration: underline; }
 
+.banner-content a {
+  color: white;
+  text-decoration: underline; }
+
 img {
   max-width: 100%; }
 

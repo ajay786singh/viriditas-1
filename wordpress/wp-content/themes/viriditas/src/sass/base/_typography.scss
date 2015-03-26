@@ -598,3 +598,9 @@ section[role=content] {
 		}
 	}
 }
+.banner-content {
+	a {
+		color:$white;
+		text-decoration:underline;
+	}
+}
