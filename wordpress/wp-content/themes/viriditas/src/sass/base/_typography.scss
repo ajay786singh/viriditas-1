@@ -34,6 +34,9 @@ h1 {
     .single & {
         text-align: center;
     }
+	.single-monograph & {
+		text-align: left;
+	}
 }
 
 h2 {
@@ -490,6 +493,12 @@ section[role=content] {
 		list-style:none;
 		li {
 			margin-left:0;
+			&.current-cat {
+				a {
+					color:$heading;
+					font-weight:500;
+				}
+			}
 			a {
 				color: $base-font-color;
 				&:hover {
@@ -590,5 +599,20 @@ section[role=content] {
 				text-decoration:underline;
 			}
 		}
+	}
+}
+.banner-content {
+	a {
+		color:$white;
+		text-decoration:underline;
+	}
+}
+.list {
+	list-style:none;
+	margin-bottom: 1em;
+	padding-left:0;
+	overflow: hidden;
+	li {
+		margin-left:0;
 	}
 }

@@ -262,4 +262,11 @@ function get_product_detail() {
 		endwhile; wp_reset_query();
 	die(0);
 }
-
+function get_product_info($id) {
+	global $wp_query;
+	$args = array( 'p' => $id,'post_type'=>'product' );
+	$post_query = new WP_Query( $args );
+	if($post_query->have_posts()): while( $post_query->have_posts() ) : $post_query->the_post();
+		echo "<li class='block-grid-3'><a href='".get_permalink()."'><i>".get_the_title()."</i></a></li>";
+	endwhile; endif; wp_reset_query();
+}

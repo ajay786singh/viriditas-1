@@ -454,6 +454,8 @@ h1 {
       margin-bottom: 0.3636em; } }
   .single h1 {
     text-align: center; }
+  .single-monograph h1 {
+    text-align: left; }
 
 h2 {
   font-size: 1.5em; }
@@ -835,6 +837,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   list-style: none; }
   .sidebar ul li {
     margin-left: 0; }
+    .sidebar ul li.current-cat a {
+      color: #3d3777;
+      font-weight: 500; }
     .sidebar ul li a {
       color: #828282; }
       .sidebar ul li a:hover {
@@ -906,6 +911,18 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   color: #3d3777;
   font-weight: 500;
   text-decoration: underline; }
+
+.banner-content a {
+  color: white;
+  text-decoration: underline; }
+
+.list {
+  list-style: none;
+  margin-bottom: 1em;
+  padding-left: 0;
+  overflow: hidden; }
+  .list li {
+    margin-left: 0; }
 
 img {
   max-width: 100%; }
@@ -1547,6 +1564,8 @@ section[role=content] {
   overflow: hidden; }
   section[role=content]:nth-of-type(2) {
     padding-top: 0; }
+    .single-monograph section[role=content]:nth-of-type(2) {
+      padding: 60px 0; }
     .home section[role=content]:nth-of-type(2) {
       padding: 60px 0; }
   section[role=content] .secondary:nth-of-type(1) {
@@ -2147,7 +2166,8 @@ button {
     color: white; }
   .banner-content .button, .banner-content input[type="button"], .banner-content #login-form input[type="submit"], #login-form .banner-content input[type="submit"] {
     border: 2px solid white;
-    background: none; }
+    background: none;
+    text-decoration: none; }
     .banner-content .button:hover, .banner-content input[type="button"]:hover, .banner-content #login-form input[type="submit"]:hover, #login-form .banner-content input[type="submit"]:hover {
       background: #403a66;
       color: white;
@@ -2310,3 +2330,21 @@ select[data-dkcacheid] {
   padding-top: 130px; }
   .home .divider {
     margin-bottom: 0px; }
+
+#pagination {
+  padding-top: 20px; }
+  #pagination a {
+    text-decoration: none;
+    border-bottom: 1px solid; }
+    #pagination a:hover {
+      border-bottom: none; }
+    #pagination a.older {
+      float: right; }
+      @media screen and (min-width: 50em) {
+        #pagination a.older {
+          max-width: 45%; } }
+    #pagination a.newer {
+      float: left; }
+      @media screen and (min-width: 50em) {
+        #pagination a.newer {
+          max-width: 45%; } }
