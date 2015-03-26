@@ -10,7 +10,7 @@ get_header(); ?>
 		<div class="column-7">
 			<?php 
 				$args  = array(
-					'posts_per_page' => 2,
+					'posts_per_page' => 10,
 					'paged' => $paged,
 				);
 				query_posts($args);

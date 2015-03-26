@@ -4,18 +4,24 @@ $args = array(
     'has_archive' => true,
     //'menu_position' => 5,
     'menu_icon' => 'dashicons-welcome-learn-more', //http://melchoyce.github.io/dashicons/
-    'supports'  => array( 'title' )
+    'supports'  => array( 'title','thumbnail' )
     );
 
-$resource = register_cuztom_post_type( 'Resource', $args);
-$resource->add_taxonomy( 'Indication' );
-$resource->add_taxonomy( 'Actions' );
+$monograph = register_cuztom_post_type( 'Monograph', $args);
+$monograph->add_taxonomy( 'Indication' );
+$monograph->add_taxonomy( 'Actions' );
 
-$resource->add_meta_box(
-    'Resource Details',
-    'resource_details',
+$monograph->add_meta_box(
+    'Monograph Details',
+    'monograph_details',
     array(
         array(
+            'name'          => 'sub_heading',
+            'label'         => 'Sub heading',
+            'description'   => '',
+            'type'          => 'text'
+        ),
+		array(
             'name'          => 'composition',
             'label'         => 'Composition',
             'description'   => '',

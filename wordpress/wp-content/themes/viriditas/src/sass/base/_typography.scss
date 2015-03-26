@@ -34,6 +34,9 @@ h1 {
     .single & {
         text-align: center;
     }
+	.single-monograph & {
+		text-align: left;
+	}
 }
 
 h2 {
@@ -602,5 +605,14 @@ section[role=content] {
 	a {
 		color:$white;
 		text-decoration:underline;
+	}
+}
+.list {
+	list-style:none;
+	margin-bottom: 1em;
+	padding-left:0;
+	overflow: hidden;
+	li {
+		margin-left:0;
 	}
 }
