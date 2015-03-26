@@ -38,8 +38,8 @@ add_filter('previous_post_link','add_class_previous_post_link',10,1);
 function single_posts_nav() {	
 ?>
 	<div id="pagination">
-		<?php previous_post_link( '%link', '<< Previous post: %title' );?>
-		<?php next_post_link( '%link', 'Next post: %title >>' );?>
+		<?php previous_post_link( '%link', '« Previous post: %title' );?>
+		<?php next_post_link( '%link', 'Next post: %title »' );?>
 	</div>
 <?php	
 }

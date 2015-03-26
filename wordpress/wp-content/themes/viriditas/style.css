@@ -2327,5 +2327,11 @@ select[data-dkcacheid] {
       border-bottom: none; }
     #pagination a.older {
       float: right; }
+      @media screen and (min-width: 50em) {
+        #pagination a.older {
+          max-width: 45%; } }
     #pagination a.newer {
       float: left; }
+      @media screen and (min-width: 50em) {
+        #pagination a.newer {
+          max-width: 45%; } }
