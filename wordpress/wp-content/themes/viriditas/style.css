@@ -924,6 +924,25 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   .list li {
     margin-left: 0; }
 
+.product-title {
+  margin-top: 15px;
+  overflow: hidden; }
+  @media screen and (min-width: 50em) {
+    .product-title {
+      margin-top: 0px; } }
+  .product-title h4 {
+    float: left; }
+  .product-title .view-monograph {
+    display: block;
+    float: left;
+    font-size: 0.75em;
+    margin-left: 10px;
+    margin-top: 3px;
+    text-decoration: underline; }
+    @media screen and (min-width: 50em) {
+      .product-title .view-monograph {
+        margin-top: 15px; } }
+
 img {
   max-width: 100%; }
 
@@ -1691,17 +1710,13 @@ article {
   .border-right {
     border-right: 1px solid #d8d8d8; } }
 
-.single-product-content {
-  margin-top: 30px;
-  overflow: hidden; }
-
 .team-member {
   padding-top: 50px; }
   .team-member .image {
     display: block;
     margin-bottom: 10px; }
 
-.faq-content {
+.faq-content, .single-product-content {
   padding-top: 30px; }
 
 .woocommerce.single-product section[role=main] {
@@ -1936,7 +1951,7 @@ footer {
 
 .accordion {
   margin-bottom: 4em; }
-  .faq-content .accordion {
+  .faq-content .accordion, .single-product-content .accordion {
     margin-bottom: 1em; }
   .accordion .accordion-panel .accordion-panel-header {
     border-bottom: 2px solid #d8d8d8;
@@ -1950,22 +1965,22 @@ footer {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; }
-    .faq-content .accordion .accordion-panel .accordion-panel-header {
+    .faq-content .accordion .accordion-panel .accordion-panel-header, .single-product-content .accordion .accordion-panel .accordion-panel-header {
       border-bottom: none;
       border-top: 1px solid #d8d8d8; }
       @media screen and (min-width: 50em) {
-        .faq-content .accordion .accordion-panel .accordion-panel-header {
+        .faq-content .accordion .accordion-panel .accordion-panel-header, .single-product-content .accordion .accordion-panel .accordion-panel-header {
           font-size: 1.25em; } }
-      .faq-content .accordion .accordion-panel .accordion-panel-header:after {
+      .faq-content .accordion .accordion-panel .accordion-panel-header:after, .single-product-content .accordion .accordion-panel .accordion-panel-header:after {
         border-top: 10px solid #d8d8d8;
         border-right: 10px solid transparent;
         border-left: 10px solid transparent;
         border-bottom: none;
         margin-top: 8px; }
         @media screen and (min-width: 50em) {
-          .faq-content .accordion .accordion-panel .accordion-panel-header:after {
+          .faq-content .accordion .accordion-panel .accordion-panel-header:after, .single-product-content .accordion .accordion-panel .accordion-panel-header:after {
             margin-top: 8px; } }
-      .faq-content .accordion .accordion-panel .accordion-panel-header.active-header:after {
+      .faq-content .accordion .accordion-panel .accordion-panel-header.active-header:after, .single-product-content .accordion .accordion-panel .accordion-panel-header.active-header:after {
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-bottom: 10px solid #d8d8d8;
@@ -1993,7 +2008,7 @@ footer {
     padding-top: 2em;
     display: none;
     margin: 0 auto; }
-    .faq-content .accordion .accordion-panel .accordion-panel-content {
+    .faq-content .accordion .accordion-panel .accordion-panel-content, .single-product-content .accordion .accordion-panel .accordion-panel-content {
       padding-top: 0em; }
     .accordion .accordion-panel .accordion-panel-content:first-child {
       display: block; }

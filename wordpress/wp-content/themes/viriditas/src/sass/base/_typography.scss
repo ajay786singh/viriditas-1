@@ -617,3 +617,24 @@ section[role=content] {
 		margin-left:0;
 	}
 }
+.product-title {
+	margin-top: 15px;
+	overflow:hidden;
+	@include media($bp-large) {
+		margin-top: 0px;
+	}
+	h4 {
+		float:left;
+	}
+	.view-monograph {
+		display: block;
+		float: left;
+		font-size:em(12px);
+		margin-left: 10px;
+		margin-top: 3px;
+		text-decoration:underline;
+		@include media($bp-large) {
+			margin-top: 15px;
+		}
+	}	
+}

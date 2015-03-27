@@ -31,48 +31,6 @@ global $product;
 	 }
 ?>
 <div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
-		<?php 
-			// $cats = get_the_terms( $post->ID, 'product_cat' ) ;
-			// $body_systems = get_the_terms( $post->ID, 'body_system' );
-			// $actions = get_the_terms( $post->ID, 'actions' );
-			// if($cats !='') {
-				// $cat_terms="";
-				// echo '<p class="single-product-meta">';
-				// if($cats) {
-					// echo "<span>Categories: </span>";
-					// foreach($cats as $cat) {
-						// $cat_terms[]="<a href='".get_term_link( $cat->slug, 'product_cat' )."'>".$cat->name."</a>";
-					// }
-					// echo implode(', ',$cat_terms);
-				// }
-				// echo "</p>";
-			// }
-			// if($body_systems !='') {
-				// echo '<p class="single-product-meta">';
-				// if($body_systems) {
-					// $body_system_terms='';
-					// echo "<span>Body Systems: </span>";
-					// foreach($body_systems as $body_system) {
-						// $body_system_terms[] ="<a href='".get_term_link( $body_system->slug, 'body_system' )."'>".$body_system->name."</a>";
-					// }
-					// echo implode(', ',$body_system_terms);
-				// }
-				// echo "</p>";
-			// }
-			// if($actions !='') {
-				// echo '<p class="single-product-meta">';
-				// if($actions) {
-					// $action_terms="";
-					// echo "<span>Actions: </span>";
-					// foreach($actions as $action) {
-						// $action_terms[] ="<a href='".get_term_link( $action->slug, 'actions' )."'>".$action->name."</a>";
-					// }
-					// echo implode(', ',$action_terms);
-				// }
-				// echo "</p>";
-			// }
-			
-		?>
 		<?php
 		/**
 		 * woocommerce_before_single_product_summary hook
@@ -98,23 +56,79 @@ global $product;
 		</div>
 	<?php  } ?>
 		<div class="secondary">
-			<?php the_title("<h4>","</h4>");?>
+			<div class="product-title">
+				<?php the_title("<h4>","</h4>");?>
+				<?php
+					$monograph=get_post_meta($post->ID,'_product_details_monograph',true);
+					if($monograph) {
+				?>
+				<a href="<?php echo get_permalink($monograph[0]);?>" class="view-monograph">view monograph</a>
+				<?php } ?>
+			</div>
 			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
 			<hr>
 			<?php the_content();?>
-			<?php
-				/*$tab_1_title="Description";
+			<div class="accordion">
+				<?php 
+					$body_systems = get_the_terms( $post->ID, 'body_system' ); 
+					if($body_systems) {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Associated Body Systems</h5>
+						<div class="accordion-panel-content">
+							<ul class="list">
+								<?php
+									foreach($body_systems as $body_system) {
+										echo "<li><a href='".get_term_link( $body_system->slug, 'body_system' )."'>".$body_system->name."</a></li>";
+									}
+								?>	
+							</ul>
+						</div>
+					</div>
+				<?php } ?>
 				
-				$tab_1_content="<h5>Product Description</h5>";
-				$tab_1_content.=get_the_content();
+				<?php 
+					$actions = get_the_terms( $post->ID, 'actions' ); 
+					if($actions) {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Associated Actions</h5>
+						<div class="accordion-panel-content">
+							<ul class="list">
+								<?php
+									foreach($actions as $action) {
+										echo "<li><a href='".get_term_link( $action->slug, 'action' )."'>".$action->name."</a></li>";
+									}
+								?>	
+							</ul>
+						</div>
+					</div>
+				<?php } ?>
 				
-				$tab_2_title="Review (0)";
-				$tab_2_content="";
-			?>
-			<div class="woocommerce-tabs">
-			<?php echo do_shortcode('[tabsgroup][tab title="'.$tab_1_title.'"]'.$tab_1_content.'[/tab][tab title="'.$tab_2_title.'"]'.$tab_2_content.'[/tab][/tabsgroup]');?>
+				<?php 
+					$indications = get_the_terms( $post->ID, 'indication' ); 
+					if($indications) {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Associated Indications</h5>
+						<div class="accordion-panel-content">
+							<ul class="list">
+								<?php
+									foreach($indications as $indication) {
+										echo "<li><a href='".get_term_link( $indication->slug, 'indication' )."'>".$indication->name."</a></li>";
+									}
+								?>	
+							</ul>
+						</div>
+					</div>
+				<?php } ?>				
+				<div class="accordion-panel">
+					<h5 class="accordion-panel-header">Questions? Contact Us</h5>
+					<div class="accordion-panel-content">
+						
+					</div>
+				</div>
 			</div>
-			*/ ?>
 
 		</div>
 </div>		

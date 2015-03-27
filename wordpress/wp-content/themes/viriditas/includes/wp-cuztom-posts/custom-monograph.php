@@ -8,8 +8,6 @@ $args = array(
     );
 
 $monograph = register_cuztom_post_type( 'Monograph', $args);
-$monograph->add_taxonomy( 'Indication' );
-$monograph->add_taxonomy( 'Actions' );
 
 $monograph->add_meta_box(
     'Monograph Details',
