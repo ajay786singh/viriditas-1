@@ -23,6 +23,19 @@ $products->add_meta_box(
 				'post_type' => 'monograph',
 			)
         ),
+		array(
+            'name'          => 'warnings',
+            'label'         => 'Warnings & Interactions',
+            'description'   => '',
+            'type'          => 'wysiwyg'
+        ),
+		
+		array(
+            'name'          => 'dosage',
+            'label'         => 'Dosage',
+            'description'   => '',
+            'type'          => 'wysiwyg'
+        ),
 	)
 );	
 ?>

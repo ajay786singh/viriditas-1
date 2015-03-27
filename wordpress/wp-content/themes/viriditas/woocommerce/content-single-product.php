@@ -70,6 +70,34 @@ global $product;
 			<?php the_content();?>
 			<div class="accordion">
 				<?php 
+					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
+					if($warnings) {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Warnings & Interactions</h5>
+						<div class="accordion-panel-content">
+							<?php
+								echo apply_filters('the_content', $warnings);
+							?>
+						</div>
+					</div>
+				<?php } ?>
+				
+				<?php 
+					$dosage=get_post_meta($post->ID,'_product_details_dosage',true);
+					if($dosage) {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Dosage</h5>
+						<div class="accordion-panel-content">
+							<?php
+								echo apply_filters('the_content', $dosage);
+							?>
+						</div>
+					</div>
+				<?php } ?>
+				
+				<?php 
 					$body_systems = get_the_terms( $post->ID, 'body_system' ); 
 					if($body_systems) {
 				?>
