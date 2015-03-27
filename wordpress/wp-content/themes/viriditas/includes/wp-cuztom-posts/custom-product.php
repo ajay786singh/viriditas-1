@@ -14,6 +14,28 @@ $products->add_meta_box(
             'description'   => '',
             'type'          => 'text',
         ),
+		array(
+            'name'          => 'monograph',
+            'label'         => 'Monograph',
+            'description'   => '',
+            'type'          => 'post_checkboxes',
+			'args'       => array(
+				'post_type' => 'monograph',
+			)
+        ),
+		array(
+            'name'          => 'warnings',
+            'label'         => 'Warnings & Interactions',
+            'description'   => '',
+            'type'          => 'wysiwyg'
+        ),
+		
+		array(
+            'name'          => 'dosage',
+            'label'         => 'Dosage',
+            'description'   => '',
+            'type'          => 'wysiwyg'
+        ),
 	)
 );	
 ?>

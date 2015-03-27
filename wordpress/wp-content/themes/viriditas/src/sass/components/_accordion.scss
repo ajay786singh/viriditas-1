@@ -1,8 +1,28 @@
 .accordion {
-	margin-bottom:4em;	
+	margin-bottom:4em;		
+	.faq-content & {	
+		margin-bottom:1em;
+	}
 	.accordion-panel {
 		.accordion-panel-header {
 			border-bottom:2px solid $base-border-color;
+			.faq-content & {	
+				border-bottom:none;
+				border-top:1px solid $base-border-color;				
+				@include media($bp-large) {
+					font-size: 1.25em;
+				}
+				&:after {
+					@include arrow(bottom,$base-border-color,10px);					
+					margin-top:8px;
+					@include media($bp-large) {
+						margin-top:8px;
+					}
+				}				
+				&.active-header:after {
+					@include arrow(top,$base-border-color,10px);
+				}
+			}
 			cursor:pointer;
 			font-size:1.25em;
 			line-height:1.25;
@@ -31,6 +51,9 @@
 		}
 		.accordion-panel-content {
 			padding-top:2em;
+			.faq-content & {	
+				padding-top:0em;
+			}
 			display:none;
 			&:first-child {
 				display:block;
@@ -47,4 +70,7 @@
 			}
 		}
 	}	
+}
+.single-product-content {
+	@extend .faq-content;
 }

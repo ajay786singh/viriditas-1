@@ -8,8 +8,6 @@ $args = array(
     );
 
 $monograph = register_cuztom_post_type( 'Monograph', $args);
-$monograph->add_taxonomy( 'Indication' );
-$monograph->add_taxonomy( 'Actions' );
 
 $monograph->add_meta_box(
     'Monograph Details',
@@ -27,7 +25,10 @@ $monograph->add_meta_box(
             'description'   => '',
             'type'          => 'post_checkboxes',
 			'args'       => array(
-				'post_type' => 'product'
+				'post_type' => 'product',
+				'product_cat' => 'single-herb-tincture',
+				'orderby' => 'title',
+				'order' => 'ASC',
 			)
         ),
 		array(

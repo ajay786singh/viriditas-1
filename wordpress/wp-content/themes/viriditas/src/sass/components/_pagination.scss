@@ -1,0 +1,22 @@
+#pagination {
+    padding-top: 20px;
+    a {
+        text-decoration: none;
+        border-bottom: 1px solid;
+        &:hover {
+            border-bottom: none;
+        }
+		&.older {
+			@include media($bp-large) {
+				max-width:45%;
+			}
+			float:right;
+		}
+		&.newer {
+			@include media($bp-large) {
+				max-width:45%;
+			}
+			float:left;
+		}
+    }
+}

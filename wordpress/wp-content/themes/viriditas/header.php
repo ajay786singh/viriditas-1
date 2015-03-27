@@ -50,13 +50,13 @@
 <div id="wrapper" class="wrapper">
 <!-- Header Starts Here -->
 <?php 
-	$header_class="";
-	if(is_page() || is_archive()) {
-		$header_class.=" active-header";
-	}
+	// $header_class="";
+	// if(is_page() || is_archive()) {
+		// $header_class.=" active-header";
+	// }
 ?>
-
-<header class="<?php echo $header_class;?>">
+<?php if(get_faqs_box_content()) echo get_faqs_box_content();?>
+<header class="top-header">
 	<div class="container">
 		<div class="header-content">
 			<div class="column-3 logo">
@@ -71,8 +71,9 @@
 								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 
 							else { ?>
-								<li><a href="" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
-								
+								<li>
+								<a class="popup-modal" href="#faq-box">*FAQ*</a>
+								<a href="" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
 								<?php form_login();?>
 								</li>
 						<?php } ?>
@@ -80,22 +81,6 @@
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
 				</nav>
 			</div>
-			<?php /*
-			<div class="span-2 login-button">
-				<?php global $woocommerce; ?> 
-				<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>">
-					<span class="count"><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?></span>
-					<span class="fa icon-shopping-cart"></span>
-				</a>
-				<?php if ( is_user_logged_in() ) { ?>
-					<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile /','woothemes'); ?></a> 
-					<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a>
-				 <?php } 
-				 else { ?>
-					<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Login / Sign up','woothemes'); ?>"><?php _e('Login / Sign up','woothemes'); ?></a>
-				 <?php } ?>
-			</div>
-			*/?>
 		</div>
 	</div>
 </header>

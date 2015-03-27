@@ -14,8 +14,11 @@ h1, h2, h3, h4, h5, h6 {
     font-family: $header-font-family;
     text-rendering: optimizeLegibility;
 	font-weight: normal;	
+	color:$heading;
+	.banner-content &, footer & {
+		color:$white;
+	}
 	section[role=content] & {
-		color:$heading;
 		&:first-child {
 			margin-top:0px;
 		}
@@ -28,7 +31,6 @@ h1 {
 	font-weight: normal;
     @include media($bp-large) {
         font-size: em(50px);
-        line-height: 1.0909em;
         margin-bottom: 0.3636em;
     }
     .single & {
@@ -42,8 +44,7 @@ h1 {
 h2 {
     font-size: $base-font-size * 1.5;
     @include media($bp-large) {
-        font-size: $base-font-size * 3.25;
-        // 16 * 3.25 = 52px
+        font-size: $base-font-size * 3.25;// 16 * 3.25 = 52px
         line-height: 1.3846em;
         margin-bottom: 0.4615em;
     }
@@ -615,4 +616,25 @@ section[role=content] {
 	li {
 		margin-left:0;
 	}
+}
+.product-title {
+	margin-top: 15px;
+	overflow:hidden;
+	@include media($bp-large) {
+		margin-top: 0px;
+	}
+	h4 {
+		float:left;
+	}
+	.view-monograph {
+		display: block;
+		float: left;
+		font-size:em(12px);
+		margin-left: 10px;
+		margin-top: 3px;
+		text-decoration:underline;
+		@include media($bp-large) {
+			margin-top: 15px;
+		}
+	}	
 }

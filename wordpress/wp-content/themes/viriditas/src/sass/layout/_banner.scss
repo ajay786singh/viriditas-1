@@ -27,10 +27,13 @@ section[role=banner] {
 			@include media($bp-large) {
 				left:30%;
 				width:40%;
-				position:absolute;
+				padding:40px 60px 0px;
 			}	
 			margin:0 auto;
-			padding:0 40px 0px;
+			padding:40px 40px 0px;
+		}
+		.banner-content { 
+			padding-bottom:0;
 		}
 	}	
 	.button {
