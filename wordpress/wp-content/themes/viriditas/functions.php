@@ -9,6 +9,7 @@ include('includes/wp-cuztom-posts/custom-product.php');
 include('includes/wp-cuztom-posts/custom-services.php');
 include('includes/wp-cuztom-posts/custom-team.php');
 include('includes/wp-cuztom-posts/custom-monograph.php');
+include('includes/wp-cuztom-posts/custom-faq.php');
 
 //Load custom functions
 require_once('includes/functions/add-classes-to-body.php');
@@ -27,6 +28,7 @@ require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/get-term-top-level-parent.php');
 require_once('includes/functions/register-widgets.php');
 require_once('includes/functions/courses.php');
+require_once('includes/functions/faq.php');
 // Load Login/Register
 require_once('includes/login-register/register.php');
 require_once('includes/login-register/login.php');
