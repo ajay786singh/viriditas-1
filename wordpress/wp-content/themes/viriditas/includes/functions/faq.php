@@ -58,9 +58,12 @@ function get_faqs_box_content() {
 	$html='<div id="faq-box" class="mfp-hide white-popup-block">';
 	$html.='<p><a class="popup-modal-dismiss" href="#">X</a></p>';
 	$html.='<h1>Ordering Support</h1>';
-		$html.='<div class="faq-content">';
-		$html.= get_faqs();
-		$html.= get_monographs();
+		$html.='<div class="column-7">';
+				$html.='<div class="faq-content">';
+				$html.= get_faqs();
+				$html.= get_monographs();
+				$html.= "<a href='".get_bloginfo('url')."/contact' class='button'>Contact Us</a>";
+				$html.='</div>';
 		$html.='</div>';
 	$html.='</div>';
 	return $html;

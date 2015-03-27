@@ -1,5 +1,8 @@
 .accordion {
-	margin-bottom:4em;	
+	margin-bottom:4em;		
+	.faq-content & {	
+		margin-bottom:1em;
+	}
 	.accordion-panel {
 		.accordion-panel-header {
 			border-bottom:2px solid $base-border-color;
