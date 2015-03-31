@@ -1685,13 +1685,16 @@ article {
   @media screen and (min-width: 50em) {
     .oddeven:nth-of-type(even) .content {
       float: left; } }
-  .oddeven .image {
-    width: 50%; }
-    .oddeven .image img {
-      border: 10px solid white; }
+  @media screen and (min-width: 50em) {
+    .oddeven .image {
+      width: 50%; } }
+  .oddeven .image img {
+    border: 10px solid white; }
   .oddeven .content {
-    width: 50%;
     padding-top: 20px; }
+    @media screen and (min-width: 50em) {
+      .oddeven .content {
+        width: 50%; } }
 
 .app_services_dropdown {
   position: relative;
@@ -2368,7 +2371,7 @@ select[data-dkcacheid] {
     display: block; }
 
 .divider {
-  background: transparent url(dist/images/divider.jpg) no-repeat top center;
+  background: transparent url(dist/images/divider.png) no-repeat top center;
   margin-bottom: 45px;
   margin-top: 50px;
   padding-top: 130px; }
