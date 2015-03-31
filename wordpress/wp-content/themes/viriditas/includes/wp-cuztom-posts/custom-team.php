@@ -4,7 +4,7 @@ $args = array(
     'has_archive' => true,
     //'menu_position' => 5,
     'menu_icon' => 'dashicons-groups', //http://melchoyce.github.io/dashicons/
-    'supports'  => array( 'title','editor','thumbnail' )
+    'supports'  => array( 'title','editor','thumbnail','page-attributes' )
     );
 	
 $team = register_cuztom_post_type( 'team', $args);
