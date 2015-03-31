@@ -225,13 +225,17 @@ article {
 		}
 	}
 	.image {
-		width: 50%;
+		@include media($bp-large) {
+			width: 50%;
+		}
 		img {
 			border:10px solid $white;
 		}
 	}	
     .content {
-		width: 50%;
+		@include media($bp-large) {
+			width: 50%;
+		}
 		padding-top:20px;
     }
 }

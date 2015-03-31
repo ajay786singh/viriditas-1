@@ -38,6 +38,8 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 		$args=array(
 			'post_type'=>'team',
 			'showposts'=>'-1',
+			'orderby' =>'menu_order',
+			'order' =>'ASC',
 			'tax_query' => array(
 				array(
 					'taxonomy' => 'team_category',
@@ -94,6 +96,8 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 			$args=array(
 				'post_type'=>'team',
 				'showposts'=>'-1',
+				'orderby' =>'menu_order',
+				'order' =>'ASC',
 				'tax_query' => array(
 					array(
 						'taxonomy' => 'team_category',
