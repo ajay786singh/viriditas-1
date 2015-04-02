@@ -116,12 +116,12 @@
 	}
 }
 .back-to-results {
-	padding-left:15px;
+	padding-left:10px;
 	&:before {
-		@include arrow(left, $heading, 8px);
+		@include arrow(left, $heading, 6px);
 		content:"";
 		left: 0;
 		position: absolute;
-		top: 6px;
+		top: 9px;
 	}
 }
