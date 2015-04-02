@@ -901,7 +901,7 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   .course-action .button, .course-action input[type="button"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"] {
     margin-top: 0; }
 
-.appointment-sidebar h5:after {
+.appointment-sidebar:nth-of-type(1) h5:after {
   background: url(dist/images/pdf-icon.jpg) 15px 0px no-repeat;
   content: '';
   height: 35px;
@@ -1924,16 +1924,16 @@ section[role="actions"] ul li a {
     padding: 10px 20px; }
 
 .back-to-results {
-  padding-left: 15px; }
+  padding-left: 10px; }
   .back-to-results:before {
-    border-top: 8px solid transparent;
-    border-right: 8px solid #3d3777;
-    border-bottom: 8px solid transparent;
+    border-top: 6px solid transparent;
+    border-right: 6px solid #3d3777;
+    border-bottom: 6px solid transparent;
     border-left: none;
     content: "";
     left: 0;
     position: absolute;
-    top: 6px; }
+    top: 9px; }
 
 footer {
   background: url(dist/images/footer-bg.jpg);

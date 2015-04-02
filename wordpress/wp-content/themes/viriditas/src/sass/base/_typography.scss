@@ -583,8 +583,8 @@ section[role=content] {
 	}
 }
 .appointment-sidebar {
-	h5 {
-		&:after {
+	&:nth-of-type(1) {
+		& h5:after {
 			background:url(dist/images/pdf-icon.jpg) 15px 0px no-repeat;
 			content:'';
 			height:35px;
