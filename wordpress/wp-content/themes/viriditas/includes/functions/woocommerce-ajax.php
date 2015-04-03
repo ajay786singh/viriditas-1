@@ -208,7 +208,7 @@ function get_body_systems() {
 					'terms' => $cat_id
 				)
 			)
-		);
+	 	);
 	$objects_ids='';	
 	$objects = get_posts( $args );
 	foreach ($objects as $object) {

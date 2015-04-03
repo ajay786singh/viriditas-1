@@ -67,12 +67,15 @@
 					<?php global $woocommerce; ?> 
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
-								<li><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
+								<li>
+								<?php if(is_archive('post-type-archive-product')){?>
+								<a class="popup-modal" href="#faq-box">*FAQ*</a>
+								<?php } ?>
+								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
 								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 
 							else { ?>
 								<li>
-								<a class="popup-modal" href="#faq-box">*FAQ*</a>
 								<a href="" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
 								<?php form_login();?>
 								</li>
