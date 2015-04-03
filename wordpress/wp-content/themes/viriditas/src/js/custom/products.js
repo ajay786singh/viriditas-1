@@ -127,7 +127,7 @@ function toParams(searchUrl) {
 				if($('.by-indication .dk-select-options .dk-option-selected').length){
 					indication=$('.by-indication .dk-select-options .dk-option-selected').attr('data-value');
 				}
-				$('.product-list').showProducts({page:page,body_system:body_system,indication:indication});
+				$('.product-list').showProducts({page:page});
 				$this.remove();
 			return false;
 		});
@@ -138,20 +138,28 @@ function toParams(searchUrl) {
 			var url = replaceParam('pc', category);
 			window.history.pushState({path:url},'',url);
 			$('section[role="body-systems"]').fetchBodysystems(category);
-			$('section[role="indications"]').fetchIndications(category);
+			$('section[role="indications"]').fetchIndications(category);			
+			var url=removeURLParameter('pb');					
+			window.history.pushState({path:url},'',url);
+			var url=removeURLParameter('pa');					
+			window.history.pushState({path:url},'',url);
+			var url=removeURLParameter('pi');					
+			window.history.pushState({path:url},'',url);
 			$('.product-list').empty();
-			$('.product-list').showProducts({category:category,page:1});
+			$('.product-list').showProducts({page:1});
 		});
 	},
 	$.fn.filterBodysystems = function(body_system) {
-		$('.product-list').empty();
-		$('.product-list').showProducts({body_system:body_system,page:1});
 		var url = replaceParam('pb', body_system);
 		window.history.pushState({path:url},'',url);
+		var url=removeURLParameter('pa');					
+		window.history.pushState({path:url},'',url);
+		$('.product-list').empty();
+		$('.product-list').showProducts({page:1});
 	},
 	$.fn.filterIndications = function(indication) {
 		$('.product-list').empty();
-		$('.product-list').showProducts({indication:indication,page:1});
+		$('.product-list').showProducts({page:1});
 	},
 	$.fn.fetchBodysystems = function(category) {
 		var $this = $(this);
@@ -202,12 +210,12 @@ function toParams(searchUrl) {
 						if(actions !='') {
 							var url = replaceParam('pa', decodeURIComponent(actions.join(",")));
 							window.history.pushState({path:url},'',url);
-							$('.product-list').empty();
-							$('.product-list').showProducts({category:category,body_system:body_system,action:actions,page:1});
-						}else {
+						} else {
 							var url=removeURLParameter('pa');					
 							window.history.pushState({path:url},'',url);
-						}
+						}					
+						$('.product-list').empty();
+						$('.product-list').showProducts({page:1});
 						return false;
 					 });
 				}	
