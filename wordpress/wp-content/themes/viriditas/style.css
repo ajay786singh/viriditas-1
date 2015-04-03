@@ -943,6 +943,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
       .product-title .view-monograph {
         margin-top: 15px; } }
 
+.message {
+  margin-top: 50px; }
+
 img {
   max-width: 100%; }
 
