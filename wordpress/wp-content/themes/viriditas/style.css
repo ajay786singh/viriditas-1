@@ -2372,9 +2372,14 @@ select[data-dkcacheid] {
 
 .divider {
   background: transparent url(dist/images/divider.png) no-repeat top center;
+  background-size: 80%;
   margin-bottom: 45px;
   margin-top: 50px;
-  padding-top: 130px; }
+  padding-top: 110px; }
+  @media screen and (min-width: 50em) {
+    .divider {
+      background-size: inherit;
+      padding-top: 235px; } }
   .home .divider {
     margin-bottom: 0px; }
 

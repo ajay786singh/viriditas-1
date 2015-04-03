@@ -1,8 +1,13 @@
 .divider {
 	background: transparent url(dist/images/divider.png) no-repeat top center;
+	background-size: 80%;
 	margin-bottom: 45px;
 	margin-top: 50px;
-	padding-top: 130px;
+	padding-top: 110px;
+	@include media($bp-large) {
+		background-size: inherit;
+		padding-top: 235px;
+	}
 	.home & {
 		margin-bottom: 0px;
 	} 
