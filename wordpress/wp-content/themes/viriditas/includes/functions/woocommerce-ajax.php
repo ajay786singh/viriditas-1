@@ -5,7 +5,7 @@ add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 * Function to get prodcut categories
 */
 function get_product_categories($exclude=false) {
-	$reslut="";
+	$result="";
 	$pc=$_REQUEST['pc'];
 	$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0&exclude='.$exclude);
 	if($product_categories) {	
@@ -189,102 +189,6 @@ add_action( 'wp_ajax_get_actions', 'get_actions' );
 add_action( 'wp_ajax_nopriv_get_actions', 'get_actions' );	
 
 /*
-* Function to get Body Systems 
-* @param: Category, Actions, Indication
-*/
-
-function get_body_systems() {
-	global $wp_query;
-	
-	$cat_id=$_POST['category'];
-	$args=array(
-			'post_type' => 'product',
-			'numberposts' => -1,
-			'tax_query' => array(
-				'relation'=>'AND',
-				array(
-					'taxonomy' => 'product_cat',
-					'field' => 'term_id',
-					'terms' => $cat_id
-				)
-			)
-	 	);
-	$objects_ids='';	
-	$objects = get_posts( $args );
-	foreach ($objects as $object) {
-		$objects_ids[] = $object->ID;
-	}
-	$body_systems = wp_get_object_terms( $objects_ids, 'body_system' );
-	if($body_systems) {
-		$result='<div class="filter filter-body_system">';
-		$result.='<div class="shop-header">';
-		$result.='<h6 class="heading">Filter by Body System</h6>';
-		$result.='</div>';
-		$result.='<select class="by-body_system">';
-			$result.='<option value="" class="hidden-option">Select Body System</option>';
-		foreach($body_systems as $body_system) {
-			
-			$result.="<option value='".$body_system->term_id."'>".$body_system->name."</option>";
-		}
-		$result.='</select>';	
-		$result.='</div>';	
-	}
-	echo $result;
-	die();
-}
-add_action( 'wp_ajax_get_body_systems', 'get_body_systems' );
-add_action( 'wp_ajax_nopriv_get_body_systems', 'get_body_systems' );	
-
-/*
-* Function to get Indications 
-* @param: Category, Body System, Actions
-*/
-function get_indications() {
-	global $wp_query;
-	$cat_id=$_POST['category'];
-	if($cat_id ==''){
-		$cat_id = 327;
-	}
-	$args=array(
-		'post_type' => 'product',
-		'numberposts' => -1,
-		'tax_query' => array(
-			array(
-				'taxonomy' => 'product_cat',
-				'field' => 'term_id',
-				'terms' => array($cat_id)
-			)
-		)
-	);
-	$objects_ids='';	
-	$objects = get_posts( $args );
-	foreach ($objects as $object) {
-		$objects_ids[] = $object->ID;
-	}
-	$indications = wp_get_object_terms( $objects_ids, 'indication');
-	if($indications) { 
-		$result='<div class="filter filter-indication">';
-		$result.='<div class="shop-header">';
-		$result.='<h6 class="heading">Filter by Indication</h6>';
-		$result.='</div>';
-		$result.='<select class="by-indication">';
-		$result.='<option value="" class="hidden-option">Select Indication</option>';
-		foreach($indications as $indication) {
-			$result.="<option value='".$indication->term_id."'>".$indication->name."</option>";
-		} 
-		$result.='</select>';
-		$result.='</div>';
-	}
-	echo $result;
-	if($_POST['category']) {
-		die(0);
-	}
-}
-
-add_action( 'wp_ajax_get_indications', 'get_indications' );
-add_action( 'wp_ajax_nopriv_get_indications', 'get_indications' );	
-
-/*
 * Function to get Product details with AJAX
 * @param: request product id
 */
@@ -313,3 +217,72 @@ function get_product_info($id) {
 		echo "<li class='block-grid-3'><a href='".get_permalink()."'><i>".get_the_title()."</i></a></li>";
 	endwhile; endif; wp_reset_query();
 }
+
+/*
+* Function to get terms
+* @param: Taxonomy
+*/
+
+function get_product_terms() {
+	global $wp_query;
+	$post_type='product';
+	$no_of_posts='-1';
+	$taxonomy=$_POST['taxonomy'];
+	$taxonomy_name=implode(" ",explode("_",$taxonomy));
+	$pa=$_POST['pa'];
+	$pb=$_POST['pb'];
+	$pc=$_POST['pc'];
+	$pi=$_POST['pi'];
+
+	$tax_query=array(
+		'taxonomy' => 'product_cat',
+		'field' => 'term_id',
+		'terms' => $pc
+	);	
+	
+	$args=array(
+		'post_type' => $post_type,
+		'numberposts' => $no_of_posts,
+		'tax_query' => array(
+			'relation'=>'AND',
+			$tax_query
+		)
+	);
+	$objects_ids='';	
+	$objects = get_posts( $args );
+		foreach ($objects as $object) {
+			$objects_ids[] = $object->ID;
+		}
+	$terms = wp_get_object_terms( $objects_ids, $taxonomy );
+		if($terms) {
+			$result='<div class="filter filter-'.$taxonomy.'">';
+			$result.='<div class="shop-header">';
+			$result.='<h6 class="heading">Filter by '.$taxonomy_name.'</h6>';
+			$result.='</div>';
+			$result.='<select class="by-'.$taxonomy.'">';
+				$result.='<option value="" class="hidden-option">Select '.$taxonomy_name.'</option>';
+			foreach($terms as $term) {
+				if($taxonomy=='body_system' && $pb!='') {
+					if($pb==$term->term_id) {
+						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+					} else {
+						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+					}
+				} else if($taxonomy=='indication' && $pi!='') {
+					if($pi==$term->term_id) {
+						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+					} else {
+						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+					}
+				} else {
+					$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+				}
+			}
+			$result.='</select>';	
+			$result.='</div>';	
+		}
+	echo $result;	
+	die(0);
+}
+add_action( 'wp_ajax_get_product_terms', 'get_product_terms' );
+add_action( 'wp_ajax_nopriv_get_product_terms', 'get_product_terms' );

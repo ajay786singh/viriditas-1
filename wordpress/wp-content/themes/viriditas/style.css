@@ -1709,9 +1709,6 @@ article {
 .app_provider_locations_dropdown {
   padding: 0; }
 
-.app_workers {
-  min-height: 180px; }
-
 @media screen and (min-width: 50em) {
   .border-right {
     border-right: 1px solid #b8b8b8; } }
