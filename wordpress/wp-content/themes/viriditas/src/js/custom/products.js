@@ -157,34 +157,39 @@ function toParams(searchUrl) {
 		$('.product-list').empty();
 		$('.product-list').showProducts({page:1});
 	},
-	$.fn.filterIndications = function(indication) {
+	$.fn.filterSelectTerms = function(filter,val) {
+		var url = replaceParam(filter, val);
+		window.history.pushState({path:url},'',url);
 		$('.product-list').empty();
 		$('.product-list').showProducts({page:1});
 	},
-	$.fn.fetchBodysystems = function(category) {
+	$.fn.fetchSelectTerms = function(taxonomy,filter,active_val) {
 		var $this = $(this);
+		var pa=getParameterByName('pa'); //Products by Actions
+		var pb=getParameterByName('pb'); //Products by Body Systems
+		var pc=getParameterByName('pc'); //Products by Categories
+		var pi=getParameterByName('pi'); //Products by Indications
 		$this.empty();
-		$('section[role="actions"]').empty();
 		$this.addClass('small-loader');
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data:{action: 'get_body_systems','category':category },
+			data:{action: 'get_product_terms','taxonomy':taxonomy,'pa':pa,'pb':pb,'pc':pc,'pi':pi,'active_val':active_val },
 			success: function(html) {
 				$this.removeClass('small-loader');
 				if(html!=''){
-					$this.append(html);
+					$this.append(html);					
 					$this.find('select').dropkick({
 						mobile: true,
 						change:function() {
 							var dk = this;
-							$('section[role="actions"]').fetchActions(category,dk.value);
-							$this.filterBodysystems(dk.value);
+							//$('section[role="actions"]').fetchActions(category,dk.value);
+							$this.filterSelectTerms(filter,dk.value);
 						}
 					});
 				}	
 			}
-		});			
+		});
 	},
 	$.fn.fetchActions = function(category,body_system) {
 		var $this = $(this);
@@ -218,29 +223,6 @@ function toParams(searchUrl) {
 						$('.product-list').showProducts({page:1});
 						return false;
 					 });
-				}	
-			}
-		});			
-	},
-	$.fn.fetchIndications = function(category) {
-		var $this = $(this);
-		$this.empty();
-		$this.addClass('small-loader');
-		$.ajax({
-			type: 'POST',
-			url: ajaxurl,
-			data:{action: 'get_indications','category':category },
-			success: function(html) {
-				$this.removeClass('small-loader');
-				if(html!=''){
-					$this.append(html);
-					$this.find('select').dropkick({
-						mobile: true,
-						change:function() {
-							var dk = this;
-							$this.filterIndications(dk.value);
-						}
-					});
 				}	
 			}
 		});			
@@ -299,11 +281,22 @@ function toParams(searchUrl) {
 jQuery(document).ready(function($){
 	if($('body').hasClass('post-type-archive-product')) {
 		var product_container = $('.product-list');
+		// Current Filter values
+		var pa=getParameterByName('pa');
+		var pb=getParameterByName('pb');
+		var pc=getParameterByName('pc');
+		var pi=getParameterByName('pi');
 		$('select.by-category').dropkick({
-			mobile: true
+			mobile: true,
+			change:function() {
+				var dk = this;
+				//$('section[role="actions"]').fetchActions(category,dk.value);
+				$('section[role="category"]').filterSelectTerms('pc',dk.value);
+				$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
+				$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+			}
 		});
 		var current_category=$('.by-category .dk-select-options .dk-option-selected').attr('data-value');
-		var pc=getParameterByName('pc');
 		var show_product=getParameterByName('show_product');
 		if(pc=='') {
 			var url = replaceParam('pc', current_category);
@@ -314,9 +307,11 @@ jQuery(document).ready(function($){
 		} else {
 			product_container.showProducts();
 		}
-		$('.by-category').filterCategory();
-		$('section[role="body-systems"]').fetchBodysystems(current_category);
+		//$('.by-category').filterCategory();
+		
+		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
+		$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 		$('section[role="actions"]').fetchActions(current_category);
-		$('section[role="indications"]').fetchIndications(current_category);
+		
 	}	
 });

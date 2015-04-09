@@ -250,9 +250,6 @@ article {
 	padding:0;
 }
 
-.app_workers {
-	min-height: 180px;
-}
 .border-right {
 	@include media($bp-large) {
 		border-right:1px solid $base-border-color;

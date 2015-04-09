@@ -29,6 +29,7 @@ global $product;
 	 	echo get_the_password_form();
 	 	return;
 	 }
+	$product_page_url=get_bloginfo('url')."/products"; 
 ?>
 <div itemscope itemtype="<?php echo woocommerce_get_product_schema(); ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<?php
@@ -90,9 +91,7 @@ global $product;
 					<div class="accordion-panel">
 						<h5 class="accordion-panel-header">Dosage</h5>
 						<div class="accordion-panel-content">
-							<?php
-								echo apply_filters('the_content', $dosage);
-							?>
+							<?php echo apply_filters('the_content', $dosage);?>
 						</div>
 					</div>
 				<?php } ?>
@@ -107,7 +106,7 @@ global $product;
 							<ul class="list">
 								<?php
 									foreach($body_systems as $body_system) {
-										echo "<li><a href='".get_term_link( $body_system->slug, 'body_system' )."'>".$body_system->name."</a></li>";
+										echo "<li><a href='".$product_page_url."/?pb=".$body_system->term_id."'>".$body_system->name."</a></li>";
 									}
 								?>	
 							</ul>
@@ -125,7 +124,7 @@ global $product;
 							<ul class="list">
 								<?php
 									foreach($actions as $action) {
-										echo "<li><a href='".get_term_link( $action->slug, 'action' )."'>".$action->name."</a></li>";
+										echo "<li><a href='".$product_page_url."/?pa=".$action->term_id."'>".$action->name."</a></li>";
 									}
 								?>	
 							</ul>
@@ -143,7 +142,7 @@ global $product;
 							<ul class="list">
 								<?php
 									foreach($indications as $indication) {
-										echo "<li><a href='".get_term_link( $indication->slug, 'indication' )."'>".$indication->name."</a></li>";
+										echo "<li><a href='".$product_page_url."/?pi=".$indication->term_id."'>".$indication->name."</a></li>";
 									}
 								?>	
 							</ul>
