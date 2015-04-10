@@ -368,6 +368,9 @@ header {
 				color: $menu-color-hover;
 				text-decoration: none;
 				@include transition(background 0.5s, color 0.5s);
+				&:hover {
+					color:$hover-link-color;
+				}
 			}
 		}
 	}
