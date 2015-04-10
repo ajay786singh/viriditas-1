@@ -105,8 +105,6 @@ function get_courses() {
 				?>
 				<a href="<?php echo $course_register_url;?>" class="button">Register Now</a>
 				<?php 
-					} else {
-						echo '<a href="#" class="button">Register Soon</a>';
 					}
 				?>
 			</div>
