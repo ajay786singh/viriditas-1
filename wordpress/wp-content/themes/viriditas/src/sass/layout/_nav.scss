@@ -29,7 +29,7 @@ $menu-gradient-stop-1: $menu-toggle-height/2 - $menu-toggle-layer-thickness/2;
 $menu-gradient-stop-2: $menu-gradient-stop-1 + $menu-toggle-layer-thickness;
 $toggle-button-color: $white; //$purple; // also for icons
 $menu-background: $white;
-$color--accent: #CDDC39;
+$color--accent: $purple;
 
 body.mm-menu-open {
 	overflow: hidden;
@@ -172,14 +172,14 @@ $delay: 0.1;
 }
 
 .mm-menu__link {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  margin: 4px 0;
-  padding: 12px;
-  color: $body_font;
-  text-decoration: none;
-  @include transition(background 0.5s, color 0.5s);
+	display: block;
+	position: relative;
+	overflow: hidden;
+	margin: 4px 0;
+	padding: 12px;
+	color: $body_font;
+	text-decoration: none;
+	@include transition(background 0.5s, color 0.5s);
 }
 
 .mm-menu__link-text {
