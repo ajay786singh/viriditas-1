@@ -8,7 +8,18 @@ $args = array(
     );
 
 $course = register_cuztom_post_type( 'Course', $args);
-$course->add_taxonomy( 'Courses type' );
+$course_type = register_cuztom_taxonomy( 'Courses type', 'course' );
+// Add option to enable/disable register button to course
+$course_type->add_term_meta (
+	array(
+		array(
+			'name'        => 'register_on_off',
+			'label'       => 'Register ON/OFF',
+			'description' => 'Select to enable registration to this course type.',
+			'type'        => 'checkbox'
+		)
+	)
+);
 
 $course->add_meta_box(
     'Course Details',

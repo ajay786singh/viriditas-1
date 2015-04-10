@@ -95,10 +95,20 @@ function get_courses() {
 		foreach($courses_type as $course_type) {
 			$course=$course_type->name;
 			$course_slug=$course_type->slug;
+			$meta='term_meta_courses_type_'.$course_type->term_id;
+			$register_on_off=get_option($meta);
 	?>
 			<div class="course-heading">
 				<h3><?php echo $course;?></h3>
+				<?php 
+					if($register_on_off['_register_on_off']=='on') {
+				?>
 				<a href="<?php echo $course_register_url;?>" class="button">Register Now</a>
+				<?php 
+					} else {
+						echo '<a href="#" class="button">Register Soon</a>';
+					}
+				?>
 			</div>
 			<?php 
 				$args['tax_query'] = array(
