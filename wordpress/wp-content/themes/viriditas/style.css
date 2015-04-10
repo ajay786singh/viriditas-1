@@ -1952,6 +1952,7 @@ footer {
     @media screen and (min-width: 50em) {
       footer .footer-logo .newsletter-box {
         width: 75%;
+        padding-right: 5%;
         margin-left: 180px; } }
 
 .accordion {
