@@ -160,11 +160,13 @@ function get_courses() {
 								if($price):
 									echo "<h4>$".$price."+tax</h4>";
 								endif;
+								if($register_on_off['_register_on_off']=='on') {	
 									if($register_open=='on') {
 										echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
 									}else {
 										echo '<a href="#" class="button">Register Soon</a>';
 									}									
+								}
 								echo "</div>";
 							echo "</div>";
 						endif ?>
