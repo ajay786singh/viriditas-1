@@ -17,6 +17,7 @@ footer {
 			width:100%;
 			@include media($bp-large) {
 				width: 75%;
+				padding-right:5%;
 				margin-left: 180px;
 			}
 		}
