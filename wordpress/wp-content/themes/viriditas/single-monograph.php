@@ -111,7 +111,7 @@
 					echo "<p>If you have suggestions do not fit your needs, you may continue on linking with the catalogue. For additional symptoms & conditions link first to the system involved, select the actions required and then choose an herb from the action category.</p>";
 					echo "<ul class='list'>";	
 						foreach($actions as $action) {
-							$action_url=$product_page_url."?pi=".$action->term_id;
+							$action_url=$product_page_url."?pa=".$action->term_id;
 							echo "<li><a href='".$action_url."'>".$action->name."</a></li>";
 						}
 					echo "</ul>";
