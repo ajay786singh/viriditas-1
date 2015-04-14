@@ -67,8 +67,12 @@ global $product;
 				<?php } ?>
 			</div>
 			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
-			<hr>
-			<?php the_content();?>
+			<?php 
+				if(get_the_content()) { 
+					echo "<hr>";
+					the_content();
+				}
+			?>
 			<div class="accordion">
 				<?php 
 					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
