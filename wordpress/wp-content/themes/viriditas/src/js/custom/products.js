@@ -233,6 +233,7 @@ function toParams(searchUrl) {
 						var url=removeURLParameter('show_product');					
 						window.history.pushState({path:url},'',url);
 						$('.list-products').show();
+						$('.product-list').showProducts();
 						$this.empty().hide();
 						return false;
 					});
