@@ -2274,7 +2274,8 @@ input[type="button"] {
   .dk-select.dk-select-open-up .dk-select-options {
     display: block; }
   .dk-select.dk-select-open-down .dk-select-options {
-    display: block; }
+    display: block;
+    max-height: 10em; }
 
 .dk-selected {
   font-family: "Playfair Display", serif;
