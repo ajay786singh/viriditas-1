@@ -13,6 +13,7 @@ function get_product_categories($exclude=false) {
 			$result.='<h6 class="heading">Filter by category</h6>';
 		$result.='</div>';
 		$result.='<select class="by-category">';
+		$result.='<option value="" class="hidden-option">Select Category</option>';
 			foreach($product_categories as $product_category) {
 				if($pc!='' && $pc== $product_category->term_id) {
 					$result.="<option selected value='".$product_category->term_id."'>".$product_category->name."</option>";
@@ -32,62 +33,38 @@ function load_products () {
 	global $wp_query;
 	$cat_id=$_POST['filter_type_category'];
 	$body_system_id=$_POST['filter_type_body_system'];
-	$action_id=$_POST['filter_type_action'];
+	$action_id = $_POST['filter_type_action'];
 	$indication_id=$_POST['filter_type_indication'];
 	$sort_by_name=$_POST['sort_by_name'];
 	$paged = $_POST['paged'];
 	
 	$args=array(
 		'post_type' =>'product',
-		'order' => 'DESC',
+		'orderby' => 'title',
+		'order' => 'ASC',
 		'paged'=>$paged,
 		'posts_per_page'=>12
 	);
-	if($sort_by_name!=''){
-		$args['orderby']='title';
-		$args['order']=$sort_by_name;
-	}
-	$product_cat="";
-	if($cat_id !='') {
-		$cterm = get_term_by( 'id', $cat_id, 'product_cat' );
-		$filter_terms['product_cat'] = $cterm->slug;	
-	}
-	$body_system="";
-	if($body_system_id !='') {
-		$body_system_term = get_term_by( 'id', $body_system_id, 'body_system' );
-		$filter_terms['body_system'] = $body_system_term->slug;	
-	}
-	$action="";
-	if($action_id !='') {
-		if(count($action_id)==1) {
-			$action_term = get_term_by( 'id', $action_id[0], 'actions' );
-			$filter_terms['actions'] = $action_term->slug;
-		}else {
-			$actions_slug='';
-			for($i=0;$i<count($action_id);$i++) {
-				$action_term = get_term_by( 'id', $action_id[$i], 'actions' );
-				$actions_slug[] = $action_term->slug;
-			}
-			$filter_terms['actions'] = implode(",",$actions_slug);
-		}
-	}
-	
-	$indication="";
-	if($indication_id !='') {
-		$indication_term = get_term_by( 'id', $indication_id, 'indication' );
-		$filter_terms['indication'] = $indication_term->slug;	
-	}
-	
+	// if($sort_by_name!=''){
+		// $args['orderby']='title';
+		// $args['order']=$sort_by_name;
+	// }
+	$filter=array(
+		'product_cat'=>array_filter(array($cat_id)),
+		'body_system'=>array_filter(array($body_system_id)),
+		'actions'=>array_filter(array($action_id)),
+		'indication'=>array_filter(array($indication_id))
+	);
+	$filter_terms=array_filter($filter);
 	if(count($filter_terms)== 1) {
 		foreach ($filter_terms as $key => $value) {
 			$args['tax_query'] = array(
 					array(
 					'taxonomy' => $key,
-					'terms' => explode(',',$value),
-					'field' => 'slug',
+					'terms' => $value,
+					'field' => 'term_id',
 					)
-			);	
-			
+			);		
 		}
 	} else if(count($filter_terms) > 1){
 		$tax_query="";
@@ -95,8 +72,8 @@ function load_products () {
 		foreach ($filter_terms as $key => $value) {
 			$tax_query[] = array(
 					'taxonomy' => $key,
-					'terms' => explode(',',$value),
-					'field' => 'slug',
+					'terms' => $value,
+					'field' => 'term_id',
 				);				
 		}
 		$args['tax_query'] = $tax_query;
@@ -213,8 +190,11 @@ function get_product_info($id) {
 	global $wp_query;
 	$args = array( 'p' => $id,'post_type'=>'product' );
 	$post_query = new WP_Query( $args );
+	$product_page_url=get_bloginfo('url')."/products"; 
 	if($post_query->have_posts()): while( $post_query->have_posts() ) : $post_query->the_post();
-		echo "<li class='block-grid-3'><a href='".get_permalink()."'><i>".get_the_title()."</i></a></li>";
+		$id=get_the_ID();
+		$single_product_url=$product_page_url."?show_product=".$id;
+		echo "<li class='block-grid-3'><a href='".$single_product_url."'><i>".get_the_title()."</i></a></li>";
 	endwhile; endif; wp_reset_query();
 }
 
@@ -233,21 +213,22 @@ function get_product_terms() {
 	$pb=$_POST['pb'];
 	$pc=$_POST['pc'];
 	$pi=$_POST['pi'];
-
-	$tax_query=array(
-		'taxonomy' => 'product_cat',
-		'field' => 'term_id',
-		'terms' => $pc
-	);	
 	
 	$args=array(
 		'post_type' => $post_type,
 		'numberposts' => $no_of_posts,
-		'tax_query' => array(
+	);
+	if($pc !='') {
+		$tax_query=array(
+			'taxonomy' => 'product_cat',
+			'field' => 'term_id',
+			'terms' => $pc
+		);
+		$args['tax_query'] = array(
 			'relation'=>'AND',
 			$tax_query
-		)
-	);
+		);
+	}
 	$objects_ids='';	
 	$objects = get_posts( $args );
 		foreach ($objects as $object) {
@@ -270,6 +251,12 @@ function get_product_terms() {
 					}
 				} else if($taxonomy=='indication' && $pi!='') {
 					if($pi==$term->term_id) {
+						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+					} else {
+						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+					}
+				}else if($taxonomy=='actions' && $pa!='') {
+					if($pa==$term->term_id) {
 						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
 					} else {
 						$result.="<option value='".$term->term_id."'>".$term->name."</option>";

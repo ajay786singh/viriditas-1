@@ -30,7 +30,7 @@
 			$contradictions = get_post_meta($post->ID,'_monograph_details_contradictions',true);
 			$dosage = get_post_meta($post->ID,'_monograph_details_dosage',true);
 			$synergy = get_post_meta($post->ID,'_monograph_details_synergy',true);
-			if($composition) {
+			if($composition!=-1) {
 				echo "<section class='column-7'>";
 					echo "<h5>Composition</h5>";
 					echo "<ul class='list'>";	
