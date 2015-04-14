@@ -13,7 +13,7 @@ function get_product_categories($exclude=false) {
 			$result.='<h6 class="heading">Filter by category</h6>';
 		$result.='</div>';
 		$result.='<select class="by-category">';
-		$result.='<option value="" class="hidden-option">Select Category</option>';
+		$result.='<option value="" class="hidden-option">Select category</option>';
 			foreach($product_categories as $product_category) {
 				if($pc!='' && $pc== $product_category->term_id) {
 					$result.="<option selected value='".$product_category->term_id."'>".$product_category->name."</option>";
