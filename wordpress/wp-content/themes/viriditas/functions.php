@@ -28,6 +28,7 @@ require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/get-term-top-level-parent.php');
 require_once('includes/functions/register-widgets.php');
 require_once('includes/functions/courses.php');
+require_once('includes/functions/appointments.php');
 require_once('includes/functions/faq.php');
 // Load Login/Register
 require_once('includes/login-register/register.php');
