@@ -10,6 +10,7 @@ include('includes/wp-cuztom-posts/custom-services.php');
 include('includes/wp-cuztom-posts/custom-team.php');
 include('includes/wp-cuztom-posts/custom-monograph.php');
 include('includes/wp-cuztom-posts/custom-faq.php');
+include('includes/wp-cuztom-posts/custom-worksheet.php');
 
 //Load custom functions
 require_once('includes/functions/add-classes-to-body.php');

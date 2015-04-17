@@ -74,6 +74,12 @@ $course->add_meta_box(
             'description'   => 'Enter schedule/season',
             'type'          => 'text'
         ),
+		array(
+            'name'          => 'end_of_course',
+            'label'         => 'Course End Date',
+            'description'   => 'Enter course end date',
+            'type'          => 'date'
+        ),
     )
 );
 

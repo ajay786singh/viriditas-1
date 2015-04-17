@@ -5,7 +5,6 @@
 */
 
 function past_posts($post_type='post',$before_date=false) {
-
 	$args=array(
 		'post_type' => $post_type,
 		'post_status' => 'publish',
@@ -14,7 +13,7 @@ function past_posts($post_type='post',$before_date=false) {
 	if($before_date!='') {
 		$args['date_query'] = array(
 			array(
-				'before' => $today,
+				'before' => $before_date,
 			),
 		);
 	}
@@ -97,6 +96,26 @@ function get_courses() {
 			$course_slug=$course_type->slug;
 			$meta='term_meta_courses_type_'.$course_type->term_id;
 			$register_on_off=get_option($meta);
+						
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => $tax,
+					'field' => 'term_id',
+					'terms' => array($course_type->term_id)
+				)
+			);			
+			//_course_details_end_of_course
+			// $before_date = date('F d, Y');
+			// $args['date_query'] = array(
+				// array(
+					// 'after' => $before_date,
+				// ),
+			// );
+			// echo "<pre>";
+			// print_r($args);
+			// echo "</pre>";
+			$query = new WP_Query($args);
+			if($query->have_posts()):
 	?>
 			<div class="course-heading">
 				<h3><?php echo $course;?></h3>
@@ -109,15 +128,7 @@ function get_courses() {
 				?>
 			</div>
 			<?php 
-				$args['tax_query'] = array(
-					array(
-						'taxonomy' => $tax,
-						'field' => 'term_id',
-						'terms' => array($course_type->term_id)
-					)
-				);
-				$query = new WP_Query($args);
-				if($query->have_posts()):while($query->have_posts()):$query->the_post();
+				while($query->have_posts()):$query->the_post();
 					$id=get_the_ID();
 					$row_id="post-".$course_slug."-".$id;
 					// Date/Time Format

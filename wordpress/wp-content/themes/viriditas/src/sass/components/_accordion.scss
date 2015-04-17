@@ -53,6 +53,15 @@
 			padding-top:2em;
 			.faq-content & {	
 				padding-top:0em;
+				.list {
+					margin-top:0;
+					li {
+						a {
+							color:$base-font-color;
+							text-decoration:underline;
+						}
+					}
+				}
 			}
 			display:none;
 			&:first-child {
