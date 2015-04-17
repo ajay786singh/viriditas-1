@@ -70,3 +70,12 @@ input[type="button"] {
 		margin: 0;
 	}
 }
+
+.faq-content {
+	.button {
+		@include border-radius(0);
+		font-size:0.8em;
+		font-weight:normal;
+		text-transform:uppercase;
+	}
+}

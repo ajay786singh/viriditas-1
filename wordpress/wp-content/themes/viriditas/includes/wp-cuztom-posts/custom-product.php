@@ -9,8 +9,8 @@ $products->add_meta_box(
     'product_details',
     array(
         array(
-            'name'          => 'latin_name',
-            'label'         => 'Product Latin Name',
+            'name'          => 'folk_name',
+            'label'         => 'Product Folk Name',
             'description'   => '',
             'type'          => 'text',
         ),
