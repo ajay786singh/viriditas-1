@@ -20,10 +20,19 @@ get_header( 'shop' );
 		<div class="column-9">
 			<div class="list-products">
 				<div class="shop-header">
-					<h6 class="heading">Shop</h6>				
-					<!--<div class="sort-product" style="float:right;">
-						<a href="#" class="sort_by_name">Sort By Name</a>
-					</div>-->
+					<h6 class="heading">Shop</h6>
+					<div class="filter-side">	
+						<ul>
+							<li><a href="#" class="sort_by" id="title">Sort by Title</a></li>
+							<li><a href="#" class="sort_by" style="display:none;" id="folk_name">Sort by Folk Name</a></li>
+							<li>
+								<a href="#" class="order_by" id="asc">ASC</a>
+								<a href="#" class="order_by" id="desc"> | DESC</a>
+							</li>
+							<li><a href="#" class="switch_view" id="thumb_view"><i class="fa fa-th-large"></i></a></li>
+							<li><a href="#" class="switch_view" id="list_view"><i class="fa fa-list"></i></a></li>
+						</ul>
+					</div>
 				</div>
 				<!-- Include Breadcrumbs -->
 				<?php /* <div class="breadcrumb">
@@ -32,8 +41,7 @@ get_header( 'shop' );
 				</div>
 				</div> */?>
 				<!-- Include Products -->
-				<div class="product-list">
-				</div>
+				<div class="product-list"></div>
 				<div class="message"></div>
 			</div>
 			<!-- Container for single product -->

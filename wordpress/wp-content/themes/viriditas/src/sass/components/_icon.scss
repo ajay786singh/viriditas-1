@@ -1,3 +1,15 @@
+.small-loader {
+	background:url(dist/images/loader-small.gif) no-repeat;
+	width:100%;
+	height:75px;
+}
+
+.loader {
+	background:url(dist/images/loader.gif) center center no-repeat;
+	width:100%;
+	height:200px;
+}
+
 .divider {
 	background: transparent url(dist/images/divider.png) no-repeat top center;
 	background-size: 80%;

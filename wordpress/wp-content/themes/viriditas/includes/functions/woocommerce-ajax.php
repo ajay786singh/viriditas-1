@@ -35,9 +35,13 @@ function load_products () {
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
 	$indication_id=$_POST['filter_type_indication'];
-	$sort_by_name=$_POST['sort_by_name'];
+	$sort_by=$_POST['sort_by'];
+	$order=$_POST['order'];
 	$paged = $_POST['paged'];
-	
+	$view_mode = $_POST['view_mode'];
+	if($view_mode=='') {
+		$view_mode='thumb_view';
+	}
 	$args=array(
 		'post_type' =>'product',
 		'orderby' => 'title',
@@ -45,10 +49,19 @@ function load_products () {
 		'paged'=>$paged,
 		'posts_per_page'=>12
 	);
-	// if($sort_by_name!=''){
-		// $args['orderby']='title';
-		// $args['order']=$sort_by_name;
-	// }
+	if($order !='') {
+		$args['order']=$order;
+	}else {
+		$args['order']='ASC';
+	}
+	if($sort_by!=''){
+		if($sort_by=='folk_name') {
+			$args['orderby']  = 'meta_value';
+			$args['meta_key'] = '_product_details_folk_name';
+		} else {
+			$args['orderby']=$sort_by;
+		}
+	}
 	$filter=array(
 		'product_cat'=>array_filter(array($cat_id)),
 		'body_system'=>array_filter(array($body_system_id)),
@@ -83,7 +96,7 @@ function load_products () {
 	$max_pages=$query->max_num_pages;
 	if($query->have_posts()){
 		$next = get_next_posts_link('Older', $max_pages);
-		echo '<ul>';
+		echo '<ul class="'.$view_mode.'">';
 		while($query->have_posts()):$query->the_post();
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">		
