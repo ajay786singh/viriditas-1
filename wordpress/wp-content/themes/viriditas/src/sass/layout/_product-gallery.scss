@@ -93,7 +93,23 @@
 				}
 			}
 		}
+		&.list_view {
+			li {
+				margin-bottom:50px;
+				@include media($bp-large) {
+					@include span-columns(12);
+					margin-right:0;
+				}
+				.product-img {
+					width:150px;
+					height:150px;
+					float:left;
+					margin-right:20px;
+				}
+			}
+		}
 	}
+	
 }
 
 .shop-header {
@@ -101,6 +117,7 @@
 	overflow: hidden;
     .heading {
         font-size: 1.2em;
+		float: left;
         margin-bottom: 0.5em;
 		text-transform:uppercase;
    }
@@ -110,9 +127,12 @@
 	padding: 10px 0;
 	overflow: hidden;
 	a {
-		background:$base-border-color;
-		color:$black;
+		background:$header-bg;
+		@include border-radius(5px);
+		color: $white;
+		display:block;
 		padding:10px 20px;
+		width:100%;
 	}
 }
 .back-to-results {
