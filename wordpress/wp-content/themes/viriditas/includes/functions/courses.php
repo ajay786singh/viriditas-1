@@ -4,20 +4,20 @@
 * $before_date represents posts published before date.
 */
 
-function past_posts($post_type='post',$before_date=false) {
+function past_courses() {
 	$args=array(
-		'post_type' => $post_type,
+		'post_type' => 'course',
 		'post_status' => 'publish',
 		'showposts' => '-1',
 	);
-	if($before_date!='') {
-		$args['date_query'] = array(
-			array(
-				'before' => $before_date,
-			),
-		);
-	}
-
+	$today = strtotime(date('F d, Y'));
+	$args['meta_query'] = array(
+		array(
+			'key'     => '_course_details_end_of_course',
+			'value'   => $today,
+			'compare' => '<',
+		),
+	);
 	$query = new WP_Query( $args );
 	if($query->have_posts()):
 	?>
@@ -51,6 +51,14 @@ function get_sidebar_courses(){
 			'post_type' => 'course',
 			'post_status' => 'publish',
 			'showposts' => '-1',
+		);		
+		$today = strtotime(date('F d, Y'));
+		$args['meta_query'] = array(
+			array(
+				'key'     => '_course_details_end_of_course',
+				'value'   => $today,
+				'compare' => '>=',
+			),
 		);
 		$tax='courses_type';
 		$courses_type = get_terms($tax, 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0');	
@@ -89,6 +97,14 @@ function get_courses() {
 		'post_type' => 'course',
 		'post_status' => 'publish',
 		'showposts' => '-1',
+	);	
+	$today = strtotime(date('F d, Y'));
+	$args['meta_query'] = array(
+		array(
+			'key'     => '_course_details_end_of_course',
+			'value'   => $today,
+			'compare' => '>=',
+		),
 	);
 	if($courses_type) {		
 		foreach($courses_type as $course_type) {

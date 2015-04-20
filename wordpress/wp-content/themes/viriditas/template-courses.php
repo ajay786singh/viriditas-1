@@ -8,11 +8,9 @@ get_header(); ?>
     <div class="container">
 		<?php get_sidebar('courses');?>
 		<div class="column-7">
-				<?php get_courses();?>
 				<?php 
-					$post_type='course';
-					$before_date = date('F d, Y');
-					past_posts($post_type,$before_date);
+					get_courses();
+					past_courses();
 				?>
 		</div>	
 	</div>
