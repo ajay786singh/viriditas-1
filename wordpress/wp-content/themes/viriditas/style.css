@@ -2239,6 +2239,10 @@ footer input[type="text"], footer input[type="email"] {
 .appointments-form {
   overflow: hidden; }
 
+.sidebar input {
+  margin-top: 1em;
+  margin-bottom: 1em; }
+
 button {
   -webkit-appearance: none;
   -moz-appearance: none;

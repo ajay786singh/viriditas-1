@@ -35,6 +35,7 @@ function load_products () {
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
 	$indication_id=$_POST['filter_type_indication'];
+	$search_folk=$_POST['search_folk'];
 	$sort_by=$_POST['sort_by'];
 	$order=$_POST['order'];
 	$paged = $_POST['paged'];
@@ -62,6 +63,17 @@ function load_products () {
 			$args['orderby']=$sort_by;
 		}
 	}
+	
+	if($search_folk !='') {
+		$args['meta_query'] = array(
+            array(
+               'key' => '_product_details_folk_name',
+               'value' => $search_folk,
+               'compare' => 'LIKE'
+            )
+         );
+	}
+	
 	$filter=array(
 		'product_cat'=>array_filter(array($cat_id)),
 		'body_system'=>array_filter(array($body_system_id)),
