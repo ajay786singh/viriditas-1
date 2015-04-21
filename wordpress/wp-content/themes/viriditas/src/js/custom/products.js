@@ -78,6 +78,7 @@ function toParams(searchUrl) {
             indication   : getParameterByName('pi'),
 			action 		 : getParameterByName('pa'),
 			view_mode    : getParameterByName('vm'),
+			search_folk  : getParameterByName('search_folk'),
 			sort_by : getParameterByName('sort_by'),
 			order : getParameterByName('order'),
 			loader    	 : $('.message')
@@ -92,6 +93,7 @@ function toParams(searchUrl) {
 				'filter_type_body_system':settings.body_system,
 				'filter_type_action':settings.action,
 				'filter_type_indication':settings.indication,
+				'search_folk':settings.search_folk,
 				'sort_by':settings.sort_by,
 				'order':settings.order,
 				'view_mode':settings.view_mode,
@@ -332,8 +334,24 @@ jQuery(document).ready(function($){
 			window.history.pushState({path:url},'',url);	
 			product_container.find('ul').removeAttr('class');
 			product_container.find('ul').addClass(id);
-			
 			return false;
 		});	
+		$('#by_folk_name').keypress(function (e) {
+			if(e.keyCode == '13'){
+				var keyword=$(this).val();
+				if(keyword !='') {
+					var url = replaceParam('search_folk', keyword);
+					window.history.pushState({path:url},'',url);	
+					product_container.empty();
+					product_container.showProducts();
+				}else {
+					var url=removeURLParameter('search_folk');					
+					window.history.pushState({path:url},'',url);
+					product_container.empty();
+					product_container.showProducts();
+				}
+				e.preventDefault();
+			}
+		});
 	}	
 });
