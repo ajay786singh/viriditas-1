@@ -25,6 +25,8 @@ class WC_Meta_Box_Order_Notes {
 
 		$args = array(
 			'post_id'   => $post->ID,
+			'orderby'   => 'comment_ID',
+			'order'     => 'DESC',
 			'approve'   => 'approve',
 			'type'      => 'order_note'
 		);
@@ -58,7 +60,7 @@ class WC_Meta_Box_Order_Notes {
 			}
 
 		} else {
-			echo '<li>' . __( 'There are no notes for this order yet.', 'woocommerce' ) . '</li>';
+			echo '<li>' . __( 'There are no notes yet.', 'woocommerce' ) . '</li>';
 		}
 
 		echo '</ul>';
