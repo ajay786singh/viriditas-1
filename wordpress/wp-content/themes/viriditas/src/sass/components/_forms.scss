@@ -187,3 +187,8 @@ input.search-box {
 	font-size:0.8em;
 	width:200px;
 }
+
+li.gfield+li.gfield.gfield_creditcard_warning {
+	border:1px solid $error-border-color;
+	padding:10px;
+}

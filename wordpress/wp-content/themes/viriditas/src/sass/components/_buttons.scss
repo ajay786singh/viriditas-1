@@ -79,3 +79,9 @@ input[type="button"] {
 		text-transform:uppercase;
 	}
 }
+
+.gform_wrapper {
+	.gform_button {
+		@extend .button;
+	}
+}
