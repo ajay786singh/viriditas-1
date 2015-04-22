@@ -24,7 +24,7 @@ get_header( 'shop' );
 					<div class="filter-side">	
 						<ul>
 							<li>
-								<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['s']) { echo $_REQUEST['s'];} ?>" placeholder="Please enter product name.." />
+								<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['s']) { echo $_REQUEST['s'];} ?>" placeholder="Search products" />
 							</li>
 							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
 							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
@@ -32,6 +32,25 @@ get_header( 'shop' );
 								<a href="#" class="order_by" id="asc">ASC</a>
 								<a href="#" class="order_by" id="desc"> | DESC</a>
 							</li>
+							<li>
+								<label>Browse by Name:</label>
+								<?php 
+									$alphas = range('A', 'Z');
+									echo "<select name='sort_by_alpha' class='sort_by_alpha'>";
+									if($_REQUEST['sort_by_alpha']=='') {
+										echo "<option value=''>--</option>";
+									}
+									foreach($alphas as $alphabet) {
+										if($_REQUEST['sort_by_alpha']==lcfirst($alphabet)) {
+											echo "<option value='".lcfirst($alphabet)."' selected>".$alphabet."</option>";
+										}else {
+											echo "<option value='".lcfirst($alphabet)."'>".$alphabet."</option>";
+										}
+									}
+									echo "</select>";
+								?>
+							</li>
+							
 							<li>
 								<a href="#" class="switch_view" id="thumb_view"><i class="fa fa-th-large"></i></a>
 								<a href="#" class="switch_view" id="list_view"><i class="fa fa-list"></i></a>

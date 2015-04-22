@@ -30,13 +30,14 @@ function get_product_categories($exclude=false) {
 * Function to get all products
 */
 function load_products () {
-	global $wp_query;
+	global $wp_query,$wpdb;
 	$cat_id=$_POST['filter_type_category'];
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
 	$indication_id=$_POST['filter_type_indication'];
 	$keyword=$_POST['search_folk'];
 	$sort_by=$_POST['sort_by'];
+	$sort_by_alpha=$_POST['sort_by_alpha'];
 	$order=$_POST['order'];
 	$paged = $_POST['paged'];
 	$view_mode = $_POST['view_mode'];
@@ -73,6 +74,20 @@ function load_products () {
                // 'compare' => 'LIKE'
             // )
         // );
+	}
+	if($sort_by_alpha !='') {
+		//$args['s'] = $sort_by_alpha;
+		$postids = $wpdb->get_col("
+			SELECT p.ID
+			FROM $wpdb->posts p
+			WHERE p.post_title REGEXP '^" . $wpdb->escape($sort_by_alpha) . "'
+			AND p.post_status = 'publish' 
+			AND p.post_type = 'product'
+			ORDER BY p.post_title ASC"
+		);
+		if($postids) {
+			$args['post__in']=$postids;
+		}
 	}
 	
 	$filter=array(

@@ -1815,7 +1815,8 @@ section[role="actions"] ul li a {
     list-style: none;
     margin-bottom: 0;
     margin-top: 8px;
-    overflow: hidden; }
+    overflow: hidden;
+    padding-left: 0; }
     .filter-side ul li {
       float: left;
       margin-left: 0px;
@@ -1831,6 +1832,15 @@ section[role="actions"] ul li a {
         padding-right: 0em; }
         .filter-side ul li:last-child a:nth-child(2) {
           margin-left: 5px; }
+      .filter-side ul li label {
+        float: left; }
+      .filter-side ul li select {
+        float: left;
+        width: 40px;
+        margin-left: 5px;
+        font-size: 0.8em;
+        padding: 2px 0;
+        margin-bottom: 0; }
 
 .product-list ul {
   display: block;
@@ -2248,7 +2258,7 @@ footer input[type="text"], footer input[type="email"] {
 
 input.search-box {
   font-size: 0.8em;
-  width: 200px; }
+  width: 150px; }
 
 li.gfield + li.gfield.gfield_creditcard_warning {
   border: 1px solid #790000;
