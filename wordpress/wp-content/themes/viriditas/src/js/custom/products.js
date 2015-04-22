@@ -78,7 +78,7 @@ function toParams(searchUrl) {
             indication   : getParameterByName('pi'),
 			action 		 : getParameterByName('pa'),
 			view_mode    : getParameterByName('vm'),
-			search_folk  : getParameterByName('search_folk'),
+			search_folk  : getParameterByName('s'),
 			sort_by : getParameterByName('sort_by'),
 			order : getParameterByName('order'),
 			loader    	 : $('.message')
@@ -340,12 +340,12 @@ jQuery(document).ready(function($){
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
 				if(keyword !='') {
-					var url = replaceParam('search_folk', keyword);
+					var url = replaceParam('s', keyword);
 					window.history.pushState({path:url},'',url);	
 					product_container.empty();
 					product_container.showProducts();
 				}else {
-					var url=removeURLParameter('search_folk');					
+					var url=removeURLParameter('s');					
 					window.history.pushState({path:url},'',url);
 					product_container.empty();
 					product_container.showProducts();
