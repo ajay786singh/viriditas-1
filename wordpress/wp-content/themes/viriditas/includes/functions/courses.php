@@ -120,16 +120,6 @@ function get_courses() {
 					'terms' => array($course_type->term_id)
 				)
 			);			
-			//_course_details_end_of_course
-			// $before_date = date('F d, Y');
-			// $args['date_query'] = array(
-				// array(
-					// 'after' => $before_date,
-				// ),
-			// );
-			// echo "<pre>";
-			// print_r($args);
-			// echo "</pre>";
 			$query = new WP_Query($args);
 			if($query->have_posts()):
 	?>
@@ -137,6 +127,7 @@ function get_courses() {
 				<h3><?php echo $course;?></h3>
 				<?php 
 					if($register_on_off['_register_on_off']=='on') {
+					$course_register_url=get_bloginfo('url').'/course-registration?form=8';	
 				?>
 				<a href="<?php echo $course_register_url;?>" class="button">Register Now</a>
 				<?php 
@@ -160,7 +151,11 @@ function get_courses() {
 					$schedule       = get_post_meta($id, '_course_details_schedule', true);
 					$register_open       = get_post_meta($id, '_course_details_register_open', true);
 					$register_form_id       = get_post_meta($id, '_course_details_register_form_id', true);
-					$course_register_url=get_bloginfo('url').'/course-registration?form='.$register_form_id;
+					if($register_form_id !='') {
+						$course_register_url = get_bloginfo('url').'/course-registration?form='.$register_form_id;
+					}else {
+						$course_register_url="#";
+					}
 			?>
 					<div class="post-course" id="<?php echo $row_id;?>">
 						<?php the_title("<h4>","</h4>");?>
