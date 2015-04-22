@@ -65,13 +65,14 @@ function load_products () {
 	}
 	
 	if($keyword !='') {
-		$args['meta_query'] = array(
-            array(
-               'key' => '_product_details_folk_name',
-               'value' => $keyword,
-               'compare' => 'LIKE'
-            )
-        );
+		$args['s'] = $keyword;
+		// $args['meta_query'] = array(
+            // array(
+               // 'key' => '_product_details_folk_name',
+               // 'value' => $keyword,
+               // 'compare' => 'LIKE'
+            // )
+        // );
 	}
 	
 	$filter=array(

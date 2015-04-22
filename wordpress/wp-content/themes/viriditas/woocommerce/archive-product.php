@@ -23,14 +23,19 @@ get_header( 'shop' );
 					<h6 class="heading">Shop</h6>
 					<div class="filter-side">	
 						<ul>
+							<li>
+								<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['s']) { echo $_REQUEST['s'];} ?>" placeholder="Please enter product name.." />
+							</li>
 							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
 							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
 							<li>
 								<a href="#" class="order_by" id="asc">ASC</a>
 								<a href="#" class="order_by" id="desc"> | DESC</a>
 							</li>
-							<li><a href="#" class="switch_view" id="thumb_view"><i class="fa fa-th-large"></i></a></li>
-							<li><a href="#" class="switch_view" id="list_view"><i class="fa fa-list"></i></a></li>
+							<li>
+								<a href="#" class="switch_view" id="thumb_view"><i class="fa fa-th-large"></i></a>
+								<a href="#" class="switch_view" id="list_view"><i class="fa fa-list"></i></a>
+							</li>
 						</ul>
 					</div>
 				</div>
