@@ -1819,17 +1819,18 @@ section[role="actions"] ul li a {
     .filter-side ul li {
       float: left;
       margin-left: 0px;
-      margin-bottom: 0; }
-      .filter-side ul li:nth-child(1) {
-        margin-right: 0.5em;
-        padding-right: 0.5em;
-        border-right: 1px solid #b8b8b8; }
-      .filter-side ul li:nth-child(2), .filter-side ul li:nth-child(3) {
-        margin-right: 0.5em;
-        padding-right: 0.5em;
-        border-right: 1px solid #b8b8b8; }
+      margin-bottom: 0;
+      margin-right: 0.5em;
+      padding-right: 0.5em;
+      border-right: 1px solid #b8b8b8; }
+      .filter-side ul li:first-child {
+        border-right: none; }
       .filter-side ul li:last-child {
-        margin-left: 10px; }
+        border-right: none;
+        margin-right: 0em;
+        padding-right: 0em; }
+        .filter-side ul li:last-child a:nth-child(2) {
+          margin-left: 5px; }
 
 .product-list ul {
   display: block;
@@ -2245,9 +2246,9 @@ footer input[type="text"], footer input[type="email"] {
 .appointments-form {
   overflow: hidden; }
 
-.sidebar input {
-  margin-top: 1em;
-  margin-bottom: 1em; }
+input.search-box {
+  font-size: 0.8em;
+  width: 200px; }
 
 button {
   -webkit-appearance: none;
