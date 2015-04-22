@@ -48,6 +48,7 @@ section[role="actions"] {
 		margin-bottom: 0;
 		margin-top: 8px;
 		overflow: hidden;
+		padding-left: 0;
 		li {
 			float:left;
 			margin-left:0px;
@@ -65,6 +66,17 @@ section[role="actions"] {
 				& a:nth-child(2) {
 					margin-left: 5px;
 				}	
+			}
+			label {
+				float:left;
+			}
+			select {
+				float:left;
+				width:40px;
+				margin-left:5px;
+				font-size:0.8em;
+				padding:2px 0;
+				margin-bottom:0;
 			}
 		}
 	}
