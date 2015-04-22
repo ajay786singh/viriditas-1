@@ -23,8 +23,8 @@ get_header( 'shop' );
 					<h6 class="heading">Shop</h6>
 					<div class="filter-side">	
 						<ul>
-							<li><a href="#" class="sort_by" id="title">Sort by Title</a></li>
-							<li><a href="#" class="sort_by" style="display:none;" id="folk_name">Sort by Folk Name</a></li>
+							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
+							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
 							<li>
 								<a href="#" class="order_by" id="asc">ASC</a>
 								<a href="#" class="order_by" id="desc"> | DESC</a>

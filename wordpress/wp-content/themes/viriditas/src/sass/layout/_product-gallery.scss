@@ -9,6 +9,10 @@
 		padding-left: 0px;
 		position: relative;
 		padding-bottom: 0px;
+		margin-top:0;
+		&:nth-of-type(1) {
+			margin-top:1.5em;
+		}
 		li {
 			@include row;
 			@include omega;
@@ -24,7 +28,7 @@
 			&:nth-child(3n) {
 				margin-right: 0;
 			}
-			margin-bottom: 30px;
+			margin-bottom: 20px;
 			margin-left: 0;
 			h6.product-title {
 				font-size: em(18);
@@ -94,18 +98,21 @@
 			}
 		}
 		&.list_view {
+			&:nth-of-type(1) {
+				margin-top:0.5em;
+			}
 			li {
 				height:0;
-				margin-bottom:50px;
+				margin-bottom:35px;
 				@include media($bp-large) {
 					@include span-columns(12);
 					margin-right:0;
 				}
+				.product-title {
+					min-height:1px;
+					padding-bottom:0;
+				}
 				.product-img {
-					/*width:150px;
-					height:150px;
-					float:left;
-					margin-right:20px;*/
 					display:none;
 				}
 				.price {
@@ -131,6 +138,9 @@
 	text-align: center;
 	padding: 10px 0;
 	overflow: hidden;
+	&.list_view_mode {
+		margin-top:50px;
+	}
 	a {
 		background:$header-bg;
 		@include border-radius(5px);
