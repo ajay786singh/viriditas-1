@@ -28,12 +28,12 @@ get_header( 'shop' );
 							</li>
 							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
 							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
-							<li>
+							<li style="display:none;">
 								<a href="#" class="order_by" id="asc">ASC</a>
 								<a href="#" class="order_by" id="desc"> | DESC</a>
 							</li>
 							<li>
-								<label>Browse by Name:</label>
+								<label>Alphabetical:</label>
 								<?php 
 									$alphas = range('A', 'Z');
 									echo "<select name='sort_by_alpha' class='sort_by_alpha'>";
