@@ -1150,7 +1150,7 @@ body.mm-menu-open {
   position: relative;
   width: 100%;
   height: 130px;
-  background-color: #52335c; }
+  background-color: #3a3877; }
 
 .mm-menu__title {
   position: absolute;
@@ -1958,7 +1958,8 @@ section[role="actions"] ul li a {
 
 .shop-header {
   border-bottom: 1px solid #b8b8b8;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative; }
   .shop-header .heading {
     font-size: 1.2em;
     float: left;
@@ -1994,6 +1995,22 @@ section[role="actions"] ul li a {
     position: absolute;
     top: 9px; }
 
+.single-product-content .product_title {
+  display: none; }
+.single-product-content .product_meta {
+  display: none; }
+.single-product-content .price del {
+  display: block; }
+.single-product-content .price ins {
+  display: block; }
+.single-product-content td {
+  vertical-align: top; }
+  .single-product-content td label {
+    font-weight: bold; }
+.single-product-content #size {
+  margin-left: 20px;
+  width: 90px; }
+
 footer {
   background: url(dist/images/footer-bg.jpg);
   background-repeat: no-repeat;
@@ -2016,6 +2033,8 @@ footer {
   margin-bottom: 4em; }
   .faq-content .accordion, .single-product-content .accordion {
     margin-bottom: 1em; }
+  .single-product-content .accordion {
+    margin-top: 1em; }
   .accordion .accordion-panel .accordion-panel-header {
     border-bottom: 2px solid #b8b8b8;
     cursor: pointer;
@@ -2268,6 +2287,34 @@ li.gfield + li.gfield.gfield_creditcard_warning {
   float: left;
   margin-right: 10px; }
 
+.woocommerce .qty {
+  width: 65px;
+  float: left;
+  overflow: hidden;
+  padding: 0px 0 0 7px;
+  line-height: 1.5em;
+  font-size: 1em;
+  text-align: center; }
+.woocommerce .cart_item {
+  border-top: 1px solid #b8b8b8; }
+.woocommerce .shop_table {
+  width: 100%; }
+.woocommerce .coupon {
+  overflow: hidden; }
+  .woocommerce .coupon label {
+    float: left;
+    margin-top: 5px;
+    margin-right: 10px; }
+  .woocommerce .coupon .input-text {
+    float: left;
+    width: 200px;
+    margin-right: 15px; }
+.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: normal;
+  padding: 10px 25px; }
+
 button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -2471,7 +2518,7 @@ select[data-dkcacheid] {
   width: 100%;
   height: 75px; }
 
-.loader {
+.loading {
   background: url(dist/images/loader.gif) center center no-repeat;
   width: 100%;
   height: 200px; }
@@ -2488,6 +2535,16 @@ select[data-dkcacheid] {
       padding-top: 235px; } }
   .home .divider {
     margin-bottom: 0px; }
+
+.sale:before {
+  content: '';
+  background: transparent url(dist/images/sale-icon.png) no-repeat;
+  left: 0;
+  height: 75px;
+  width: 75px;
+  position: absolute;
+  top: 0;
+  z-index: 1; }
 
 #pagination {
   padding-top: 20px; }
