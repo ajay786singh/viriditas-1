@@ -4,7 +4,7 @@
 	height:75px;
 }
 
-.loader {
+.loading {
 	background:url(dist/images/loader.gif) center center no-repeat;
 	width:100%;
 	height:200px;
@@ -23,4 +23,17 @@
 	.home & {
 		margin-bottom: 0px;
 	} 
+}
+
+.sale {
+	&:before {
+		content:'';
+		background: transparent url(dist/images/sale-icon.png) no-repeat;
+		left: 0;
+		height:75px;
+		width:75px;
+		position:absolute;
+		top: 0;
+		z-index: 1;
+	}
 }

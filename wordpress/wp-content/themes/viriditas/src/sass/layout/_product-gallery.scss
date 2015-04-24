@@ -127,6 +127,7 @@
 .shop-header {
     border-bottom: 1px solid $base-border-color;
 	overflow: hidden;
+	position:relative;
     .heading {
         font-size: 1.2em;
 		float: left;
@@ -158,5 +159,32 @@
 		left: 0;
 		position: absolute;
 		top: 9px;
+	}
+}
+
+.single-product-content {
+	.product_title {
+		display:none;
+	}
+	.product_meta {
+		display:none;
+	}
+	.price {
+		del {
+			display:block;
+		}
+		ins {
+			display:block;
+		}
+	}
+	td {
+		vertical-align:top;
+		label {
+			font-weight:bold;
+		}
+	}
+	#size {
+		margin-left:20px;
+		width: 90px;
 	}
 }

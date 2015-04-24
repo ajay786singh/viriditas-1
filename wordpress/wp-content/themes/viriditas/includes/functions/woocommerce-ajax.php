@@ -1,5 +1,5 @@
 <?php
-add_filter( 'woocommerce_enqueue_styles', '__return_false' );
+//add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
 /*
 * Function to get prodcut categories
@@ -128,62 +128,8 @@ function load_products () {
 		while($query->have_posts()):$query->the_post();
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">		
-			<?php //get_template_part( 'woocommerce/content-product', 'woocommerce'); 
-						
-		global $product, $woocommerce_loop, $post;
-
-		// Store loop count we're currently on
-		if ( empty( $woocommerce_loop['loop'] ) )
-			$woocommerce_loop['loop'] = 0;
-
-		// Store column count for displaying the grid
-		if ( empty( $woocommerce_loop['columns'] ) )
-			$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
-
-		// Ensure visibility
-		if ( ! $product || ! $product->is_visible() )
-			return;
-
-		// Increase loop count
-		$woocommerce_loop['loop']++;
-
-		// Extra post classes
-		$classes = array();
-		if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 == $woocommerce_loop['columns'] )
-			$classes[] = 'first';
-		if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
-			$classes[] = 'last';
-		?>
-			<div <?php post_class( $classes ); ?>>
-				<?php	$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'product-thumb' );
-				$img = $thumb['0']; 
-				if($img == '') {
-					$img=get_bloginfo('template_url')."/dist/images/product_default.jpg";
-				}
-				?>
-				<a class="product-image" rel="<?php the_ID();?>" href="<?php the_permalink();?>">
-					<div class="product-img" style="background-image:url(<?php echo $img;?>);">
-						<img src="<?php echo $img;?>" />		
-					</div>
-				</a>
-				<div class="product-meta">
-					<div class="product-title">    
-						<div class="title">
-							<?php 
-								$title=get_the_title();
-								if($sort_by!='' && $sort_by == 'folk_name') {
-									$title = get_post_meta(get_the_ID(),'_product_details_folk_name',true);
-									if($title == '') {
-										$title=get_the_title();
-									}
-								}
-							?>
-							<a href="<?php the_permalink();?>" rel="<?php the_ID();?>"><?php echo $title; ?></a>
-						</div>
-						<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
-					</div>
-				</div>
-			</div>
+			<?php get_template_part( 'woocommerce/content-product', 'woocommerce'); ?>
+					
 		</li>
 	<?php
 		endwhile;

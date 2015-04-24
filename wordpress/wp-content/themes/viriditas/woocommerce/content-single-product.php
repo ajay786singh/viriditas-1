@@ -12,6 +12,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $product;
 ?>
+<div class="column-9">
 <div class="shop-header">
 	<h6 class="heading"><a href="#" class="back-to-results">Back to Results</a></h6>
 </div>
@@ -46,13 +47,13 @@ global $product;
 			$thumb_url = wp_get_attachment_image_src($thumb_id,'full', true);
 			$img = $thumb_url[0];
 			?>
-			<div class="secondary images">
+			<div class="secondary">
 				<img src="<?php echo $img;?>" class="attachment-shop_single wp-post-image" alt="beef osso bucco" title="Beef Osso Bucco">
 			</div>
 			<?php
 		}else {
 	?>
-		<div class="secondary images">
+		<div class="secondary">
 			<?php echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<img src="%s" alt="Placeholder" />', woocommerce_placeholder_img_src() ), $post->ID ); ?>
 		</div>
 	<?php  } ?>
@@ -66,7 +67,9 @@ global $product;
 				<a href="<?php echo get_permalink($monograph[0]);?>" class="view-monograph">view monograph</a>
 				<?php } ?>
 			</div>
-			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
+			<?php 
+				do_action( 'woocommerce_single_product_summary' );
+			?>
 			<?php 
 				if(get_the_content()) { 
 					echo "<hr>";
@@ -166,3 +169,4 @@ global $product;
 </div>
 </div>
 <?php do_action( 'woocommerce_after_single_product' ); ?>
+</div>
