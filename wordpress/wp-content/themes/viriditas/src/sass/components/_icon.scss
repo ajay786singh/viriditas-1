@@ -29,6 +29,9 @@
 	&:before {
 		content:'';
 		background: transparent url(dist/images/sale-icon.png) no-repeat;
+		.list_view & {
+			background: none;
+		}
 		left: 0;
 		height:75px;
 		width:75px;
