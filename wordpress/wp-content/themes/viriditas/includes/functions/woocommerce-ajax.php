@@ -127,9 +127,8 @@ function load_products () {
 		echo '<ul class="'.$view_mode.'">';
 		while($query->have_posts()):$query->the_post();
 	?>	
-		<li id="product-<?php echo get_the_ID();?>">		
+		<li class="equal-height-item" id="product-<?php echo get_the_ID();?>">		
 			<?php get_template_part( 'woocommerce/content-product', 'woocommerce'); ?>
-					
 		</li>
 	<?php
 		endwhile;
