@@ -109,7 +109,9 @@ function toParams(searchUrl) {
 				if(html!='' && html!=1) {
 					settings.container.append(html);
 					//settings.container.showProduct();
-					$('.product-list ul li').equalHeights();	
+					if(settings.view_mode!='list_view') {
+						$('.product-list ul li').equalHeights();	
+					}
 					$('.load-more').loadMore();
 				} else if(html==1) {
 					settings.loader.html("<h6>No records found.</h6>");

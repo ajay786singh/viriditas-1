@@ -2545,6 +2545,8 @@ select[data-dkcacheid] {
   position: absolute;
   top: 0;
   z-index: 1; }
+  .list_view .sale:before {
+    background: none; }
 
 #pagination {
   padding-top: 20px; }
