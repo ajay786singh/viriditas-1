@@ -109,8 +109,8 @@ function toParams(searchUrl) {
 				if(html!='' && html!=1) {
 					settings.container.append(html);
 					//settings.container.showProduct();
-					if(settings.view_mode!='list_view') {
-						$('.product-list ul li').equalHeights();	
+					if(settings.view_mode!='' && settings.view_mode!='list_view') {
+						$('.equal-height-item').equalHeights();	
 					}
 					$('.load-more').loadMore();
 				} else if(html==1) {
@@ -346,11 +346,14 @@ jQuery(document).ready(function($){
 				}
 			});
 			$(this).addClass('active');
-			var id=$(this).attr('id');			
+			$('.equal-height-item').equalHeights();
+			var id=$(this).attr('id');
 			var url = replaceParam('vm', id);
 			window.history.pushState({path:url},'',url);	
 			product_container.find('ul').removeAttr('class');
 			product_container.find('ul').addClass(id);
+			product_container.empty();
+			product_container.showProducts();
 			return false;
 		});	
 		$('#by_folk_name').keypress(function (e) {
