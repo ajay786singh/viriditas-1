@@ -2317,6 +2317,27 @@ li.gfield + li.gfield.gfield_creditcard_warning {
   font-weight: normal;
   padding: 10px 25px; }
 
+.gform_wrapper form .top_label li.gfield {
+  margin-bottom: 25px; }
+  .gform_wrapper form .top_label li.gfield:last-child {
+    margin-bottom: 0px; }
+.gform_wrapper form .top_label .gfield_label {
+  color: #3d3777;
+  display: block;
+  font-weight: normal;
+  margin-bottom: 0; }
+.gform_wrapper form .top_label .name_first input[type="text"] {
+  margin-bottom: 0; }
+.gform_wrapper form .top_label .name_first label {
+  display: none; }
+.gform_wrapper form .top_label .gfield .gfield_checkbox li label {
+  color: #3d3777;
+  font-weight: normal; }
+.gform_wrapper form .top_label .gfield .gfield_checkbox li input[type=checkbox] {
+  margin-top: 5px; }
+  .gform_wrapper form .top_label .gfield .gfield_checkbox li input[type=checkbox]:checked + label {
+    font-weight: normal; }
+
 button {
   -webkit-appearance: none;
   -moz-appearance: none;
