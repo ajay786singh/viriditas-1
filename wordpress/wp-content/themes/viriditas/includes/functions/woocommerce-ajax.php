@@ -9,11 +9,11 @@ function get_product_categories($exclude=false) {
 	$pc=$_REQUEST['pc'];
 	$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0&exclude='.$exclude);
 	if($product_categories) {	
-		$result='<div class="shop-header">';
-			$result.='<h6 class="heading">Filter by category</h6>';
-		$result.='</div>';
+		//$result='<div class="shop-header">';
+			//$result.='<h6 class="heading">Filter by category</h6>';
+		//$result.='</div>';
 		$result.='<select class="by-category">';
-		$result.='<option value="" class="hidden-option">Select category</option>';
+		$result.='<option value="" class="hidden-option">PRODUCT CATEGORY</option>';
 			foreach($product_categories as $product_category) {
 				if($pc!='' && $pc== $product_category->term_id) {
 					$result.="<option selected value='".$product_category->term_id."'>".$product_category->name."</option>";
@@ -282,11 +282,11 @@ function get_product_terms() {
 	$terms = wp_get_object_terms( $objects_ids, $taxonomy );
 		if($terms) {
 			$result='<div class="filter filter-'.$taxonomy.'">';
-			$result.='<div class="shop-header">';
-			$result.='<h6 class="heading">Filter by '.$taxonomy_name.'</h6>';
-			$result.='</div>';
+			// $result.='<div class="shop-header">';
+			// $result.='<h6 class="heading">Filter by '.$taxonomy_name.'</h6>';
+			// $result.='</div>';
 			$result.='<select class="by-'.$taxonomy.'">';
-				$result.='<option value="" class="hidden-option">Select '.$taxonomy_name.'</option>';
+				$result.='<option value="" class="hidden-option">FILTER BY '.strtoupper($taxonomy_name).'</option>';
 			foreach($terms as $term) {
 				if($taxonomy=='body_system' && $pb!='') {
 					if($pb==$term->term_id) {

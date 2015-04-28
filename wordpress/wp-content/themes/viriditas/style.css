@@ -2395,7 +2395,7 @@ input[type="button"] {
   cursor: pointer;
   display: block;
   line-height: 1.5em;
-  margin-top: 0.75em;
+  margin-top: 0em;
   margin-bottom: 0.75em;
   position: relative;
   width: 100%; }
@@ -2414,8 +2414,7 @@ input[type="button"] {
   .dk-select.dk-select-open-up .dk-select-options {
     display: block; }
   .dk-select.dk-select-open-down .dk-select-options {
-    display: block;
-    max-height: 10em; }
+    display: block; }
 
 .dk-selected {
   font-family: "Playfair Display", serif;
@@ -2458,7 +2457,8 @@ input[type="button"] {
   border-bottom: 1px solid #3d3777; }
 
 .dk-option {
-  padding: 0.5em 0 0; }
+  padding: 0.5em 0 0;
+  margin-bottom: 0; }
 
 .dk-select-open-up .dk-selected:after, .dk-select-open-down .dk-selected:after {
   border-left: 10px solid transparent;
