@@ -450,7 +450,7 @@ h1 {
   font-weight: normal; }
   @media screen and (min-width: 50em) {
     h1 {
-      font-size: 3.125em;
+      font-size: 4.375em;
       margin-bottom: 0.3636em; } }
   .single h1 {
     text-align: center; }
@@ -2343,9 +2343,8 @@ button {
     background: none;
     text-decoration: none; }
     .banner-content .button:hover, .banner-content input[type="button"]:hover, .banner-content .appointments-form input[type="submit"]:hover, .appointments-form .banner-content input[type="submit"]:hover, .banner-content #login-form input[type="submit"]:hover, #login-form .banner-content input[type="submit"]:hover, .banner-content .gform_wrapper .gform_button:hover, .gform_wrapper .banner-content .gform_button:hover {
-      background: #403a66;
-      color: white;
-      border-color: #403a66; }
+      background: white;
+      color: #311f39; }
 
 input[type="button"] {
   border: none;
