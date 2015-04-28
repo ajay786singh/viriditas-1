@@ -159,7 +159,14 @@ global $product;
 				<div class="accordion-panel">
 					<h5 class="accordion-panel-header">Questions? Contact Us</h5>
 					<div class="accordion-panel-content">
-						
+						<?php 
+							$contact_form_id=9;
+							$display_title = false;
+							$display_description = false;
+							$display_inactive = false;
+							$field_values = null; 
+							$ajax = true;
+							gravity_form($contact_form_id, $display_title, $display_description, $display_inactive, $field_values, $ajax); ?>
 					</div>
 				</div>
 			</div>
