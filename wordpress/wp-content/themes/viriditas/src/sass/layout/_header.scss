@@ -24,7 +24,7 @@ header {
 	&.active-header {
 		background-color: $header-bg;
 		.header-content {
-			border-bottom:2px solid $header-active-border;
+			border-bottom:none;
 		}	
 	}
 }

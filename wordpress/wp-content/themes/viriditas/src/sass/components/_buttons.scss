@@ -25,9 +25,8 @@ button {
 		background:none;
 		text-decoration: none;
 		&:hover {
-			background: $button-bg-hover;
-			color:$white;
-			border-color:$button-bg-hover;
+			background: $white;
+			color:$light-purple;
 		}
 	}
 }

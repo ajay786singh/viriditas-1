@@ -450,7 +450,7 @@ h1 {
   font-weight: normal; }
   @media screen and (min-width: 50em) {
     h1 {
-      font-size: 3.125em;
+      font-size: 4.375em;
       margin-bottom: 0.3636em; } }
   .single h1 {
     text-align: center; }
@@ -663,9 +663,9 @@ footer .copyright p {
       .main-menu-desktop ul li a {
         color: white; }
         .main-menu-desktop ul li a:hover {
-          color: #999999; }
+          color: #99BC5B; }
       .main-menu-desktop ul li.current-menu-item a {
-        color: #999999;
+        color: #99BC5B;
         font-weight: 400; }
     .main-menu-desktop ul:nth-child(1) {
       margin-top: 1.5em; }
@@ -736,7 +736,7 @@ header .logo a {
       overflow: hidden;
       margin: 4px 0;
       padding: 12px;
-      color: #999999;
+      color: #99BC5B;
       text-decoration: none;
       -webkit-transition: background 0.5s, color 0.5s;
       -moz-transition: background 0.5s, color 0.5s;
@@ -1036,7 +1036,7 @@ header {
   header.active-header {
     background-color: #3a3877; }
     header.active-header .header-content {
-      border-bottom: 2px solid #52335c; }
+      border-bottom: none; }
 
 .main-menu-desktop {
   display: none; }
@@ -2343,9 +2343,8 @@ button {
     background: none;
     text-decoration: none; }
     .banner-content .button:hover, .banner-content input[type="button"]:hover, .banner-content .appointments-form input[type="submit"]:hover, .appointments-form .banner-content input[type="submit"]:hover, .banner-content #login-form input[type="submit"]:hover, #login-form .banner-content input[type="submit"]:hover, .banner-content .gform_wrapper .gform_button:hover, .gform_wrapper .banner-content .gform_button:hover {
-      background: #403a66;
-      color: white;
-      border-color: #403a66; }
+      background: white;
+      color: #311f39; }
 
 input[type="button"] {
   border: none;

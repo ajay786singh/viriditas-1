@@ -30,7 +30,7 @@ h1 {
 	line-height: 1.0909em;
 	font-weight: normal;
     @include media($bp-large) {
-        font-size: em(50px);
+        font-size: em(70px);
         margin-bottom: 0.3636em;
     }
     .single & {
