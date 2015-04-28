@@ -750,6 +750,8 @@ header .logo a {
     color: #666666; }
     .contact .secondary a.button, .contact .secondary .gform_wrapper a.gform_button, .gform_wrapper .contact .secondary a.gform_button {
       color: white; }
+    .contact .secondary a.view-map {
+      margin-left: 8px; }
   .contact .secondary p {
     margin: 0; }
     .contact .secondary p span {

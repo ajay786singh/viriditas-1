@@ -5,9 +5,12 @@
     <div class="container contact">
         <div class="banner-content">
 			<div class="secondary">
+				<?php 
+					$map_url="https://www.google.co.in/maps/place/2775+Dundas+St+W,+Toronto,+ON+M6P+1Y4,+Canada/@43.6652469,-79.4618064,17z/data=!3m1!4b1!4m2!3m1!1s0x882b3422899970ad:0xf3a8f7a3d3db7a62?hl=en";
+				?>
 				<h4>Viriditas</h4>
 				<p>2775 Dundas Street West</p>
-				<p>Toronto, ON M6P 1Y5</p>
+				<p>Toronto, ON M6P 1Y5 <a href="<?php echo $map_url;?>" title="View on map" class="view-map" target="_blank"><img src="<?php bloginfo('template_url');?>/dist/images/map-icon.png" width="16"></a></p>
 			</div>
         </div>
     </div>
