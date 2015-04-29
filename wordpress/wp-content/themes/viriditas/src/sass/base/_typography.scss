@@ -280,7 +280,7 @@ footer {
 }
 .team-member {
 	.content {
-		h5 {
+		h4 {
 			margin-bottom:0;
 		}
 		& p:nth-of-type(1) {
@@ -292,7 +292,7 @@ footer {
 			margin-bottom:40px;
 			&:after {
 				border: 1px solid $team-designation-border;
-				bottom: -30px;
+				bottom: -25px;
 				content: "";
 				left: 0px;
 				position: absolute;

@@ -1,4 +1,4 @@
-$oddeven-background: $light-grey;
+$oddeven-background: $grey;
 
 .container {
     @include outer-container;
@@ -205,7 +205,7 @@ article {
 		.image {
 			@include media($bp-large) {
 				float: left;
-				padding-right:1em;
+				padding-right:50px;
 			}
 		}
 		.content {
@@ -218,7 +218,7 @@ article {
 		.image {
 			@include media($bp-large) {
 				float: right;
-				padding-left:1em;
+				padding-left:50px;
 				img {
 					float:right;
 				}

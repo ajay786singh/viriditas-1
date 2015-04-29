@@ -66,7 +66,7 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 						<img src="<?php echo $img;?>">
 					</span>
 					<span class="content">
-						<h5><?php the_title(); ?></h5>
+						<h4><?php the_title(); ?></h4>
 						<?php
 							$designation=get_post_meta($post->ID,'_content_block_designation',true);
 							if($designation) {
@@ -123,7 +123,7 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 						<img src="<?php echo $img;?>">
 					</span>
 					<span class="content">
-						<h5><?php the_title(); ?></h5>
+						<h4><?php the_title(); ?></h4>
 						<?php
 							$designation=get_post_meta($post->ID,'_content_block_designation',true);
 							if($designation) {
