@@ -31,6 +31,7 @@ require_once('includes/functions/register-widgets.php');
 require_once('includes/functions/courses.php');
 require_once('includes/functions/appointments.php');
 require_once('includes/functions/faq.php');
+require_once('includes/functions/edit-tag-cloud.php');
 // Load Login/Register
 require_once('includes/login-register/register.php');
 require_once('includes/login-register/login.php');
