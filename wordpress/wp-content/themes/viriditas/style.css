@@ -2163,6 +2163,7 @@ fieldset {
   border: 0;
   padding: 0; }
   fieldset ol {
+    list-style: none;
     padding: 0; }
     fieldset ol li {
       display: inline-block;
@@ -2237,7 +2238,7 @@ input[type="submit"] {
   cursor: pointer;
   font-family: "Roboto", sans-serif;
   font-size: 1em;
-  font-size: 1.15em;
+  font-size: 1.2em;
   padding: 6px 15px 7px;
   margin-left: -4px;
   text-decoration: none;
@@ -2273,7 +2274,15 @@ select {
   width: auto; }
 
 footer input[type="text"], footer input[type="email"] {
-  border-radius: 0; }
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  height: 35px; }
+  footer input[type="text"]:hover, footer input[type="text"]:focus, footer input[type="email"]:hover, footer input[type="email"]:focus {
+    border: none; }
+footer input[type="submit"] {
+  height: 35px;
+  padding: 7px 15px 7px; }
 
 .account-form ul {
   margin-left: 0;
