@@ -38,12 +38,17 @@ $oddeven-background: $light-grey;
         @include span-columns(6 of 12);
     }
 	section[role=contact-content] & {
-		padding: 0 40px 50px;
+		background:$white;
+		padding: 40px 40px 50px;
 		@include media($bp-large) {
+			@include span-columns(6.5 of 12);
+			float:none;
 			margin-left:auto;
 			margin-right:auto;
-			float: none;
-			padding: 0 95px 70px;
+			padding: 40px 60px 50px;
+			&:last-child {
+				margin-right:auto;
+			}
 		}
 	}
 }
@@ -264,4 +269,24 @@ article {
 }
 .faq-content {
 	padding-top:30px;
+}
+
+.store-map {
+	#map {
+		height:500px;
+		width:100%;	
+		position:absolute;
+		top:0;
+		left:0;
+		&:before {
+			content:"";
+			position:absolute;
+			left:0;
+			width:100%;
+			height:100%;
+			background:$banner-bg;
+			z-index:1;
+			top:0;
+		}
+	}
 }
