@@ -676,7 +676,7 @@ footer .copyright p {
       margin-bottom: 1em;
       margin-top: 0.5em; }
 
-.team-member .content h5 {
+.team-member .content h4 {
   margin-bottom: 0; }
 .team-member .content p:nth-of-type(1) {
   margin-top: 0;
@@ -686,7 +686,7 @@ footer .copyright p {
   margin-bottom: 40px; }
   .team-member .content p.designation:after {
     border: 1px solid #473e53;
-    bottom: -30px;
+    bottom: -25px;
     content: "";
     left: 0px;
     position: absolute;
@@ -1691,18 +1691,18 @@ article {
   .oddeven.team:nth-of-type(odd) {
     background: none; }
   .oddeven:nth-of-type(odd) {
-    background: #b8b8b8; }
+    background: #F3F4F4; }
     @media screen and (min-width: 50em) {
       .oddeven:nth-of-type(odd) .image {
         float: left;
-        padding-right: 1em; } }
+        padding-right: 50px; } }
     @media screen and (min-width: 50em) {
       .oddeven:nth-of-type(odd) .content {
         float: right; } }
   @media screen and (min-width: 50em) {
     .oddeven:nth-of-type(even) .image {
       float: right;
-      padding-left: 1em; }
+      padding-left: 50px; }
       .oddeven:nth-of-type(even) .image img {
         float: right; } }
   @media screen and (min-width: 50em) {
