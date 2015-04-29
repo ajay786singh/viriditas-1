@@ -789,8 +789,16 @@ header .logo a {
   .appointments-wrapper h3, .appointments-confirmation-wrapper h3 {
     text-transform: none; }
 
+.app_timetable {
+  margin-left: 0px;
+  margin-top: 20px; }
+  @media screen and (min-width: 50em) {
+    .app_timetable {
+      margin-left: 15px;
+      margin-top: 0px; } }
+
 .app_monthly_schedule_wrapper table th {
-  padding: 15px; }
+  padding: 15px 0; }
 
 section[role=content] .course-heading h3 {
   color: #666666;
@@ -1510,7 +1518,8 @@ section[role=banner] {
       float: left;
       display: block;
       margin-right: 5.88235%;
-      width: 73.52941%; }
+      width: 73.52941%;
+      margin-right: 40px; }
       .column-9:last-child {
         margin-right: 0; } }
 
@@ -2294,6 +2303,8 @@ footer input[type="text"], footer input[type="email"] {
 
 .appointments-form {
   overflow: hidden; }
+  .appointments-form select {
+    font-size: 0.75em; }
 
 input.search-box {
   font-size: 0.8em;

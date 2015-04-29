@@ -440,8 +440,16 @@ header {
 		text-transform:none;
 	}
 }
+.app_timetable {
+	margin-left:0px;
+	margin-top:20px;
+	@include media($bp-large) {
+		margin-left:15px;
+		margin-top:0px;
+	}
+}
 .app_monthly_schedule_wrapper table th {
-	padding:15px;
+	padding:15px 0;
 }
 
 section[role=content] {
