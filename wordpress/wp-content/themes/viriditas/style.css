@@ -754,12 +754,15 @@ header .logo a {
       margin-left: 8px; }
   .contact .secondary p {
     margin: 0; }
+    @media screen and (min-width: 50em) {
+      .contact .secondary p {
+        font-size: 1.375em; } }
     .contact .secondary p span {
       color: #3d3777;
       font-weight: bold; }
-  .contact .secondary h4 {
-    color: #3d3777;
-    margin-bottom: 0.2em;
+  .contact .secondary h2 {
+    margin-bottom: 0em;
+    margin-top: 0;
     padding-bottom: 0; }
 
 .app_services .app_services_dropdown {
@@ -1382,16 +1385,6 @@ section[role=banner] {
     @media screen and (min-width: 50em) {
       section[role=banner] .banner-content {
         padding: 250px 0 150px; } }
-  section[role=banner] .contact .secondary {
-    background-color: white;
-    bottom: 0;
-    margin: 0 auto;
-    padding: 40px 40px 0px; }
-    @media screen and (min-width: 50em) {
-      section[role=banner] .contact .secondary {
-        left: 30%;
-        width: 40%;
-        padding: 40px 60px 0px; } }
   section[role=banner] .contact .banner-content {
     padding-bottom: 0; }
   section[role=banner] .button, section[role=banner] input[type="button"], section[role=banner] .appointments-form input[type="submit"], .appointments-form section[role=banner] input[type="submit"], section[role=banner] #login-form input[type="submit"], #login-form section[role=banner] input[type="submit"], section[role=banner] .gform_wrapper .gform_button, .gform_wrapper section[role=banner] .gform_button {
@@ -1453,13 +1446,22 @@ section[role=banner] {
       .secondary:last-child {
         margin-right: 0; } }
   section[role=contact-content] .secondary {
-    padding: 0 40px 50px; }
+    background: white;
+    padding: 40px 40px 50px; }
     @media screen and (min-width: 50em) {
       section[role=contact-content] .secondary {
+        float: left;
+        display: block;
+        margin-right: 5.88235%;
+        width: 51.47059%;
+        float: none;
         margin-left: auto;
         margin-right: auto;
-        float: none;
-        padding: 0 95px 70px; } }
+        padding: 40px 60px 50px; }
+        section[role=contact-content] .secondary:last-child {
+          margin-right: 0; }
+        section[role=contact-content] .secondary:last-child {
+          margin-right: auto; } }
 
 .column-3 {
   float: left;
@@ -1725,6 +1727,22 @@ article {
 
 .faq-content, .single-product-content {
   padding-top: 30px; }
+
+.store-map #map {
+  height: 500px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+  .store-map #map:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(58, 56, 119, 0.5);
+    z-index: 1;
+    top: 0; }
 
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }

@@ -390,14 +390,17 @@ header {
 		}
 		p {
 			margin:0;
+			@include media($bp-large) {
+				font-size:1.375em;
+			}
 			span {
 				color:$heading;
 				font-weight:bold;
 			}
 		}
-		h4 {
-			color:$heading;
-			margin-bottom: 0.2em;
+		h2 {
+			margin-bottom: 0em;
+			margin-top: 0;
 			padding-bottom: 0;
 		}
 	}
