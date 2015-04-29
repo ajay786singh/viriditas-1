@@ -1718,6 +1718,10 @@ article {
     @media screen and (min-width: 50em) {
       .oddeven .content {
         width: 50%; } }
+    .oddeven .content ul {
+      padding-left: 0; }
+      .oddeven .content ul li {
+        margin-left: 1em; }
 
 .app_services_dropdown {
   position: relative;
