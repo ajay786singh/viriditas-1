@@ -74,6 +74,7 @@ $oddeven-background: $light-grey;
     position: relative;
     @include media($bp-large) {
         @include span-columns(9 of 12);
+		margin-right:40px;
     }
 }
 
