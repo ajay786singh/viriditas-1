@@ -461,7 +461,7 @@ h2 {
   font-size: 1.5em; }
   @media screen and (min-width: 50em) {
     h2 {
-      font-size: 3.25em;
+      font-size: 3.125em;
       line-height: 1.3846em;
       margin-bottom: 0.4615em; } }
 
@@ -488,7 +488,7 @@ h5 {
   font-size: 1em; }
   @media screen and (min-width: 50em) {
     h5 {
-      font-size: 1.625em;
+      font-size: 1.375em;
       line-height: 1.5em;
       margin-bottom: 0.25em;
       margin-top: 0.5em; } }
@@ -800,6 +800,11 @@ header .logo a {
 .app_monthly_schedule_wrapper table th {
   padding: 15px 0; }
 
+section[role=content] .course-heading h2 {
+  color: #666666;
+  display: inline-block;
+  float: left;
+  margin-bottom: 0.125em; }
 section[role=content] .course-heading h3 {
   color: #666666;
   display: inline-block;
@@ -812,7 +817,7 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   margin-top: 0; }
   @media screen and (min-width: 50em) {
     section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading .appointments-form input[type="submit"], .appointments-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading .gform_wrapper .gform_button, .gform_wrapper section[role=content] .course-heading .gform_button {
-      margin: 0; } }
+      margin-top: 20px; } }
 
 .post-course {
   overflow: hidden;
@@ -2066,6 +2071,7 @@ footer {
     margin-top: 1em; }
   .accordion .accordion-panel .accordion-panel-header {
     border-bottom: 2px solid #b8b8b8;
+    position: relative;
     cursor: pointer;
     font-size: 1.25em;
     line-height: 1.25;
@@ -2105,11 +2111,12 @@ footer {
       border-left: 10px solid transparent;
       border-bottom: none;
       content: "";
-      float: right;
-      margin-top: 10px; }
+      right: 0;
+      position: absolute;
+      top: 20px; }
       @media screen and (min-width: 50em) {
         .accordion .accordion-panel .accordion-panel-header:after {
-          margin-top: 12px; } }
+          top: 26px; } }
     .accordion .accordion-panel .accordion-panel-header.active-header:after {
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
@@ -2136,6 +2143,17 @@ footer {
       @media screen and (min-width: 50em) {
         .accordion .accordion-panel .accordion-panel-content img {
           width: 28%; } }
+
+.past-courses .accordion-panel {
+  border-bottom: 2px solid #b8b8b8; }
+  .past-courses .accordion-panel .accordion-panel-header {
+    border-bottom: none;
+    font-size: 1em; }
+    @media screen and (min-width: 50em) {
+      .past-courses .accordion-panel .accordion-panel-header {
+        font-size: 1.375em; } }
+  .past-courses .accordion-panel .accordion-panel-content {
+    padding-top: 1em; }
 
 fieldset {
   border: 0;

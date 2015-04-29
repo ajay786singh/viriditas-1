@@ -9,6 +9,7 @@
 	.accordion-panel {
 		.accordion-panel-header {
 			border-bottom:2px solid $base-border-color;
+			position:relative;
 			.faq-content & {	
 				border-bottom:none;
 				border-top:1px solid $base-border-color;				
@@ -42,10 +43,11 @@
 			&:after {
 				@include arrow(bottom,$heading,10px);
 				content:"";
-				float:right;
-				margin-top:10px;
+				right:0;
+				position:absolute;
+				top:20px;
 				@include media($bp-large) {
-					margin-top:12px;
+					top:26px;
 				}
 			}
 			&.active-header:after {
@@ -85,4 +87,19 @@
 }
 .single-product-content {
 	@extend .faq-content;
+}
+.past-courses {
+	.accordion-panel {
+		border-bottom:2px solid $base-border-color;
+		.accordion-panel-header {
+			border-bottom:none;
+			font-size:1em;
+			@include media($bp-large) {
+				font-size:1.375em;
+			}
+		}
+		.accordion-panel-content {
+			padding-top:1em;
+		}	
+	}
 }

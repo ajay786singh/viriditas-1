@@ -23,7 +23,7 @@ function past_courses() {
 	?>
 	<div class="past-courses">
 		<div class="course-heading">
-			<h3>Past Courses</h3>
+			<h2>Past Courses</h2>
 		</div>
 		<div class="accordion">
 		<?php
@@ -124,7 +124,7 @@ function get_courses() {
 			if($query->have_posts()):
 	?>
 			<div class="course-heading">
-				<h3><?php echo $course;?></h3>
+				<h2><?php echo $course;?></h2>
 				<?php 
 					if($register_on_off['_register_on_off']=='on') {
 					$course_register_url=get_bloginfo('url').'/course-registration?form=8';	
