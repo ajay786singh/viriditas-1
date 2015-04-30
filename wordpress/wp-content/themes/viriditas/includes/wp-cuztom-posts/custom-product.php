@@ -24,6 +24,18 @@ $products->add_meta_box(
 			)
         ),
 		array(
+            'name'          => 'composition',
+            'label'         => 'Composition',
+            'description'   => '',
+            'type'          => 'post_checkboxes',
+			'args'       => array(
+				'post_type' => 'product',
+				'product_cat' => 'single-herb-tincture',
+				'orderby' => 'title',
+				'order' => 'ASC',
+			)
+        ),
+		array(
             'name'          => 'warnings',
             'label'         => 'Warnings & Interactions',
             'description'   => '',

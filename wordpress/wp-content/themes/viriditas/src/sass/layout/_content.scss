@@ -49,6 +49,7 @@ $oddeven-background: $grey;
 			&:last-child {
 				margin-right:auto;
 			}
+			z-index:2;
 		}
 	}
 }
@@ -285,6 +286,7 @@ article {
 		position:absolute;
 		top:0;
 		left:0;
+		z-index:1;
 		&:before {
 			content:"";
 			position:absolute;
