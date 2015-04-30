@@ -233,14 +233,16 @@ add_action( 'wp_ajax_nopriv_get_product_detail', 'get_product_detail' );
 */
 function get_product_info($id) {
 	global $wp_query;
+	$html='';
 	$args = array( 'p' => $id,'post_type'=>'product' );
 	$post_query = new WP_Query( $args );
 	$product_page_url=get_bloginfo('url')."/products"; 
 	if($post_query->have_posts()): while( $post_query->have_posts() ) : $post_query->the_post();
 		$id=get_the_ID();
 		$single_product_url=$product_page_url."?show_product=".$id;
-		echo "<li class='block-grid-3'><a href='".$single_product_url."'><i>".get_the_title()."</i></a></li>";
+		$html.="<a href='".$single_product_url."'><i>".get_the_title()."</i></a>";
 	endwhile; endif; wp_reset_query();
+	return $html;
 }
 
 /*

@@ -109,7 +109,7 @@ function toParams(searchUrl) {
 				if(html!='' && html!=1) {
 					settings.container.append(html);
 					//settings.container.showProduct();
-					if(settings.view_mode!='' && settings.view_mode!='list_view') {
+					if(settings.view_mode == '' || settings.view_mode!='list_view') {
 						$('.equal-height-item').equalHeights();	
 					}
 					$('.load-more').loadMore();

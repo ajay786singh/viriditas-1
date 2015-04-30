@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
 		var location=$('#location').val();
 		geocoder.geocode( { 'address': location}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
-				var zoom_level=8;
+				var zoom_level=15;
 				var center=new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng());
 				$('#map').gmap('option', 'center', center);
 				$('#map').gmap('option', 'zoom', Number(zoom_level));

@@ -56,7 +56,9 @@
 					echo "<h5>Composition</h5>";
 					echo "<ul class='list'>";	
 						for($i=0;$i<count($composition);$i++) {
-							get_product_info($composition[$i]);
+							echo "<li class='block-grid-3'>";
+							echo get_product_info($composition[$i]);
+							echo "</li>";
 						}
 					echo "</ul>";	
 				echo "</section>";	

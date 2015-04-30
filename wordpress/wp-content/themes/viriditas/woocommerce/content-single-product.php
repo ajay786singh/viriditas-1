@@ -78,6 +78,24 @@ global $product;
 			?>
 			<div class="accordion">
 				<?php 
+					$composition=get_post_meta($post->ID,'_product_details_composition',true);
+					if($composition!='' && $composition!=-1) {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Composition List</h5>
+						<div class="accordion-panel-content">
+							<?php
+								$compositions="";
+								for($i=0;$i<count($composition);$i++) {
+									$compositions[]=get_product_info($composition[$i]);
+								}
+								echo implode(', ', $compositions );
+							?>
+						</div>
+					</div>
+				<?php } ?>
+				
+				<?php 
 					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
 					if($warnings) {
 				?>

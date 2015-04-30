@@ -7,20 +7,19 @@
 		margin-top:1em;
 	}
 	.accordion-panel {
+		border-bottom:2px solid $base-border-color;
 		.accordion-panel-header {
-			border-bottom:2px solid $base-border-color;
 			position:relative;
 			.faq-content & {	
 				border-bottom:none;
-				border-top:1px solid $base-border-color;				
 				@include media($bp-large) {
 					font-size: 1.25em;
 				}
 				&:after {
 					@include arrow(bottom,$base-border-color,10px);					
-					margin-top:8px;
+					//margin-top:8px;
 					@include media($bp-large) {
-						margin-top:8px;
+						//margin-top:8px;
 					}
 				}				
 				&.active-header:after {
@@ -56,6 +55,7 @@
 		}
 		.accordion-panel-content {
 			padding-top:2em;
+			padding-bottom:2em;
 			.faq-content & {	
 				padding-top:0em;
 				.list {
@@ -87,6 +87,9 @@
 }
 .single-product-content {
 	@extend .faq-content;
+	.accordion-panel {
+		border-bottom:1px solid $base-border-color;
+	}
 }
 .past-courses {
 	.accordion-panel {
