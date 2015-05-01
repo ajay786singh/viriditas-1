@@ -1764,6 +1764,14 @@ article {
     z-index: 1;
     top: 0; }
 
+/*
+.body-overlay {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,0.8);
+	z-index: 20000;
+}*/
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
 .woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a {

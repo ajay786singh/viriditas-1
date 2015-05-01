@@ -87,7 +87,9 @@ global $product;
 							<?php
 								$compositions="";
 								for($i=0;$i<count($composition);$i++) {
-									$compositions[]=get_product_info($composition[$i]);
+									//if($post->ID!=$composition[$i]) {
+										$compositions[]=get_product_info($composition[$i]);
+									//}
 								}
 								echo implode(', ', $compositions );
 							?>

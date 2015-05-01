@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 get_header( 'shop' );
 ?>
+<!--<div class="body-overlay"></div>-->
 <section role="content">
 	<div class="container">
 		<!-- Include Sidebar -->
@@ -28,10 +29,6 @@ get_header( 'shop' );
 							</li>
 							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
 							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
-							<li style="display:none;">
-								<a href="#" class="order_by" id="asc">ASC</a>
-								<a href="#" class="order_by" id="desc"> | DESC</a>
-							</li>
 							<li>
 								<label>Alphabetical:</label>
 								<?php 
