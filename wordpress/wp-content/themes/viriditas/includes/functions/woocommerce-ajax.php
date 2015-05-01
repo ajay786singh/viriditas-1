@@ -240,7 +240,7 @@ function get_product_info($id) {
 	if($post_query->have_posts()): while( $post_query->have_posts() ) : $post_query->the_post();
 		$id=get_the_ID();
 		$single_product_url=$product_page_url."?show_product=".$id;
-		$html.="<a href='".$single_product_url."'><i>".get_the_title()."</i></a>";
+		$html.="<a href='".get_the_permalink($id)."'><i>".get_the_title()."</i></a>";
 	endwhile; endif; wp_reset_query();
 	return $html;
 }
@@ -258,24 +258,29 @@ function get_product_terms() {
 	$taxonomy_name=implode(" ",explode("_",$taxonomy));
 	$pa=$_POST['pa'];
 	$pb=$_POST['pb'];
-	$pc=$_POST['pc'];
+	$pc='327';
+	if($_POST['pc']!='') {
+		$pc=$_POST['pc'];
+	}
 	$pi=$_POST['pi'];
-	
+	$filters=array_filter(array('actions'=>$pa,'body_system'=>$pb,'product_cat'=>$pc,'indication'=>$pi));
 	$args=array(
 		'post_type' => $post_type,
 		'numberposts' => $no_of_posts,
 	);
-	if($pc !='') {
-		$tax_query=array(
-			'taxonomy' => 'product_cat',
-			'field' => 'term_id',
-			'terms' => $pc
-		);
-		$args['tax_query'] = array(
-			'relation'=>'AND',
-			$tax_query
-		);
+	$tax_query="";
+	if(count($filters)> 0) {
+		$tax_query['relation']='AND';
+		foreach($filters as $category=>$cat_value) {
+			$tax_query[]=array(
+				'taxonomy' => $category,
+				'field' => 'term_id',
+				'terms' => $cat_value
+			);	
+		}
+		$args['tax_query'] = $tax_query;
 	}
+	
 	$objects_ids='';	
 	$objects = get_posts( $args );
 		foreach ($objects as $object) {

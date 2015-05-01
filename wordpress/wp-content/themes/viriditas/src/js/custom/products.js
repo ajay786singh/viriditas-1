@@ -169,8 +169,13 @@ function toParams(searchUrl) {
 						mobile: true,
 						change:function() {
 							var dk = this;
-							//$('section[role="actions"]').fetchActions(category,dk.value);
 							$this.filterSelectTerms(filter,dk.value);
+							if(taxonomy =='body_system') {
+								$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
+								$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+							} else if(taxonomy =='actions') {
+								$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+							}
 						}
 					});
 				}	
@@ -266,6 +271,7 @@ function toParams(searchUrl) {
 }(jQuery));
 
 jQuery(document).ready(function($){
+	$.ajaxSetup({cache:false});
 	if($('body').hasClass('post-type-archive-product') || $('body').hasClass('single-product')) {
 		var product_container = $('.product-list');
 		// Current Filter values
