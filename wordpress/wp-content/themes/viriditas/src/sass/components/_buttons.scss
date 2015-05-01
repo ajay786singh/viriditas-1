@@ -55,11 +55,9 @@ input[type="button"] {
 	input[type="submit"] {
 		@extend .button;
 		border:none;
-		//	bottom:0;
 		font-size:0.8em;
 		font-weight:normal;
 		text-transform:uppercase;
-		//position: absolute;
 	}
 }
 #login-form {
@@ -83,4 +81,11 @@ input[type="button"] {
 	.gform_button {
 		@extend .button;
 	}
+}
+.appointments-pagination a {
+	@extend .button;
+	border:none;
+	font-weight:normal;
+	@include border-radius(0);
+	box-shadow:none;
 }
