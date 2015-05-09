@@ -89,3 +89,16 @@ input[type="button"] {
 	@include border-radius(0);
 	box-shadow:none;
 }
+
+.woocommerce #respond input#submit.alt, 
+.woocommerce a.button.alt, 
+.woocommerce button.button.alt, 
+.woocommerce input.button.alt {
+	@extend .button;
+	border:none;
+	font-weight:normal;
+	box-shadow:none;
+	margin-top:0;
+	font-size:1em;
+	@include border-radius(5px);
+}

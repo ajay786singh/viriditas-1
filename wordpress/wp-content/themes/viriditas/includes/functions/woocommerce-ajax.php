@@ -325,3 +325,13 @@ function get_product_terms() {
 }
 add_action( 'wp_ajax_get_product_terms', 'get_product_terms' );
 add_action( 'wp_ajax_nopriv_get_product_terms', 'get_product_terms' );
+
+//Change the placeholder image in WooCommerce
+add_action( 'init', 'ccw_custom_woo_placeholder' );
+function ccw_custom_woo_placeholder(){
+	add_filter('woocommerce_placeholder_img_src','ccw_custom_placeholder_callback');
+	function ccw_custom_placeholder_callback($src){
+		$src = get_bloginfo('template_url')."/dist/images/product_default.jpg";
+		return $src;
+	}
+}

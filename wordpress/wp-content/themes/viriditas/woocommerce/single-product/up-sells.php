@@ -7,13 +7,17 @@
  * @version     1.6.4
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
 
 global $product, $woocommerce_loop;
 
 $upsells = $product->get_upsells();
 
-if ( sizeof( $upsells ) == 0 ) return;
+if ( sizeof( $upsells ) == 0 ) {
+	return;
+}
 
 $meta_query = WC()->query->get_meta_query();
 
@@ -34,7 +38,8 @@ $woocommerce_loop['columns'] = $columns;
 
 if ( $products->have_posts() ) : ?>
 
-	<div class="upsells related products">
+	<div class="upsells products">
+
 		<h2><?php _e( 'You may also like&hellip;', 'woocommerce' ) ?></h2>
 
 		<?php woocommerce_product_loop_start(); ?>

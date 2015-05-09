@@ -405,7 +405,10 @@ http://drinchev.github.io/monosocialiconsfont/
   src: url("dist/fonts/icomoon.eot?#iefix-rdnm34") format("embedded-opentype"), url("dist/fonts/icomoon.woff?-rdnm34") format("woff"), url("dist/fonts/icomoon.ttf?-rdnm34") format("truetype"), url("dist/fonts/icomoon.svg?-rdnm34#icomoon") format("svg");
   font-weight: normal;
   font-style: normal; }
-.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a, button {
+.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a, .woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt, button {
   -webkit-font-smoothing: antialiased;
   background-color: #3a3877;
   border-radius: 0.1875em;
@@ -416,10 +419,16 @@ http://drinchev.github.io/monosocialiconsfont/
   line-height: 1;
   padding: 0.75em 1em;
   text-decoration: none; }
-  .woocommerce .button:hover, .woocommerce input[type="button"]:hover, .woocommerce .appointments-form input[type="submit"]:hover, .appointments-form .woocommerce input[type="submit"]:hover, .woocommerce #login-form input[type="submit"]:hover, #login-form .woocommerce input[type="submit"]:hover, .woocommerce .gform_wrapper .gform_button:hover, .gform_wrapper .woocommerce .gform_button:hover, .woocommerce .appointments-pagination a:hover, .appointments-pagination .woocommerce a:hover, button:hover {
+  .woocommerce .button:hover, .woocommerce input[type="button"]:hover, .woocommerce .appointments-form input[type="submit"]:hover, .appointments-form .woocommerce input[type="submit"]:hover, .woocommerce #login-form input[type="submit"]:hover, #login-form .woocommerce input[type="submit"]:hover, .woocommerce .gform_wrapper .gform_button:hover, .gform_wrapper .woocommerce .gform_button:hover, .woocommerce .appointments-pagination a:hover, .appointments-pagination .woocommerce a:hover, .woocommerce #respond input#submit.alt:hover,
+  .woocommerce a.button.alt:hover,
+  .woocommerce button.button.alt:hover,
+  .woocommerce input.button.alt:hover, button:hover {
     background-color: #212043;
     color: white; }
-  .woocommerce .button:disabled, .woocommerce input[type="button"]:disabled, .woocommerce .appointments-form input[type="submit"]:disabled, .appointments-form .woocommerce input[type="submit"]:disabled, .woocommerce #login-form input[type="submit"]:disabled, #login-form .woocommerce input[type="submit"]:disabled, .woocommerce .gform_wrapper .gform_button:disabled, .gform_wrapper .woocommerce .gform_button:disabled, .woocommerce .appointments-pagination a:disabled, .appointments-pagination .woocommerce a:disabled, button:disabled {
+  .woocommerce .button:disabled, .woocommerce input[type="button"]:disabled, .woocommerce .appointments-form input[type="submit"]:disabled, .appointments-form .woocommerce input[type="submit"]:disabled, .woocommerce #login-form input[type="submit"]:disabled, #login-form .woocommerce input[type="submit"]:disabled, .woocommerce .gform_wrapper .gform_button:disabled, .gform_wrapper .woocommerce .gform_button:disabled, .woocommerce .appointments-pagination a:disabled, .appointments-pagination .woocommerce a:disabled, .woocommerce #respond input#submit.alt:disabled,
+  .woocommerce a.button.alt:disabled,
+  .woocommerce button.button.alt:disabled,
+  .woocommerce input.button.alt:disabled, button:disabled {
     cursor: not-allowed;
     opacity: 0.5; }
 
@@ -810,13 +819,13 @@ section[role=content] .course-heading h3 {
   display: inline-block;
   float: left;
   margin-bottom: 0.4em; }
-section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading .appointments-form input[type="submit"], .appointments-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading .gform_wrapper .gform_button, .gform_wrapper section[role=content] .course-heading .gform_button, section[role=content] .course-heading .appointments-pagination a, .appointments-pagination section[role=content] .course-heading a {
+section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading .appointments-form input[type="submit"], .appointments-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading .gform_wrapper .gform_button, .gform_wrapper section[role=content] .course-heading .gform_button, section[role=content] .course-heading .appointments-pagination a, .appointments-pagination section[role=content] .course-heading a, section[role=content] .course-heading .woocommerce #respond input#submit.alt, .woocommerce #respond section[role=content] .course-heading input#submit.alt {
   float: right;
   display: inline-block;
   font-size: 0.8em;
   margin-top: 0; }
   @media screen and (min-width: 50em) {
-    section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading .appointments-form input[type="submit"], .appointments-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading .gform_wrapper .gform_button, .gform_wrapper section[role=content] .course-heading .gform_button, section[role=content] .course-heading .appointments-pagination a, .appointments-pagination section[role=content] .course-heading a {
+    section[role=content] .course-heading .button, section[role=content] .course-heading input[type="button"], section[role=content] .course-heading .appointments-form input[type="submit"], .appointments-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading #login-form input[type="submit"], #login-form section[role=content] .course-heading input[type="submit"], section[role=content] .course-heading .gform_wrapper .gform_button, .gform_wrapper section[role=content] .course-heading .gform_button, section[role=content] .course-heading .appointments-pagination a, .appointments-pagination section[role=content] .course-heading a, section[role=content] .course-heading .woocommerce #respond input#submit.alt, .woocommerce #respond section[role=content] .course-heading input#submit.alt {
       margin-top: 20px; } }
 
 .post-course {
@@ -918,7 +927,13 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   .course-action h4 {
     float: left;
     margin-right: 30px; }
-  .course-action .button, .course-action input[type="button"], .course-action .appointments-form input[type="submit"], .appointments-form .course-action input[type="submit"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"], .course-action .gform_wrapper .gform_button, .gform_wrapper .course-action .gform_button, .course-action .appointments-pagination a, .appointments-pagination .course-action a {
+  .course-action .button, .course-action input[type="button"], .course-action .appointments-form input[type="submit"], .appointments-form .course-action input[type="submit"], .course-action #login-form input[type="submit"], #login-form .course-action input[type="submit"], .course-action .gform_wrapper .gform_button, .gform_wrapper .course-action .gform_button, .course-action .appointments-pagination a, .appointments-pagination .course-action a, .course-action .woocommerce #respond input#submit.alt, .woocommerce #respond .course-action input#submit.alt,
+  .course-action .woocommerce a.button.alt,
+  .woocommerce .course-action a.button.alt,
+  .course-action .woocommerce button.button.alt,
+  .woocommerce .course-action button.button.alt,
+  .course-action .woocommerce input.button.alt,
+  .woocommerce .course-action input.button.alt {
     margin-top: 0; }
 
 .appointment-sidebar:nth-of-type(1) h5:after {
@@ -1400,7 +1415,13 @@ section[role=banner] {
         padding: 250px 0 150px; } }
   section[role=banner] .contact .banner-content {
     padding-bottom: 0; }
-  section[role=banner] .button, section[role=banner] input[type="button"], section[role=banner] .appointments-form input[type="submit"], .appointments-form section[role=banner] input[type="submit"], section[role=banner] #login-form input[type="submit"], #login-form section[role=banner] input[type="submit"], section[role=banner] .gform_wrapper .gform_button, .gform_wrapper section[role=banner] .gform_button, section[role=banner] .appointments-pagination a, .appointments-pagination section[role=banner] a {
+  section[role=banner] .button, section[role=banner] input[type="button"], section[role=banner] .appointments-form input[type="submit"], .appointments-form section[role=banner] input[type="submit"], section[role=banner] #login-form input[type="submit"], #login-form section[role=banner] input[type="submit"], section[role=banner] .gform_wrapper .gform_button, .gform_wrapper section[role=banner] .gform_button, section[role=banner] .appointments-pagination a, .appointments-pagination section[role=banner] a, section[role=banner] .woocommerce #respond input#submit.alt, .woocommerce #respond section[role=banner] input#submit.alt,
+  section[role=banner] .woocommerce a.button.alt,
+  .woocommerce section[role=banner] a.button.alt,
+  section[role=banner] .woocommerce button.button.alt,
+  .woocommerce section[role=banner] button.button.alt,
+  section[role=banner] .woocommerce input.button.alt,
+  .woocommerce section[role=banner] input.button.alt {
     color: white; }
 
 .container {
@@ -1774,7 +1795,10 @@ article {
 }*/
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
-.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a {
+.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a, .woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
   -webkit-appearance: none;
   -moz-appearance: none;
   -ms-appearance: none;
@@ -2045,6 +2069,12 @@ section[role="actions"] ul li a {
 
 .single-product-content .product_title {
   display: none; }
+.single-product-content div[itemprop="description"] {
+  display: none; }
+.single-product-content .product-content {
+  margin-top: 15px;
+  border-top: 1px solid #b8b8b8;
+  padding-top: 10px; }
 .single-product-content .product_meta {
   display: none; }
 .single-product-content .price del {
@@ -2053,11 +2083,21 @@ section[role="actions"] ul li a {
   display: block; }
 .single-product-content td {
   vertical-align: top; }
-  .single-product-content td label {
-    font-weight: bold; }
 .single-product-content #size {
   margin-left: 20px;
   width: 90px; }
+
+.woocommerce div.product form.cart .variations label {
+  display: inline-block;
+  font-weight: normal;
+  vertical-align: middle; }
+
+.woocommerce div.product p.price, .woocommerce div.product span.price {
+  color: #666666; }
+
+.woocommerce div.product p.price ins, .woocommerce div.product span.price ins {
+  font-weight: normal;
+  text-decoration: none; }
 
 footer {
   background: url(dist/images/footer-bg.jpg);
@@ -2155,6 +2195,8 @@ footer {
           .accordion .accordion-panel .accordion-panel-content img {
             width: 28%; } }
 
+.single-product-content .accordion {
+  border-top: 1px solid #b8b8b8; }
 .single-product-content .accordion-panel {
   border-bottom: 1px solid #b8b8b8; }
 
@@ -2381,7 +2423,10 @@ li.gfield + li.gfield.gfield_creditcard_warning {
     float: left;
     width: 200px;
     margin-right: 15px; }
-.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a {
+.woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a, .woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
   margin-top: 0;
   margin-bottom: 0;
   font-weight: normal;
@@ -2428,21 +2473,42 @@ button {
   white-space: nowrap;
   margin-bottom: 0.5em; }
 
-.button, input[type="button"], .app_services_dropdown_select input[type="button"], .appointments-form input[type="submit"], #login-form input[type="submit"], .gform_wrapper .gform_button, .appointments-pagination a {
+.button, input[type="button"], .app_services_dropdown_select input[type="button"], .appointments-form input[type="submit"], #login-form input[type="submit"], .gform_wrapper .gform_button, .appointments-pagination a, .woocommerce #respond input#submit.alt,
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
   background: #4e4d89;
   padding: 8px 15px;
   float: left;
   margin: 20px 0;
   color: white; }
-  .button:hover, input[type="button"]:hover, .appointments-form input[type="submit"]:hover, #login-form input[type="submit"]:hover, .gform_wrapper .gform_button:hover, .appointments-pagination a:hover, .button:focus, input[type="button"]:focus, .appointments-form input[type="submit"]:focus, #login-form input[type="submit"]:focus, .gform_wrapper .gform_button:focus, .appointments-pagination a:focus {
+  .button:hover, input[type="button"]:hover, .appointments-form input[type="submit"]:hover, #login-form input[type="submit"]:hover, .gform_wrapper .gform_button:hover, .appointments-pagination a:hover, .woocommerce #respond input#submit.alt:hover,
+  .woocommerce a.button.alt:hover,
+  .woocommerce button.button.alt:hover,
+  .woocommerce input.button.alt:hover, .button:focus, input[type="button"]:focus, .appointments-form input[type="submit"]:focus, #login-form input[type="submit"]:focus, .gform_wrapper .gform_button:focus, .appointments-pagination a:focus, .woocommerce #respond input#submit.alt:focus,
+  .woocommerce a.button.alt:focus,
+  .woocommerce button.button.alt:focus,
+  .woocommerce input.button.alt:focus {
     background: #403a66;
     border-color: #311f39;
     color: white; }
-  .banner-content .button, .banner-content input[type="button"], .banner-content .appointments-form input[type="submit"], .appointments-form .banner-content input[type="submit"], .banner-content #login-form input[type="submit"], #login-form .banner-content input[type="submit"], .banner-content .gform_wrapper .gform_button, .gform_wrapper .banner-content .gform_button, .banner-content .appointments-pagination a, .appointments-pagination .banner-content a {
+  .banner-content .button, .banner-content input[type="button"], .banner-content .appointments-form input[type="submit"], .appointments-form .banner-content input[type="submit"], .banner-content #login-form input[type="submit"], #login-form .banner-content input[type="submit"], .banner-content .gform_wrapper .gform_button, .gform_wrapper .banner-content .gform_button, .banner-content .appointments-pagination a, .appointments-pagination .banner-content a, .banner-content .woocommerce #respond input#submit.alt, .woocommerce #respond .banner-content input#submit.alt,
+  .banner-content .woocommerce a.button.alt,
+  .woocommerce .banner-content a.button.alt,
+  .banner-content .woocommerce button.button.alt,
+  .woocommerce .banner-content button.button.alt,
+  .banner-content .woocommerce input.button.alt,
+  .woocommerce .banner-content input.button.alt {
     border: 2px solid white;
     background: none;
     text-decoration: none; }
-    .banner-content .button:hover, .banner-content input[type="button"]:hover, .banner-content .appointments-form input[type="submit"]:hover, .appointments-form .banner-content input[type="submit"]:hover, .banner-content #login-form input[type="submit"]:hover, #login-form .banner-content input[type="submit"]:hover, .banner-content .gform_wrapper .gform_button:hover, .gform_wrapper .banner-content .gform_button:hover, .banner-content .appointments-pagination a:hover, .appointments-pagination .banner-content a:hover {
+    .banner-content .button:hover, .banner-content input[type="button"]:hover, .banner-content .appointments-form input[type="submit"]:hover, .appointments-form .banner-content input[type="submit"]:hover, .banner-content #login-form input[type="submit"]:hover, #login-form .banner-content input[type="submit"]:hover, .banner-content .gform_wrapper .gform_button:hover, .gform_wrapper .banner-content .gform_button:hover, .banner-content .appointments-pagination a:hover, .appointments-pagination .banner-content a:hover, .banner-content .woocommerce #respond input#submit.alt:hover, .woocommerce #respond .banner-content input#submit.alt:hover,
+    .banner-content .woocommerce a.button.alt:hover,
+    .woocommerce .banner-content a.button.alt:hover,
+    .banner-content .woocommerce button.button.alt:hover,
+    .woocommerce .banner-content button.button.alt:hover,
+    .banner-content .woocommerce input.button.alt:hover,
+    .woocommerce .banner-content input.button.alt:hover {
       background: white;
       color: #311f39; }
 
@@ -2471,7 +2537,19 @@ input[type="button"] {
   width: 100%;
   margin: 0; }
 
-.faq-content .button, .single-product-content .button, .faq-content input[type="button"], .single-product-content input[type="button"], .faq-content .appointments-form input[type="submit"], .appointments-form .faq-content input[type="submit"], .single-product-content .appointments-form input[type="submit"], .appointments-form .single-product-content input[type="submit"], .faq-content #login-form input[type="submit"], #login-form .faq-content input[type="submit"], .single-product-content #login-form input[type="submit"], #login-form .single-product-content input[type="submit"], .faq-content .gform_wrapper .gform_button, .gform_wrapper .faq-content .gform_button, .single-product-content .gform_wrapper .gform_button, .gform_wrapper .single-product-content .gform_button, .faq-content .appointments-pagination a, .appointments-pagination .faq-content a, .single-product-content .appointments-pagination a, .appointments-pagination .single-product-content a {
+.faq-content .button, .single-product-content .button, .faq-content input[type="button"], .single-product-content input[type="button"], .faq-content .appointments-form input[type="submit"], .appointments-form .faq-content input[type="submit"], .single-product-content .appointments-form input[type="submit"], .appointments-form .single-product-content input[type="submit"], .faq-content #login-form input[type="submit"], #login-form .faq-content input[type="submit"], .single-product-content #login-form input[type="submit"], #login-form .single-product-content input[type="submit"], .faq-content .gform_wrapper .gform_button, .gform_wrapper .faq-content .gform_button, .single-product-content .gform_wrapper .gform_button, .gform_wrapper .single-product-content .gform_button, .faq-content .appointments-pagination a, .appointments-pagination .faq-content a, .single-product-content .appointments-pagination a, .appointments-pagination .single-product-content a, .faq-content .woocommerce #respond input#submit.alt, .woocommerce #respond .faq-content input#submit.alt, .single-product-content .woocommerce #respond input#submit.alt, .woocommerce #respond .single-product-content input#submit.alt,
+.faq-content .woocommerce a.button.alt,
+.woocommerce .faq-content a.button.alt,
+.single-product-content .woocommerce a.button.alt,
+.woocommerce .single-product-content a.button.alt,
+.faq-content .woocommerce button.button.alt,
+.woocommerce .faq-content button.button.alt,
+.single-product-content .woocommerce button.button.alt,
+.woocommerce .single-product-content button.button.alt,
+.faq-content .woocommerce input.button.alt,
+.woocommerce .faq-content input.button.alt,
+.single-product-content .woocommerce input.button.alt,
+.woocommerce .single-product-content input.button.alt {
   -webkit-border-radius: 0;
   border-radius: 0;
   background-clip: padding-box;
@@ -2488,6 +2566,34 @@ input[type="button"] {
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   box-shadow: none; }
+
+.woocommerce #respond input#submit.alt,
+.woocommerce .gform_wrapper a.alt.gform_button,
+.gform_wrapper .woocommerce a.alt.gform_button,
+.woocommerce .appointments-pagination a.alt,
+.appointments-pagination .woocommerce a.alt,
+.woocommerce a.alt.button,
+.woocommerce .gform_wrapper button.alt.gform_button,
+.gform_wrapper .woocommerce button.alt.gform_button,
+.woocommerce button.alt.button,
+.woocommerce input.alt[type="button"],
+.woocommerce .appointments-form input.alt[type="submit"],
+.appointments-form .woocommerce input.alt[type="submit"],
+.woocommerce #login-form input.alt[type="submit"],
+#login-form .woocommerce input.alt[type="submit"],
+.woocommerce .gform_wrapper input.alt.gform_button,
+.gform_wrapper .woocommerce input.alt.gform_button,
+.woocommerce #respond input.alt#submit,
+.woocommerce input.alt.button {
+  border: none;
+  font-weight: normal;
+  box-shadow: none;
+  margin-top: 0;
+  font-size: 1em;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */ }
 
 .dk-select,
 .dk-select *,

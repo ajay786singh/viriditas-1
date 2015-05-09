@@ -62,18 +62,23 @@ global $product;
 				<?php the_title("<h4>","</h4>");?>
 				<?php
 					$monograph=get_post_meta($post->ID,'_product_details_monograph',true);
-					if($monograph) {
+					if($monograph!='' && $monograph!='-1') {
 				?>
 				<a href="<?php echo get_permalink($monograph[0]);?>" class="view-monograph">view monograph</a>
 				<?php } ?>
 			</div>
-			<?php 
+			<?php
+				// $prices = $product->get_price_html();
+				// print_r($prices);
+				//$price = price_array($price_html);
+				//print_r($price);
 				do_action( 'woocommerce_single_product_summary' );
 			?>
 			<?php 
-				if(get_the_content()) { 
-					echo "<hr>";
-					the_content();
+				if(get_the_excerpt()) { 
+					echo '<div class="product-content">';
+						the_excerpt();
+					echo '</div>';
 				}
 			?>
 			<div class="accordion">

@@ -166,6 +166,14 @@
 	.product_title {
 		display:none;
 	}
+	div[itemprop="description"] {
+		display:none;
+	}
+	.product-content {
+		margin-top:15px;
+		border-top:1px solid $base-border-color;
+		padding-top:10px;
+	}
 	.product_meta {
 		display:none;
 	}
@@ -179,12 +187,22 @@
 	}
 	td {
 		vertical-align:top;
-		label {
-			font-weight:bold;
-		}
 	}
 	#size {
 		margin-left:20px;
 		width: 90px;
 	}
+}
+.woocommerce div.product form.cart .variations label {
+	display: inline-block;
+	font-weight:normal;
+	vertical-align: middle;
+}
+
+.woocommerce div.product p.price, .woocommerce div.product span.price {
+	color:$base-font-color;
+}
+.woocommerce div.product p.price ins, .woocommerce div.product span.price ins {
+	font-weight:normal;
+	text-decoration:none;
 }
