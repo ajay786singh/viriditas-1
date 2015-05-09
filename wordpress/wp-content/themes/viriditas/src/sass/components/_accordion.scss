@@ -85,12 +85,17 @@
 		}
 	}	
 }
+
 .single-product-content {
 	@extend .faq-content;
+	.accordion {
+		border-top: 1px solid $base-border-color;
+	}
 	.accordion-panel {
 		border-bottom:1px solid $base-border-color;
 	}
 }
+
 .past-courses {
 	.accordion-panel {
 		border-bottom:2px solid $base-border-color;
