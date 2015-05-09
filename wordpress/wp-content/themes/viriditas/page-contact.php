@@ -13,14 +13,7 @@
 <section role="contact-content">
 	<article class="container contact">
 		<div class="secondary">
-			<h2>Viriditas</h2>
-			<p>2775 Dundas Street West</p>
-			<p>Toronto, ON M6P 1Y5 <a href="<?php echo $map_url;?>" title="View on map" class="view-map" target="_blank"><img src="<?php bloginfo('template_url');?>/dist/images/map-icon.png" width="16"></a></p>
-			<hr>
-			<p><span>p:</span> 416-767-3427</p>	
-			<p><span>f:</span> 416-767-1215</p>	
-			<p><a href="mailto://redden@viriditasherbalproducts.com">redden@viriditasherbalproducts.com</a></p>
-			<a href="<?php bloginfo('url');?>/appointments" class="button">Book Appointment</a>
+			<?php the_content();?>
 		</div>
 	</article>
 </section>	
