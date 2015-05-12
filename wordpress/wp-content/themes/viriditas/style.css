@@ -922,6 +922,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
 .login-box a.lost {
   color: #3d3777;
   float: left; }
+.login-box a.register {
+  color: #3d3777;
+  float: left; }
 
 .course-title {
   overflow: hidden;

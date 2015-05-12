@@ -1,6 +1,7 @@
 <?php
 function form_login() {
 	$logo=get_bloginfo('template_url')."/dist/images/logo.png";
+	$register=get_bloginfo('url')."/register";
 	$html='<div class="login-box">';
 	$html.='<form id="login-form" action="login" method="post">';
 	$html.='<img src="'.$logo.'">';
@@ -14,6 +15,7 @@ function form_login() {
 	$html.= wp_nonce_field( 'ajax-login-nonce', 'security' );
 	$html.='</form>';
 	$html.='<a class="lost" href="">Forgot your password?</a>';
+	$html.='<a class="register" href="'.$register.'">Register New?</a>';
 	$html.='</div>';
 	echo $html;
 }
