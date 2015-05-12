@@ -7,7 +7,15 @@
 
 function my_custom_login_logo() {
     echo '<style type="text/css">
-        h1 a { background-image:url('.get_bloginfo('template_directory').'/images/logo.png) !important; }
+		body {
+			background:#fff;
+		}
+        h1 a { 
+			background-size: contain!important;
+			background-image:url('.get_bloginfo('template_directory').'/dist/images/logo.png) !important;
+			height:85px!important;
+			width:68px!important;	
+		}
     </style>';
 }
 

@@ -102,3 +102,16 @@ input[type="button"] {
 	font-size:1em;
 	@include border-radius(5px);
 }
+
+.woocommerce #respond input#submit, 
+.woocommerce a.button, 
+.woocommerce button.button, 
+.woocommerce input.button {
+	@extend .button;
+	border:none;
+	font-weight:normal;
+	box-shadow:none;
+	margin-top:0;
+	font-size:1em;
+	@include border-radius(0px);
+}
