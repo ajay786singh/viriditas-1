@@ -541,6 +541,7 @@ section[role=content] {
 }
 
 .meta {
+	width:100%;
 	overflow:hidden;
 	ul {
 		padding-left:0;
@@ -593,6 +594,22 @@ section[role=content] {
 	a.lost {
 		color:$heading;
 		float:left;
+	}
+}
+.course-title {
+	overflow: hidden;
+	width:100%;
+	h4 {
+		float:left;
+		@include media($bp-large) {
+			width: 80%;
+		}
+	}
+	.button {
+		@include media($bp-large) {
+			float:right;
+		}
+		margin-top:0;
 	}
 }
 .course-action {

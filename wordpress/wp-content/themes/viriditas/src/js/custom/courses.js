@@ -5,6 +5,7 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 jQuery(document).ready(function($) {
+	$('a[href="#"]').click(function(e) { e.preventDefault ? e.preventDefault() : e.returnValue = false; });
 	$('.sidebar li a').click(function(){
 		var scroll = $(this).attr('rel');
 		var padding=$('section[role="content"]').css('padding-top');

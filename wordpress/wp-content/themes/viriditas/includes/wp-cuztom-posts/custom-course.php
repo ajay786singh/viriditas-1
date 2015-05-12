@@ -10,7 +10,7 @@ $args = array(
 $course = register_cuztom_post_type( 'Course', $args);
 $course_type = register_cuztom_taxonomy( 'Courses type', 'course' );
 // Add option to enable/disable register button to course
-$course_type->add_term_meta (
+/*$course_type->add_term_meta (
 	array(
 		array(
 			'name'        => 'register_on_off',
@@ -19,7 +19,7 @@ $course_type->add_term_meta (
 			'type'        => 'checkbox'
 		)
 	)
-);
+);*/
 
 $course->add_meta_box(
     'Course Details',
@@ -38,12 +38,12 @@ $course->add_meta_box(
             'description'   => 'Please enter gravity form id.',
 			'type'          => 'text'
         ),
-        array(
+        /*array(
             'name'          => 'image',
             'label'         => 'Course Banner Image',
             'description'   => 'Dimensions 1200px x 600px',
             'type'          => 'image',
-        ),
+        ),*/
         array(
             'name'          => 'description',
             'label'         => 'Course Description',

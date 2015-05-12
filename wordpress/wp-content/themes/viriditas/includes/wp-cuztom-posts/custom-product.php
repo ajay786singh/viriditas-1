@@ -1,6 +1,11 @@
 <?php
 //Create product custom post type
 $products = new Cuztom_Post_Type('product');
+add_action( 'init', 'product_remove_post_type_support', 10 );
+function product_remove_post_type_support() {
+    remove_post_type_support( 'product', 'editor' );
+	remove_post_type_support( 'product', 'custom-fields' );
+}
 $products->add_taxonomy( 'Body system' );
 $products->add_taxonomy( 'Actions' );
 $products->add_taxonomy( 'Indication' );
