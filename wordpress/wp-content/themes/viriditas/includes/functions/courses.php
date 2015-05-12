@@ -86,6 +86,8 @@ function get_sidebar_courses(){
 						echo "<li><a href='#' rel='".$id."'>".get_the_title()."</a></li>";
 						endwhile;
 					echo "</ul>";
+				else:
+					echo "<p>No course available.</p>";
 				endif;wp_reset_query();
 			}
 		}
@@ -126,12 +128,12 @@ function get_courses() {
 			<div class="course-heading">
 				<h2><?php echo $course;?></h2>
 				<?php 
-					if($register_on_off['_register_on_off']=='on') {
+					/*if($register_on_off['_register_on_off']=='on') {
 					$course_register_url=get_bloginfo('url').'/course-registration?form=8';	
 				?>
 				<a href="<?php echo $course_register_url;?>" class="button">Register Now</a>
 				<?php 
-					}
+					}*/
 				?>
 			</div>
 			<?php 
@@ -142,8 +144,8 @@ function get_courses() {
 					$dateFormat     = 'F j, Y';
 					$timeFormat     =  'g:i a';
 					// Get custom meta values
-					$imageID        = get_post_meta($id, '_course_details_image', true);
-					$imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
+					//$imageID        = get_post_meta($id, '_course_details_image', true);
+					//$imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
 					$description    = wpautop(get_post_meta($id, '_course_details_description', true));
 					$price          = get_post_meta($id, '_course_details_price', true);
 					$course_in_week       = get_post_meta($id, '_course_details_course_in_week', true);
@@ -158,7 +160,16 @@ function get_courses() {
 					}
 			?>
 					<div class="post-course" id="<?php echo $row_id;?>">
-						<?php the_title("<h4>","</h4>");?>
+						<div class="course-title">
+						<?php 
+							the_title("<h4>","</h4>");
+							if($register_open=='on') {
+								echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
+							}else {
+								echo '<a href="#" class="button">Register Soon</a>';
+							}									
+						?>
+						</div>
 						<div class="meta">
 							<ul>
 								<?php if($course_in_week):
@@ -182,13 +193,11 @@ function get_courses() {
 								if($price):
 									echo "<h4>$".$price."+tax</h4>";
 								endif;
-								if($register_on_off['_register_on_off']=='on') {	
-									if($register_open=='on') {
-										echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
-									}else {
-										echo '<a href="#" class="button">Register Soon</a>';
-									}									
-								}
+								if($register_open=='on') {
+									echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
+								}else {
+									echo '<a href="#" class="button">Register Soon</a>';
+								}									
 								echo "</div>";
 							echo "</div>";
 						endif ?>

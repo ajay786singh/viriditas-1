@@ -880,6 +880,7 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   margin: 0; }
 
 .meta {
+  width: 100%;
   overflow: hidden; }
   .meta ul {
     padding-left: 0;
@@ -921,6 +922,32 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
 .login-box a.lost {
   color: #3d3777;
   float: left; }
+
+.course-title {
+  overflow: hidden;
+  width: 100%; }
+  .course-title h4 {
+    float: left; }
+    @media screen and (min-width: 50em) {
+      .course-title h4 {
+        width: 80%; } }
+  .course-title .button, .course-title input[type="button"], .course-title .appointments-form input[type="submit"], .appointments-form .course-title input[type="submit"], .course-title #login-form input[type="submit"], #login-form .course-title input[type="submit"], .course-title .gform_wrapper .gform_button, .gform_wrapper .course-title .gform_button, .course-title .appointments-pagination a, .appointments-pagination .course-title a, .course-title .woocommerce #respond input#submit.alt, .woocommerce #respond .course-title input#submit.alt,
+  .course-title .woocommerce a.button.alt,
+  .woocommerce .course-title a.button.alt,
+  .course-title .woocommerce button.button.alt,
+  .woocommerce .course-title button.button.alt,
+  .course-title .woocommerce input.button.alt,
+  .woocommerce .course-title input.button.alt {
+    margin-top: 0; }
+    @media screen and (min-width: 50em) {
+      .course-title .button, .course-title input[type="button"], .course-title .appointments-form input[type="submit"], .appointments-form .course-title input[type="submit"], .course-title #login-form input[type="submit"], #login-form .course-title input[type="submit"], .course-title .gform_wrapper .gform_button, .gform_wrapper .course-title .gform_button, .course-title .appointments-pagination a, .appointments-pagination .course-title a, .course-title .woocommerce #respond input#submit.alt, .woocommerce #respond .course-title input#submit.alt,
+      .course-title .woocommerce a.button.alt,
+      .woocommerce .course-title a.button.alt,
+      .course-title .woocommerce button.button.alt,
+      .woocommerce .course-title button.button.alt,
+      .course-title .woocommerce input.button.alt,
+      .woocommerce .course-title input.button.alt {
+        float: right; } }
 
 .course-action {
   padding: 20px 0 30px; }
