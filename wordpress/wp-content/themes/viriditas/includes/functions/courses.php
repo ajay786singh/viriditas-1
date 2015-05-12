@@ -163,10 +163,8 @@ function get_courses() {
 						<div class="course-title">
 						<?php 
 							the_title("<h4>","</h4>");
-							if($register_open=='on') {
+							if($register_open !='' && $register_open =='on') {
 								echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
-							}else {
-								echo '<a href="#" class="button">Register Soon</a>';
 							}									
 						?>
 						</div>
@@ -195,8 +193,6 @@ function get_courses() {
 								endif;
 								if($register_open=='on') {
 									echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
-								}else {
-									echo '<a href="#" class="button">Register Soon</a>';
 								}									
 								echo "</div>";
 							echo "</div>";
