@@ -40,6 +40,11 @@
     </script>
 </head>
 <body <?php body_class();?>>
+<?php
+	if(is_archive('products') && !is_user_logged_in()) {
+		auth_redirect();
+	}
+?>
 <?php global $woocommerce; ?> 
 <div id="mm-menu-toggle" class="mm-menu-toggle">Menu</div>
   <nav id="mm-menu" class="mm-menu">

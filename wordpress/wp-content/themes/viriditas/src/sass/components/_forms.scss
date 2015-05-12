@@ -297,3 +297,7 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	margin-right:50px;
 	margin-top:30px;
 }
+.woocommerce form .form-row label, 
+.woocommerce-page form .form-row label {
+	float:left;
+}
