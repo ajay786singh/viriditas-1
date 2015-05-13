@@ -14,10 +14,9 @@ global $product;
 ?>
 <div class="column-9">
 <div class="shop-header">
-	<h6 class="heading"><a href="#" class="back-to-results">Back to Results</a></h6>
+	<h6 class="heading"><a href="<?php bloginfo('url');?>/products" class="back-to-results">Back to Products</a></h6>
 </div>
 <div class="single-product-content">
-	
 <?php
 	/**
 	 * woocommerce_before_single_product hook
