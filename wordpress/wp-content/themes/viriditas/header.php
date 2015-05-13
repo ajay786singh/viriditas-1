@@ -41,11 +41,15 @@
 </head>
 <body <?php body_class();?>>
 <?php
-	if(is_archive('product') || is_singular('product')) {
-		if(!is_user_logged_in()){
-			wp_redirect(wp_login_url( current_page_url()));
-			exit();
-		}
+	// if(is_archive('product') || is_singular('product')) {
+		// if(!is_user_logged_in()){
+			// wp_redirect(wp_login_url( current_page_url()));
+		// }
+	// }
+	if( !is_user_logged_in() ) { 
+		$redirect =  site_url('wp-login.php');
+		wp_redirect( $redirect ); 
+		exit;
 	}
 ?>
 <?php global $woocommerce; ?> 
