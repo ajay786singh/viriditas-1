@@ -49,7 +49,8 @@ function load_products () {
 		'orderby' => 'title',
 		'order' => 'ASC',
 		'paged'=>$paged,
-		'posts_per_page'=>36
+		'posts_per_page'=>36,
+		'post_status'=>array('publish')
 	);
 	if($order !='') {
 		$args['order']=$order;
