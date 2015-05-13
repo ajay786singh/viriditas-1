@@ -43,9 +43,8 @@
 <?php
 	if(is_archive('product') || is_singular('product')) {
 		if(!is_user_logged_in()){
-			echo "Test Login";
-			echo current_page_url();
-			//wp_redirect(wp_login_url( current_page_url()));
+			wp_redirect(wp_login_url( current_page_url()));
+			exit;
 		}
 	}
 ?>
