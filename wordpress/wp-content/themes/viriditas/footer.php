@@ -25,7 +25,6 @@
 						<p>copyright Viriditas <?php echo date('Y');?></p>
 						<p><a href="<?php echo get_permalink($privacy_policy_page_id);?>">Privacy policy</a> | <a href="<?php echo get_permalink($terms_conditions_page_id);?>">Terms of condition</a></p>
 					</div>
-					
 				</div>
 			</div>
 			<div class="secondary">
@@ -43,7 +42,7 @@
 				<div class="secondary">
 					<h6>Contact Us</h6>
 					<p>
-						2775 Dundas St. West<br>
+						2775 Dundas St. West, Suite 101<br>
 						Toronto, ON, M6P 1Y4<br>
 						Tel: 416-767-3428<br>
 						Fax: 416-767-1215<br>
