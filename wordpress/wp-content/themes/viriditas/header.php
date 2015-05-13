@@ -44,7 +44,6 @@
 	if(is_archive('product') || is_singular('product')) {
 		if(!is_user_logged_in()){
 			wp_redirect(wp_login_url( current_page_url()));
-			exit;
 		}
 	}
 ?>
