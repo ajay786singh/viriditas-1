@@ -41,9 +41,10 @@
 </head>
 <body <?php body_class();?>>
 <?php
+	echo "Test";
 	if(is_archive('product') || is_singular('product')) {
 		if(!is_user_logged_in()){
-			wp_redirect(wp_login_url( current_page_url()));	
+			wp_redirect(wp_login_url( current_page_url()));
 		}
 	}
 ?>
