@@ -41,8 +41,9 @@
 </head>
 <body <?php body_class();?>>
 <?php
-	if(!is_user_logged_in()) {
-		echo "Please login";//auth_redirect();
+	if(is_archive('product') && !is_user_logged_in()) {
+		//auth_redirect();
+		echo "Please login to Products";
 	}
 ?>
 <?php global $woocommerce; ?> 
