@@ -15,6 +15,7 @@ include('includes/wp-cuztom-posts/custom-worksheet.php');
 //Load custom functions
 require_once('includes/functions/add-classes-to-body.php');
 require_once('includes/functions/custom-login-logo.php');
+require_once('includes/functions/add-current-page-url.php');
 require_once('includes/functions/enqueue-style.php');
 require_once('includes/functions/enqueue-script.php');
 require_once('includes/functions/first-image.php');
