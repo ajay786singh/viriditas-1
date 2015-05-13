@@ -41,11 +41,11 @@
 </head>
 <body <?php body_class();?>>
 <?php
-	echo "Test";
 	if(is_archive('product') || is_singular('product')) {
-		//if(!is_user_logged_in()){
-			wp_redirect(wp_login_url( current_page_url()));
-		//}
+		if(!is_user_logged_in()){
+			echo "Test Login";
+			//wp_redirect(wp_login_url( current_page_url()));
+		}
 	}
 ?>
 <?php global $woocommerce; ?> 
