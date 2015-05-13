@@ -1,0 +1,25 @@
+.component_table_item .product-name .component dd, .component_table_item .product-price, .component_table_item .product-quantity, .component_table_item .product-subtotal, .component_table_item .product-total {
+	font-size: 85%;
+}
+
+.component_table_item .product-name > span, .woocommerce .component_table_item td.product-name > dl {
+	margin: 0 0 0 30px;
+	display: block;
+}
+
+.woocommerce .component_table_item td.product-name dl.variation, .woocommerce-page .component_table_item td.product-name dl.variation {
+	font-size: 85%;
+}
+
+.component_table_item td {
+	border-top: none !important;
+	border-bottom: none !important;
+}
+
+.component_container_table_item td {
+	border-bottom: none !important;
+}
+
+dt.component_title_meta, .component_notice {
+	margin: 12px 0 5px;
+}

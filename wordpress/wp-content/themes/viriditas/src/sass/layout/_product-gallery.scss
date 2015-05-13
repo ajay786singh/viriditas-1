@@ -166,6 +166,13 @@
 	.product_title {
 		display:none;
 	}
+	.product-title {
+		h4 {
+			@include media($bp-large) {
+				margin-bottom:0px;
+			}
+		}
+	}
 	div[itemprop="description"] {
 		display:none;
 	}

@@ -2093,6 +2093,9 @@ section[role="actions"] ul li a {
 
 .single-product-content .product_title {
   display: none; }
+@media screen and (min-width: 50em) {
+  .single-product-content .product-title h4 {
+    margin-bottom: 0px; } }
 .single-product-content div[itemprop="description"] {
   display: none; }
 .single-product-content .product-content {
