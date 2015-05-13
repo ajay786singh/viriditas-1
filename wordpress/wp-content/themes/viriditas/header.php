@@ -42,7 +42,7 @@
 <body <?php body_class();?>>
 <?php
 	if(!is_user_logged_in()) {
-		auth_redirect();
+		echo "Please login";//auth_redirect();
 	}
 ?>
 <?php global $woocommerce; ?> 
