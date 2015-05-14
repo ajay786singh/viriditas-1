@@ -163,7 +163,7 @@
 }
 
 .single-product-content {
-	.product_title {
+	& h1.product_title {
 		display:none;
 	}
 	.product-title {

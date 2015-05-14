@@ -45,8 +45,20 @@
 	?>
 	<div class="oddeven">
 		<div class="container">
+			<?php 
+				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'featured-1' );
+				if($image=="") {
+					$img="http://placehold.it/700x400&text=No%20Preview";
+				}else{
+					$img=$image[0];
+				}
+			?>
 			<span class="image">
-				<?php echo get_the_post_thumbnail($post->ID, 'full'); ?>
+				<?php 
+					if($image) {
+						echo "<div class='img'><img src='".$img."' /></div>";
+					}
+				?>
 			</span>
 			<span class="content">
 				<?php the_title("<h3>","</h3>"); ?>

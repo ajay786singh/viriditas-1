@@ -179,10 +179,19 @@ article {
         }
     }
     .thumb {
+		margin-bottom:50px;
         @include media($bp-large) {
             //@include pad(3em 0 0 0);
             @include span-columns(4);
         }
+		.img {
+			width:100%;
+			height:200px;
+			@include media($bp-large) {
+				height:240px;
+			}
+			overflow: hidden;
+		}
     }
 }
 
@@ -224,6 +233,9 @@ article {
 					float:right;
 				}
 			}
+			.img {
+				border-color:$oddeven-background;
+			}
 		}
 		.content {
 			@include media($bp-large) {
@@ -235,8 +247,18 @@ article {
 		@include media($bp-large) {
 			width: 50%;
 		}
-		img {
+		.img {
+			width:100%;
+			height:175px;	
+			@include media($bp-large) {
+				height:350px;
+			}
 			border:10px solid $white;
+			overflow:hidden;			
+			img {
+				height: auto;
+				width: 100%;
+			}
 		}
 	}	
     .content {
@@ -273,6 +295,20 @@ article {
 	.image {
 		display: block;
 		margin-bottom:10px;
+		.img {
+			width:100%;
+			@include media($bp-large) {
+				height:300px;
+			}
+			overflow: hidden;
+		}
+	}
+	&.block-grid-3 {
+		.img {
+			width:100%;
+			height:180px;
+			overflow: hidden;
+		}
 	}
 }
 .faq-content {

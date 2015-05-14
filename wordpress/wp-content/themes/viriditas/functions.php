@@ -27,13 +27,16 @@ require_once('includes/functions/register-menu.php');
 require_once('includes/functions/remove-menu-id.php');
 require_once('includes/functions/add-woocommerce-support.php');
 require_once('includes/functions/add-cart-link-header.php');
-require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/get-term-top-level-parent.php');
 require_once('includes/functions/register-widgets.php');
 require_once('includes/functions/courses.php');
 require_once('includes/functions/appointments.php');
 require_once('includes/functions/faq.php');
 require_once('includes/functions/edit-tag-cloud.php');
+// Woocommerce Functions
+require_once('includes/functions/woocommerce-ajax.php');
+require_once('includes/functions/add-single-cart.php');
+
 // Load Login/Register
 require_once('includes/login-register/register.php');
 require_once('includes/login-register/login.php');

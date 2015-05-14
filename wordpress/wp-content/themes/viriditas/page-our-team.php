@@ -63,7 +63,7 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 								$img=$image[0];
 							}
 						?>
-						<img src="<?php echo $img;?>">
+						<div class="img"><img src="<?php echo $img;?>"></div>
 					</span>
 					<span class="content">
 						<h4><?php the_title(); ?></h4>
@@ -120,7 +120,7 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 								$img=$image[0];
 							}
 						?>
-						<img src="<?php echo $img;?>">
+						<div class="img"><img src="<?php echo $img;?>"></div>
 					</span>
 					<span class="content">
 						<h4><?php the_title(); ?></h4>

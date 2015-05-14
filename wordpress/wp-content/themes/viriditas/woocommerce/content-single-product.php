@@ -71,7 +71,13 @@ global $product;
 				// print_r($prices);
 				//$price = price_array($price_html);
 				//print_r($price);
-				do_action( 'woocommerce_single_product_summary' );
+				//do_action( 'woocommerce_single_product_summary' );
+				
+				if($product->product_type=='bundle') {
+					get_cart_bundled();
+				}else{
+					do_action( 'woocommerce_single_product_summary');
+				}
 			?>
 			<?php 
 				if(get_the_excerpt()) { 
@@ -82,24 +88,28 @@ global $product;
 			?>
 			<div class="accordion">
 				<?php 
-					$composition=get_post_meta($post->ID,'_product_details_composition',true);
-					if($composition!='' && $composition!=-1) {
+					//Composition list will be for bundled data (Professional Herbal Combination or Make your own compound Products)
+					if($product->product_type=='bundle') {
+						$product_bundled_data=$product->bundle_data;
+						if($product_bundled_data && count($product_bundled_data)> 0 ) {
 				?>
 					<div class="accordion-panel">
 						<h5 class="accordion-panel-header">Composition List</h5>
 						<div class="accordion-panel-content">
 							<?php
 								$compositions="";
-								for($i=0;$i<count($composition);$i++) {
-									//if($post->ID!=$composition[$i]) {
-										$compositions[]=get_product_info($composition[$i]);
-									//}
+								foreach($product_bundled_data as $key=>$value) {
+									$id = $value['product_id'];
+									$compositions[]=get_product_info($id);
 								}
 								echo implode(', ', $compositions );
 							?>
 						</div>
 					</div>
-				<?php } ?>
+				<?php 
+					} 
+				} //For Bundled Data
+				?>
 				
 				<?php 
 					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
