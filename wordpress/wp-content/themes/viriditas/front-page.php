@@ -58,7 +58,12 @@
 			$pages = get_pages($args); 
 			if($pages ) {
 				foreach ( $pages as $page ) {				
-					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $page->ID ), 'full' );
+					$image = wp_get_attachment_image_src( get_post_thumbnail_id( $page->ID ), 'featured-1' );
+					if($image=="") {
+						$img="http://placehold.it/700x500&text=No%20Preview";
+					}else{
+						$img=$image[0];
+					}
 					$content = $page->post_content;
 					if ( ! $content ) // Check for empty page
 						continue;
@@ -67,7 +72,7 @@
 		?>
 						<div class="thumb">
 							<a href="<?php echo $redirect_url;?>">
-								<img src="<?php echo $image[0];?>">
+								<div class="img"><img src="<?php echo $img;?>"></div>
 								<h5><?php echo $page->post_title;?></h5>
 								<?php echo $content;?>
 							</a>
