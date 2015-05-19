@@ -1844,6 +1844,36 @@ article {
 	background: rgba(0,0,0,0.8);
 	z-index: 20000;
 }*/
+.popup-box {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  background: #fff;
+  width: 80%;
+  left: 10%;
+  height: 80%;
+  top: 10%; }
+
+.popup-box-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 50px; }
+
+.open-popup {
+  overflow: hidden; }
+  .open-popup .popup-overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    position: fixed;
+    z-index: 9999; }
+  .open-popup .popup-box {
+    display: block; }
+
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
 .woocommerce .button, .woocommerce input[type="button"], .woocommerce .appointments-form input[type="submit"], .appointments-form .woocommerce input[type="submit"], .woocommerce #login-form input[type="submit"], #login-form .woocommerce input[type="submit"], .woocommerce .gform_wrapper .gform_button, .gform_wrapper .woocommerce .gform_button, .woocommerce .appointments-pagination a, .appointments-pagination .woocommerce a, .woocommerce #respond input#submit.alt,
@@ -2134,6 +2164,30 @@ section[role="actions"] ul li a {
   padding-top: 10px; }
 .single-product-content .product_meta {
   display: none; }
+.single-product-content .product-actions ul {
+  list-style: none;
+  margin: 10px 0 0;
+  padding-left: 0;
+  overflow: hidden; }
+  .single-product-content .product-actions ul li {
+    margin-left: 0;
+    margin-bottom: 5px;
+    overflow: hidden; }
+    .single-product-content .product-actions ul li input[type="radio"] {
+      vertical-align: middle; }
+    .single-product-content .product-actions ul li label {
+      display: inline; }
+    .single-product-content .product-actions ul li span {
+      display: inline-block;
+      float: left;
+      margin-right: 15px;
+      margin-top: 10px; }
+      .single-product-content .product-actions ul li span a.button, .single-product-content .product-actions ul li span .gform_wrapper a.gform_button, .gform_wrapper .single-product-content .product-actions ul li span a.gform_button, .single-product-content .product-actions ul li span .appointments-pagination a, .appointments-pagination .single-product-content .product-actions ul li span a {
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        background-clip: padding-box;
+        /* stops bg color from leaking outside the border: */ }
 .single-product-content .price del {
   display: block; }
 .single-product-content .price ins {

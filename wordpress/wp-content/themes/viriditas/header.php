@@ -20,15 +20,12 @@
             <meta property="og:type" content="website" />
             <meta property="og:image" content="<?php bloginfo('template_url' ); ?>/images/logo.png">
     <?php } endwhile; endif; ?>
-    <?php wp_reset_query(); ?>
-    
+    <?php wp_reset_query(); ?>    
     <?php wp_head(); ?>
-    
 	<script type="text/javascript">
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 		var redirect = '<?php echo $_SERVER['REQUEST_URI']; ?>';
 	</script>
-
     <script>
         (function(d) {
         var config = {
@@ -57,12 +54,6 @@
   </nav><!-- /nav -->
 <div id="wrapper" class="wrapper">
 <!-- Header Starts Here -->
-<?php 
-	// $header_class="";
-	// if(is_page() || is_archive()) {
-		// $header_class.=" active-header";
-	// }
-?>
 <?php if(get_faqs_box_content()) echo get_faqs_box_content();?>
 <header class="top-header">
 	<div class="container">
