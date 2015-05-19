@@ -66,6 +66,7 @@ global $product;
 				<a href="<?php echo get_permalink($monograph[0]);?>" class="view-monograph">view monograph</a>
 				<?php } ?>
 			</div>
+			<div class="product-actions">
 			<?php
 				// $prices = $product->get_price_html();
 				// print_r($prices);
@@ -74,11 +75,31 @@ global $product;
 				//do_action( 'woocommerce_single_product_summary' );
 				
 				if($product->product_type=='bundle') {
-					get_cart_bundled();
+				?>	
+					<?php get_cart_bundled();?>
+					<div class="popup-overlay"></div>
+					<div class="edit-formula popup-box">
+						<div class="popup-box-content">
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1><h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+						</div>
+					</div>
+				<?php	
 				}else{
 					do_action( 'woocommerce_single_product_summary');
 				}
 			?>
+			</div>
 			<?php 
 				if(get_the_excerpt()) { 
 					echo '<div class="product-content">';

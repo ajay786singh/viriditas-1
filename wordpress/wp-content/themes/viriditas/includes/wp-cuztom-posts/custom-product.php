@@ -7,7 +7,7 @@ function product_remove_post_type_support() {
 	remove_post_type_support( 'product', 'custom-fields' );
 }
 $products->add_taxonomy( 'Body system' );
-$products->add_taxonomy( 'Actions' );
+//$products->add_taxonomy( 'Actions' );
 $products->add_taxonomy( 'Indication' );
 $products->add_meta_box(
     'Product Details',
@@ -28,18 +28,18 @@ $products->add_meta_box(
 				'post_type' => 'monograph',
 			)
         ),
-		array(
-            'name'          => 'composition',
-            'label'         => 'Composition',
-            'description'   => '',
-            'type'          => 'post_checkboxes',
-			'args'       => array(
-				'post_type' => 'product',
-				'product_cat' => 'single-herb-tincture',
-				'orderby' => 'title',
-				'order' => 'ASC',
-			)
-        ),
+		// array(
+            // 'name'          => 'composition',
+            // 'label'         => 'Composition',
+            // 'description'   => '',
+            // 'type'          => 'post_checkboxes',
+			// 'args'       => array(
+				// 'post_type' => 'product',
+				// 'product_cat' => 'single-herb-tincture',
+				// 'orderby' => 'title',
+				// 'order' => 'ASC',
+			// )
+        // ),
 		array(
             'name'          => 'warnings',
             'label'         => 'Warnings & Interactions',

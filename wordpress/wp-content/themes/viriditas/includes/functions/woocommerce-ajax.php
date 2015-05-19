@@ -251,6 +251,22 @@ function get_product_info($id) {
 * @param: Taxonomy
 */
 
+function get_body_systems() {
+	$taxonomy='body_system';
+	$args = array(
+		'orderby'           => 'name', 
+		'order'             => 'ASC',
+		'parent'            =>0,
+		'hierarchical'      => true, 
+	);
+	$terms = get_terms($taxonomy, $args);
+	print_r($terms);
+	die(0);
+}
+
+add_action( 'wp_ajax_get_body_systems', 'get_body_systems' );
+add_action( 'wp_ajax_nopriv_get_body_systems', 'get_body_systems' );
+
 function get_product_terms() {
 	global $wp_query;
 	$post_type='product';
@@ -290,9 +306,6 @@ function get_product_terms() {
 	$terms = wp_get_object_terms( $objects_ids, $taxonomy );
 		if($terms) {
 			$result='<div class="filter filter-'.$taxonomy.'">';
-			// $result.='<div class="shop-header">';
-			// $result.='<h6 class="heading">Filter by '.$taxonomy_name.'</h6>';
-			// $result.='</div>';
 			$result.='<select class="by-'.$taxonomy.'">';
 				$result.='<option value="" class="hidden-option">FILTER BY '.strtoupper($taxonomy_name).'</option>';
 			foreach($terms as $term) {
