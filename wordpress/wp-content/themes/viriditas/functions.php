@@ -33,6 +33,8 @@ require_once('includes/functions/courses.php');
 require_once('includes/functions/appointments.php');
 require_once('includes/functions/faq.php');
 require_once('includes/functions/edit-tag-cloud.php');
+//Remove Emoji Script From Site
+require_once('includes/functions/remove-wordpress-emoji.php');
 // Woocommerce Functions
 require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/add-single-cart.php');
@@ -46,8 +48,4 @@ require_once('includes/login-register/login.php');
 //require_once('includes/shortcodes/content-sidebar.php');
 //require_once('includes/shortcodes/readmore.php');
 require_once('includes/shortcodes/tab.php');
-
-//Remove Emoji Script From Site
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'wp_print_styles', 'print_emoji_styles' );
 ?>
