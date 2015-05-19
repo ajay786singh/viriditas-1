@@ -46,4 +46,8 @@ require_once('includes/login-register/login.php');
 //require_once('includes/shortcodes/content-sidebar.php');
 //require_once('includes/shortcodes/readmore.php');
 require_once('includes/shortcodes/tab.php');
+
+//Remove Emoji Script From Site
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+remove_action( 'wp_print_styles', 'print_emoji_styles' );
 ?>
