@@ -41,6 +41,9 @@ function load_products () {
 	$order=$_POST['order'];
 	$paged = $_POST['paged'];
 	$view_mode = $_POST['view_mode'];
+	if($action_id !='') {
+		$body_system_id=$action_id;
+	}
 	if($view_mode=='') {
 		$view_mode='thumb_view';
 	}
@@ -94,7 +97,6 @@ function load_products () {
 	$filter=array(
 		'product_cat'=>array_filter(array($cat_id)),
 		'body_system'=>array_filter(array($body_system_id)),
-		'actions'=>array_filter(array($action_id)),
 		'indication'=>array_filter(array($indication_id))
 	);
 	$filter_terms=array_filter($filter);
@@ -120,8 +122,10 @@ function load_products () {
 		}
 		$args['tax_query'] = $tax_query;
 	}
+	
 	ob_start ();
 	$query=new WP_Query($args);
+	//echo $count=$query->found_posts;
 	$max_pages=$query->max_num_pages;
 	if($query->have_posts()){
 		$next = get_next_posts_link('Older', $max_pages);
@@ -160,52 +164,34 @@ add_action( 'wp_ajax_nopriv_load_products', 'load_products' );
 */
 function get_actions() {
 	global $wp_query;
-	$cat=$_POST['category'];
-	$category = get_term_by('name', $cat, 'product_cat');
-	
-	$body_system_id=$_POST['body_system'];
-	$args=array(
-			'post_type' => 'product',
-			'numberposts' => -1,
-			'tax_query' => array(
-				'relation'=>'AND',
-				array(
-					'taxonomy' => 'product_cat',
-					'field' => 'term_id',
-					'terms' => $cat
-				),
-				array(
-					'taxonomy' => 'body_system',
-					'field' => 'term_id',
-					'terms' => $body_system_id
-				)
-			)
-		);
-	$objects_ids='';
-	$body_system_term = get_term_by( 'id', $body_system_id, 'body_system' );
-	$body_match = explode(" ",$body_system_term->name);	
-	
-	$objects = get_posts( $args );
-	foreach ($objects as $object) {
-		$objects_ids[] = $object->ID;
+	$pa=$_POST['active_val'];
+	$pb=$_POST['pb'];
+	$taxonomies = array( 'body_system' );
+	$args = array(
+		'hide_empty'        => true, 
+		'hierarchical'      => true, 
+		'child_of'          => 0,
+	); 
+	if($pb!='') {
+		$args['child_of']=$pb;
 	}
-	$actions = wp_get_object_terms( $objects_ids, 'actions' );
-	if($actions) {
-		$result='<div class="filter filter-actions">';
-		$result.='<div class="shop-header">';
-		$result.='<h6 class="heading">Filter by Actions</h6>';
-		$result.='</div>';
-		$result.='<ul>';	
-		foreach($actions as $action) {
-			$action_match = explode(" ",$action->name);	
-			if($action_match[0]==$body_match[0]) {
-				$result.="<li><a href='#' data-value='".$action->term_id."'>".$action->name."</a></li>";
+	
+	$terms = get_terms( $taxonomies, $args );
+	if($terms) {
+			$result='<div class="filter filter-actions">';
+			$result.='<select class="by-actions">';
+				$result.='<option value="" class="hidden-option">FILTER BY ACTIONS </option>';
+			foreach($terms as $term) {
+				if($pa==$term->term_id) {
+					$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+				} else {
+					$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+				}
 			}
+			$result.='</select>';	
+			$result.='</div>';	
 		}
-		$result.='</ul>';
-		$result.='</div>';
-	}
-	echo $result;
+	 echo $result;
 	die();
 }
 add_action( 'wp_ajax_get_actions', 'get_actions' );
@@ -251,22 +237,6 @@ function get_product_info($id) {
 * @param: Taxonomy
 */
 
-function get_body_systems() {
-	$taxonomy='body_system';
-	$args = array(
-		'orderby'           => 'name', 
-		'order'             => 'ASC',
-		'parent'            =>0,
-		'hierarchical'      => true, 
-	);
-	$terms = get_terms($taxonomy, $args);
-	print_r($terms);
-	die(0);
-}
-
-add_action( 'wp_ajax_get_body_systems', 'get_body_systems' );
-add_action( 'wp_ajax_nopriv_get_body_systems', 'get_body_systems' );
-
 function get_product_terms() {
 	global $wp_query;
 	$post_type='product';
@@ -280,7 +250,7 @@ function get_product_terms() {
 		$pc=$_POST['pc'];
 	}
 	$pi=$_POST['pi'];
-	$filters=array_filter(array('actions'=>$pa,'body_system'=>$pb,'product_cat'=>$pc,'indication'=>$pi));
+	$filters=array_filter(array('body_system'=>$pa,'body_system'=>$pb,'product_cat'=>$pc,'indication'=>$pi));
 	$args=array(
 		'post_type' => $post_type,
 		'numberposts' => $no_of_posts,
@@ -309,27 +279,49 @@ function get_product_terms() {
 			$result.='<select class="by-'.$taxonomy.'">';
 				$result.='<option value="" class="hidden-option">FILTER BY '.strtoupper($taxonomy_name).'</option>';
 			foreach($terms as $term) {
-				if($taxonomy=='body_system' && $pb!='') {
-					if($pb==$term->term_id) {
-						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-					} else {
-						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
-					}
-				} else if($taxonomy=='indication' && $pi!='') {
-					if($pi==$term->term_id) {
-						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-					} else {
-						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
-					}
-				}else if($taxonomy=='actions' && $pa!='') {
-					if($pa==$term->term_id) {
-						$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-					} else {
-						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+				// if($taxonomy!='body_system' && $parent<=0) {
+					// if($taxonomy=='body_system' && $pb!='') {
+						// if($pb==$term->term_id) {
+							// $result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+						// } else {
+							// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
+						// }
+					// } else if($taxonomy=='indication' && $pi!='') {
+						// if($pi==$term->term_id) {
+							// $result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+						// } else {
+							// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
+						// }
+					// }else if($taxonomy=='actions' && $pa!='') {
+						// if($pa==$term->term_id) {
+							// $result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+						// } else {
+							// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
+						// }
+					// } else {
+						// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
+					// }
+				// }
+				if($taxonomy=='body_system') {
+					$parent=$term->parent;
+					if($parent==0) {
+						if($pb==$term->term_id) {
+							$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+						} else {
+							$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+						}
 					}
 				} else {
-					$result.="<option value='".$term->term_id."'>".$term->name."</option>";
-				}
+					if($taxonomy=='indication' && $pi!='') {
+						if($pi==$term->term_id) {
+							$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+						} else {
+							$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+						}
+					} else {
+						$result.="<option value='".$term->term_id."'>".$term->name."</option>";
+					}	
+				}				
 			}
 			$result.='</select>';	
 			$result.='</div>';	

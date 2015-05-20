@@ -169,51 +169,47 @@ function toParams(searchUrl) {
 						mobile: true,
 						change:function() {
 							var dk = this;
-							$this.filterSelectTerms(filter,dk.value);
 							if(taxonomy =='body_system') {
-								$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
-								$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-							} else if(taxonomy =='actions') {
-								$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+								//$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
+								var url=removeURLParameter('pa');					
+								window.history.pushState({path:url},'',url);
+								$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+								//$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 							}
+							$this.filterSelectTerms(filter,dk.value);
 						}
 					});
 				}	
 			}
 		});
 	},
-	$.fn.fetchActions = function( category, body_system) {
+	$.fn.fetchActions = function(taxonomy,pb,filter,active_val) {
 		var $this = $(this);
+		//var pb=getParameterByName('pb'); //Products by Body Systems
 		$this.empty();
 		$this.addClass('small-loader');
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
-			data:{action: 'get_actions','category':category,'body_system':body_system },
+			data:{action: 'get_actions','pb':pb,'active_val':active_val},
 			success: function(html) {
 				$this.removeClass('small-loader');
 				if(html!=''){
-					$this.append(html);
-					 $this.find('ul li a').click(function(){
-						$(this).toggleClass('checked');
-						var actions = [];
-						$this.find('ul li a').each(function(){
-							if($(this).hasClass('checked')==true) {
-								var val=$(this).attr('data-value');
-								actions.push(val);
-							}
-						});
-						if(actions !='') {
-							var url = replaceParam('pa', decodeURIComponent(actions.join(",")));
-							window.history.pushState({path:url},'',url);
-						} else {
-							var url=removeURLParameter('pa');					
-							window.history.pushState({path:url},'',url);
-						}					
-						$('.product-list').empty();
-						$('.product-list').showProducts({page:1});
-						return false;
-					 });
+					$this.append(html);					
+					$this.find('select').dropkick({
+						mobile: true,
+						change:function() {
+							var dk = this;
+							$this.filterSelectTerms(filter,dk.value);
+							// if(taxonomy =='body_system') {
+							//	$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
+								// $('section[role="actions"]').fetchActions('body_system','pa',pa);
+								// $('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+							// } else if(taxonomy =='actions') {
+								// $('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+							// }
+						}
+					});
 				}	
 			}
 		});			
@@ -295,7 +291,8 @@ jQuery(document).ready(function($){
 				window.history.pushState({path:url},'',url);
 				$('section[role="category"]').filterSelectTerms('pc',dk.value);
 				$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-				$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
+				//$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
+				$('section[role="actions"]').fetchActions('body_system','pa',pa);
 				$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 				// $('.product-list').empty();
 				// $('.product-list').showProducts({page:1});
@@ -311,7 +308,7 @@ jQuery(document).ready(function($){
 		}
 		
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-		$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
+		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
 		$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 		
 		$('a.sort_by').click(function(){
