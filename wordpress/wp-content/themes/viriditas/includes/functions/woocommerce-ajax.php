@@ -341,3 +341,16 @@ function ccw_custom_woo_placeholder(){
 		return $src;
 	}
 }
+
+/*
+* Show Compound List
+*/
+
+function show_compound_products() {
+	echo "<pre>";
+	print_r($_POST);
+	echo "</pre>";
+	die(0);
+}
+add_action( 'wp_ajax_show_compound_products', 'show_compound_products' );
+add_action( 'wp_ajax_nopriv_show_compound_products', 'show_compound_products' );

@@ -40,12 +40,12 @@ body.mm-menu-open {
 
 .mm-menu-toggle {
 	position: fixed;
-	top: 30px; 
+	top: 38px; 
 	@include media($bp-large) {
 		display:none;
 	}
 	.admin-bar & {
-		top: 65px; 		 
+		top: 83px; 		 
 		@include media($bp-large) {
 			top: 50px; 
 		}

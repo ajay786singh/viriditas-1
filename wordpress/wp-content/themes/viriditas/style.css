@@ -680,7 +680,7 @@ footer .copyright p {
         position: relative; }
     .main-menu-desktop ul:nth-child(2) {
       margin-bottom: 1em;
-      margin-top: 0.5em; }
+      margin-top: 2.5em; }
 
 .team-member .content h4 {
   margin-bottom: 0; }
@@ -1125,7 +1125,7 @@ body.mm-menu-open {
 
 .mm-menu-toggle {
   position: fixed;
-  top: 30px;
+  top: 38px;
   right: 30px;
   padding-right: 35px;
   z-index: 21001;
@@ -1140,7 +1140,7 @@ body.mm-menu-open {
     .mm-menu-toggle {
       display: none; } }
   .admin-bar .mm-menu-toggle {
-    top: 65px; }
+    top: 83px; }
     @media screen and (min-width: 50em) {
       .admin-bar .mm-menu-toggle {
         top: 50px; } }
@@ -1536,6 +1536,23 @@ section[role=banner] {
       .column-3:last-child {
         margin-right: 0; } }
 
+.column-4 {
+  float: left;
+  display: block;
+  margin-right: 15.38462%;
+  width: 100%;
+  position: relative; }
+  .column-4:last-child {
+    margin-right: 0; }
+  @media screen and (min-width: 50em) {
+    .column-4 {
+      float: left;
+      display: block;
+      margin-right: 5.88235%;
+      width: 29.41176%; }
+      .column-4:last-child {
+        margin-right: 0; } }
+
 .column-7 {
   float: left;
   display: block;
@@ -1873,6 +1890,21 @@ article {
     z-index: 9999; }
   .open-popup .popup-box {
     display: block; }
+
+.compound-header {
+  background: #b8b8b8;
+  padding: 5px 15px 2px;
+  text-transform: uppercase;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
+  margin-bottom: 15px; }
+
+.compound-content {
+  width: 85%; }
+  .compound-content ul li {
+    margin-left: 0; }
 
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
