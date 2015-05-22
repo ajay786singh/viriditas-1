@@ -56,7 +56,7 @@
 				<nav class="main-menu-desktop">
 					<?php global $woocommerce; ?> 
 						<ul>
-							<?php if ( is_user_logged_in() ) { ?>
+							<?php /* if ( is_user_logged_in() ) { ?>
 								<li>
 								<?php if(is_archive('post-type-archive-product')){?>
 								<a class="popup-modal" href="#faq-box">*FAQ*</a>
@@ -69,7 +69,7 @@
 								<a href="" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
 								<?php form_login();?>
 								</li>
-						<?php } ?>
+						<?php } */ ?>
 						</ul>
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
 				</nav>
