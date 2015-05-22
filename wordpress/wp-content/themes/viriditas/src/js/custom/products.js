@@ -143,51 +143,11 @@ function toParams(searchUrl) {
 			return false;
 		});
 	},
-	$.fn.showCompound = function(options) {
-        var settings = $.extend({
-            container    : $(this),
-			page         : 1,
-			category     : getParameterByName('pc'),
-            body_system  : getParameterByName('pb'),
-            indication   : getParameterByName('pi'),
-			action 		 : getParameterByName('pa'),
-			view_mode    : getParameterByName('vm'),
-			search_folk  : getParameterByName('s'),
-			sort_by : getParameterByName('sort_by'),
-			sort_by_alpha : getParameterByName('sort_by_alpha'),
-			order : getParameterByName('order'),
-			loader    	 : $('.message')
-        }, options);
-		settings.loader.empty().loaderShow();
-		$.ajax({
-			type: 'POST',
-			url: ajaxurl,
-			data:{
-				action: 'show_compound_products',
-			},
-			beforeSend: function() {
-				settings.loader.loaderShow();
-			},
-			success: function(html) {
-				settings.loader.loaderHide();
-				if(html!='' && html!=1) {
-					alert(html);
-				} else if(html==1) {
-					settings.loader.html("<h6>No records found.</h6>");
-				}
-			}
-		});
-	},
 	$.fn.filterSelectTerms = function(filter,val) {
 		var url = replaceParam(filter, val);
 		window.history.pushState({path:url},'',url);
-		if($('.filter-compound').length !=1) {
-			$('.product-list').empty();
-			$('.product-list').showProducts({page:1});
-		}else {
-			$('.product-list').empty();
-			$('.product-list').showCompound();
-		}
+		$('.product-list').empty();
+		$('.product-list').showProducts({page:1});
 	},
 	$.fn.fetchSelectTerms = function(taxonomy,filter,active_val) {
 		var $this = $(this);
@@ -211,8 +171,10 @@ function toParams(searchUrl) {
 							var dk = this;
 							if(taxonomy =='body_system') {
 								//$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
-								var url=removeURLParameter('pa');					
-								window.history.pushState({path:url},'',url);
+								if(getParameterByName('pa')) {
+									var url=removeURLParameter('pa');					
+									window.history.pushState({path:url},'',url);
+								}
 								$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
 								//$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 							}
