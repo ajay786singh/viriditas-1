@@ -121,6 +121,14 @@
 			}
 		}
 	}
+	&.compound-list {
+		ul {
+			li {
+				@include span-columns(12);
+				margin-bottom:10px;
+			}
+		}
+	}
 	
 }
 
