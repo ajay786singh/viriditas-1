@@ -65,7 +65,69 @@ function toParams(searchUrl) {
 }
 
 (function($) {
-    $.fn.showProducts = function( options ) {
+    $.fn.showCompound = function( options ) {
+		var settings = $.extend({
+            container    : $(this),
+			page         : 1,
+            body_system  : getParameterByName('pb'),
+			action 		 : getParameterByName('pa'),
+			search_folk  : getParameterByName('s'),
+			sort_by : getParameterByName('sort_by'),
+			loader    	 : $('.message')
+        }, options);
+		settings.container.empty();
+		settings.container.empty().loaderShow();
+		$.ajax({
+			type: 'POST',
+			url: ajaxurl,
+			data:{
+				action: 'show_compound_products',
+				'filter_type_body_system':settings.body_system,
+				'filter_type_action':settings.action,
+				'search_folk':settings.search_folk,
+			},
+			success: function(html) {
+				settings.container.loaderHide();
+				if(html!='' && html!=1) {
+					settings.container.empty().html(html);
+					//settings.container.addCompound('a');
+					jQuery(".compound-product").unbind('click').bind("click", function(e){
+						e.preventDefault();
+						var id=$(this).attr('data-id');
+						var name=$(this).attr('data-name');
+						if($(this).hasClass('added')==false) {
+							$(this).addCompound(id,name);
+						}
+						$(this).addClass('added')
+						//alert(id);
+					});
+				} else if(html==1) {
+					settings.container.empty().html("<h6>No records found.</h6>");
+					//settings.loader.html("<h6>No records found.</h6>");
+				}
+			}
+		});	
+	},
+	$.fn.addCompound = function( id,name ) {
+		var html="<li><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> "+name+"</li>";
+		if($('.additions ul li').length<=6) {
+			$('.additions ul').append(html);
+		}else {
+			alert("You can add max 7 herbs to your compound.");
+		}
+		jQuery(".remove-compound").unbind('click').bind("click", function(e){
+			e.preventDefault();
+			var id=$(this).attr('id');
+			id=id.replace('remove-','');
+			$('#compound-'+id).removeClass('added');
+			$(this).parent().remove();
+		});	
+	},
+	$.fn.remvoeCompound = function( id ) {
+		//var removeItem='remove-'
+		$('.additions ul').find(id).remove();
+	},
+	$.fn.showProducts = function( options ) {
         // Establish our default settings
 		$('.list-products').show();
 		$('.single-product-detail').empty().hide();
@@ -146,8 +208,12 @@ function toParams(searchUrl) {
 	$.fn.filterSelectTerms = function(filter,val) {
 		var url = replaceParam(filter, val);
 		window.history.pushState({path:url},'',url);
-		$('.product-list').empty();
-		$('.product-list').showProducts({page:1});
+		if($('.filter-compound').length) {
+			$('.compound-content .product-list').showCompound();
+		} else {
+			$('.product-list').empty();
+			$('.product-list').showProducts({page:1});
+		}
 	},
 	$.fn.fetchSelectTerms = function(taxonomy,filter,active_val) {
 		var $this = $(this);

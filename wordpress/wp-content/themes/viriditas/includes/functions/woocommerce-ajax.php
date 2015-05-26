@@ -347,10 +347,85 @@ function ccw_custom_woo_placeholder(){
 */
 
 function show_compound_products() {
-	echo "<pre>";
-	print_r($_POST);
-	echo "</pre>";
-	die(0);
+	global $wp_query,$wpdb;
+	
+	$body_system_id=$_POST['filter_type_body_system'];
+	$action_id = $_POST['filter_type_action'];
+	$keyword=$_POST['search_folk'];
+	if($action_id !='') {
+		$body_system_id=$action_id;
+	}
+	$args=array(
+		'post_type' =>'product',
+		'orderby' => 'title',
+		'order' => 'ASC',
+		'paged'=>$paged,
+		'showposts'=>-1,
+		'post_status'=>array('publish')
+	);
+	
+	if($keyword !='') {
+		$args['s'] = $keyword;
+		// $args['meta_query'] = array(
+            // array(
+               // 'key' => '_product_details_folk_name',
+               // 'value' => $keyword,
+               // 'compare' => 'LIKE'
+            // )
+        // );
+	}
+	
+	$filter=array(
+		'body_system'=>array_filter(array($body_system_id)),
+		'product_cat'=>array_filter(array(327)),
+	);
+	$filter_terms=array_filter($filter);
+	if(count($filter_terms)== 1) {
+		foreach ($filter_terms as $key => $value) {
+			$args['tax_query'] = array(
+					array(
+					'taxonomy' => $key,
+					'terms' => $value,
+					'field' => 'term_id',
+					)
+			);		
+		}
+	} else if(count($filter_terms) > 1){
+		$tax_query="";
+		$tax_query['relation'] = 'AND';
+		foreach ($filter_terms as $key => $value) {
+			$tax_query[] = array(
+					'taxonomy' => $key,
+					'terms' => $value,
+					'field' => 'term_id',
+				);				
+		}
+		$args['tax_query'] = $tax_query;
+	}
+	
+	ob_start ();
+	$query=new WP_Query($args);
+	//echo $count=$query->found_posts;
+	$max_pages=$query->max_num_pages;
+	if($query->have_posts()){
+		$next = get_next_posts_link('Older', $max_pages);
+		echo '<ul>';
+		while($query->have_posts()):$query->the_post();
+	?>	
+		<li id="product-<?php echo get_the_ID();?>">
+			<a href="#" id="compound-<?php echo get_the_ID();?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product"><?php the_title();?></a>
+		</li>
+	<?php
+		endwhile;
+		echo "</ul>";
+	} else {
+		echo "1";
+	}
+	wp_reset_query();
+	$response = ob_get_contents();
+	ob_end_clean();
+	echo $response;
+	die();
 }
 add_action( 'wp_ajax_show_compound_products', 'show_compound_products' );
 add_action( 'wp_ajax_nopriv_show_compound_products', 'show_compound_products' );

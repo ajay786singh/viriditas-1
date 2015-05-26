@@ -31,15 +31,21 @@ get_header(); ?>
 				Latin / Folk
 			</div>
 			<div class="compound-content">
-				<ul class="product-list">
-					
-				</ul>
+				<div class="compound-list product-list"></div>
 			</div>
 		</div>	
 		
 		<div class="column-4 conclude-box">
 			<div class="compound-header">
 				Your recipe
+			</div>
+			<div class="compound-header">
+				Your Additions
+			</div>
+			<div class="additions">
+				<ul>
+					
+				</ul>
 			</div>
 		</div>	
 	</div>
