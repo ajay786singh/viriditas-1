@@ -18,10 +18,7 @@ get_header(); ?>
 			</div>
 			<div class="compound-content">
 				<input type="text" name="" id="" value="" placeholder="Search herb to add" />
-				<section role="body-systems">
-				
-				
-				</section>	
+				<section role="body-systems"></section>	
 				<section role="actions"></section>				
 			</div>
 		</div>	
@@ -31,22 +28,57 @@ get_header(); ?>
 				Latin / Folk
 			</div>
 			<div class="compound-content">
+				<div class="popup-compound">
+					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
+					<form action="" class="pop-up-action">
+						<p><input type="text" name="" id="herb-size" max="100" /> <label>%</label></p>
+						<input type="submit" name="" value="Submit" />
+					</form>
+				</div>
 				<div class="compound-list product-list"></div>
 			</div>
 		</div>	
 		
 		<div class="column-4 conclude-box">
-			<div class="compound-header">
-				Your recipe
-			</div>
-			<div class="compound-header">
-				Your Additions
-			</div>
-			<div class="additions">
-				<ul>
-					
-				</ul>
-			</div>
+			<h4>Your Recipe</h4>
+			<form action="" class="recipe-form">
+				<div class="compound-header">
+					Recipe Name
+				</div>
+				<div class="compound-content">
+					<input type="text" name="recipe-name" placeholder="Please give a name to your recipe.">
+				</div>	
+				<div class="compound-header">
+					Size
+				</div>
+				<div class="compound-content">
+					<ul>
+						<li><label><input type="radio" name="recipe-size" checked> 500 ML</label></li>
+						<li><label><input type="radio" name="recipe-size"> 1000 ML</label></li>
+					</ul>
+				</div>	
+				<div class="compound-header">
+					Your Additions
+					<input type="hidden" name="compound-products" id="compound-products" value="">
+				</div>
+				<div class="additions compound-content">
+					<p class="error-info">Please select herbs.</p>
+					<ul>
+					</ul>
+				</div>
+				<div class="compound-header-2">
+					* Total must equal 100%
+				</div>
+				<div class="compound-content">
+					<ul>
+						<li><label><input type="radio" name="recipe-size" checked> 500 ML</label></li>
+						<li><label><input type="radio" name="recipe-size"> 1000 ML</label></li>
+					</ul>
+				</div>
+				<div class="compound-header-2">
+					<h5>Done ?</h5> <a href="" class="button">Add to cart</a>
+				</div>
+			</form>	
 		</div>	
 	</div>
 </section>

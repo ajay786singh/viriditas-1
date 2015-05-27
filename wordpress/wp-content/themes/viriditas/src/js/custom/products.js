@@ -98,29 +98,58 @@ function toParams(searchUrl) {
 						if($(this).hasClass('added')==false) {
 							$(this).addCompound(id,name);
 						}
-						$(this).addClass('added')
-						//alert(id);
 					});
 				} else if(html==1) {
 					settings.container.empty().html("<h6>No records found.</h6>");
-					//settings.loader.html("<h6>No records found.</h6>");
 				}
 			}
 		});	
 	},
+	$.fn.openPopup =function() {
+		$(this).show();
+	},
+	$.fn.closePopup =function() {
+		$(this).hide();
+	},
+	$.fn.allowNumberOnly =function(limit) {
+		$(this).keypress(function(e) {
+			if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+				//display error message
+				$("#errmsg").html("Digits Only").show().fadeOut("slow");
+				return false;
+			}
+        });
+	},
 	$.fn.addCompound = function( id,name ) {
 		var html="<li><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> "+name+"</li>";
+		var values =[];
 		if($('.additions ul li').length<=6) {
+			$('#compound-'+id).addClass('added');
 			$('.additions ul').append(html);
-		}else {
+			$('.popup-compound').openPopup();
+			$('.herb-name').html(name);
+			$('.additions ul li a').each(function(){
+				var id = $(this).attr('id');
+				id=id.replace('remove-','');
+				values.push(id);
+			});
+			$('#compound-products').val(values);
+		} else {
 			alert("You can add max 7 herbs to your compound.");
 		}
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
 			e.preventDefault();
 			var id=$(this).attr('id');
+			var values =[];
 			id=id.replace('remove-','');
 			$('#compound-'+id).removeClass('added');
 			$(this).parent().remove();
+			$('.additions ul li a').each(function(){
+				var id = $(this).attr('id');
+				id=id.replace('remove-','');
+				values.push(id);
+			});
+			$('#compound-products').empty().val(values);
 		});	
 	},
 	$.fn.remvoeCompound = function( id ) {
