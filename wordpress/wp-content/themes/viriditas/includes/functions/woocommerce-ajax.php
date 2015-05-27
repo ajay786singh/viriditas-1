@@ -12,7 +12,7 @@ function get_product_categories($exclude=false) {
 		//$result='<div class="shop-header">';
 			//$result.='<h6 class="heading">Filter by category</h6>';
 		//$result.='</div>';
-		$result.='<select class="by-category">';
+		$result.='<select class="by-category filter">';
 		$result.='<option value="" class="hidden-option">PRODUCT CATEGORY</option>';
 			foreach($product_categories as $product_category) {
 				if($pc!='' && $pc== $product_category->term_id) {

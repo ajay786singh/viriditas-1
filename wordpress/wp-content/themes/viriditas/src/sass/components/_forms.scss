@@ -302,3 +302,31 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 .woocommerce-page form .form-row label {
 	float:left;
 }
+
+.recipe-form {
+	input {
+		font-size:1em;
+	}
+}
+
+.pop-up-action {
+	margin:0 auto;
+	width: 70%;
+	@include media($bp-large) {
+		width: 50%;
+	}
+	& input[type="text"] {
+		background:none;
+		border:none;
+		@include border-radius(0px);
+		border-bottom:1px solid;
+		box-shadow: none;
+		float:left;
+		width: 63px;
+		text-align: center;
+	}
+	label {
+		font-size:2em;
+		margin-top:10px;
+	}
+}

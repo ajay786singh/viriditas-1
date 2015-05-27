@@ -685,3 +685,17 @@ section[role=content] {
 .message {
 	margin-top:50px;
 }
+
+.conclude-box {
+	h4 {
+		color:$black;
+		margin: 0;
+		padding: 20px 30px;
+		text-align:center;
+		text-transform:uppercase;
+	}
+	h5 {
+		float: left;
+		padding: 20px;
+	}
+}

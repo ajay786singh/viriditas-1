@@ -1008,6 +1008,16 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
 .message {
   margin-top: 50px; }
 
+.conclude-box h4 {
+  color: black;
+  margin: 0;
+  padding: 20px 30px;
+  text-align: center;
+  text-transform: uppercase; }
+.conclude-box h5 {
+  float: left;
+  padding: 20px; }
+
 img {
   max-width: 100%; }
 
@@ -1891,7 +1901,7 @@ article {
   .open-popup .popup-box {
     display: block; }
 
-.compound-header {
+.compound-header, .compound-header-2 {
   background: #b8b8b8;
   padding: 5px 15px 2px;
   text-transform: uppercase;
@@ -1899,7 +1909,22 @@ article {
   border-radius: 3px;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
-  margin-bottom: 15px; }
+  margin-bottom: 1em; }
+  .conclude-box .compound-header, .conclude-box .compound-header-2 {
+    margin-bottom: 0; }
+
+.compound-header-2 {
+  background: #dc6859;
+  margin-bottom: 0;
+  overflow: hidden; }
+  .compound-header-2 .button, .compound-header-2 input[type="button"], .compound-header-2 .appointments-form input[type="submit"], .appointments-form .compound-header-2 input[type="submit"], .compound-header-2 #login-form input[type="submit"], #login-form .compound-header-2 input[type="submit"], .compound-header-2 .gform_wrapper .gform_button, .gform_wrapper .compound-header-2 .gform_button, .compound-header-2 .appointments-pagination a, .appointments-pagination .compound-header-2 a, .compound-header-2 .woocommerce #respond input#submit, .woocommerce #respond .compound-header-2 input#submit,
+  .compound-header-2 .woocommerce a.button,
+  .woocommerce .compound-header-2 a.button,
+  .compound-header-2 .woocommerce button.button,
+  .woocommerce .compound-header-2 button.button,
+  .compound-header-2 .woocommerce input.button,
+  .woocommerce .compound-header-2 input.button {
+    float: right; }
 
 .compound-content {
   width: 85%; }
@@ -1916,26 +1941,28 @@ article {
       display: inline-block;
       position: relative;
       margin-right: 5px;
-      padding-left: 20px; }
+      padding-left: 25px; }
       .compound-list ul li a:before, .additions ul li a:before {
-        content: "\F046";
+        content: "";
         position: absolute;
-        width: 20px;
-        height: 20px;
+        background: url(dist/images/check-on-off.png) no-repeat;
+        width: 18px;
+        height: 18px;
         left: 0px;
         top: 0px;
         display: block; }
+      .compound-list ul li a.added:before, .additions ul li a.added:before {
+        background-position: -19px 0px; }
 
 .additions ul li a {
-  padding-left: 0; }
-
-.remove-compound {
+  padding-left: 0;
   display: inline-block;
   position: relative;
   width: 10px;
   margin-right: 5px; }
-  .remove-compound:before {
+  .additions ul li a:before {
     content: "\f00d";
+    background: none;
     position: absolute;
     width: 10px;
     height: 20px;
@@ -1944,14 +1971,24 @@ article {
     display: block;
     text-indent: -9999px; }
 
-.site-loader {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  background: rgba(0, 0, 0, 0.5) url("dist/images/loader.gif") no-repeat 50% 50%;
-  z-index: 10000;
-  height: 25px;
-  width: 128px; }
+.conclude-box {
+  background: #33bab4; }
+  .conclude-box .compound-content {
+    padding: 15px 15px 0; }
+    .conclude-box .compound-content ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 0; }
+      .conclude-box .compound-content ul li {
+        margin-left: 0; }
+  .conclude-box label {
+    display: inline; }
+
+.popup-compound {
+  position: absolute;
+  background: #fff6bf;
+  padding: 30px;
+  z-index: 1000; }
 
 .woocommerce.single-product section[role=main] {
   padding: 20px 0 50px; }
@@ -2666,6 +2703,31 @@ li.gfield + li.gfield.gfield_creditcard_warning {
 .woocommerce-page form .form-row label {
   float: left; }
 
+.recipe-form input {
+  font-size: 1em; }
+
+.pop-up-action {
+  margin: 0 auto;
+  width: 70%; }
+  @media screen and (min-width: 50em) {
+    .pop-up-action {
+      width: 50%; } }
+  .pop-up-action input[type="text"] {
+    background: none;
+    border: none;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    border-bottom: 1px solid;
+    box-shadow: none;
+    float: left;
+    width: 63px;
+    text-align: center; }
+  .pop-up-action label {
+    font-size: 2em;
+    margin-top: 10px; }
+
 button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -2996,6 +3058,11 @@ select[data-dkcacheid] {
   z-index: 1; }
   .list_view .sale:before {
     background: none; }
+
+.error-info {
+  color: #fbe3e4;
+  margin: 0;
+  display: none; }
 
 #pagination {
   padding-top: 20px; }
