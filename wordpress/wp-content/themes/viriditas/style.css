@@ -1974,19 +1974,39 @@ article {
 .conclude-box {
   background: #33bab4; }
   .conclude-box .compound-content {
-    padding: 15px 15px 0; }
+    padding: 0px 15px 0;
+    width: 100%; }
     .conclude-box .compound-content ul {
       list-style: none;
       margin: 0;
-      padding-left: 0; }
+      padding-left: 0;
+      overflow: hidden; }
       .conclude-box .compound-content ul li {
         margin-left: 0; }
+      .conclude-box .compound-content ul.border-list li {
+        border-bottom: 1px solid black;
+        overflow: hidden;
+        margin: 0; }
+        .conclude-box .compound-content ul.border-list li input {
+          margin-bottom: 0; }
+        .conclude-box .compound-content ul.border-list li:last-child {
+          border-bottom: none; }
+        .conclude-box .compound-content ul.border-list li .left {
+          width: 60%;
+          float: left;
+          border-right: 1px solid black;
+          padding: 10px 0 0; }
+        .conclude-box .compound-content ul.border-list li .right {
+          width: 40%;
+          float: left;
+          padding: 10px 10px 0; }
   .conclude-box label {
     display: inline; }
 
 .popup-compound {
   position: absolute;
   background: #fff6bf;
+  display: none;
   padding: 30px;
   z-index: 1000; }
 
@@ -2725,6 +2745,7 @@ li.gfield + li.gfield.gfield_creditcard_warning {
     width: 63px;
     text-align: center; }
   .pop-up-action label {
+    float: left;
     font-size: 2em;
     margin-top: 10px; }
 

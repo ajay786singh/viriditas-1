@@ -470,14 +470,41 @@ article {
 .conclude-box {
 	background:$recipe-box-bg;
 	.compound-content {
-		padding: 15px 15px 0;
+		padding: 0px 15px 0;
+		width:100%;
 		ul {
 			list-style:none;
 			margin:0;
 			padding-left:0;
+			overflow: hidden;
 			li {
 				margin-left:0;
+				
 			}
+			&.border-list {
+				li {
+					border-bottom:1px solid $black;
+					overflow: hidden;
+					margin: 0;
+					input {
+						margin-bottom:0;
+					}
+					&:last-child {
+						border-bottom:none;
+					}
+					.left {
+						width:60%;
+						float:left;
+						border-right:1px solid $black;
+						padding:10px 0 0;
+					}
+					.right {
+						width:40%;
+						float:left;
+						padding:10px 10px 0;
+					}
+				}
+			}	
 		}
 	}
 	label {
@@ -488,7 +515,7 @@ article {
 .popup-compound {
 	position:absolute;
 	background:$alert-color;
-	//display:none;
+	display:none;
 	padding:30px;
 	z-index: 1000;
 }

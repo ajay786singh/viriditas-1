@@ -30,10 +30,10 @@ get_header(); ?>
 			<div class="compound-content">
 				<div class="popup-compound">
 					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
-					<form action="" class="pop-up-action">
+					<div class="pop-up-action">
 						<p><input type="text" name="" id="herb-size" max="100" /> <label>%</label></p>
-						<input type="submit" name="" value="Submit" />
-					</form>
+						<a href="#" class="button">Submit</a>
+					</div>
 				</div>
 				<div class="compound-list product-list"></div>
 			</div>
@@ -62,17 +62,20 @@ get_header(); ?>
 					<input type="hidden" name="compound-products" id="compound-products" value="">
 				</div>
 				<div class="additions compound-content">
-					<p class="error-info">Please select herbs.</p>
-					<ul>
+					<ul class="border-list">
+					
 					</ul>
 				</div>
 				<div class="compound-header-2">
 					* Total must equal 100%
+					<input type="text" name="" id="total_percentage" value="">
 				</div>
 				<div class="compound-content">
-					<ul>
-						<li><label><input type="radio" name="recipe-size" checked> 500 ML</label></li>
-						<li><label><input type="radio" name="recipe-size"> 1000 ML</label></li>
+					<ul class="border-list">
+						<li>
+							<div class="left"><strong>Total</strong></div>
+							<div class="right">0%</div>
+						</li>
 					</ul>
 				</div>
 				<div class="compound-header-2">
