@@ -113,20 +113,24 @@ function toParams(searchUrl) {
 	},
 	$.fn.allowNumberOnly =function(limit) {
 		$(this).keypress(function(e) {
+			alert(e.which);
 			if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
 				//display error message
-				$("#errmsg").html("Digits Only").show().fadeOut("slow");
+				//$("#errmsg").html("Digits Only").show().fadeOut("slow");
 				return false;
 			}
         });
 	},
 	$.fn.addCompound = function( id,name ) {
-		var html="<li><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> "+name+"</li>";
+		var number_size="size_"+id;
+		var html="<li id='remove-product-"+id+"'><div class='left'><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> "+name+"</div>";
+			html+="<dib class='right'><input type='number' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''></div>";
+			html+="</li>";
 		var values =[];
-		if($('.additions ul li').length<=6) {
+		if($('.additions ul li').length <= 6) {
 			$('#compound-'+id).addClass('added');
 			$('.additions ul').append(html);
-			$('.popup-compound').openPopup();
+			//$('.popup-compound').openPopup();
 			$('.herb-name').html(name);
 			$('.additions ul li a').each(function(){
 				var id = $(this).attr('id');
@@ -143,7 +147,7 @@ function toParams(searchUrl) {
 			var values =[];
 			id=id.replace('remove-','');
 			$('#compound-'+id).removeClass('added');
-			$(this).parent().remove();
+			$('#remove-product-'+id).remove();
 			$('.additions ul li a').each(function(){
 				var id = $(this).attr('id');
 				id=id.replace('remove-','');
