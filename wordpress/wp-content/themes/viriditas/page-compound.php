@@ -52,11 +52,10 @@ get_header(); ?>
 					Size (ML)
 				</div>
 				<div class="compound-content">
-					<input type="text" name="size-name" required placeholder="Please enter size.">
-					<!--<ul>
-						<li><label><input type="radio" name="recipe-size" checked> 500 ML</label></li>
-						<li><label><input type="radio" name="recipe-size"> 1000 ML</label></li>
-					</ul>-->
+					<ul>
+						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="500-60" checked> 500 ML - 60$</label></li>
+						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="1000-100"> 1000 ML - 100$</label></li>
+					</ul>
 				</div>	
 				<div class="compound-header">
 					Your Additions
