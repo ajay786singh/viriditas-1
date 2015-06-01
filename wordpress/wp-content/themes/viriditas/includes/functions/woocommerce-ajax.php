@@ -435,34 +435,67 @@ add_action( 'wp_ajax_nopriv_show_compound_products', 'show_compound_products' );
 */
 
 function manage_compound() {
-    
+	global $woocommerce;
+    $current_user = wp_get_current_user();
 	$errors = array();
-	
-	$action = trim($_POST['form_type']);
-    $title = trim($_POST['title']);
-	$compound_products = trim($_POST['compound_products']);
-	if (strlen($title) == 0) {
-		array_push($errors, "Please enter your recipe name."); 
-	}
-	
-	// If no errors were found, proceed with storing the user input
-	if (count($errors) == 0) {
+	if ( $current_user->ID != 0 ) {
+		//logged in.			
+		$action = trim($_POST['form_type']);
+		$title = trim($_POST['title']);
+		$compound_products = trim($_POST['compound_products']);
+		if (strlen($title) == 0) {
+			array_push($errors, "Please enter your recipe name."); 
+		}
 		
-		$post_id = wp_insert_post( array(
-			'post_title'        => $title,
-			'post_status'       => 'publish',
-			'post_type'       => 'product',
-			'post_author'       => '1'
-		) );
-	 
-		if ( $post_id != 0 ) {
-			$msg="Congrats!!! <br> Your recipe has been added to your cart. Please click here to checkout.";
+		// If no errors were found, proceed with storing the user input
+		if (count($errors) == 0) {
+			
+			$post_id = wp_insert_post( array(
+				'post_title'        => $title,
+				'post_status'       => 'publish',
+				'post_type'       => 'product',
+				'post_author'       => '1'
+			) );
+		 
+			if ( $post_id != 0 ) {
+				wp_set_object_terms( $post_id, 'Single Herb Tincture', 'product_cat' );
+				wp_set_object_terms($post_id, 'simple', 'product_type');
+				update_post_meta( $post_id, '_visibility', 'visible' );
+				update_post_meta( $post_id, '_stock_status', 'instock');
+				update_post_meta( $post_id, 'total_sales', '0');
+				update_post_meta( $post_id, '_downloadable', 'no');
+				update_post_meta( $post_id, '_virtual', 'no');
+				update_post_meta( $post_id, '_regular_price', "1" );
+				update_post_meta( $post_id, '_sale_price', "1" );
+				update_post_meta( $post_id, '_purchase_note', "" );
+				update_post_meta( $post_id, '_featured', "no" );
+				update_post_meta( $post_id, '_weight', "" );
+				update_post_meta( $post_id, '_length', "" );
+				update_post_meta( $post_id, '_width', "" );
+				update_post_meta( $post_id, '_height', "" );
+				update_post_meta($post_id, '_sku', "");
+				update_post_meta( $post_id, '_product_attributes', array());
+				update_post_meta( $post_id, '_sale_price_dates_from', "" );
+				update_post_meta( $post_id, '_sale_price_dates_to', "" );
+				update_post_meta( $post_id, '_price', "1" );
+				update_post_meta( $post_id, '_sold_individually', "" );
+				update_post_meta( $post_id, '_manage_stock', "no" );
+				update_post_meta( $post_id, '_backorders', "no" );
+				update_post_meta( $post_id, '_stock', "" );
+				$woocommerce->cart->add_to_cart($post_id);
+				$cart_url=$woocommerce->cart->get_cart_url();
+				$msg="Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
+			}
+			else {
+				$msg = '*Error occured while adding the recipe';
+			}
+		} else {
+			$msg="Check Errors*";
 		}
-		else {
-			$msg = '*Error occured while adding the recipe';
-		}
+		
 	} else {
-		$msg="Check Errors*";
+		//Not Logged in.
+		$msg="Please login to add your recipe to cart.";
 	}
 		
 	//Prepare errors for output
