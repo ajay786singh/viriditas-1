@@ -516,6 +516,9 @@ p, ul, ol {
       line-height: 1.5em;
       margin-bottom: 1.5em; } }
 
+ol {
+  list-style-type: decimal; }
+
 li {
   margin: 0 0 .5em 2.5em; }
 
@@ -1910,8 +1913,6 @@ article {
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   margin-bottom: 1em; }
-  .conclude-box .compound-header, .conclude-box .compound-header-2 {
-    margin-bottom: 0; }
 
 .compound-header-2 {
   background: #dc6859;
@@ -1928,6 +1929,8 @@ article {
 
 .compound-content {
   width: 85%; }
+  .result-box .compound-content {
+    width: 100%; }
   .compound-content ul li {
     margin-left: 0; }
 
@@ -2648,6 +2651,9 @@ footer input[type="submit"] {
 input.search-box {
   font-size: 0.8em;
   width: 150px; }
+  .compound-content input.search-box {
+    font-size: 1em;
+    width: 100%; }
 
 li.gfield + li.gfield.gfield_creditcard_warning {
   border: 1px solid #790000;
@@ -2726,6 +2732,9 @@ li.gfield + li.gfield.gfield_creditcard_warning {
 .recipe-form input {
   font-size: 1em; }
 
+.conclude-box input[type="text"] {
+  margin-top: 1em; }
+
 .pop-up-action {
   margin: 0 auto;
   width: 70%; }
@@ -2748,6 +2757,20 @@ li.gfield + li.gfield.gfield_creditcard_warning {
     float: left;
     font-size: 2em;
     margin-top: 10px; }
+
+.errors {
+  background: #dc6859;
+  color: white;
+  display: none;
+  padding: 15px; }
+  .errors .error-header {
+    text-transform: uppercase; }
+  .errors .error-content ol {
+    margin: 0;
+    padding-left: 1.5em; }
+    .errors .error-content ol li {
+      padding-left: 0;
+      margin-left: 0; }
 
 button {
   -webkit-appearance: none;
@@ -3054,6 +3077,9 @@ select[data-dkcacheid] {
   background: url(dist/images/loader.gif) center center no-repeat;
   width: 100%;
   height: 200px; }
+  .loading.errors {
+    background: #dc6859 url(dist/images/loader-small.gif) center center no-repeat;
+    height: 70px; }
 
 .divider {
   background: transparent url(dist/images/divider.png) no-repeat top center;

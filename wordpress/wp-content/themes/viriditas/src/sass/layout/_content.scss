@@ -390,9 +390,6 @@ article {
 	text-transform:uppercase;
 	@include border-radius(3px);
 	margin-bottom: 1em;
-	.conclude-box & {
-		margin-bottom:0;
-	}
 }
 
 .compound-header-2 {
@@ -407,6 +404,9 @@ article {
 
 .compound-content {
 	width:85%;
+	.result-box & {
+		width:100%;
+	}
 	ul {
 		li {
 			margin-left:0;

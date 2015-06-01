@@ -201,6 +201,10 @@ footer {
 input.search-box {
 	font-size:0.8em;
 	width:150px;
+	.compound-content & {
+		font-size:1em;
+		width:100%;
+	}
 }
 
 li.gfield+li.gfield.gfield_creditcard_warning {
@@ -309,6 +313,12 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	}
 }
 
+.conclude-box {
+	& input[type="text"] {
+		margin-top:1em;
+	}
+}
+
 .pop-up-action {
 	margin:0 auto;
 	width: 70%;
@@ -329,5 +339,25 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		float:left;
 		font-size:2em;
 		margin-top:10px;
+	}
+}
+
+.errors {
+	background:$dark-orange;
+	color:$white;
+	display:none;
+	padding:15px;
+	.error-header {
+		text-transform:uppercase;
+	}
+	.error-content {
+		ol {
+			margin:0;
+			padding-left: 1.5em;
+			li {
+				padding-left: 0;
+				margin-left: 0;
+			}
+		}
 	}
 }

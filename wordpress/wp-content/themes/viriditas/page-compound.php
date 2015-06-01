@@ -17,7 +17,7 @@ get_header(); ?>
 				Search herb to add
 			</div>
 			<div class="compound-content">
-				<input type="text" name="" id="" value="" placeholder="Search herb to add" />
+				<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search herb to add" />
 				<section role="body-systems"></section>	
 				<section role="actions"></section>				
 			</div>
@@ -46,16 +46,17 @@ get_header(); ?>
 					Recipe Name
 				</div>
 				<div class="compound-content">
-					<input type="text" name="recipe-name" placeholder="Please give a name to your recipe.">
+					<input type="text" id="recipe-name" required name="recipe-name" placeholder="Please give a name to your recipe.">
 				</div>	
 				<div class="compound-header">
-					Size
+					Size (ML)
 				</div>
 				<div class="compound-content">
-					<ul>
+					<input type="text" name="size-name" required placeholder="Please enter size.">
+					<!--<ul>
 						<li><label><input type="radio" name="recipe-size" checked> 500 ML</label></li>
 						<li><label><input type="radio" name="recipe-size"> 1000 ML</label></li>
-					</ul>
+					</ul>-->
 				</div>	
 				<div class="compound-header">
 					Your Additions
@@ -79,8 +80,10 @@ get_header(); ?>
 					</ul>
 				</div>
 				<div class="compound-header-2">
-					<h5>Done ?</h5> <a href="" class="button">Add to cart</a>
+					<input type="hidden" name="form_type" id="form_type" value="add">
+					<h5>Done ?</h5> <input type="submit" class="manage-recipe button" value="Add to cart">
 				</div>
+				<div class="errors"></div>
 			</form>	
 		</div>	
 	</div>
