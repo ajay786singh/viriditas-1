@@ -442,7 +442,12 @@ function manage_compound() {
 		//logged in.			
 		$action = trim($_POST['form_type']);
 		$title = trim($_POST['title']);
+		$size = trim($_POST['size']);
+		$price = trim($_POST['price']);
+		$price_per_unit = number_format(($price/$size),2, '.', '');
 		$compound_products = trim($_POST['compound_products']);
+		
+		//check for title not blank
 		if (strlen($title) == 0) {
 			array_push($errors, "Please enter your recipe name."); 
 		}
@@ -465,8 +470,9 @@ function manage_compound() {
 				update_post_meta( $post_id, 'total_sales', '0');
 				update_post_meta( $post_id, '_downloadable', 'no');
 				update_post_meta( $post_id, '_virtual', 'no');
-				update_post_meta( $post_id, '_regular_price', "1" );
-				update_post_meta( $post_id, '_sale_price', "1" );
+				update_post_meta( $post_id, '_price', $price_per_unit );
+				update_post_meta( $post_id, '_regular_price',  $price_per_unit );
+				update_post_meta( $post_id, '_sale_price',  $price_per_unit );
 				update_post_meta( $post_id, '_purchase_note', "" );
 				update_post_meta( $post_id, '_featured', "no" );
 				update_post_meta( $post_id, '_weight', "" );
@@ -477,14 +483,13 @@ function manage_compound() {
 				update_post_meta( $post_id, '_product_attributes', array());
 				update_post_meta( $post_id, '_sale_price_dates_from', "" );
 				update_post_meta( $post_id, '_sale_price_dates_to', "" );
-				update_post_meta( $post_id, '_price', "1" );
 				update_post_meta( $post_id, '_sold_individually', "" );
 				update_post_meta( $post_id, '_manage_stock', "no" );
 				update_post_meta( $post_id, '_backorders', "no" );
 				update_post_meta( $post_id, '_stock', "" );
-				$woocommerce->cart->add_to_cart($post_id);
+				$woocommerce->cart->add_to_cart($post_id,$size);
 				$cart_url=$woocommerce->cart->get_cart_url();
-				$msg="Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
+				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
 			}
 			else {
 				$msg = '*Error occured while adding the recipe';
@@ -492,7 +497,6 @@ function manage_compound() {
 		} else {
 			$msg="Check Errors*";
 		}
-		
 	} else {
 		//Not Logged in.
 		$msg="Please login to add your recipe to cart.";

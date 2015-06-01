@@ -24,8 +24,12 @@ jQuery(document).ready(function($) {
 			e.preventDefault();
 			var title = $('#recipe-name').val();
 			var form_type=$('#form_type').val();
+			var size_price=$('.recipe-size:checked').val();
+			size_price=size_price.split("-");
+			var size=size_price[0];
+			var price=size_price[1];
 			var compound_products=$('#compound-products').val();
-			var data= {'action':'manage_compound','title':title,'form_type':form_type,'compound_products':compound_products};
+			var data= {'action':'manage_compound','title':title,'size':size,'price':price,'form_type':form_type,'compound_products':compound_products};
 			var message=$('.errors');
 			message.fadeIn().empty();
 			message.loaderShow();
@@ -34,6 +38,7 @@ jQuery(document).ready(function($) {
 				url: ajaxurl,
 				data:data,
 				success: function(html) {
+					alert(html);
 					message.loaderHide();
 					message.empty();
 					message.append(html);
