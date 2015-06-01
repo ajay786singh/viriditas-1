@@ -71,7 +71,7 @@ function toParams(searchUrl) {
 			page         : 1,
             body_system  : getParameterByName('pb'),
 			action 		 : getParameterByName('pa'),
-			search_folk  : getParameterByName('s'),
+			search_folk  : getParameterByName('keyword'),
 			sort_by : getParameterByName('sort_by'),
 			loader    	 : $('.message')
         }, options);
@@ -111,25 +111,44 @@ function toParams(searchUrl) {
 	$.fn.closePopup =function() {
 		$(this).hide();
 	},
-	$.fn.allowNumberOnly =function(limit) {
-		$(this).keypress(function(e) {
-			alert(e.which);
-			if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-				//display error message
-				//$("#errmsg").html("Digits Only").show().fadeOut("slow");
-				return false;
-			}
-        });
+	$.fn.forceNumeric = function () {
+		return this.each(function () {			
+			jQuery(this).on('input', function (event) { 
+				var size=this.value;				
+				size = size.replace(/[^0-9]/g, '');
+				if(size<=100) {
+					alert(size);
+				}
+			});	
+			/*$(this).keypress(function (e) {
+				var key = e.which || e.keyCode;
+				if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+					// numbers   
+					 key >= 48 && key <= 57 ||
+					// Numeric keypad
+					 key >= 96 && key <= 105 ||
+					// Backspace and Tab and Enter
+					key == 8 || key == 9 || key == 13 ||
+					// left and right arrows
+					key == 37 || key == 39 ) {
+						alert($(this).val());
+						return true;
+					} else {
+						return false;
+				}
+			});*/
+		});
 	},
 	$.fn.addCompound = function( id,name ) {
 		var number_size="size_"+id;
 		var html="<li id='remove-product-"+id+"'><div class='left'><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> "+name+"</div>";
-			html+="<dib class='right'><input type='number' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''></div>";
+			html+="<dib class='right'><input type='number' min='1' max='100' maxlength='3' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''></div>";
 			html+="</li>";
+		//$('.herb-sizes').calculateSize(100);	
 		var values =[];
 		if($('.additions ul li').length <= 6) {
 			$('#compound-'+id).addClass('added');
-			$('.additions ul').append(html);
+			$('.additions ul').append(html);			
 			//$('.popup-compound').openPopup();
 			$('.herb-name').html(name);
 			$('.additions ul li a').each(function(){
@@ -138,9 +157,12 @@ function toParams(searchUrl) {
 				values.push(id);
 			});
 			$('#compound-products').val(values);
+			
 		} else {
 			alert("You can add max 7 herbs to your compound.");
 		}
+		jQuery('.herb-sizes').forceNumeric();
+		
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
 			e.preventDefault();
 			var id=$(this).attr('id');
@@ -173,7 +195,7 @@ function toParams(searchUrl) {
             indication   : getParameterByName('pi'),
 			action 		 : getParameterByName('pa'),
 			view_mode    : getParameterByName('vm'),
-			search_folk  : getParameterByName('s'),
+			search_folk  : getParameterByName('keyword'),
 			sort_by : getParameterByName('sort_by'),
 			sort_by_alpha : getParameterByName('sort_by_alpha'),
 			order : getParameterByName('order'),
@@ -464,10 +486,10 @@ jQuery(document).ready(function($){
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
 				if(keyword !='') {
-					var url = replaceParam('s', keyword);
+					var url = replaceParam('keyword', keyword);
 					window.history.pushState({path:url},'',url);	
 				}else {
-					var url=removeURLParameter('s');					
+					var url=removeURLParameter('keyword');					
 					window.history.pushState({path:url},'',url);
 				}
 				product_container.empty();

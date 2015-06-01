@@ -348,7 +348,7 @@ function ccw_custom_woo_placeholder(){
 
 function show_compound_products() {
 	global $wp_query,$wpdb;
-	
+	//echo "<pre>"; print_r($_POST); echo "</pre>";
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
 	$keyword=$_POST['search_folk'];
@@ -429,3 +429,53 @@ function show_compound_products() {
 }
 add_action( 'wp_ajax_show_compound_products', 'show_compound_products' );
 add_action( 'wp_ajax_nopriv_show_compound_products', 'show_compound_products' );
+
+/*
+*  Function to Manage Recipe By User(s)
+*/
+
+function manage_compound() {
+    
+	$errors = array();
+	
+	$action = trim($_POST['form_type']);
+    $title = trim($_POST['title']);
+	$compound_products = trim($_POST['compound_products']);
+	if (strlen($title) == 0) {
+		array_push($errors, "Please enter your recipe name."); 
+	}
+	
+	// If no errors were found, proceed with storing the user input
+	if (count($errors) == 0) {
+		
+		$post_id = wp_insert_post( array(
+			'post_title'        => $title,
+			'post_status'       => 'publish',
+			'post_type'       => 'product',
+			'post_author'       => '1'
+		) );
+	 
+		if ( $post_id != 0 ) {
+			$msg="Congrats!!! <br> Your recipe has been added to your cart. Please click here to checkout.";
+		}
+		else {
+			$msg = '*Error occured while adding the recipe';
+		}
+	} else {
+		$msg="Check Errors*";
+	}
+		
+	//Prepare errors for output
+	$output='';
+	$output .= '<div class="error-header">'.$msg.'</div>';
+	$output .= '<div class="error-content"><ol>';
+	foreach($errors as $val) {
+		$output .= "<li>$val</li>";
+	}
+	$output .= '</ol></div>';
+	echo $output;
+	die();
+}
+
+add_action( 'wp_ajax_manage_compound', 'manage_compound' );
+add_action( 'wp_ajax_nopriv_manage_compound', 'manage_compound' );

@@ -25,7 +25,7 @@ get_header( 'shop' );
 					<div class="filter-side">	
 						<ul>
 							<li>
-								<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['s']) { echo $_REQUEST['s'];} ?>" placeholder="Search products" />
+								<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search products" />
 							</li>
 							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
 							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
