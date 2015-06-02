@@ -72,7 +72,7 @@ global $product;
 				// print_r($prices);
 				//$price = price_array($price_html);
 				//print_r($price);
-				//do_action( 'woocommerce_single_product_summary' );
+				do_action( 'woocommerce_single_product_summary' );
 				
 				if($product->product_type=='bundle') {
 				?>	
