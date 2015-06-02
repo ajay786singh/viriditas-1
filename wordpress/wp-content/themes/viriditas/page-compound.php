@@ -52,6 +52,14 @@ get_header(); ?>
 					Size (ML)
 				</div>
 				<div class="compound-content">
+					<?php
+						// $products=unserialize('a:2:{i:1383;a:9:{s:10:"product_id";s:4:"1383";s:14:"hide_thumbnail";s:2:"no";s:14:"override_title";s:2:"no";s:20:"override_description";s:2:"no";s:8:"optional";s:2:"no";s:15:"bundle_quantity";i:1;s:19:"bundle_quantity_max";i:1;s:15:"bundle_discount";s:0:"";s:10:"visibility";s:7:"visible";}i:1389;a:9:{s:10:"product_id";s:4:"1389";s:14:"hide_thumbnail";s:2:"no";s:14:"override_title";s:2:"no";s:20:"override_description";s:2:"no";s:8:"optional";s:2:"no";s:15:"bundle_quantity";i:1;s:19:"bundle_quantity_max";i:1;s:15:"bundle_discount";s:0:"";s:10:"visibility";s:7:"visible";}}');
+						// echo "<pre>";
+						// print_r($products);
+						// echo "</pre>";
+					?>
+				
+				
 					<ul>
 						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="500-60" checked> 500 ML - 60$</label></li>
 						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="1000-100"> 1000 ML - 100$</label></li>
