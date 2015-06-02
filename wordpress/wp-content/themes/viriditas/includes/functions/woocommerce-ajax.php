@@ -435,8 +435,7 @@ add_action( 'wp_ajax_nopriv_show_compound_products', 'show_compound_products' );
 */
 
 function manage_compound() {
-	global $woocommerce;
-    $current_user = wp_get_current_user();
+	$current_user = wp_get_current_user();
 	$errors = array();
 	if ( $current_user->ID != 0 ) {
 		//logged in.			
@@ -453,21 +452,20 @@ function manage_compound() {
 		}
 		
 		//Check for selected herbs
+		$herbs = array();
 		if($compound_products ==0) {
 			array_push($errors, "Please add herbs your recipe."); 
 		} else {
 			$compound_products=explode(",",$compound_products);
-			$herbs = '';
 			foreach($compound_products as $compound_herb) {
 				$herbs[$compound_herb] =array(
 					'product_id' => $compound_herb,
-					'optional' => 'yes',
+					'optional' => 'no',
 					'bundle_quantity' => 1,
 					'bundle_quantity_max' => 1,
 					'visibility' => 'visible'
 				);
 			}
-			$herbs_seriliaze=serialize($herbs);
 		}
 		
 		
@@ -483,6 +481,7 @@ function manage_compound() {
 			if ( $post_id != 0 ) {
 				wp_set_object_terms( $post_id, 'Single Herb Tincture', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
+				update_post_meta( $post_id, '_edit_last', '1' );
 				update_post_meta( $post_id, '_visibility', 'visible' );
 				update_post_meta( $post_id, '_stock_status', 'instock');
 				update_post_meta( $post_id, 'total_sales', '0');
@@ -509,11 +508,13 @@ function manage_compound() {
 				update_post_meta( $post_id, '_crosssell_ids',  array());
 				update_post_meta( $post_id, '_per_product_pricing_active', "no" );
 				update_post_meta( $post_id, '_per_product_shipping_active', "no" );
-				update_post_meta( $post_id, '_bundle_data', $herbs_seriliaze );
+				update_post_meta( $post_id, '_bundle_data', $herbs);
 				update_post_meta( $post_id, '_product_image_gallery',  '');
 				update_post_meta( $post_id, '_product_details_folk_name',  '');
 				update_post_meta( $post_id, '_min_bundle_price', $price_per_unit );
 				update_post_meta( $post_id, '_max_bundle_price', $price_per_unit);
+				
+				global $woocommerce;
 				$woocommerce->cart->add_to_cart($post_id,$size);
 				$cart_url=$woocommerce->cart->get_cart_url();
 				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
