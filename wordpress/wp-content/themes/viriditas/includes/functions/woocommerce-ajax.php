@@ -452,9 +452,27 @@ function manage_compound() {
 			array_push($errors, "Please enter your recipe name."); 
 		}
 		
+		//Check for selected herbs
+		if($compound_products ==0) {
+			array_push($errors, "Please add herbs your recipe."); 
+		} else {
+			$compound_products=explode(",",$compound_products);
+			$herbs = '';
+			foreach($compound_products as $compound_herb) {
+				$herbs[$compound_herb] =array(
+					'product_id' => $compound_herb,
+					'optional' => 'yes',
+					'bundle_quantity' => 1,
+					'bundle_quantity_max' => 1,
+					'visibility' => 'visible'
+				);
+			}
+			$herbs_seriliaze=serialize($herbs);
+		}
+		
+		
 		// If no errors were found, proceed with storing the user input
 		if (count($errors) == 0) {
-			
 			$post_id = wp_insert_post( array(
 				'post_title'        => $title,
 				'post_status'       => 'publish',
@@ -464,7 +482,7 @@ function manage_compound() {
 		 
 			if ( $post_id != 0 ) {
 				wp_set_object_terms( $post_id, 'Single Herb Tincture', 'product_cat' );
-				wp_set_object_terms($post_id, 'simple', 'product_type');
+				wp_set_object_terms($post_id, 'bundle', 'product_type');
 				update_post_meta( $post_id, '_visibility', 'visible' );
 				update_post_meta( $post_id, '_stock_status', 'instock');
 				update_post_meta( $post_id, 'total_sales', '0');
@@ -479,6 +497,7 @@ function manage_compound() {
 				update_post_meta( $post_id, '_length', "" );
 				update_post_meta( $post_id, '_width', "" );
 				update_post_meta( $post_id, '_height', "" );
+				update_post_meta( $post_id, '_bundle_data', $herbs_seriliaze );
 				update_post_meta($post_id, '_sku', "");
 				update_post_meta( $post_id, '_product_attributes', array());
 				update_post_meta( $post_id, '_sale_price_dates_from', "" );
@@ -487,6 +506,10 @@ function manage_compound() {
 				update_post_meta( $post_id, '_manage_stock', "no" );
 				update_post_meta( $post_id, '_backorders', "no" );
 				update_post_meta( $post_id, '_stock', "" );
+				update_post_meta( $post_id, '_per_product_pricing_active', "no" );
+				update_post_meta( $post_id, '_per_product_shipping_active', "no" );
+				update_post_meta( $post_id, '_min_bundle_price', $price_per_unit );
+				update_post_meta( $post_id, '_max_bundle_price', $price_per_unit);
 				$woocommerce->cart->add_to_cart($post_id,$size);
 				$cart_url=$woocommerce->cart->get_cart_url();
 				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
