@@ -46,7 +46,7 @@
 						Toronto, ON, M6P 1Y4<br>
 						Tel: 416-767-3428<br>
 						Fax: 416-767-1215<br>
-						<a href="mailto: redden@viriditasherbalproducts.com">redden@viriditasherbalproducts.com</a>
+						<a href="mailto: info@viriditasherbalproducts.com">info@viriditasherbalproducts.com</a>
 					</p>
 				</div>
 			</div>
