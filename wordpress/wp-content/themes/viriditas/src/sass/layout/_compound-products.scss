@@ -1,0 +1,173 @@
+.compound-header {
+	//background:$base-border-color;
+	padding: 5px 15px 2px;
+	text-transform:uppercase;
+	@include border-radius(3px);
+	margin-bottom: 1em;
+}
+
+.compound-header-2 {
+	@extend .compound-header;
+	//background:$dark-orange;
+	margin-bottom: 0;
+	overflow: hidden;
+	.button {
+		float: right;
+	}
+}
+
+.compound-content {
+	width:85%;
+	.result-box & {
+		width:100%;
+	}
+	ul {
+		li {
+			margin-left:0;
+		}
+	}
+}
+
+.compound-list {
+	border:1px solid $base-border-color;
+	//max-height:720px;
+	overflow: hidden;
+	padding:30px 20px;
+	ul {
+		list-style:none;
+		padding-left:0;
+		margin-top:0;
+		&.product-list {
+			width:85%;
+			float:left;
+			li {
+				a {
+					display: inline-block;
+					position: relative;
+					margin-right: 5px;
+					padding-left:25px;
+					&:before {
+						content:"";
+						position:absolute;
+						background:url(dist/images/check-on-off.png) no-repeat;
+						width:18px;
+						height:18px;
+						left:0px;
+						top:0px;
+						display:block;
+					}
+					&.added {
+						&:before {
+							background-position:-19px 0px;
+						}
+					}
+				}
+			}
+		}
+		&.alphabets-list {
+			width:15%;
+			float:left;
+			margin:3em 0;
+			padding-top:2em;
+			text-align: right;
+			position:relative;
+			&:before {
+				content:"";
+				background:url(dist/images/search-icon.png) no-repeat;
+				background-size: 100%;
+				left: 70%;
+				height: 20px;
+				position: absolute;
+				width: 20px;
+				top: 5px;
+			}
+			li {
+				margin-bottom:0;
+				font-size:0.8em;
+				a {
+					color:$alphabets-link-color;
+					&.active {
+						font-weight:bold;
+					}
+				}
+			}
+		}
+		li {
+			margin-left:0;
+		}
+	}
+}
+.additions {
+	@extend .compound-list;
+	& ul li a {
+		padding-left:0;		
+		display: inline-block;
+		position: relative;
+		width: 10px;
+		margin-right: 5px;
+		&:before {
+			content: "\f00d";
+			background:none;
+			position:absolute;
+			width:10px;
+			height:20px;
+			left:0px;
+			top:2px;
+			display:block;
+			text-indent:-9999px;
+		}
+	}
+}
+
+.conclude-box {
+	background:$recipe-box-bg;
+	.compound-content {
+		padding: 0px 15px 0;
+		width:100%;
+		ul {
+			list-style:none;
+			margin:0;
+			padding-left:0;
+			overflow: hidden;
+			li {
+				margin-left:0;
+				
+			}
+			&.border-list {
+				li {
+					border-bottom:1px solid $black;
+					overflow: hidden;
+					margin: 0;
+					input {
+						margin-bottom:0;
+					}
+					&:last-child {
+						border-bottom:none;
+					}
+					.left {
+						width:60%;
+						float:left;
+						border-right:1px solid $black;
+						padding:10px 0 0;
+					}
+					.right {
+						width:40%;
+						float:left;
+						padding:10px 10px 0;
+					}
+				}
+			}	
+		}
+	}
+	label {
+		display:inline;
+	}
+}
+
+.popup-compound {
+	position:absolute;
+	background:$alert-color;
+	display:none;
+	padding:30px;
+	z-index: 1000;
+}

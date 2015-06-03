@@ -72,7 +72,7 @@ function toParams(searchUrl) {
             body_system  : getParameterByName('pb'),
 			action 		 : getParameterByName('pa'),
 			search_folk  : getParameterByName('keyword'),
-			sort_by : getParameterByName('sort_by'),
+			sort_by_alpha : getParameterByName('sort_by_alpha'),
 			loader    	 : $('.message')
         }, options);
 		settings.container.empty();
@@ -85,6 +85,7 @@ function toParams(searchUrl) {
 				'filter_type_body_system':settings.body_system,
 				'filter_type_action':settings.action,
 				'search_folk':settings.search_folk,
+				'sort_by_alpha':settings.sort_by_alpha
 			},
 			success: function(html) {
 				settings.container.loaderHide();
@@ -98,6 +99,24 @@ function toParams(searchUrl) {
 						if($(this).hasClass('added')==false) {
 							$(this).addCompound(id,name);
 						}
+					});
+					jQuery(".alphabets-list li a").unbind('click').bind("click", function(e){
+						e.preventDefault();
+						var id=$(this).attr('id');
+						id=id.replace('sort-','');
+						jQuery(".alphabets-list li a").each(function(){
+							$(this).removeClass('active');
+						});
+						$(this).addClass('active');
+						if(id!='') {
+							var url = replaceParam('sort_by_alpha', id);
+							window.history.pushState({path:url},'',url);				
+						}else {
+							var url=removeURLParameter('sort_by_alpha');					
+							window.history.pushState({path:url},'',url);
+						}
+						$('.compound-list').showCompound();
+						
 					});
 				} else if(html==1) {
 					settings.container.empty().html("<h6>No records found.</h6>");
