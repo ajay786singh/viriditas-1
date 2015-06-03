@@ -11,10 +11,11 @@ get_header(); ?>
 		<?php the_content();?>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container compounds">
 		<div class="column-4 filter-compound">
+			<h5>Search herb to add</h5>
 			<div class="compound-header">
-				Search herb to add
+				
 			</div>
 			<div class="compound-content">
 				<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search herb to add" />
@@ -24,8 +25,9 @@ get_header(); ?>
 		</div>	
 		
 		<div class="column-4 result-box">
+			<h5>Latin / Folk</h5>
 			<div class="compound-header">
-				Latin / Folk
+				
 			</div>
 			<div class="compound-content">
 				<div class="popup-compound">
@@ -35,12 +37,14 @@ get_header(); ?>
 						<a href="#" class="button">Submit</a>
 					</div>
 				</div>
-				<div class="compound-list product-list"></div>
+				<div class="compound-list">
+					
+				</div>
 			</div>
 		</div>	
 		
 		<div class="column-4 conclude-box">
-			<h4>Your Recipe</h4>
+			<h5>Your Recipe</h5>
 			<form action="" class="recipe-form">
 				<div class="compound-header">
 					Recipe Name
@@ -52,14 +56,6 @@ get_header(); ?>
 					Size (ML)
 				</div>
 				<div class="compound-content">
-					<?php
-						// $products=unserialize('a:2:{i:1383;a:9:{s:10:"product_id";s:4:"1383";s:14:"hide_thumbnail";s:2:"no";s:14:"override_title";s:2:"no";s:20:"override_description";s:2:"no";s:8:"optional";s:2:"no";s:15:"bundle_quantity";i:1;s:19:"bundle_quantity_max";i:1;s:15:"bundle_discount";s:0:"";s:10:"visibility";s:7:"visible";}i:1389;a:9:{s:10:"product_id";s:4:"1389";s:14:"hide_thumbnail";s:2:"no";s:14:"override_title";s:2:"no";s:20:"override_description";s:2:"no";s:8:"optional";s:2:"no";s:15:"bundle_quantity";i:1;s:19:"bundle_quantity_max";i:1;s:15:"bundle_discount";s:0:"";s:10:"visibility";s:7:"visible";}}');
-						// echo "<pre>";
-						// print_r($products);
-						// echo "</pre>";
-					?>
-				
-				
 					<ul>
 						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="500-60" checked> 500 ML - 60$</label></li>
 						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="1000-100"> 1000 ML - 100$</label></li>

@@ -79,6 +79,7 @@ function load_products () {
             // )
         // );
 	}
+	
 	if($sort_by_alpha !='') {
 		//$args['s'] = $sort_by_alpha;
 		$postids = $wpdb->get_col("
@@ -352,6 +353,7 @@ function show_compound_products() {
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
 	$keyword=$_POST['search_folk'];
+	$sort_by_alpha=$_POST['sort_by_alpha'];
 	if($action_id !='') {
 		$body_system_id=$action_id;
 	}
@@ -379,6 +381,21 @@ function show_compound_products() {
 		'body_system'=>array_filter(array($body_system_id)),
 		'product_cat'=>array_filter(array(327)),
 	);
+	
+	if($sort_by_alpha !='') {
+		//$args['s'] = $sort_by_alpha;
+		$postids = $wpdb->get_col("
+			SELECT p.ID
+			FROM $wpdb->posts p
+			WHERE p.post_title REGEXP '^" . $wpdb->escape($sort_by_alpha) . "'
+			AND p.post_status = 'publish' 
+			AND p.post_type = 'product'
+			ORDER BY p.post_title ASC"
+		);
+		if($postids) {
+			$args['post__in']=$postids;
+		}
+	}
 	$filter_terms=array_filter($filter);
 	if(count($filter_terms)== 1) {
 		foreach ($filter_terms as $key => $value) {
@@ -409,7 +426,7 @@ function show_compound_products() {
 	$max_pages=$query->max_num_pages;
 	if($query->have_posts()){
 		$next = get_next_posts_link('Older', $max_pages);
-		echo '<ul>';
+		echo '<ul class="product-list">';
 		while($query->have_posts()):$query->the_post();
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
@@ -418,6 +435,16 @@ function show_compound_products() {
 	<?php
 		endwhile;
 		echo "</ul>";
+		echo '<ul class="alphabets-list">';
+				$alphas = range('A', 'Z');
+				foreach($alphas as $alphabet) {
+					if($_REQUEST['sort_by_alpha']==lcfirst($alphabet)) {
+						echo "<li><a href='#' id='sort-".lcfirst($alphabet)."' class='active'>".$alphabet."</li>";
+					}else {
+						echo "<li><a href='#' id='sort-".lcfirst($alphabet)."'>".$alphabet."</li>";
+					}
+				}
+		echo '</ul>';
 	} else {
 		echo "1";
 	}
@@ -481,6 +508,7 @@ function manage_compound() {
 			if ( $post_id != 0 ) {
 				wp_set_object_terms( $post_id, 'Single Herb Tincture', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
+				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
 				update_post_meta( $post_id, '_edit_last', '1' );
 				update_post_meta( $post_id, '_visibility', 'visible' );
 				update_post_meta( $post_id, '_stock_status', 'instock');
