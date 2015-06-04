@@ -1530,7 +1530,8 @@ section[role=banner] {
         margin-right: 0; } }
   section[role=contact-content] .secondary {
     background: white;
-    padding: 40px 40px 50px; }
+    padding: 40px 40px 50px;
+    z-index: 1; }
     @media screen and (min-width: 50em) {
       section[role=contact-content] .secondary {
         float: left;
@@ -2405,7 +2406,8 @@ footer {
   background-repeat: no-repeat;
   background-size: cover;
   padding: 30px 0 70px;
-  color: white; }
+  color: white;
+  z-index: 1; }
   @media screen and (min-width: 50em) {
     footer .footer-logo img {
       float: left; } }
