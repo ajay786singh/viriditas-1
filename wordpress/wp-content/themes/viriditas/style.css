@@ -1044,6 +1044,9 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
   float: left;
   padding: 20px; }
 
+.sub_title {
+  margin-bottom: 0; }
+
 img {
   max-width: 100%; }
 

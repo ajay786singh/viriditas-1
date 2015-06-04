@@ -10,7 +10,7 @@
 				query_posts('post_type=page&p='.$our_philosophy_page_id);
 				if(have_posts()):
 					while(have_posts()):the_post();
-						the_title("<h1>","</h1>");
+						the_title("<h2 class='sub_title'>","</h2>");
 						get_template_part( 'template', 'sub_heading' );
 						echo "<div class='content-grid'>";
 						the_content();
@@ -28,7 +28,7 @@
 				query_posts('post_type=page&p='.$our_services_page_id);
 				if(have_posts()):
 					while(have_posts()):the_post();
-						the_title("<h1>","</h1>");
+						the_title("<h2 class='sub_title'>","</h2>");
 						get_template_part( 'template', 'sub_heading' );
 						echo "<div class='content-grid'>";
 						the_content();
