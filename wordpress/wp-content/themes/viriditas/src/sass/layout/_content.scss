@@ -40,6 +40,7 @@ $oddeven-background: $grey;
 	section[role=contact-content] & {
 		background:$white;
 		padding: 40px 40px 50px;
+		z-index:1;
 		@include media($bp-large) {
 			@include span-columns(6.5 of 12);
 			float:none;
