@@ -861,6 +861,21 @@ section[role=content] .course-heading .button, section[role=content] .course-hea
     border-bottom: 8px solid #3d3777;
     border-top: none; }
 
+.read-more {
+  font-family: "Playfair Display", serif;
+  margin-top: 10px;
+  max-width: 115px;
+  position: relative; }
+  .read-more:after {
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #3d3777;
+    border-right: none;
+    content: "";
+    position: absolute;
+    right: -12px;
+    top: 6px; }
+
 .sidebar ul {
   padding-left: 0;
   list-style: none; }
