@@ -3011,7 +3011,7 @@ input[type="button"] {
   /* stops bg color from leaking outside the border: */
   box-shadow: none;
   font-family: "Roboto", sans-serif;
-  font-size: 0.75em;
+  font-size: 0.8em;
   font-weight: normal;
   margin-top: 0;
   text-transform: uppercase;
