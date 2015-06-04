@@ -515,6 +515,19 @@ section[role=content] {
 		}	
 	}
 }
+.read-more {
+	font-family: $header-font-family;
+	margin-top:10px;
+	max-width:115px;
+	position:relative;
+	&:after {
+		@include arrow(right,$heading,6px);
+		content:"";
+		position: absolute;
+		right: -12px;
+		top: 6px;
+	}	
+}
 .sidebar {
 	ul {
 		padding-left:0;
