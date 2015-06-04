@@ -42,6 +42,7 @@
 		query_posts("post_type=service&showposts=-1");
 		if(have_posts()):
 		while(have_posts()):the_post();
+			echo '<a href="#" id="#'.$post->post_name.'"></a>';
 	?>
 	<div class="oddeven">
 		<div class="container">
