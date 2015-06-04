@@ -10,7 +10,7 @@ get_header();?>
     <div class="container">
 		<div class="content-grid">
 			<?php
-				the_title("<h1>","</h1>");
+				the_title("<h2 class='sub_title'>","</h2>");
 				get_template_part( 'template', 'sub_heading' );
 				echo "<div class='content-grid'>";
 					the_content();
@@ -30,7 +30,7 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 				$clinic_team_category_id=1362;
 				$team_category = get_term_by('id', $clinic_team_category_id, 'team_category');
 			?>
-				<h1><?php echo $team_category->name;?></h1>
+				<h2 class="sub_title"><?php echo $team_category->name;?></h2>
 				<p><?php echo $team_category->description; ?></p>
 		</div>	
 	</div>			
@@ -89,7 +89,7 @@ $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full'
 				$production_team_category_id=1363;
 				$team_category = get_term_by('id', $production_team_category_id, 'team_category');
 			?>
-				<h1><?php echo $team_category->name;?></h1>
+				<h2 class="sub_title"><?php echo $team_category->name;?></h2>
 				<p><?php echo $team_category->description; ?></p>
 		</div>			
 		<?php
