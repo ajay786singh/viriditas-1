@@ -7,9 +7,13 @@ $gutter: golden-ratio(2em, 3);
 $grid-columns: 5;
 
 $max-width: em(1280);
+$mobile-size:em(320);
 
 // Major: Content centric breakpoints
 $bp-large: new-breakpoint(min-width 50em 12);
+
+// Minor: Content centric breakpoints
+$bp-small: new-breakpoint(max-width $mobile-size 4);
 
 // Visual Grid view
 $visual-grid: false;

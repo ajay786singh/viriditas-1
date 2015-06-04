@@ -1709,6 +1709,8 @@ section[role=content] {
       padding: 60px 0; }
     .home section[role=content]:nth-of-type(2) {
       padding: 60px 0; }
+  .about section[role=content] {
+    padding-bottom: 0; }
   section[role=content] .secondary:nth-of-type(1) {
     margin-left: 0;
     padding-left: 0; }
@@ -2197,7 +2199,10 @@ section[role="actions"] ul li a {
   .load-more a {
     background: #3a3877;
     -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
     border-radius: 5px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
     background-clip: padding-box;
     /* stops bg color from leaking outside the border: */
     color: white;
@@ -2251,7 +2256,10 @@ section[role="actions"] ul li a {
       .single-product-content .product-actions ul li span a.button, .single-product-content .product-actions ul li span .gform_wrapper a.gform_button, .gform_wrapper .single-product-content .product-actions ul li span a.gform_button, .single-product-content .product-actions ul li span .appointments-pagination a, .appointments-pagination .single-product-content .product-actions ul li span a {
         margin-bottom: 0;
         -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
         border-radius: 3px;
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
         background-clip: padding-box;
         /* stops bg color from leaking outside the border: */ }
 .single-product-content .price del {
@@ -2280,7 +2288,10 @@ section[role="actions"] ul li a {
   padding: 5px 15px 2px;
   text-transform: uppercase;
   -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
   border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   margin-bottom: 1em; }
@@ -2607,7 +2618,6 @@ input[type="submit"] {
   font-size: 1em;
   font-size: 1.2em;
   padding: 6px 15px 7px;
-  margin-left: -4px;
   text-decoration: none;
   user-select: none;
   vertical-align: middle;
@@ -2643,14 +2653,31 @@ select {
 
 footer input[type="text"], footer input[type="email"] {
   border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
   box-shadow: none;
   height: 35px; }
   footer input[type="text"]:hover, footer input[type="text"]:focus, footer input[type="email"]:hover, footer input[type="email"]:focus {
     border: none; }
 footer input[type="submit"] {
   height: 35px;
-  padding: 7px 15px 7px; }
+  padding: 7px 15px 7px;
+  margin-left: -4px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */ }
+  @media screen and (max-width: 20em) {
+    footer input[type="submit"] {
+      margin-left: 0px; } }
 
 .account-form ul {
   margin-left: 0;
@@ -2806,7 +2833,10 @@ li.gfield + li.gfield.gfield_creditcard_warning {
     background: none;
     border: none;
     -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
     border-radius: 0px;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
     background-clip: padding-box;
     /* stops bg color from leaking outside the border: */
     border-bottom: 1px solid;
@@ -2903,6 +2933,13 @@ input[type="button"] {
 
 .appointments-form input[type="submit"] {
   border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  /* stops bg color from leaking outside the border: */
   font-size: 0.8em;
   font-weight: normal;
   text-transform: uppercase; }
@@ -2925,7 +2962,10 @@ input[type="button"] {
 .single-product-content .woocommerce input.button,
 .woocommerce .single-product-content input.button {
   -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   font-size: 0.8em;
@@ -2936,7 +2976,10 @@ input[type="button"] {
   border: none;
   font-weight: normal;
   -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   box-shadow: none; }
@@ -2965,7 +3008,10 @@ input[type="button"] {
   margin-top: 0;
   font-size: 1em;
   -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */ }
 
@@ -2999,14 +3045,20 @@ input[type="button"] {
   margin-top: 0;
   font-size: 1em;
   -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
   border-radius: 0px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */ }
 
 .appointments-pagination a {
   border: none;
   -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
   border-radius: 0px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   box-shadow: none;
