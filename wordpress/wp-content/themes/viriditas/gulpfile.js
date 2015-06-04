@@ -42,6 +42,7 @@ var scriptList = [
 	'src/js/custom/login.js',
 	'src/js/custom/single-cart.js',
 	'src/js/custom/compound.js',
+	'src/js/custom/scroll-to-url-hash.js',
 ];
 
 var fontIcons = [
