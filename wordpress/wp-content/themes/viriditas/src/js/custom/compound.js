@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
 		var pb=getParameterByName('pb');
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
-		$('.compound-list').showCompound();
+		$('.compound-list .product-list').showCompound();
 		$('#by_folk_name').keypress(function (e) {
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 					var url=removeURLParameter('keyword');					
 					window.history.pushState({path:url},'',url);
 				}
-				$('.compound-list').showCompound();
+				$('.compound-list .product-list').showCompound();
 				e.preventDefault();
 			}
 		});

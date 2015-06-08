@@ -25,9 +25,28 @@
 @import "helpers/extends/arrow-border";
 
 
+
+// Include plugins css
+//Gravity Forms
+@import "plugins/gravityforms/formreset.min";
+@import "plugins/gravityforms/formsmain";
+@import "plugins/gravityforms/readyclass.min";
+@import "plugins/gravityforms/browsers.min";
+
+//Woocommerce
+@import "plugins/woocommerce/woocommerce-layout";
+@import "plugins/woocommerce/woocommerce-smallscreen";
+@import "plugins/woocommerce/woocommerce";
+@import "plugins/woocommerce-product-bundles/bundles-style";
+
+//Appointments
+@import "plugins/appointments/front";
+
+// Include Base css
 @import "base/typography";
 @import "base/wp_core";
 
+// Include Layout css
 @import "layout/header";
 @import "layout/nav";
 @import "layout/banner";
@@ -38,6 +57,7 @@
 @import "layout/compound-products";
 @import "layout/footer";
 
+// Include Components css
 @import "components/accordion";
 @import "components/forms";
 @import "components/buttons";

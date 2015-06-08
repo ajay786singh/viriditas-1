@@ -426,7 +426,7 @@ function show_compound_products() {
 	$max_pages=$query->max_num_pages;
 	if($query->have_posts()){
 		$next = get_next_posts_link('Older', $max_pages);
-		echo '<ul class="product-list">';
+		//echo '<ul class="product-list">';
 		while($query->have_posts()):$query->the_post();
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
@@ -434,17 +434,7 @@ function show_compound_products() {
 		</li>
 	<?php
 		endwhile;
-		echo "</ul>";
-		echo '<ul class="alphabets-list">';
-				$alphas = range('A', 'Z');
-				foreach($alphas as $alphabet) {
-					if($_REQUEST['sort_by_alpha']==lcfirst($alphabet)) {
-						echo "<li><a href='#' id='sort-".lcfirst($alphabet)."' class='active'>".$alphabet."</li>";
-					}else {
-						echo "<li><a href='#' id='sort-".lcfirst($alphabet)."'>".$alphabet."</li>";
-					}
-				}
-		echo '</ul>';
+		//echo "</ul>";
 	} else {
 		echo "1";
 	}

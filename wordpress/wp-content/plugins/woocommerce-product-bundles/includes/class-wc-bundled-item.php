@@ -6,7 +6,7 @@
  * The bunded item class is a container that initializes and holds all pricing, availability and variation/attribute-related data of a bundled item.
  *
  * @class 	WC_Bundled_Item
- * @version 4.8.8
+ * @version 4.9.4
  * @since   4.2.0
  */
 
@@ -148,43 +148,6 @@ class WC_Bundled_Item {
 				}
 			}
 
-			//	Sign up price
-
-			$regular_signup_fee = $bundled_product->get_sign_up_fee();
-			$signup_fee			= $this->get_sign_up_fee( $regular_signup_fee, $bundled_product );
-
-			$this->min_regular_price = $this->max_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $regular_signup_fee );
-			$this->min_price         = $this->max_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $signup_fee );
-
-			if ( $regular_signup_fee > $signup_fee ) {
-				$this->on_sale = true;
-			}
-
-			// Save prices incl or excl tax
-
-			if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes === 'yes' && $this->is_front_end ) {
-
-				if ( $woocommerce_bundles->helpers->wc_option_tax_display_shop === 'incl' ) {
-
-					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
-						$this->min_price_incl_tax = $signup_fee;
-						$this->min_price_excl_tax = $bundled_product->get_price_excluding_tax( $quantity, $signup_fee ) / $quantity;
-					} else {
-						$this->min_price_incl_tax = $this->min_price;
-						$this->min_price_excl_tax = $signup_fee;
-					}
-				} else {
-
-					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
-						$this->min_price_incl_tax = $signup_fee;
-						$this->min_price_excl_tax = $this->min_price;
-					} else {
-						$this->min_price_incl_tax = $bundled_product->get_price_including_tax( $quantity, $signup_fee ) / $quantity;
-						$this->min_price_excl_tax = $signup_fee;
-					}
-				}
-			}
-
 			//	Recurring price
 
 			$regular_recurring_fee = $bundled_product->get_regular_price();
@@ -197,13 +160,44 @@ class WC_Bundled_Item {
 				$this->on_sale = true;
 			}
 
-			// If there is NO free trial, we need to include the recurring price in the initial amount
+			//	Sign up price
 
-			$trial_length = $bundled_product->subscription_trial_length;
+			$regular_signup_fee      = $bundled_product->get_sign_up_fee();
+			$signup_fee              = $this->get_sign_up_fee( $regular_signup_fee, $bundled_product );
 
-			if ( $trial_length == 0 ) {
-				$this->min_regular_price = $this->max_regular_price = $this->min_regular_price + $this->min_regular_recurring_price;
-				$this->min_price         = $this->max_price         = $this->min_price + $this->min_recurring_price;
+			$regular_up_front_fee    = $regular_signup_fee + $this->get_prorated_price_for_subscription( $regular_recurring_fee );
+			$up_front_fee            = $signup_fee + $this->get_prorated_price_for_subscription( $recurring_fee );
+
+			$this->min_regular_price = $this->max_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $regular_up_front_fee );
+			$this->min_price         = $this->max_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $up_front_fee );
+
+			if ( $regular_up_front_fee > $up_front_fee ) {
+				$this->on_sale = true;
+			}
+
+			// Save prices incl or excl tax
+
+			if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes === 'yes' && $this->is_front_end ) {
+
+				if ( $woocommerce_bundles->helpers->wc_option_tax_display_shop === 'incl' ) {
+
+					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
+						$this->min_price_incl_tax = $up_front_fee;
+						$this->min_price_excl_tax = $bundled_product->get_price_excluding_tax( $quantity, $up_front_fee ) / $quantity;
+					} else {
+						$this->min_price_incl_tax = $this->min_price;
+						$this->min_price_excl_tax = $up_front_fee;
+					}
+				} else {
+
+					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
+						$this->min_price_incl_tax = $up_front_fee;
+						$this->min_price_excl_tax = $this->min_price;
+					} else {
+						$this->min_price_incl_tax = $bundled_product->get_price_including_tax( $quantity, $up_front_fee ) / $quantity;
+						$this->min_price_excl_tax = $up_front_fee;
+					}
+				}
 			}
 
 		/*-----------------------------------------------------------------------------------*/
@@ -1211,5 +1205,60 @@ class WC_Bundled_Item {
 		}
 
 		return apply_filters( 'woocommerce_bundled_item_availability', array( 'availability' => $availability, 'class' => $class ), $this );
+	}
+
+	/**
+	 * Get prorated sub price.
+	 *
+	 * @param  double     $recurring_price
+	 * @param  WC_Product $product
+	 * @return double
+	 */
+	public function get_prorated_price_for_subscription( $recurring_price, $product = false ) {
+
+		if ( ! $product ) {
+			$product = $this->product;
+		}
+
+		$price   = 0;
+
+		if ( WC_Subscriptions_Product::is_subscription( $product ) ) {
+
+			if ( 0 == WC_Subscriptions_Product::get_trial_length( $product ) ) {
+
+				if ( WC_Subscriptions_Synchroniser::is_product_prorated( $product ) ) {
+
+					$next_payment_date = WC_Subscriptions_Synchroniser::calculate_first_payment_date( $product, 'timestamp' );
+
+					if ( WC_Subscriptions_Synchroniser::is_today( $next_payment_date ) ) {
+						return $recurring_price;
+					}
+
+					switch( $product->subscription_period ) {
+						case 'week' :
+							$days_in_cycle = 7 * $product->subscription_period_interval;
+							break;
+						case 'month' :
+							$days_in_cycle = date( 't' ) * $product->subscription_period_interval;
+							break;
+						case 'year' :
+							$days_in_cycle = ( 365 + date( 'L' ) ) * $product->subscription_period_interval;
+							break;
+					}
+
+					$days_until_next_payment = ceil( ( $next_payment_date - gmdate( 'U' ) ) / ( 60 * 60 * 24 ) );
+
+					$price = $days_until_next_payment * ( $recurring_price / $days_in_cycle );
+
+				} else {
+
+					$price = $recurring_price;
+				}
+
+			}
+
+		}
+
+		return $price;
 	}
 }

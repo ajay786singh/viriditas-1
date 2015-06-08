@@ -3,7 +3,7 @@
  * Product Bundle cart functions and filters.
  *
  * @class 	WC_PB_Cart
- * @version 4.9.3
+ * @version 4.9.4
  * @since   4.5.0
  */
 
@@ -662,8 +662,9 @@ class WC_PB_Cart {
 
 		$cart_contents = ! empty( WC()->cart ) ? WC()->cart->cart_contents : '';
 
-		if ( isset( $item_session_values[ 'bundled_items' ] ) && ! empty( $item_session_values[ 'bundled_items' ] ) )
+		if ( isset( $item_session_values[ 'bundled_items' ] ) && ! empty( $item_session_values[ 'bundled_items' ] ) ) {
 			$cart_item[ 'bundled_items' ] = $item_session_values[ 'bundled_items' ];
+		}
 
 		if ( isset( $item_session_values[ 'stamp' ] ) ) {
 			$cart_item[ 'stamp' ] = $item_session_values[ 'stamp' ];
@@ -685,45 +686,52 @@ class WC_PB_Cart {
 				$parent          = $cart_contents[ $bundle_cart_key ][ 'data' ];
 				$bundled_item_id = $cart_item[ 'bundled_item_id' ];
 
-				$per_product_pricing  = $parent->is_priced_per_product();
-				$per_product_shipping = $parent->is_shipped_per_product();
+				if ( $parent->has_bundled_item( $bundled_item_id ) ) {
 
-				if ( $per_product_pricing == false ) {
+					$per_product_pricing  = $parent->is_priced_per_product();
+					$per_product_shipping = $parent->is_shipped_per_product();
 
-					$cart_item[ 'data' ]->price = 0;
+					if ( $per_product_pricing == false ) {
 
-					if ( isset( $cart_item[ 'data' ]->subscription_sign_up_fee ) ) {
-						$cart_item[ 'data' ]->subscription_sign_up_fee = 0;
+						$cart_item[ 'data' ]->price = 0;
+
+						if ( isset( $cart_item[ 'data' ]->subscription_sign_up_fee ) ) {
+							$cart_item[ 'data' ]->subscription_sign_up_fee = 0;
+						}
+
+					} else {
+
+						$discount = $cart_item[ 'stamp' ][ $cart_item[ 'bundled_item_id' ] ][ 'discount' ];
+
+						if ( ! empty( $discount ) || has_filter( 'woocommerce_bundle_is_composited' ) ) {
+
+							$bundled_item = $parent->get_bundled_item( $bundled_item_id );
+
+							$bundled_item->add_price_filters();
+
+							$cart_item[ 'data' ]->price = $cart_item[ 'data' ]->get_price();
+
+							$bundled_item->remove_price_filters();
+
+						}
+					}
+
+					if ( $cart_item[ 'data' ]->needs_shipping() ) {
+
+						if ( false === apply_filters( 'woocommerce_bundled_item_shipped_individually', $per_product_shipping, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
+
+							if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
+								$cart_item[ 'data' ]->bundled_weight = $cart_item[ 'data' ]->get_weight();
+							}
+
+							$cart_item[ 'data' ]->bundled_value = $cart_item[ 'data' ]->price;
+							$cart_item[ 'data' ]->virtual       = 'yes';
+						}
 					}
 
 				} else {
 
-					$discount = $cart_item[ 'stamp' ][ $cart_item[ 'bundled_item_id' ] ][ 'discount' ];
-
-					if ( ! empty( $discount ) || has_filter( 'woocommerce_bundle_is_composited' ) ) {
-
-						$bundled_item = $parent->get_bundled_item( $bundled_item_id );
-
-						$bundled_item->add_price_filters();
-
-						$cart_item[ 'data' ]->price = $cart_item[ 'data' ]->get_price();
-
-						$bundled_item->remove_price_filters();
-
-					}
-				}
-
-				if ( $cart_item[ 'data' ]->needs_shipping() ) {
-
-					if ( false === apply_filters( 'woocommerce_bundled_item_shipped_individually', $per_product_shipping, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
-
-						if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
-							$cart_item[ 'data' ]->bundled_weight = $cart_item[ 'data' ]->get_weight();
-						}
-
-						$cart_item[ 'data' ]->bundled_value = $cart_item[ 'data' ]->price;
-						$cart_item[ 'data' ]->virtual       = 'yes';
-					}
+					$cart_item[ 'quantity' ] = 0;
 				}
 			}
 		}
@@ -922,13 +930,9 @@ class WC_PB_Cart {
 					}
 
 					$bundled_item_sign_up_fee  = get_option( 'woocommerce_tax_display_cart' ) === 'excl' ? $product->get_sign_up_fee_excluding_tax( $item_values[ 'quantity' ] ) : $product->get_sign_up_fee_including_tax( $item_values[ 'quantity' ] );
-					$bundled_item_trial_length = $product->subscription_trial_length;
+					$bundled_item_prorated_fee = get_option( 'woocommerce_tax_display_cart' ) === 'excl' ? $product->get_price_excluding_tax( $item_values[ 'quantity' ], $bundled_item->get_prorated_price_for_subscription( $product->get_price(), $product ) ) : $product->get_price_including_tax( $item_values[ 'quantity' ], $bundled_item->get_prorated_price_for_subscription( $product->get_price(), $product ) );
 
-					if ( $bundled_item_trial_length == 0 ) {
-						$bundled_item_price += $bundled_item_sign_up_fee;
-					} else {
-						$bundled_item_price = $bundled_item_sign_up_fee;
-					}
+					$bundled_item_price = $bundled_item_sign_up_fee + $bundled_item_prorated_fee;
 				}
 
 				$bundled_items_price += $bundled_item_price;

@@ -1,5 +1,12 @@
 *** WooCommerce Product Bundles ***
 
+2015.05.18 - version 4.9.4
+ * Fix - Sanitize attribute meta values when validating defaults.
+ * Fix - Escaped product title in bundled product templates.
+ * Fix - Bundle price strings with synced Subscriptions.
+ * Fix - Incorrect get_max_bundle_price() value when a bundle contains optional items.
+ * Fix - Fatal error when a Bundle in cart contains discounted bundled items that were deleted from the Bundle after the cart session data was saved.
+
 2015.04.21 - version 4.9.3
  * Feature - Support optional Subscriptions.
  * Feature - Support for multiple bundled subscriptions (WC Subscriptions v2.0+).
