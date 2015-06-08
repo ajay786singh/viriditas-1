@@ -14,6 +14,7 @@ var gulp 		= require('gulp'),
 	pngquant 	= require('imagemin-pngquant'),
 	livereload 	= require('gulp-livereload'),
 	notify 		= require('gulp-notify'),
+	sassbeautify = require('gulp-sassbeautify'),
 	jshint 		= require('gulp-jshint');
 
 // Create custom variables to make life easier
@@ -51,8 +52,15 @@ var fontIcons = [
 ];
 
 var sassOptions = {
-	style: 'nested'
+	style: 'compressed'
 };
+
+//Beautify sass files
+gulp.task('beautify-scss', function () {
+  gulp.src('src/**/*.scss')
+    .pipe(sassbeautify())
+    .pipe(gulp.dest('src'))
+})
 
 // Create sass compile task
 gulp.task('sass', function() {
@@ -105,4 +113,4 @@ gulp.task('watch', function() {
 });
 
 // Create default task so you can gulp whenever you don't want to watch
-gulp.task('default', ['js', 'sass', 'imagemin', 'icons']);
+gulp.task('default', ['js', 'sass', 'imagemin', 'icons','beautify-scss']);
