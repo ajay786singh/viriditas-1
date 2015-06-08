@@ -16,7 +16,7 @@ class Hype_registration_form {
     }
 
     function scripts() {
-		wp_enqueue_script('countries-js', get_template_directory_uri()."/includes/login-register/js/countries.js", __FILE__);
+		//wp_enqueue_script('countries-js', get_template_directory_uri()."/includes/login-register/js/countries.js", __FILE__);
     }
 
     public function registration_form()	{
