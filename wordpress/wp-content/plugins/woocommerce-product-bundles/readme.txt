@@ -2,9 +2,9 @@
 
 Contributors: franticpsyx
 Tags: woocommerce, product, bundle, bundles, kits, simple, variable
-Requires at least: 3.7.0
-Tested up to: 4.1.1
-Stable tag: 4.9.3
+Requires at least: 3.8
+Tested up to: 4.2
+Stable tag: 4.9.4
 WC requires at least: 2.1
 WC tested up to: 2.3
 License: GNU General Public License v3.0
@@ -25,5 +25,5 @@ Product Bundles is probably the most straightforward WooCommerce extension for c
 
 == Upgrade Notice ==
 
-= 4.9.3 =
-Escaped add_query_arg to fix reported WP XSS issue. Includes support for WC Subs 2.0+.
+= 4.9.4 =
+Minor fixes.

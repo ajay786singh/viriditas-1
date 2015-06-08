@@ -11,7 +11,7 @@
 </section>
 
 <section role="contact-content">
-	<article class="container contact">
+	<article class="container contact-box">
 		<div class="secondary">
 			<?php the_content();?>
 		</div>

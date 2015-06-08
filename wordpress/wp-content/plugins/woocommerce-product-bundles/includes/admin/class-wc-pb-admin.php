@@ -5,7 +5,7 @@
  * Loads admin tabs and adds related hooks / filters.
  *
  * @class WC_PB_Admin
- * @version 4.9.3
+ * @version 4.9.4
  */
 
 // Exit if accessed directly
@@ -101,8 +101,9 @@ class WC_PB_Admin {
 						foreach ( $attributes as $attribute ) {
 
 							// Only deal with attributes that are variations
-							if ( ! $attribute[ 'is_variation' ] )
+							if ( ! $attribute[ 'is_variation' ] ) {
 								continue;
+							}
 
 							// Get current value for variation (if set)
 							$variation_selected_value = isset( $variation_data[ 'attribute_' . sanitize_title( $attribute['name'] ) ][0] ) ? $variation_data[ 'attribute_' . sanitize_title( $attribute['name'] ) ][0] : '';
@@ -203,9 +204,10 @@ class WC_PB_Admin {
 
 							sort( $post_terms );
 							foreach ( $post_terms as $term ) {
-								if ( $filter_variations == 'yes' && isset( $filtered_attributes[ $attribute[ 'name' ] ] ) && ! in_array( '', $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
-									if ( ! in_array( $term->slug, $filtered_attributes[ $attribute[ 'name' ] ] ) )
+								if ( $filter_variations === 'yes' && isset( $filtered_attributes[ $attribute[ 'name' ] ] ) && ! in_array( '', $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
+									if ( ! in_array( $term->slug, $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
 										continue;
+									}
 								}
 								echo '<option ' . selected( $variation_selected_value, $term->slug, false ) . ' value="' . esc_attr( $term->slug ) . '">' . apply_filters( 'woocommerce_variation_option_name', esc_html( $term->name ) ) . '</option>';
 							}
@@ -216,9 +218,10 @@ class WC_PB_Admin {
 
 							sort( $options );
 							foreach ( $options as $option ) {
-								if ( $filter_variations == 'yes' && isset( $filtered_attributes[ $attribute[ 'name' ] ] ) && ! in_array( '', $filtered_attributes[ $attribute['name'] ] ) ) {
-									if ( ! in_array( sanitize_title( $option ), $filtered_attributes[ $attribute['name'] ] ) )
+								if ( $filter_variations === 'yes' && isset( $filtered_attributes[ $attribute[ 'name' ] ] ) && ! in_array( '', $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
+									if ( ! in_array( sanitize_title( $option ), $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
 										continue;
+									}
 								}
 								echo '<option ' . selected( sanitize_title( $variation_selected_value ), sanitize_title( $option ), false ) . ' value="' . esc_attr( sanitize_title( $option ) ) . '">' . esc_html( apply_filters( 'woocommerce_variation_option_name', $option ) ) . '</option>';
 							}
@@ -828,19 +831,22 @@ class WC_PB_Admin {
 
 										$product_custom_fields = get_post_custom( $variation );
 
-										foreach ( $product_custom_fields as $name => $value ) :
+										foreach ( $product_custom_fields as $name => $value ) {
 
-											if ( ! strstr( $name, 'attribute_' ) ) continue;
-											$attribute_name = substr( $name, strlen('attribute_') );
+											if ( ! strstr( $name, 'attribute_' ) ) {
+												continue;
+											}
+
+											$attribute_name  = substr( $name, strlen( 'attribute_' ) );
+											$attribute_value = sanitize_title( $value[0] );
 
 											// ( populate array )
 											if ( ! isset( $filtered_attributes[ $attribute_name ] ) ) {
-												$filtered_attributes[ $attribute_name ][] = $value[0];
-											} elseif ( ! in_array( $value[0], $filtered_attributes[ $attribute_name ] ) ) {
-												$filtered_attributes[ $attribute_name ][] = $value[0];
+												$filtered_attributes[ $attribute_name ][] = $attribute_value;
+											} elseif ( ! in_array( $attribute_value, $filtered_attributes[ $attribute_name ] ) ) {
+												$filtered_attributes[ $attribute_name ][] = $attribute_value;
 											}
-
-										endforeach;
+										}
 
 									}
 
@@ -851,13 +857,13 @@ class WC_PB_Admin {
 											continue;
 										}
 
-										if ( ! in_array( $value, $filtered_attributes[ sanitize_title( $name ) ] ) && ! in_array( '', $filtered_attributes[ sanitize_title( $name ) ] ) ) {
+										if ( ! in_array( sanitize_title( $value ), $filtered_attributes[ sanitize_title( $name ) ] ) && ! in_array( '', $filtered_attributes[ sanitize_title( $name ) ] ) ) {
 
 											// set option to "Any"
 											$data[ 'default_attributes' ][ sanitize_title( $name ) ] = '';
 
 											// throw an error
-											$this->add_admin_error( sprintf( __( 'The \'%1$s\' default option that you selected for \'%2$s%3$s\' (#%4$s) is inconsistent with the set of active variations. Always double-check your preferences before saving, and always save any changes made to the variation filters before choosing new defaults.', 'woocommerce-product-bundles' ), ucwords( wc_attribute_label( $name ) ), get_the_title( $id ), ( $id != $val ? ' #' . $times[$id] : '' ), $id ) );
+											$this->add_admin_error( sprintf( __( 'The defaults that you selected for \'%1$s%2$s\' (#%3$s) are inconsistent with the set of active variations. Always double-check your preferences before saving, and always save any changes made to the variation filters before choosing new defaults.', 'woocommerce-product-bundles' ), get_the_title( $id ), ( $id != $val ? ' #' . $times[$id] : '' ), $id ) );
 
 											continue;
 										}

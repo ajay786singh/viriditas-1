@@ -4,7 +4,7 @@
  * Extends the WC_Product class to calculate html price strings and availability by taking into account the prices and availability of all bundled products.
  *
  * @class 	WC_Product_Bundle
- * @version 4.9.3
+ * @version 4.9.4
  */
 
 // Exit if accessed directly
@@ -208,7 +208,7 @@ class WC_Product_Bundle extends WC_Product {
 			if ( $this->is_priced_per_product() ) {
 
 				$bundled_item_qty_min = $bundled_item->is_optional() ? 0 : $bundled_item->get_quantity();
-				$bundled_item_qty_max = $bundled_item->is_optional() ? 0 : $bundled_item->get_quantity( 'max' );
+				$bundled_item_qty_max = $bundled_item->get_quantity( 'max' );
 
 				$this->min_bundle_price          = $this->min_bundle_price + $bundled_item_qty_min * $bundled_item->min_price;
 				$this->min_bundle_regular_price  = $this->min_bundle_regular_price + $bundled_item_qty_min * $bundled_item->min_regular_price;
@@ -491,8 +491,24 @@ class WC_Product_Bundle extends WC_Product {
 	}
 
 	/**
+	 * Checks if a specific bundled item exists.
+	 *
+	 * @param  $bundled_item_id
+	 * @return boolean
+	 */
+	public function has_bundled_item( $bundled_item_id ) {
+
+		if ( ! empty( $this->bundle_data ) && isset( $this->bundle_data[ $bundled_item_id ] ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Gets a specific bundled item.
 	 *
+	 * @param  $bundled_item_id
 	 * @return WC_Bundled_Item
 	 */
 	public function get_bundled_item( $bundled_item_id ) {

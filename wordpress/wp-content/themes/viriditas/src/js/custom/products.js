@@ -115,7 +115,7 @@ function toParams(searchUrl) {
 							var url=removeURLParameter('sort_by_alpha');					
 							window.history.pushState({path:url},'',url);
 						}
-						$('.compound-list').showCompound();
+						$('.compound-list .product-list').showCompound();
 						
 					});
 				} else if(html==1) {
@@ -283,7 +283,7 @@ function toParams(searchUrl) {
 		var url = replaceParam(filter, val);
 		window.history.pushState({path:url},'',url);
 		if($('.filter-compound').length) {
-			$('.compound-content .product-list').showCompound();
+			$('.compound-list .product-list').showCompound();
 		} else {
 			$('.product-list').empty();
 			$('.product-list').showProducts({page:1});
