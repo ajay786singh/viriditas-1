@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	if($('.filter-compound').length) {
+	if($('.compounds').length) {
 		$('.error-info').show();
 		var pa=getParameterByName('pa');
 		var pb=getParameterByName('pb');

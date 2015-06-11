@@ -10,98 +10,82 @@ get_header(); ?>
 		<h1>Custom Formulae</h1>
 		<?php the_content();?>
 		</div>
+		<div class="secondary">
+			<a class="back-to-products" href="<?php bloginfo('url');?>/products">&larr; Back to products</a>
+		</div>	
 	</div>
 	<div class="container compounds">
-		<div class="column-4 filter-compound">
+		<section class="column-4">
 			<h5>Search herb to add</h5>
-			<div class="compound-header">
-				
-			</div>
-			<div class="compound-content">
+			<div class="compound-box" id="compound-box-1">
 				<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search herb to add" />
 				<section role="body-systems"></section>	
 				<section role="actions"></section>				
 			</div>
-		</div>	
-		
-		<div class="column-4 result-box">
-			<h5>Latin / Folk</h5>
-			<div class="compound-header">
-				
-			</div>
-			<div class="compound-content">
-				<div class="popup-compound">
-					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
-					<div class="pop-up-action">
-						<p><input type="text" name="" id="herb-size" max="100" /> <label>%</label></p>
-						<a href="#" class="button">Submit</a>
-					</div>
-				</div>
-				<div class="compound-list">
-					<?php
-						echo '<ul class="product-list">';
-						echo '</ul>';
-						echo '<ul class="alphabets-list">';
-								$alphas = range('A', 'Z');
-								foreach($alphas as $alphabet) {
-									if($_REQUEST['sort_by_alpha']==lcfirst($alphabet)) {
-										echo "<li><a href='#' id='sort-".lcfirst($alphabet)."' class='active'>".$alphabet."</li>";
-									}else {
-										echo "<li><a href='#' id='sort-".lcfirst($alphabet)."'>".$alphabet."</li>";
-									}
+		</section>	
+		<section class="column-4">
+			<h5><a href="">Latin</a> / <a href="">Folk</a></h5>
+			<div class="compound-list compound-box" id="compound-box-2">
+				<?php
+					echo '<ul class="product-list">';
+					echo '</ul>';
+					echo '<ul class="alphabets-list">';
+							$alphas = range('A', 'Z');
+							foreach($alphas as $alphabet) {
+								if($_REQUEST['sort_by_alpha']==lcfirst($alphabet)) {
+									echo "<li><a href='#' id='sort-".lcfirst($alphabet)."' class='active'>".$alphabet."</li>";
+								}else {
+									echo "<li><a href='#' id='sort-".lcfirst($alphabet)."'>".$alphabet."</a></li>";
 								}
-						echo '</ul>';
-					?>
-				</div>
+							}
+					echo '</ul>';
+				?>
 			</div>
-		</div>	
-		
-		<div class="column-4 conclude-box">
+		</section>	
+		<section class="column-4">
 			<h5>Your Recipe</h5>
-			<form action="" class="recipe-form">
-				<div class="compound-header">
-					Recipe Name
-				</div>
-				<div class="compound-content">
-					<input type="text" id="recipe-name" required name="recipe-name" placeholder="Please give a name to your recipe.">
-				</div>	
-				<div class="compound-header">
-					Size (ML)
-				</div>
-				<div class="compound-content">
-					<ul>
-						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="500-60" checked> 500 ML - 60$</label></li>
-						<li><label><input type="radio" name="recipe-size" class="recipe-size" value="1000-100"> 1000 ML - 100$</label></li>
-					</ul>
-				</div>	
-				<div class="compound-header">
-					Your Additions
-					<input type="hidden" name="compound-products" id="compound-products" value="">
-				</div>
-				<div class="additions compound-content">
-					<ul class="border-list">
-					
-					</ul>
-				</div>
-				<div class="compound-header-2">
-					* Total must equal 100%
-					<input type="text" name="" id="total_percentage" value="">
-				</div>
-				<div class="compound-content">
-					<ul class="border-list">
-						<li>
-							<div class="left"><strong>Total</strong></div>
-							<div class="right">0%</div>
-						</li>
-					</ul>
-				</div>
-				<div class="compound-header-2">
-					<input type="hidden" name="form_type" id="form_type" value="add">
-					<h5>Done ?</h5> <input type="submit" class="manage-recipe button" value="Add to cart">
-				</div>
-				<div class="errors"></div>
-			</form>	
-		</div>	
+			<div class="compound-box" id="compound-box-3">
+				<form action="" class="recipe-form">
+					<section class="compound-header">
+						<h6>Recipe Name</h6>
+						<input type="text" id="recipe-name" required name="recipe-name" placeholder="Please give a name to your recipe.">
+					</section>
+					<section class="compound-sizes">
+						<h6>Size (mL)</h6>
+						<?php
+							$sizes=get_option('wc_settings_tab_compound_sizes');
+							if($sizes) {
+								$sizes=explode(",",$sizes);
+								$i=1;
+								echo "<ul>";
+								foreach($sizes as $sizeprice) {
+									$sizeprice=explode("/",$sizeprice);
+									$size=$sizeprice[0];
+									$price=$sizeprice[1];
+									$additional_price=$sizeprice[2];
+									$checked="";
+									if($i==1) { $checked='checked';}
+									echo "<li>";
+										echo "<input type='radio' ".$checked." id='size-".$i."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
+										echo "<label for='size-".$i."'>".$size." ML - ".$price."$</label>";
+									echo "</li>";
+									$i++;
+								}
+								echo "</ul>";
+							}
+						?>
+					</section>
+					<section class="additions">
+						<h6>Your Additions</h6>
+						<input type="hidden" name="compound-products" id="compound-products" value="">
+						<ul>
+							
+						</ul>
+					</section>
+					<input type="submit" name="" value="Add to cart">
+				</form>
+			</div>
+		</section>	
 	</div>
 </section>
 <?php endwhile; endif; ?>
