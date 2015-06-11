@@ -19,7 +19,7 @@ class WC_Settings_Woocommerce_Compound_Settings {
      * @return array $settings_tabs Array of WooCommerce setting tabs & their labels, including the Subscription tab.
      */
     public static function add_settings_tab( $settings_tabs ) {
-        $settings_tabs['settings_tab_compound'] = __( 'Settings compound Tab', 'woocommerce-settings-tab-compound' );
+        $settings_tabs['settings_tab_compound'] = __( 'Compound settings', 'woocommerce-settings-tab-compound' );
         return $settings_tabs;
     }
 
@@ -33,7 +33,6 @@ class WC_Settings_Woocommerce_Compound_Settings {
     public static function settings_tab() {
         woocommerce_admin_fields( self::get_settings() );
     }
-
 
     /**
      * Uses the WooCommerce options API to save settings via the @see woocommerce_update_options() function.
@@ -55,22 +54,24 @@ class WC_Settings_Woocommerce_Compound_Settings {
 
         $settings = array(
             'section_title' => array(
-                'name'     => __( 'Section Title', 'woocommerce-settings-tab-compound' ),
+                'name'     => __( 'Compound Settings', 'woocommerce-settings-tab-compound' ),
                 'type'     => 'title',
                 'desc'     => '',
                 'id'       => 'wc_settings_tab_compound_section_title'
             ),
-            'title' => array(
-                'name' => __( 'Title', 'woocommerce-settings-tab-compound' ),
-                'type' => 'text',
-                'desc' => __( 'This is some helper text', 'woocommerce-settings-tab-compound' ),
-                'id'   => 'wc_settings_tab_compound_title'
-            ),
-            'description' => array(
-                'name' => __( 'Description', 'woocommerce-settings-tab-compound' ),
+            'sizes' => array(
+                'name' => __( 'Size/Price/Additional Price', 'woocommerce-settings-tab-compound' ),
                 'type' => 'textarea',
-                'desc' => __( 'This is a paragraph describing the setting. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda. Lorem ipsum yadda yadda yadda.', 'woocommerce-settings-tab-compound' ),
-                'id'   => 'wc_settings_tab_compound_description'
+                'desc' => __( 'Please enter size, price and additional price in this format (500ml/$60/$5). For multiple sizes use comma(,) to separate.', 'woocommerce-settings-tab-compound' ),
+                'id'   => 'wc_settings_tab_compound_sizes',
+				'css' =>'min-width:500px;min-height:100px;'
+            ),
+			'pricy-products' => array(
+                'name' => __( 'Pricy Products', 'woocommerce-settings-tab-compound' ),
+                'type' => 'textarea',
+                'desc' => __( 'Please enter product id(s) separated with comma.', 'woocommerce-settings-tab-compound' ),
+                'id'   => 'wc_settings_tab_compound_pricy',
+				'css' =>'min-width:500px;min-height:100px;'
             ),
             'section_end' => array(
                  'type' => 'sectionend',

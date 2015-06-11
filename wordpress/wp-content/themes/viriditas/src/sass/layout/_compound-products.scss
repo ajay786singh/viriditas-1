@@ -1,41 +1,62 @@
-.compound-header {
-	//background:$base-border-color;
-	padding: 5px 15px 2px;
-	text-transform:uppercase;
-	@include border-radius(3px);
-	margin-bottom: 1em;
-}
+$compound-border-color:#cdcdcd;
+$compound-header-bg:#fafafa;
 
-.compound-header-2 {
-	@extend .compound-header;
-	//background:$dark-orange;
-	margin-bottom: 0;
-	overflow: hidden;
-	.button {
+.back-to-products {
+	display: inline-block;
+	font-weight:bold;
+	@include media($bp-large) {
 		float: right;
+		margin-top: 2.25em;
 	}
+	text-transform:uppercase;
 }
 
-.compound-content {
-	width:85%;
-	.result-box & {
-		width:100%;
+.compounds {
+	.compound-box {
+		margin-top:5px;
+		margin-bottom:50px;
+		&#compound-box-2 {
+			border:1px solid $compound-border-color;
+		}
+		&.compound-list {
+			padding:20px;
+		}
+		.recipe-form {
+			section {
+				padding:20px;
+				border:1px solid $compound-border-color;
+				border-top:none;
+				&.compound-header {
+					background:$compound-header-bg;
+				}
+				&:nth-of-type(1) {
+					border-top:1px solid $compound-border-color;
+				}
+				&.compound-sizes {
+					margin-bottom:0;
+					li {
+						display:inline-block;
+						margin-right:10px;
+					}
+				}
+			}
+		}
 	}
 	ul {
-		li {
+		list-style:none;
+		margin-left:0;
+		padding-left: 0;
+		overflow: hidden;
+	li {
 			margin-left:0;
 		}
 	}
 }
 
 .compound-list {
-	border:1px solid $base-border-color;
 	height:800px;
 	overflow-y:auto;
-	padding:30px 20px;
 	ul {
-		list-style:none;
-		padding-left:0;
 		margin-top:0;
 		&.product-list {
 			width:100%;
@@ -99,69 +120,29 @@
 	}
 }
 .additions {
-	@extend .compound-list;
 	& ul li a {
-		padding-left:0;		
 		display: inline-block;
-		position: relative;
-		width: 10px;
+		font-size:10px;
+		line-height: 2em;
+		top: -2px;
 		margin-right: 5px;
+		padding-left:0;		
+		position: relative;
+		width: 15px;
+		text-align:center;
 		&:before {
-			content: "\f00d";
 			background:none;
-			position:absolute;
-			width:10px;
-			height:20px;
-			left:0px;
-			top:2px;
+			border:1px solid;
+			@include border-radius(50%);
+			content: "\f00d";
 			display:block;
+			left:0px;
+			height:15px;
+			position:absolute;
+			width:15px;
+			top:2px;
 			text-indent:-9999px;
 		}
-	}
-}
-
-.conclude-box {
-	background:$recipe-box-bg;
-	.compound-content {
-		padding: 0px 15px 0;
-		width:100%;
-		ul {
-			list-style:none;
-			margin:0;
-			padding-left:0;
-			overflow: hidden;
-			li {
-				margin-left:0;
-				
-			}
-			&.border-list {
-				li {
-					border-bottom:1px solid $black;
-					overflow: hidden;
-					margin: 0;
-					input {
-						margin-bottom:0;
-					}
-					&:last-child {
-						border-bottom:none;
-					}
-					.left {
-						width:60%;
-						float:left;
-						border-right:1px solid $black;
-						padding:10px 0 0;
-					}
-					.right {
-						width:40%;
-						float:left;
-						padding:10px 10px 0;
-					}
-				}
-			}	
-		}
-	}
-	label {
-		display:inline;
 	}
 }
 
@@ -172,3 +153,4 @@
 	padding:30px;
 	z-index: 1000;
 }
+

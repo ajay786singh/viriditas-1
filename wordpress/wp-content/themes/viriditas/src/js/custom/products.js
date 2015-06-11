@@ -160,8 +160,8 @@ function toParams(searchUrl) {
 	},
 	$.fn.addCompound = function( id,name ) {
 		var number_size="size_"+id;
-		var html="<li id='remove-product-"+id+"'><div class='left'><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> "+name+"</div>";
-			html+="<dib class='right'><input type='number' min='1' max='100' maxlength='3' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''></div>";
+		var html="<li id='remove-product-"+id+"'><div class='secondary'><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> <span>"+name+"</span></div>";
+			html+="<dib class='secondary'><input type='text' min='1' max='100' maxlength='3' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''></div>";
 			html+="</li>";
 		//$('.herb-sizes').calculateSize(100);	
 		var values =[];
@@ -282,7 +282,7 @@ function toParams(searchUrl) {
 	$.fn.filterSelectTerms = function(filter,val) {
 		var url = replaceParam(filter, val);
 		window.history.pushState({path:url},'',url);
-		if($('.filter-compound').length) {
+		if($('.compounds').length) {
 			$('.compound-list .product-list').showCompound();
 		} else {
 			$('.product-list').empty();
