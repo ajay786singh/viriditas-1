@@ -67,13 +67,14 @@ function toParams(searchUrl) {
 (function($) {
     $.fn.showCompound = function( options ) {
 		var settings = $.extend({
-            container    : $(this),
-			page         : 1,
-            body_system  : getParameterByName('pb'),
-			action 		 : getParameterByName('pa'),
-			search_folk  : getParameterByName('keyword'),
+            container     : $(this),
+			page          : 1,
+            body_system   : getParameterByName('pb'),
+			action 		  : getParameterByName('pa'),
+			search_folk   : getParameterByName('keyword'),
 			sort_by_alpha : getParameterByName('sort_by_alpha'),
-			loader    	 : $('.message')
+			sort_by       : getParameterByName('sort_by'),
+			loader    	  : $('.message')
         }, options);
 		settings.container.empty();
 		settings.container.empty().loaderShow();
@@ -85,7 +86,7 @@ function toParams(searchUrl) {
 				'filter_type_body_system':settings.body_system,
 				'filter_type_action':settings.action,
 				'search_folk':settings.search_folk,
-				'sort_by_alpha':settings.sort_by_alpha
+				'sort_by':settings.sort_by
 			},
 			success: function(html) {
 				settings.container.loaderHide();
@@ -175,10 +176,10 @@ function toParams(searchUrl) {
 		var number_size="size_"+id;
 		//$('.herb-sizes').calculateSize(100);	
 		var values =[];
+		$('.additions').show();
 		if($('.additions ul li').length <= 6) {
 			var data_pricy=$('#compound-'+id).attr('data-pricy');
 			$('.popup-compound').openPopup();
-			
 			var html="<li id='remove-product-"+id+"'><div class='box'>";
 				html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+"</div>";
 				html+="<div class='box'>";
@@ -192,7 +193,12 @@ function toParams(searchUrl) {
 				id=id.replace('remove-','');
 				values.push(id);
 			});
-			$('#compound-products').val(values);
+			$('#compound-products').val(values);			
+			if($('#compound-products').val() != '') {
+				$('.additions').show();
+			} else {
+				$('.additions').hide();
+			}
 			
 		} else {
 			alert("You can add max 7 herbs to your compound.");
@@ -212,6 +218,11 @@ function toParams(searchUrl) {
 				values.push(id);
 			});
 			$('#compound-products').empty().val(values);
+			if($('#compound-products').val() != '') {
+				$('.additions').show();
+			} else {
+				$('.additions').hide();
+			}
 		});	
 	},
 	$.fn.remvoeCompound = function( id ) {
