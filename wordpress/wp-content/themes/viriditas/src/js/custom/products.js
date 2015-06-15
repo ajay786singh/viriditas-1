@@ -130,15 +130,11 @@ function toParams(searchUrl) {
 		alert(size);
 		if (!(keycode==8 || keycode==46)&&(keycode < 48 || keycode > 57)) {
 			return false;
-		} else {
+		} else if (size.length < 3) {
 			alert(size.length);	
-			//Condition to check textbox contains ten numbers or not
-			if (size.length < 3){
-				//alert(size);
-				return true;
-			} else {
-				return false;
-			}
+			return true;		
+		} else {
+			return false;
 		}
 	},
 	$.fn.openPopup =function() {
