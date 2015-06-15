@@ -20,9 +20,15 @@ jQuery(document).ready(function($) {
 				e.preventDefault();
 			}
 		});
-		// $('.herb-sizes').on('input', function (event) { 
-			// this.value = this.value.replace(/[^0-9]/g, '');
-			// alert(this.value);
-		// });
+		$(".recipe-size").on('change',function(){
+			//alert($(this).val());
+		});
+		$('.popup-compound .close-button').click(function(e){
+			e.preventDefault();
+			$(this).parent().closePopup();
+		});
+		$('#herb-size').on('keyup',function(e){
+			$(this).sizeInput($(this),e);
+		});
 	}
 });

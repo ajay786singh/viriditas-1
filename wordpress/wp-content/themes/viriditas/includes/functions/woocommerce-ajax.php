@@ -422,19 +422,22 @@ function show_compound_products() {
 	
 	ob_start ();
 	$query=new WP_Query($args);
-	//echo $count=$query->found_posts;
-	$max_pages=$query->max_num_pages;
 	if($query->have_posts()){
-		$next = get_next_posts_link('Older', $max_pages);
-		//echo '<ul class="product-list">';
+		$pricy=get_option('wc_settings_tab_compound_pricy');
+		if($pricy) {
+			$pricy=explode(",",$pricy);
+		}
 		while($query->have_posts()):$query->the_post();
+			$data_pricy="";
+			if (in_array(get_the_ID(), $pricy)) {
+				$data_pricy="1";
+			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
-			<a href="#" id="compound-<?php echo get_the_ID();?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product"><?php the_title();?></a>
+			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product"><?php the_title();?></a>
 		</li>
 	<?php
 		endwhile;
-		//echo "</ul>";
 	} else {
 		echo "1";
 	}

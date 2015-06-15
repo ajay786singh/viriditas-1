@@ -124,6 +124,23 @@ function toParams(searchUrl) {
 			}
 		});	
 	},
+	$.fn.sizeInput = function(a,e) {
+		var keycode = (e.which) ? e.which : e.keyCode;
+		var size = a.val();
+		alert(size);
+		if (!(keycode==8 || keycode==46)&&(keycode < 48 || keycode > 57)) {
+			return false;
+		} else {
+			alert(size.length);	
+			//Condition to check textbox contains ten numbers or not
+			if (size.length < 3){
+				//alert(size);
+				return true;
+			} else {
+				return false;
+			}
+		}
+	},
 	$.fn.openPopup =function() {
 		$(this).show();
 	},
@@ -160,15 +177,19 @@ function toParams(searchUrl) {
 	},
 	$.fn.addCompound = function( id,name ) {
 		var number_size="size_"+id;
-		var html="<li id='remove-product-"+id+"'><div class='secondary'><a href='#' class='remove-compound' id='remove-"+id+"'>X</a> <span>"+name+"</span></div>";
-			html+="<dib class='secondary'><input type='text' min='1' max='100' maxlength='3' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''></div>";
-			html+="</li>";
 		//$('.herb-sizes').calculateSize(100);	
 		var values =[];
 		if($('.additions ul li').length <= 6) {
+			var data_pricy=$('#compound-'+id).attr('data-pricy');
+			$('.popup-compound').openPopup();
+			
+			var html="<li id='remove-product-"+id+"'><div class='box'>";
+				html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+"</div>";
+				html+="<div class='box'>";
+				html+="<input type='text' min='1' max='100' maxlength='3' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''>";
+				html+="</div></li>";
 			$('#compound-'+id).addClass('added');
 			$('.additions ul').append(html);			
-			//$('.popup-compound').openPopup();
 			$('.herb-name').html(name);
 			$('.additions ul li a').each(function(){
 				var id = $(this).attr('id');
@@ -198,7 +219,6 @@ function toParams(searchUrl) {
 		});	
 	},
 	$.fn.remvoeCompound = function( id ) {
-		//var removeItem='remove-'
 		$('.additions ul').find(id).remove();
 	},
 	$.fn.showProducts = function( options ) {

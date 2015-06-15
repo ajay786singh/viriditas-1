@@ -4,14 +4,6 @@ http://drinchev.github.io/monosocialiconsfont/
 */
 
 @font-face {
-    font-family: 'Mono Social Icons Font';
-    font-style: normal;
-    font-weight: normal;
-    src: url("fonts/MonoSocialIconsFont-1.10.eot");
-    src: url("fonts/MonoSocialIconsFont-1.10.eot?#iefix") format("embedded-opentype"), url("fonts/MonoSocialIconsFont-1.10.woff") format("woff"), url("fonts/MonoSocialIconsFont-1.10.ttf") format("truetype"), url("fonts/MonoSocialIconsFont-1.10.svg#MonoSocialIconsFont") format("svg");
-    src: url("fonts/MonoSocialIconsFont-1.10.ttf") format("truetype");
-}
-@font-face {
 	font-family: 'icomoon';
 	src:url('dist/fonts/icomoon.eot?-rdnm34');
 	src:url('dist/fonts/icomoon.eot?#iefix-rdnm34') format('embedded-opentype'),
@@ -22,7 +14,7 @@ http://drinchev.github.io/monosocialiconsfont/
 	font-style: normal;
 }
 
-$icon-font: "Mono Social Icons Font";
+$icon-font: "FontAwesome";
 $serif: "Playfair Display", serif;
 $sans-serif: "Roboto", sans-serif;
 $base-font-family: $sans-serif;
