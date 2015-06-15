@@ -125,17 +125,11 @@ function toParams(searchUrl) {
 			}
 		});	
 	},
-	$.fn.sizeInput = function(a,e) {
+	$.fn.onlyNumbers = function(e) {
 		var keycode = (e.which) ? e.which : e.keyCode;
-		var size = a.val();
-		alert(size);
-		if (!(keycode==8 || keycode==46)&&(keycode < 48 || keycode > 57)) {
-			return false;
-		} else if (size.length < 3) {
-			alert(size.length);	
-			return true;		
-		} else {
-			return false;
+		if (keycode != 8 && keycode != 0 && (keycode < 48 || keycode > 57)) {
+			e.preventDefault();
+		} else {			
 		}
 	},
 	$.fn.openPopup =function() {
@@ -188,6 +182,7 @@ function toParams(searchUrl) {
 			$('#compound-'+id).addClass('added');
 			$('.additions ul').append(html);			
 			$('.herb-name').html(name);
+			$('.herb-name').attr("id",'').attr("id",id);
 			$('.additions ul li a').each(function(){
 				var id = $(this).attr('id');
 				id=id.replace('remove-','');

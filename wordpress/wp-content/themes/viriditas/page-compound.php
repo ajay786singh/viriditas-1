@@ -35,8 +35,8 @@ get_header(); ?>
 					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
 					<a href="#" class="close-button"></a>
 					<div class="pop-up-action">
-						<div class="size-input"><input type="text" name="" value="50" id="herb-size" max="100" /></div>
-						<div><a href="#" class="button">Submit</a></div>
+						<div class="size-input"><input type="text" name="" value="" id="herb-size" maxlength="2" /></div>
+						<div><a href="#" class="button add-herb">Add Herb</a></div>
 					</div>
 				</div>
 				<?php

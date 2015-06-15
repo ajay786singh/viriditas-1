@@ -27,8 +27,16 @@ jQuery(document).ready(function($) {
 			e.preventDefault();
 			$(this).parent().closePopup();
 		});
-		$('#herb-size').on('keyup',function(e){
-			$(this).sizeInput($(this),e);
+		// $('#herb-size').unbind('keyup change input paste').bind('keyup change input paste',function(e){
+			// $(this).sizeInput($(this),e);
+		// });
+		//$('#herb-size').sizeInput($(this),e);
+		$('#herb-size').bind('keypress',function(e){
+			$(this).onlyNumbers(e);
+		});
+		$('.add-herb').click(function(e) {
+			var herb_size=$('#herb-size').val();
+			alert(herb_size);
 		});
 		$('a.sort_by').click(function(e){
 			var id=$(this).attr('id');			

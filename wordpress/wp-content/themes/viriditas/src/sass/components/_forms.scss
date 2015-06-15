@@ -357,10 +357,11 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	margin:0 auto;
 	width: 90px;
 	div {
-		width:100%;			
+		width:120px;			
 		margin:0 auto 10px;
 		overflow:hidden;		
 		&.size-input {
+			width:90px;					
 			padding: 0 15px;
 			border-bottom:1px solid $dark-grey;
 			&:after {
