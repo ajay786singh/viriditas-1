@@ -15,10 +15,14 @@ get_header(); ?>
 		</div>	
 	</div>
 	<div class="container compounds">
+	
 		<section class="column-4">
 			<h5>Search herb to add</h5>
 			<div class="compound-box" id="compound-box-1">
-				<input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search herb to add" />
+				<div class="search-input">
+					<i class="icon-search"></i>
+					<input type="search" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search herb to add" />
+				</div>				
 				<section role="body-systems"></section>	
 				<section role="actions"></section>				
 			</div>
@@ -26,6 +30,15 @@ get_header(); ?>
 		<section class="column-4">
 			<h5><a href="">Latin</a> / <a href="">Folk</a></h5>
 			<div class="compound-list compound-box" id="compound-box-2">
+				<!-- Pop Up Box Content -->
+				<div class="popup-compound">
+					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
+					<a href="#" class="close-button"></a>
+					<div class="pop-up-action">
+						<div class="size-input"><input type="text" name="" value="50" id="herb-size" max="100" /></div>
+						<div><a href="#" class="button">Submit</a></div>
+					</div>
+				</div>
 				<?php
 					echo '<ul class="product-list">';
 					echo '</ul>';
@@ -66,7 +79,7 @@ get_header(); ?>
 									$checked="";
 									if($i==1) { $checked='checked';}
 									echo "<li>";
-										echo "<input type='radio' ".$checked." id='size-".$i."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
+										echo "<input type='radio' ".$checked." id='size-".$i."' data-additional='".$additional_price."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
 										echo "<label for='size-".$i."'>".$size." ML - ".$price."$</label>";
 									echo "</li>";
 									$i++;

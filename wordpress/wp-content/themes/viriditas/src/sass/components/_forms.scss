@@ -321,30 +321,28 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	input[type="radio"] {
 		display: none;
 		&:checked + label:before {
-			content: "\2022";
-			color: $heading;
-			font-size: 2em;
-			text-align: center;
-			line-height: 0.5em;
+			content: "\f192";
 		}
 	}
 	label {
 		display: inline-block;
 		cursor: pointer;
 		position: relative;
-		padding-left: 25px;
+		padding-left: 20px;
 		margin-right: 15px;
 		&:before {
-			content: "";
+			@include border-radius(50%);
+			content: "\f10c";
+			color:$heading;
 			display: inline-block;
-			width: 16px;
+			font-family:$icon-font;
 			height: 16px;
+			left: 0;
 			margin-right: 10px;
 			position: absolute;
-			left: 0;
-			top: 5px;
-			@include border-radius(50%);
-			border:1px solid $heading;
+			top: 0px;
+			width: 16px;
+			//border:1px solid $heading;
 		}
 	}
 }
@@ -357,24 +355,47 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 
 .pop-up-action {
 	margin:0 auto;
-	width: 70%;
-	@include media($bp-large) {
-		width: 50%;
+	width: 90px;
+	div {
+		width:100%;			
+		margin:0 auto 10px;
+		overflow:hidden;		
+		&.size-input {
+			padding: 0 15px;
+			border-bottom:1px solid $dark-grey;
+			&:after {
+				content:"%";
+				color:$heading;
+				float: left;
+				font-size: 2em;
+				line-height: 1;
+				margin-top: 2px;
+				width: 25px;
+			}
+		}
 	}
 	& input[type="text"] {
 		background:none;
 		border:none;
 		@include border-radius(0px);
-		border-bottom:1px solid;
 		box-shadow: none;
+		color:$heading;
 		float:left;
-		width: 63px;
-		text-align: center;
+		font-size:2em;
+		line-height:1;
+		margin:0;
+		padding:0;
+		width: 35px;
 	}
 	label {
 		float:left;
 		font-size:2em;
 		margin-top:10px;
+	}
+	.button {
+		margin-bottom:0px;
+		text-transform:uppercase;
+		width:100%;
 	}
 }
 
@@ -394,6 +415,32 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 				padding-left: 0;
 				margin-left: 0;
 			}
+		}
+	}
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  text-decoration: inherit;
+  display: inline-block;
+  speak: none;
+}
+
+.search-input {	
+	color:$heading;
+	position: relative;
+	input {
+		color:$heading;
+		padding-right: 30px;
+	}
+	.icon-search {
+		font-style: normal;
+		padding: 5px 12px 0px;
+		pointer-events: none;
+		position: absolute;
+		right: 0px;
+		font-family:$icon-font;
+		&:before {
+			content: "\f002";
 		}
 	}
 }

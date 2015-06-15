@@ -347,14 +347,6 @@ article {
 		}
 	}
 }
-/*
-.body-overlay {
-	position: fixed;
-	height: 100%;
-	width: 100%;
-	background: rgba(0,0,0,0.8);
-	z-index: 20000;
-}*/
 .popup-box {
 	display:none;
 	position: fixed;
@@ -386,4 +378,4 @@ article {
 	.popup-box {
 		display:block;
 	}
-}	
+}
