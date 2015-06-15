@@ -430,11 +430,11 @@ function show_compound_products() {
 		while($query->have_posts()):$query->the_post();
 			$data_pricy="";
 			if (in_array(get_the_ID(), $pricy)) {
-				$data_pricy="1";
+				$data_pricy="*";
 			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
-			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product"><?php the_title();?></a>
+			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product"><?php echo get_the_title().$data_pricy;?></a>
 		</li>
 	<?php
 		endwhile;

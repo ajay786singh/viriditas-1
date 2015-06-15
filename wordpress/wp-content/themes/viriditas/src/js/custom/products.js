@@ -175,10 +175,10 @@ function toParams(searchUrl) {
 		var number_size="size_"+id;
 		//$('.herb-sizes').calculateSize(100);	
 		var values =[];
+		$('.additions').show();
 		if($('.additions ul li').length <= 6) {
 			var data_pricy=$('#compound-'+id).attr('data-pricy');
 			$('.popup-compound').openPopup();
-			
 			var html="<li id='remove-product-"+id+"'><div class='box'>";
 				html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+"</div>";
 				html+="<div class='box'>";
@@ -192,7 +192,12 @@ function toParams(searchUrl) {
 				id=id.replace('remove-','');
 				values.push(id);
 			});
-			$('#compound-products').val(values);
+			$('#compound-products').val(values);			
+			if($('#compound-products').val() != '') {
+				$('.additions').show();
+			} else {
+				$('.additions').hide();
+			}
 			
 		} else {
 			alert("You can add max 7 herbs to your compound.");
@@ -212,6 +217,11 @@ function toParams(searchUrl) {
 				values.push(id);
 			});
 			$('#compound-products').empty().val(values);
+			if($('#compound-products').val() != '') {
+				$('.additions').show();
+			} else {
+				$('.additions').hide();
+			}
 		});	
 	},
 	$.fn.remvoeCompound = function( id ) {
