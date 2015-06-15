@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title><?php wp_title( '|', true, 'right' ); ?><?php bloginfo('name') ?></title>
-	<link rel="icon" type="image/x-icon" href="<?php bloginfo('template_url');?>/favicon.ico">
     <?php 
         $args   =array('post_type' => 'post','posts_per_page' => 1);query_posts($args);
         if (have_posts()) : while(have_posts()) : the_post();

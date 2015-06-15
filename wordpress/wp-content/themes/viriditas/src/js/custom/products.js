@@ -67,13 +67,14 @@ function toParams(searchUrl) {
 (function($) {
     $.fn.showCompound = function( options ) {
 		var settings = $.extend({
-            container    : $(this),
-			page         : 1,
-            body_system  : getParameterByName('pb'),
-			action 		 : getParameterByName('pa'),
-			search_folk  : getParameterByName('keyword'),
+            container     : $(this),
+			page          : 1,
+            body_system   : getParameterByName('pb'),
+			action 		  : getParameterByName('pa'),
+			search_folk   : getParameterByName('keyword'),
 			sort_by_alpha : getParameterByName('sort_by_alpha'),
-			loader    	 : $('.message')
+			sort_by       : getParameterByName('sort_by'),
+			loader    	  : $('.message')
         }, options);
 		settings.container.empty();
 		settings.container.empty().loaderShow();
@@ -85,7 +86,7 @@ function toParams(searchUrl) {
 				'filter_type_body_system':settings.body_system,
 				'filter_type_action':settings.action,
 				'search_folk':settings.search_folk,
-				'sort_by_alpha':settings.sort_by_alpha
+				'sort_by':settings.sort_by
 			},
 			success: function(html) {
 				settings.container.loaderHide();

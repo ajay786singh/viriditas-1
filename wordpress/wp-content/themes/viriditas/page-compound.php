@@ -28,7 +28,7 @@ get_header(); ?>
 			</div>
 		</section>	
 		<section class="column-4">
-			<h5><a href="">Latin</a> / <a href="">Folk</a></h5>
+			<h5><a href="#" class="sort_by" id="title">Latin</a> / <a href="#" class="sort_by" id="folk_name">Folk</a></h5>
 			<div class="compound-list compound-box" id="compound-box-2">
 				<!-- Pop Up Box Content -->
 				<div class="popup-compound">

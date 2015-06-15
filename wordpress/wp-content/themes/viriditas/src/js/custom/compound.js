@@ -30,5 +30,12 @@ jQuery(document).ready(function($) {
 		$('#herb-size').on('keyup',function(e){
 			$(this).sizeInput($(this),e);
 		});
+		$('a.sort_by').click(function(e){
+			var id=$(this).attr('id');			
+			var url = replaceParam('sort_by', id);
+			window.history.pushState({path:url},'',url);				
+			$('.compound-list .product-list').showCompound();
+			e.preventDefault();
+		});
 	}
 });

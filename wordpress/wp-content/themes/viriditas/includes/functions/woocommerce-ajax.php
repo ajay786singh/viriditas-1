@@ -280,29 +280,6 @@ function get_product_terms() {
 			$result.='<select class="by-'.$taxonomy.'">';
 				$result.='<option value="" class="hidden-option">FILTER BY '.strtoupper($taxonomy_name).'</option>';
 			foreach($terms as $term) {
-				// if($taxonomy!='body_system' && $parent<=0) {
-					// if($taxonomy=='body_system' && $pb!='') {
-						// if($pb==$term->term_id) {
-							// $result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-						// } else {
-							// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
-						// }
-					// } else if($taxonomy=='indication' && $pi!='') {
-						// if($pi==$term->term_id) {
-							// $result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-						// } else {
-							// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
-						// }
-					// }else if($taxonomy=='actions' && $pa!='') {
-						// if($pa==$term->term_id) {
-							// $result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-						// } else {
-							// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
-						// }
-					// } else {
-						// $result.="<option value='".$term->term_id."'>".$term->name."</option>";
-					// }
-				// }
 				if($taxonomy=='body_system') {
 					$parent=$term->parent;
 					if($parent==0) {
@@ -354,6 +331,7 @@ function show_compound_products() {
 	$action_id = $_POST['filter_type_action'];
 	$keyword=$_POST['search_folk'];
 	$sort_by_alpha=$_POST['sort_by_alpha'];
+	$sort_by=$_POST['sort_by'];
 	if($action_id !='') {
 		$body_system_id=$action_id;
 	}
@@ -375,6 +353,15 @@ function show_compound_products() {
                // 'compare' => 'LIKE'
             // )
         // );
+	}
+	
+	if($sort_by!=''){
+		if($sort_by=='folk_name') {
+			$args['orderby']  = 'meta_value';
+			$args['meta_key'] = '_product_details_folk_name';
+		} else {
+			$args['orderby']=$sort_by;
+		}
 	}
 	
 	$filter=array(
@@ -434,7 +421,24 @@ function show_compound_products() {
 			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
-			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product"><?php echo get_the_title().$data_pricy;?></a>
+			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product">
+			
+			<?php 
+				if($sort_by!='' && $sort_by=='folk_name') {
+					$folk_name=get_post_meta(get_the_ID(),'_product_details_folk_name',true);
+					if($folk_name) {
+						echo $folk_name.$data_pricy;
+					} else { 
+						echo get_the_title().$data_pricy;
+					}
+				}else {
+					echo get_the_title().$data_pricy;
+				}				
+					
+			?>
+			
+			
+			</a>
 		</li>
 	<?php
 		endwhile;
