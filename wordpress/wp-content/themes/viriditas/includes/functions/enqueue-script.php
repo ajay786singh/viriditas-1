@@ -6,7 +6,7 @@ function my_scripts() {
 	wp_deregister_script('jquery');
 	wp_register_script('jquery', includes_url(). 'js/jquery/jquery.js', null, '',false);
 	wp_enqueue_script('jquery');
-	wp_enqueue_script( 'map', 'http://maps.google.com/maps/api/js?sensor=true', array(), '1.0.0', true);
+	wp_enqueue_script( 'map', '//maps.google.com/maps/api/js?sensor=true', array(), '1.0.0', true);
 	wp_enqueue_script( 'app', get_template_directory_uri() . '/dist/js/app.min.js', array(), '', false);
 	
 }
