@@ -98,8 +98,10 @@ get_header(); ?>
 							</ul>
 						</section>
 						<section class="compound-info">*Total must be equal 100%</section>
-						<input type="submit" name="" value="ADD TO CART" class="button">
+						<div class="errors"></div>
+						<input type="submit" name="" value="ADD TO CART" id="add-recipe" class="button">
 					</div>
+					<section class="compound-info hide-info">Please add herbs to make your recipe.</section>
 				</form>
 			</div>
 		</section>	
