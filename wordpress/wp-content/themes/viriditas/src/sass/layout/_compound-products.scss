@@ -77,9 +77,9 @@ $pop-up-border-color:#afafaf;
 					margin-right: 5px;
 					padding-left:25px;
 					&:before {
-						content:"";
+						content:"\f096";
 						position:absolute;
-						background:url(dist/images/check-on-off.png) no-repeat;
+						font-family:$icon-font;
 						width:18px;
 						height:18px;
 						left:0px;
@@ -88,7 +88,7 @@ $pop-up-border-color:#afafaf;
 					}
 					&.added {
 						&:before {
-							background-position:-19px 0px;
+							content:"\f046";
 						}
 					}
 				}
@@ -103,9 +103,9 @@ $pop-up-border-color:#afafaf;
 			position: absolute;
 			right: 24px;
 			&:before {
-				content:"";
-				background:url(dist/images/search-icon.png) no-repeat;
-				background-size: 100%;
+				color:$base-link-color;
+				content:"\f002";
+				font-family:$icon-font;
 				left: 0;
 				height: 20px;
 				position: absolute;
