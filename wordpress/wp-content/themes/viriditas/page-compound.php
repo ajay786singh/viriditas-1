@@ -32,6 +32,7 @@ get_header(); ?>
 			<div class="compound-list compound-box" id="compound-box-2">
 				<!-- Pop Up Box Content -->
 				<div class="popup-compound">
+					<div class="error pop-up-error"></div>
 					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
 					<a href="#" class="close-button"></a>
 					<div class="pop-up-action">
@@ -88,14 +89,17 @@ get_header(); ?>
 							}
 						?>
 					</section>
-					<section class="additions">
-						<h6>Your Additions</h6>
-						<input type="hidden" name="compound-products" id="compound-products" value="">
-						<ul>
-							
-						</ul>
-					</section>
-					<input type="submit" name="" value="Add to cart">
+					<div class="addition-box">
+						<section class="additions">
+							<h6>Your Additions</h6>
+							<input type="hidden" name="compound-products" id="compound-products" value="">
+							<ul>
+								
+							</ul>
+						</section>
+						<section class="compound-info">*Total must be equal 100%</section>
+						<input type="submit" name="" value="ADD TO CART" class="button">
+					</div>
 				</form>
 			</div>
 		</section>	

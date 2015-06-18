@@ -86,7 +86,8 @@ function toParams(searchUrl) {
 				'filter_type_body_system':settings.body_system,
 				'filter_type_action':settings.action,
 				'search_folk':settings.search_folk,
-				'sort_by':settings.sort_by
+				'sort_by':settings.sort_by,
+				'sort_by_alpha':settings.sort_by_alpha
 			},
 			success: function(html) {
 				settings.container.loaderHide();
@@ -125,64 +126,56 @@ function toParams(searchUrl) {
 			}
 		});	
 	},
-	$.fn.onlyNumbers = function(e) {
-		var keycode = (e.which) ? e.which : e.keyCode;
-		if (keycode != 8 && keycode != 0 && (keycode < 48 || keycode > 57)) {
-			e.preventDefault();
-		} else {			
+	$.fn.onlyNumbers = function(event) {
+		if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+			 // Allow: Ctrl+A
+			(event.keyCode == 65 && event.ctrlKey === true) || 
+			
+			// Allow: Ctrl+C
+			(event.keyCode == 67 && event.ctrlKey === true) || 
+			
+			// Allow: Ctrl+V
+			(event.keyCode == 86 && event.ctrlKey === true) || 
+			
+			// Allow: home, end, left, right
+			(event.keyCode >= 35 && event.keyCode <= 39)) {
+			  // let it happen, don't do anything
+			  return;
+		} else {
+			// Ensure that it is a number and stop the keypress
+			if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+				event.preventDefault(); 
+			}				
 		}
 	},
 	$.fn.openPopup =function() {
 		$(this).show();
 	},
 	$.fn.closePopup =function() {
+		$(this).find('input').val('');
+		$(this).find('.herb-name').attr('id','');
+		$(this).find('.herb-name').attr('data-pricy','');
 		$(this).hide();
 	},
-	$.fn.forceNumeric = function () {
-		return this.each(function () {			
-			jQuery(this).on('input', function (event) { 
-				var size=this.value;				
-				size = size.replace(/[^0-9]/g, '');
-				if(size<=100) {
-					alert(size);
-				}
-			});	
-			/*$(this).keypress(function (e) {
-				var key = e.which || e.keyCode;
-				if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
-					// numbers   
-					 key >= 48 && key <= 57 ||
-					// Numeric keypad
-					 key >= 96 && key <= 105 ||
-					// Backspace and Tab and Enter
-					key == 8 || key == 9 || key == 13 ||
-					// left and right arrows
-					key == 37 || key == 39 ) {
-						alert($(this).val());
-						return true;
-					} else {
-						return false;
-				}
-			});*/
-		});
-	},
 	$.fn.addCompound = function( id,name ) {
+		$('.popup-compound').closePopup();
 		var number_size="size_"+id;
 		//$('.herb-sizes').calculateSize(100);	
 		var values =[];
-		$('.additions').show();
+		$('.addition-box').show();
 		if($('.additions ul li').length <= 6) {
 			var data_pricy=$('#compound-'+id).attr('data-pricy');
 			$('.popup-compound').openPopup();
 			var html="<li id='remove-product-"+id+"'><div class='box'>";
-				html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+"</div>";
+				html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+data_pricy+"</div>";
 				html+="<div class='box'>";
 				html+="<input type='text' min='1' max='100' maxlength='3' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''>";
 				html+="</div></li>";
 			$('#compound-'+id).addClass('added');
 			$('.additions ul').append(html);			
-			$('.herb-name').html(name);
+			$('.herb-name').html(name+data_pricy);
 			$('.herb-name').attr("id",'').attr("id",id);
+			$('.herb-name').attr("data-pricy",'').attr("data-pricy",data_pricy);
 			$('.additions ul li a').each(function(){
 				var id = $(this).attr('id');
 				id=id.replace('remove-','');
@@ -190,21 +183,21 @@ function toParams(searchUrl) {
 			});
 			$('#compound-products').val(values);			
 			if($('#compound-products').val() != '') {
-				$('.additions').show();
+				$('.addition-box').show();
 			} else {
-				$('.additions').hide();
+				$('.addition-box').hide();
 			}
 			
 		} else {
 			alert("You can add max 7 herbs to your compound.");
 		}
-		jQuery('.herb-sizes').forceNumeric();
-		
+		 
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
 			e.preventDefault();
 			var id=$(this).attr('id');
 			var values =[];
 			id=id.replace('remove-','');
+			$('.popup-compound').closePopup();
 			$('#compound-'+id).removeClass('added');
 			$('#remove-product-'+id).remove();
 			$('.additions ul li a').each(function(){
@@ -214,9 +207,9 @@ function toParams(searchUrl) {
 			});
 			$('#compound-products').empty().val(values);
 			if($('#compound-products').val() != '') {
-				$('.additions').show();
+				$('.addition-box').show();
 			} else {
-				$('.additions').hide();
+				$('.addition-box').hide();
 			}
 		});	
 	},
