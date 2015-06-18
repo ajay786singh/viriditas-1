@@ -316,6 +316,7 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		font-size:1em;
 	}
 	input[type="submit"] {
+		float: none;
 		margin:20px auto 0;
 	}
 	input[type="radio"] {
@@ -355,7 +356,7 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 
 .pop-up-action {
 	margin:0 auto;
-	width: 90px;
+	width: 125px;
 	div {
 		width:120px;			
 		margin:0 auto 10px;

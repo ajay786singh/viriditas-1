@@ -88,6 +88,9 @@ h6 {
         line-height: 1.2em;
         margin-bottom: 1.2em;
     }
+	.popup-compound &{
+		margin-top:0;
+	}
 }
 
 p, ul, ol {
@@ -159,6 +162,11 @@ cite {
         @include shift(2);
         @include span-columns(8);
     }
+}
+
+.error.pop-up-error {
+	display:none;
+	width:100%;
 }
 .success {
     display: none;

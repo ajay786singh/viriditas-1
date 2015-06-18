@@ -370,7 +370,6 @@ function show_compound_products() {
 	);
 	
 	if($sort_by_alpha !='') {
-		//$args['s'] = $sort_by_alpha;
 		$postids = $wpdb->get_col("
 			SELECT p.ID
 			FROM $wpdb->posts p

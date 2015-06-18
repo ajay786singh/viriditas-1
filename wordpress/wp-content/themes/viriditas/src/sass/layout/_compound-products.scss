@@ -39,6 +39,13 @@ $pop-up-border-color:#afafaf;
 						display:inline-block;
 						margin-right:10px;
 					}
+				}				
+				&.compound-info {
+					background:$heading;
+					color:$white;
+					padding:5px 20px;
+					width:100%;
+					text-align:center;
 				}
 			}
 		}
@@ -121,8 +128,10 @@ $pop-up-border-color:#afafaf;
 		}
 	}
 }
-.additions {
+.addition-box {
 	display:none;
+}
+.additions {
 	& ul li {
 		overflow: hidden;
 		.box {

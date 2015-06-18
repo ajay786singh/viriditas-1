@@ -31,12 +31,30 @@ jQuery(document).ready(function($) {
 			// $(this).sizeInput($(this),e);
 		// });
 		//$('#herb-size').sizeInput($(this),e);
-		$('#herb-size').bind('keypress',function(e){
+		$('#herb-size').bind('keydown',function(e){
 			$(this).onlyNumbers(e);
 		});
 		$('.add-herb').click(function(e) {
 			var herb_size=$('#herb-size').val();
-			alert(herb_size);
+			var herb_id=$('.herb-name').attr("id");
+			var herb_pricy=$('.herb-name').attr("id");
+			if(herb_size !='') {
+				if(herb_pricy!='') {
+					if(herb_size > 60 ) {
+						$('.pop-up-error').empty().show().html("Herb size cann't be more than 60%.");
+					} else {
+						$('.pop-up-error').empty().hide();
+						$('#size_'+herb_id).val(herb_size);
+						$('.popup-compound').closePopup();
+					}	
+				} else {
+					$('.pop-up-error').empty().hide();
+					$('#size_'+herb_id).val(herb_size);
+					$('.popup-compound').closePopup();
+				}
+			} else {
+				$('.pop-up-error').empty().show().html("Please enter size of herb for recipe.");
+			}
 		});
 		$('a.sort_by').click(function(e){
 			var id=$(this).attr('id');			
