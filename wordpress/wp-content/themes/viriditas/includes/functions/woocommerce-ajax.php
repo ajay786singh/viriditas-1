@@ -466,7 +466,8 @@ function manage_compound() {
 		$title = trim($_POST['title']);
 		$size = trim($_POST['size']);
 		$price = trim($_POST['price']);
-		$price_per_unit = number_format(($price/$size),2, '.', '');
+		$additional_price = trim($_POST['additional_price']);
+		
 		$compound_products = trim($_POST['compound_products']);
 		
 		//check for title not blank
@@ -476,11 +477,21 @@ function manage_compound() {
 		
 		//Check for selected herbs
 		$herbs = array();
+		$other_price="";
 		if($compound_products ==0) {
-			array_push($errors, "Please add herbs your recipe."); 
+			array_push($errors, "Please add herbs to your recipe."); 
 		} else {
 			$compound_products=explode(",",$compound_products);
+			$pricy=get_option('wc_settings_tab_compound_pricy');
+			if($pricy) {
+				$pricy=explode(",",$pricy);
+				//$other_price=$additional_price*count($pricy);	
+			}
 			foreach($compound_products as $compound_herb) {
+				//print_r($pricy);
+				if(in_array($compound_herb,$pricy)) {
+					$price=$price+$additional_price;
+				}
 				$herbs[$compound_herb] =array(
 					'product_id' => $compound_herb,
 					'optional' => 'no',
@@ -490,7 +501,7 @@ function manage_compound() {
 				);
 			}
 		}
-		
+		$price_per_unit = number_format(($price/$size),2, '.', '');
 		
 		// If no errors were found, proceed with storing the user input
 		if (count($errors) == 0) {
@@ -502,7 +513,7 @@ function manage_compound() {
 			) );
 		 
 			if ( $post_id != 0 ) {
-				wp_set_object_terms( $post_id, 'Single Herb Tincture', 'product_cat' );
+				wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
 				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
 				update_post_meta( $post_id, '_edit_last', '1' );

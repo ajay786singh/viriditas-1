@@ -146,7 +146,16 @@ $pop-up-border-color:#afafaf;
 			&:nth-child(3) {
 				width:35%;
 				input{
-					width:70px;
+					@include border-radius(0px);
+					@include box-shadow(none);
+					display:inline-block;
+					padding-left: 10px;
+					padding-right: 10px;
+					text-align: center;
+					width: 45px;
+				}
+				div {
+					display:inline-block;
 				}
 			}
 		}
