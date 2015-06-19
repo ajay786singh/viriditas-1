@@ -497,12 +497,12 @@ function manage_compound() {
 							$price=$price+$additional_price;
 						}
 					}
-					//$main_size=$herb_size/100;
+					$main_size=$herb_size/100;
 					$herbs[$herb_id] =array(
 						'product_id' => $herb_id,
 						'optional' => 'no',
-						'bundle_quantity' => $herb_size,
-						'bundle_quantity_max' => $herb_size,
+						'bundle_quantity' => $main_size,
+						'bundle_quantity_max' => $main_size,
 						'visibility' => 'visible'
 					);
 				}	
