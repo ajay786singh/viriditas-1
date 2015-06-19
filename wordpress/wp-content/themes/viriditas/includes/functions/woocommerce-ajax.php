@@ -486,23 +486,23 @@ function manage_compound() {
 				$compound_herb = explode("_",$compound_herb);
 				$herb_id=$compound_herb[0];
 				$herb_size=$compound_herb[1];
-				$title=get_the_title($herb_id);
+				$name=get_the_title($herb_id);
 				if($herb_size=='' || $herb_size==0) {
-					array_push($errors, "Please add size to herb: <b>".$title."</b>."); 
+					array_push($errors, "Please add size to herb: <b>".$name."</b>."); 
 				} else {
 					if(in_array($herb_id,$pricy)) {
 						if($herb_size > 60) {
-							array_push($errors, "This herb: <b>".$title."</b> can't have size for than 60%."); 
+							array_push($errors, "This herb: <b>".$name."</b> can't have size for than 60%."); 
 						} else {
 							$price=$price+$additional_price;
 						}
 					}
-					$main_size=($size*$herb_size)/100;
+					//$main_size=$herb_size/100;
 					$herbs[$herb_id] =array(
 						'product_id' => $herb_id,
 						'optional' => 'no',
-						'bundle_quantity' => $main_size,
-						'bundle_quantity_max' => $main_size,
+						'bundle_quantity' => $herb_size,
+						'bundle_quantity_max' => $herb_size,
 						'visibility' => 'visible'
 					);
 				}	
@@ -511,30 +511,6 @@ function manage_compound() {
 			array_push($errors, "Please add herbs to your recipe."); 
 		}
 		
-		//Check for selected herbs
-		// $other_price="";
-		// if($compound_products ==0) {
-			// array_push($errors, "Please add herbs to your recipe."); 
-		// } else {
-			// $compound_products=explode(",",$compound_products);
-			
-			// $pricy=get_option('wc_settings_tab_compound_pricy');
-			// if($pricy) {
-				// $pricy=explode(",",$pricy);
-			// }
-			// foreach($compound_products as $compound_herb) {
-				// if(in_array($compound_herb,$pricy)) {
-					// $price=$price+$additional_price;
-				// }
-				// $herbs[$compound_herb] =array(
-					// 'product_id' => $compound_herb,
-					// 'optional' => 'no',
-					// 'bundle_quantity' => 1,
-					// 'bundle_quantity_max' => 1,
-					// 'visibility' => 'visible'
-				// );
-			// }
-		// }
 		$price_per_unit = number_format(($price/$size),2, '.', '');
 		
 		// If no errors were found, proceed with storing the user input
