@@ -136,6 +136,7 @@ footer {
 		@include media($bp-small) {
 			margin-left:0px;
 		}
+		text-transform:uppercase;
 	}
 }
 

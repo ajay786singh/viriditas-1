@@ -467,99 +467,130 @@ function manage_compound() {
 		$size = trim($_POST['size']);
 		$price = trim($_POST['price']);
 		$additional_price = trim($_POST['additional_price']);
-		
-		$compound_products = trim($_POST['compound_products']);
+		$compound_products = $_POST['compound_products'];
+		$compound_herbs = $_POST['herbs'];
 		
 		//check for title not blank
 		if (strlen($title) == 0) {
 			array_push($errors, "Please enter your recipe name."); 
 		}
 		
-		//Check for selected herbs
 		$herbs = array();
-		$other_price="";
-		if($compound_products ==0) {
-			array_push($errors, "Please add herbs to your recipe."); 
-		} else {
-			$compound_products=explode(",",$compound_products);
+		if(count($compound_herbs)>0) {
 			$pricy=get_option('wc_settings_tab_compound_pricy');
 			if($pricy) {
 				$pricy=explode(",",$pricy);
-				//$other_price=$additional_price*count($pricy);	
 			}
-			foreach($compound_products as $compound_herb) {
-				//print_r($pricy);
-				if(in_array($compound_herb,$pricy)) {
-					$price=$price+$additional_price;
-				}
-				$herbs[$compound_herb] =array(
-					'product_id' => $compound_herb,
-					'optional' => 'no',
-					'bundle_quantity' => 1,
-					'bundle_quantity_max' => 1,
-					'visibility' => 'visible'
-				);
-			}
+			foreach($compound_herbs as $compound_herb) {
+				$compound_herb = str_replace("size_","",$compound_herb);
+				$compound_herb = explode("_",$compound_herb);
+				$herb_id=$compound_herb[0];
+				$herb_size=$compound_herb[1];
+				$title=get_the_title($herb_id);
+				
+				if($herb_size=='' || $herb_size==0) {
+					array_push($errors, "Please add size to herb: <b>".$title."</b>."); 
+				} else {
+					if(in_array($herb_id,$pricy)) {
+						$price=$price+$additional_price;
+					}
+					$herbs[$herb_id] =array(
+						'product_id' => $herb_id,
+						'optional' => 'no',
+						'bundle_quantity' => $herb_size,
+						'bundle_quantity_max' => $herb_size,
+						'visibility' => 'visible'
+					);
+				}	
+				//$compound_herb
+			}			
+		} else {
+			array_push($errors, "Please add herbs to your recipe."); 
 		}
+		
+		//Check for selected herbs
+		// $other_price="";
+		// if($compound_products ==0) {
+			// array_push($errors, "Please add herbs to your recipe."); 
+		// } else {
+			// $compound_products=explode(",",$compound_products);
+			
+			// $pricy=get_option('wc_settings_tab_compound_pricy');
+			// if($pricy) {
+				// $pricy=explode(",",$pricy);
+			// }
+			// foreach($compound_products as $compound_herb) {
+				// if(in_array($compound_herb,$pricy)) {
+					// $price=$price+$additional_price;
+				// }
+				// $herbs[$compound_herb] =array(
+					// 'product_id' => $compound_herb,
+					// 'optional' => 'no',
+					// 'bundle_quantity' => 1,
+					// 'bundle_quantity_max' => 1,
+					// 'visibility' => 'visible'
+				// );
+			// }
+		// }
 		$price_per_unit = number_format(($price/$size),2, '.', '');
 		
 		// If no errors were found, proceed with storing the user input
-		if (count($errors) == 0) {
-			$post_id = wp_insert_post( array(
-				'post_title'        => $title,
-				'post_status'       => 'publish',
-				'post_type'       => 'product',
-				'post_author'       => '1'
-			) );
+		// if (count($errors) == 0) {
+			// $post_id = wp_insert_post( array(
+				// 'post_title'        => $title,
+				// 'post_status'       => 'publish',
+				// 'post_type'       => 'product',
+				// 'post_author'       => '1'
+			// ) );
 		 
-			if ( $post_id != 0 ) {
-				wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
-				wp_set_object_terms($post_id, 'bundle', 'product_type');
-				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
-				update_post_meta( $post_id, '_edit_last', '1' );
-				update_post_meta( $post_id, '_visibility', 'visible' );
-				update_post_meta( $post_id, '_stock_status', 'instock');
-				update_post_meta( $post_id, 'total_sales', '0');
-				update_post_meta( $post_id, '_downloadable', 'no');
-				update_post_meta( $post_id, '_virtual', 'no');
-				update_post_meta( $post_id, '_regular_price',  $price_per_unit );
-				update_post_meta( $post_id, '_sale_price',  '' );
-				update_post_meta( $post_id, '_purchase_note', "" );
-				update_post_meta( $post_id, '_featured', "no" );
-				update_post_meta( $post_id, '_weight', "" );
-				update_post_meta( $post_id, '_length', "" );
-				update_post_meta( $post_id, '_width', "" );
-				update_post_meta( $post_id, '_height', "" );
-				update_post_meta($post_id, '_sku', "");
-				update_post_meta( $post_id, '_product_attributes', array());
-				update_post_meta( $post_id, '_sale_price_dates_from', '' );
-				update_post_meta( $post_id, '_sale_price_dates_to', '' );
-				update_post_meta( $post_id, '_price', $price_per_unit );
-				update_post_meta( $post_id, '_sold_individually', "" );
-				update_post_meta( $post_id, '_manage_stock', "no" );
-				update_post_meta( $post_id, '_backorders', "no" );
-				update_post_meta( $post_id, '_stock', "" );
-				update_post_meta( $post_id, '_upsell_ids',  array());
-				update_post_meta( $post_id, '_crosssell_ids',  array());
-				update_post_meta( $post_id, '_per_product_pricing_active', "no" );
-				update_post_meta( $post_id, '_per_product_shipping_active', "no" );
-				update_post_meta( $post_id, '_bundle_data', $herbs);
-				update_post_meta( $post_id, '_product_image_gallery',  '');
-				update_post_meta( $post_id, '_product_details_folk_name',  '');
-				update_post_meta( $post_id, '_min_bundle_price', $price_per_unit );
-				update_post_meta( $post_id, '_max_bundle_price', $price_per_unit);
+			// if ( $post_id != 0 ) {
+				// wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
+				// wp_set_object_terms($post_id, 'bundle', 'product_type');
+				// update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
+				// update_post_meta( $post_id, '_edit_last', '1' );
+				// update_post_meta( $post_id, '_visibility', 'visible' );
+				// update_post_meta( $post_id, '_stock_status', 'instock');
+				// update_post_meta( $post_id, 'total_sales', '0');
+				// update_post_meta( $post_id, '_downloadable', 'no');
+				// update_post_meta( $post_id, '_virtual', 'no');
+				// update_post_meta( $post_id, '_regular_price',  $price_per_unit );
+				// update_post_meta( $post_id, '_sale_price',  '' );
+				// update_post_meta( $post_id, '_purchase_note', "" );
+				// update_post_meta( $post_id, '_featured', "no" );
+				// update_post_meta( $post_id, '_weight', "" );
+				// update_post_meta( $post_id, '_length', "" );
+				// update_post_meta( $post_id, '_width', "" );
+				// update_post_meta( $post_id, '_height', "" );
+				// update_post_meta($post_id, '_sku', "");
+				// update_post_meta( $post_id, '_product_attributes', array());
+				// update_post_meta( $post_id, '_sale_price_dates_from', '' );
+				// update_post_meta( $post_id, '_sale_price_dates_to', '' );
+				// update_post_meta( $post_id, '_price', $price_per_unit );
+				// update_post_meta( $post_id, '_sold_individually', "" );
+				// update_post_meta( $post_id, '_manage_stock', "no" );
+				// update_post_meta( $post_id, '_backorders', "no" );
+				// update_post_meta( $post_id, '_stock', "" );
+				// update_post_meta( $post_id, '_upsell_ids',  array());
+				// update_post_meta( $post_id, '_crosssell_ids',  array());
+				// update_post_meta( $post_id, '_per_product_pricing_active', "no" );
+				// update_post_meta( $post_id, '_per_product_shipping_active', "no" );
+				// update_post_meta( $post_id, '_bundle_data', $herbs);
+				// update_post_meta( $post_id, '_product_image_gallery',  '');
+				// update_post_meta( $post_id, '_product_details_folk_name',  '');
+				// update_post_meta( $post_id, '_min_bundle_price', $price_per_unit );
+				// update_post_meta( $post_id, '_max_bundle_price', $price_per_unit);
 				
-				global $woocommerce;
-				$woocommerce->cart->add_to_cart($post_id,$size);
-				$cart_url=$woocommerce->cart->get_cart_url();
-				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
-			}
-			else {
-				$msg = '*Error occured while adding the recipe';
-			}
-		} else {
-			$msg="Check Errors*";
-		}
+				// global $woocommerce;
+				// $woocommerce->cart->add_to_cart($post_id,$size);
+				// $cart_url=$woocommerce->cart->get_cart_url();
+				// $msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
+			// }
+			// else {
+				// $msg = '*Error occured while adding the recipe';
+			// }
+		// } else {
+			// $msg="Check Errors*";
+		// }
 	} else {
 		//Not Logged in.
 		$msg="Please login to add your recipe to cart.";
