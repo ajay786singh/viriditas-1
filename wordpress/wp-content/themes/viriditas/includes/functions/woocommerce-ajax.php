@@ -467,40 +467,50 @@ function manage_compound() {
 		$size = trim($_POST['size']);
 		$price = trim($_POST['price']);
 		$additional_price = trim($_POST['additional_price']);
-		
-		$compound_products = trim($_POST['compound_products']);
+		$compound_products = $_POST['compound_products'];
+		$compound_herbs = $_POST['herbs'];
 		
 		//check for title not blank
 		if (strlen($title) == 0) {
 			array_push($errors, "Please enter your recipe name."); 
 		}
 		
-		//Check for selected herbs
 		$herbs = array();
-		$other_price="";
-		if($compound_products ==0) {
-			array_push($errors, "Please add herbs to your recipe."); 
-		} else {
-			$compound_products=explode(",",$compound_products);
+		if(count($compound_herbs)>0) {
 			$pricy=get_option('wc_settings_tab_compound_pricy');
 			if($pricy) {
 				$pricy=explode(",",$pricy);
-				//$other_price=$additional_price*count($pricy);	
 			}
-			foreach($compound_products as $compound_herb) {
-				//print_r($pricy);
-				if(in_array($compound_herb,$pricy)) {
-					$price=$price+$additional_price;
-				}
-				$herbs[$compound_herb] =array(
-					'product_id' => $compound_herb,
-					'optional' => 'no',
-					'bundle_quantity' => 1,
-					'bundle_quantity_max' => 1,
-					'visibility' => 'visible'
-				);
-			}
+			foreach($compound_herbs as $compound_herb) {
+				$compound_herb = str_replace("size_","",$compound_herb);
+				$compound_herb = explode("_",$compound_herb);
+				$herb_id=$compound_herb[0];
+				$herb_size=$compound_herb[1];
+				$name=get_the_title($herb_id);
+				if($herb_size=='' || $herb_size==0) {
+					array_push($errors, "Please add size to herb: <b>".$name."</b>."); 
+				} else {
+					if(in_array($herb_id,$pricy)) {
+						if($herb_size > 60) {
+							array_push($errors, "This herb: <b>".$name."</b> can't have size for than 60%."); 
+						} else {
+							$price=$price+$additional_price;
+						}
+					}
+					//$main_size=$herb_size/100;
+					$herbs[$herb_id] =array(
+						'product_id' => $herb_id,
+						'optional' => 'no',
+						'bundle_quantity' => $herb_size,
+						'bundle_quantity_max' => $herb_size,
+						'visibility' => 'visible'
+					);
+				}	
+			}			
+		} else {
+			array_push($errors, "Please add herbs to your recipe."); 
 		}
+		
 		$price_per_unit = number_format(($price/$size),2, '.', '');
 		
 		// If no errors were found, proceed with storing the user input

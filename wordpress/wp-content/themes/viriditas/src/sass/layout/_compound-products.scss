@@ -27,11 +27,15 @@ $pop-up-border-color:#afafaf;
 				padding:20px;
 				border:1px solid $compound-border-color;
 				border-top:none;
+				overflow:hidden;
 				&.compound-header {
 					background:$compound-header-bg;
 				}
 				&:nth-of-type(1) {
 					border-top:1px solid $compound-border-color;
+				}
+				&.additions {
+					border-top:none;
 				}
 				&.compound-sizes {
 					margin-bottom:0;
@@ -132,6 +136,7 @@ $pop-up-border-color:#afafaf;
 	display:none;
 }
 .additions {
+	border-top:none;
 	& ul li {
 		overflow: hidden;
 		.box {

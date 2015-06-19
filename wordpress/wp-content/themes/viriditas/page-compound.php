@@ -36,7 +36,7 @@ get_header(); ?>
 					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
 					<a href="#" class="close-button"></a>
 					<div class="pop-up-action">
-						<div class="size-input"><input type="text" name="" value="" id="herb-size" maxlength="2" /></div>
+						<div class="size-input"><input type="text" name="herb-size" value="0" class="numbers" id="herb-size" maxlength="2" /></div>
 						<div><a href="#" class="button add-herb">Add Herb</a></div>
 					</div>
 				</div>
@@ -90,7 +90,7 @@ get_header(); ?>
 						?>
 					</section>
 					<div class="addition-box">
-						<section class="additions">
+						<section class="compound-header additions">
 							<h6>Your Additions</h6>
 							<input type="hidden" name="compound-products" id="compound-products" value="">
 							<ul>
@@ -98,6 +98,10 @@ get_header(); ?>
 							</ul>
 						</section>
 						<section class="compound-info">*Total must be equal 100%</section>
+						<section class="compound-header total-box">
+							<h6>TOTAL</h6>
+							<h6 id="total_size">0%</h6>
+						</section>
 						<div class="errors"></div>
 						<input type="submit" name="" value="ADD TO CART" id="add-recipe" class="button">
 					</div>

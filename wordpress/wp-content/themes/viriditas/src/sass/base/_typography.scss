@@ -715,8 +715,16 @@ section[role=content] {
 	margin-bottom:0;
 }
 
-.recipe-form {
-	h6 {
-		margin-bottom:10px;
+.recipe-form h6 {
+	margin-bottom:10px;
+}
+
+.total-box h6 {
+	display:inline;
+	float: left;
+	margin: 0;
+	width: 50%;
+	&#total_size {
+		text-align:right;
 	}
 }

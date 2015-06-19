@@ -155,7 +155,7 @@ function toParams(searchUrl) {
 		$(this).find('input').val('');
 		$(this).find('.herb-name').attr('id','');
 		$(this).find('.herb-name').attr('data-pricy','');
-		$('.pop-up-error').hide();
+		$('.pop-up-error').empty().hide();
 		$(this).hide();
 	},
 	$.fn.calculateSize = function( ) {
@@ -165,8 +165,8 @@ function toParams(searchUrl) {
 				sum += parseFloat(this.value);
 			}
 		});
+		$('#total_size').html(sum+"%");
 		return sum;
-		//$(el).find(".total").html(sum.toFixed(2));
 	},
 	$.fn.addCompound = function( id,name ) {
 		$('.popup-compound').closePopup();
@@ -174,37 +174,39 @@ function toParams(searchUrl) {
 		var values =[];
 		$('.addition-box').show();
 		$('.hide-info').hide();
+		var total_size = $('.herb-sizes').calculateSize();
 		if($('.additions ul li').length <= 6) {
-			var data_pricy=$('#compound-'+id).attr('data-pricy');
-			$('.popup-compound').openPopup();
-			var html="<li id='remove-product-"+id+"'><div class='box'>";
-				html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+data_pricy+"</div>";
-				html+="<div class='box'>";
-				html+="<input type='text' maxlength='2' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value=''>";
-				html+="<div id='label_size_"+id+"'></div></div></li>";
-			$('#compound-'+id).addClass('added');
-			$('.additions ul').append(html);			
-			$('.herb-name').html(name+data_pricy);
-			$('.herb-name').attr("id",'').attr("id",id);
-			$('.herb-name').attr("data-pricy",'').attr("data-pricy",data_pricy);
-			$('.additions ul li a').each(function(){
-				var id = $(this).attr('id');
-				id=id.replace('remove-','');
-				values.push(id);
-			});
-			$('#compound-products').val(values);			
-			if($('#compound-products').val() != '') {
-				$('.addition-box').show();
-				$('.hide-info').hide();
-			} else {
-				$('.hide-info').show();
-				$('.addition-box').hide();
+			if(total_size <=100) {
+				var data_pricy=$('#compound-'+id).attr('data-pricy');
+				$('.popup-compound').openPopup();
+				var html="<li id='remove-product-"+id+"'><div class='box'>";
+					html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+data_pricy+"</div>";
+					html+="<div class='box'>";
+					html+="<input type='text' data-pricy='"+data_pricy+"' maxlength='2' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value='0'>";
+					html+="<div>%</div></div></li>";
+				$('#compound-'+id).addClass('added');
+				$('.additions ul').append(html);			
+				$('.herb-name').html(name+data_pricy);
+				$('.herb-name').attr("id",'').attr("id",id);
+				$('.herb-name').attr("data-pricy",'').attr("data-pricy",data_pricy);
+				$('.additions ul li a').each(function(){
+					var id = $(this).attr('id');
+					id=id.replace('remove-','');
+					values.push(id);
+				});
+				$('#compound-products').val(values);			
+				if($('#compound-products').val() != '') {
+					$('.addition-box').show();
+					$('.hide-info').hide();
+				} else {
+					$('.hide-info').show();
+					$('.addition-box').hide();
+				}
 			}
-			
 		} else {
 			alert("You can add max 7 herbs to your compound.");
 		}
-		 
+		
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
 			e.preventDefault();
 			var id=$(this).attr('id');
@@ -227,15 +229,13 @@ function toParams(searchUrl) {
 				$('.addition-box').hide();
 			}
 		});
+
 		$('.herb-sizes').unbind('blur').bind('blur',function(e){
-			var val=$(this).val();
-			var id=$(this).attr('id');
-			$('#label_'+id).html(val+"%");
-		});		
+			var total_size = $('.herb-sizes').calculateSize();
+		});
+		
 		$('.herb-sizes').unbind('keydown').bind('keydown',function(e){
-			var val=$(this).val();
-			var id=$(this).attr('id');
-			$('#label_'+id).html(val+"%");
+			$(this).onlyNumbers(e);
 		});		
 	},
 	$.fn.remvoeCompound = function( id ) {
@@ -284,7 +284,6 @@ function toParams(searchUrl) {
 				settings.loader.loaderHide();
 				if(html!='' && html!=1) {
 					settings.container.append(html);
-					//settings.container.showProduct();
 					if(settings.view_mode == '' || settings.view_mode!='list_view') {
 						$('.equal-height-item').equalHeights();	
 					}
