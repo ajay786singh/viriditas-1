@@ -72,7 +72,7 @@ global $product;
 				// print_r($prices);
 				//$price = price_array($price_html);
 				//print_r($price);
-				do_action( 'woocommerce_single_product_summary' );
+				//do_action( 'woocommerce_single_product_summary' );
 				
 				if($product->product_type=='bundle') {
 				?>	
@@ -84,7 +84,8 @@ global $product;
 							<h1>Custom Formula</h1>
 							<h1>Custom Formula</h1>
 							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1><h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
+							<h1>Custom Formula</h1>
 							<h1>Custom Formula</h1>
 							<h1>Custom Formula</h1>
 							<h1>Custom Formula</h1>
@@ -168,7 +169,9 @@ global $product;
 							<ul class="list">
 								<?php
 									foreach($body_systems as $body_system) {
-										echo "<li><a href='".$product_page_url."/?pb=".$body_system->term_id."'>".$body_system->name."</a></li>";
+										if ($body_system->parent == 0) {
+											echo "<li><a href='".$product_page_url."/?pb=".$body_system->term_id."'>".$body_system->name."</a></li>";
+										}
 									}
 								?>	
 							</ul>
@@ -177,7 +180,7 @@ global $product;
 				<?php } ?>
 				
 				<?php 
-					$actions = get_the_terms( $post->ID, 'actions' ); 
+					$actions = get_the_terms( $post->ID, 'body_system' ); 
 					if($actions) {
 				?>
 					<div class="accordion-panel">
@@ -186,7 +189,9 @@ global $product;
 							<ul class="list">
 								<?php
 									foreach($actions as $action) {
-										echo "<li><a href='".$product_page_url."/?pa=".$action->term_id."'>".$action->name."</a></li>";
+										if ($action->parent > 0) {
+											echo "<li><a href='".$product_page_url."/?pa=".$action->term_id."'>".$action->name."</a></li>";
+										}
 									}
 								?>	
 							</ul>
