@@ -14,6 +14,28 @@ http://drinchev.github.io/monosocialiconsfont/
 	font-style: normal;
 }
 
+@font-face {
+	font-family:'WooCommerce';
+	src:url('dist/fonts/woocommerce/WooCommerce.eot');
+	src:url('dist/fonts/woocommerce/WooCommerce.eot?#iefix') format('embedded-opentype'),
+		url('dist/fonts/woocommerce/WooCommerce.woff') format('woff'),
+		url('dist/fonts/woocommerce/WooCommerce.ttf') format('truetype'),
+		url('dist/fonts/woocommerce/WooCommerce.svg#WooCommerce') format('svg');
+	font-weight:400;
+	font-style:normal;
+}
+
+@font-face {
+	font-family:'star';
+	src:url('dist/fonts/woocommerce/star.eot');
+	src:url('dist/fonts/woocommerce/star.eot?#iefix') format('embedded-opentype'),
+		url('dist/fonts/woocommerce/star.woff') format('woff'),
+		url('dist/fonts/woocommerce/star.ttf') format('truetype'),
+		url('dist/fonts/woocommerce/star.svg#star') format('svg');
+	font-weight:400;
+	font-style:normal;
+}
+
 $icon-font: "FontAwesome";
 $serif: "Playfair Display", serif;
 $sans-serif: "Roboto", sans-serif;
