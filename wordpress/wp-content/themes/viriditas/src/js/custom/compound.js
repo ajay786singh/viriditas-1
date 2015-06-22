@@ -80,10 +80,9 @@ jQuery(document).ready(function($) {
 			size_price=size_price.split("-");		
 			var size=size_price[0];		
 			var price=size_price[1];		
-			$('.herb-sizes').each(function(){
+			$('.herb-sizes').each(function(e){
 				var id = $(this).attr('id');
 				var val= $(this).val();
-				//var name= $(this).attr("data-title");
 				var herb=id+"_"+val;
 				herbs.push(herb);
 			});

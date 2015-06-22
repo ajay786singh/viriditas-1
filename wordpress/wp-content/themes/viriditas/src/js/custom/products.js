@@ -106,7 +106,7 @@ function toParams(searchUrl) {
 						e.preventDefault();
 						var id=$(this).attr('id');
 						id=id.replace('sort-','');
-						jQuery(".alphabets-list li a").each(function(){
+						jQuery(".alphabets-list li a").each(function(e){
 							$(this).removeClass('active');
 						});
 						$(this).addClass('active');
@@ -160,7 +160,7 @@ function toParams(searchUrl) {
 	},
 	$.fn.calculateSize = function( ) {
 		var sum = 0;
-		$(this).each(function() {
+		$(this).each(function(e) {
 			if(!isNaN(this.value) && this.value.length!=0) {
 				sum += parseFloat(this.value);
 			}
@@ -245,7 +245,6 @@ function toParams(searchUrl) {
         // Establish our default settings
 		$('.list-products').show();
 		$('.single-product-detail').empty().hide();
-		
         var settings = $.extend({
             container    : $(this),
 			page         : 1,
@@ -349,13 +348,11 @@ function toParams(searchUrl) {
 						change:function() {
 							var dk = this;
 							if(taxonomy =='body_system') {
-								//$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
 								if(getParameterByName('pa')) {
 									var url=removeURLParameter('pa');					
 									window.history.pushState({path:url},'',url);
 								}
 								$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
-								//$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 							}
 							$this.filterSelectTerms(filter,dk.value);
 						}
@@ -366,7 +363,6 @@ function toParams(searchUrl) {
 	},
 	$.fn.fetchActions = function(taxonomy,pb,filter,active_val) {
 		var $this = $(this);
-		//var pb=getParameterByName('pb'); //Products by Body Systems
 		$this.empty();
 		$this.addClass('small-loader');
 		$.ajax({
@@ -382,13 +378,6 @@ function toParams(searchUrl) {
 						change:function() {
 							var dk = this;
 							$this.filterSelectTerms(filter,dk.value);
-							// if(taxonomy =='body_system') {
-							//	$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
-								// $('section[role="actions"]').fetchActions('body_system','pa',pa);
-								// $('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-							// } else if(taxonomy =='actions') {
-								// $('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-							// }
 						}
 					});
 				}	
@@ -462,31 +451,35 @@ jQuery(document).ready(function($){
 				var dk = this;
 				var url = replaceParam('pc', dk.value);
 				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('show_product');					
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('pb');					
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('pa');					
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('pi');					
-				window.history.pushState({path:url},'',url);
+				if(pb !='') {
+					var url=removeURLParameter('pb');					
+					window.history.pushState({path:url},'',url);
+				}
+				if(pa !='') {
+					var url=removeURLParameter('pa');					
+					window.history.pushState({path:url},'',url);
+				}
+				if(pi !='') {
+					var url=removeURLParameter('pi');					
+					window.history.pushState({path:url},'',url);
+				}
 				$('section[role="category"]').filterSelectTerms('pc',dk.value);
 				$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 				//$('section[role="actions"]').fetchSelectTerms('actions','pa',pa);
 				$('section[role="actions"]').fetchActions('body_system','pa',pa);
 				$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-				// $('.product-list').empty();
-				// $('.product-list').showProducts({page:1});
+				$('.product-list').empty();
+				$('.product-list').showProducts({page:1});
 			}
 		});
-		var current_category=$('.by-category .dk-select-options .dk-option-selected').attr('data-value');
-		var show_product=getParameterByName('show_product');
+		product_container.showProducts();
+		// var show_product=getParameterByName('show_product');
 		
-		if(show_product!='') {
-			$('.single-product-detail').getProduct(show_product);
-		} else {
-			product_container.showProducts();
-		}
+		// if(show_product!='') {
+			// $('.single-product-detail').getProduct(show_product);
+		// } else {
+			// product_container.showProducts();
+		// }
 		
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);

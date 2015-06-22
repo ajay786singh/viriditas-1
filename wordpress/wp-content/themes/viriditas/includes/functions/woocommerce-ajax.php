@@ -176,7 +176,6 @@ function get_actions() {
 	if($pb!='') {
 		$args['child_of']=$pb;
 	}
-	
 	$terms = get_terms( $taxonomies, $args );
 	if($terms) {
 			$result='<div class="filter filter-actions">';
@@ -497,12 +496,13 @@ function manage_compound() {
 							$price=$price+$additional_price;
 						}
 					}
-					$main_size=$herb_size/100;
+					//$main_size=$herb_size/100;
 					$herbs[$herb_id] =array(
 						'product_id' => $herb_id,
 						'optional' => 'no',
-						'bundle_quantity' => $main_size,
-						'bundle_quantity_max' => $main_size,
+						'bundle_quantity' => $herb_size,
+						'bundle_required_quantity' => $herb_size,
+						'bundle_quantity_max' => $herb_size,
 						'visibility' => 'visible'
 					);
 				}	
