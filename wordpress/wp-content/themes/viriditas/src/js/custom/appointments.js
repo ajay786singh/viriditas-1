@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 	if($('.appointments-form').length) {
-		$('.app_select_workers').on('change',function() {
+		$('.app_select_workers').on('change',function(e) {
 			var $this=$(this);
 			var value=$this.val();
 			var $service=$('.app_service_id');
