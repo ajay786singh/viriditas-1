@@ -73,7 +73,16 @@ global $product;
 				//$price = price_array($price_html);
 				//print_r($price);
 				//do_action( 'woocommerce_single_product_summary' );
-				
+				$sizes = get_terms("pa_size");
+				if($sizes) {
+					
+					foreach ( $sizes as $size ) {
+						echo "<input type='radio' name='' value='".$size->name."'>".$size->name;
+					}
+					echo "<pre>";
+						print_r($sizes);
+					echo "</pre>";
+				}
 				if($product->product_type=='bundle') {
 				?>	
 					<?php get_cart_bundled();?>
