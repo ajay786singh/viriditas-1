@@ -20,6 +20,12 @@ $products->add_meta_box(
             'type'          => 'text',
         ),
 		array(
+			'name'          => 'monograph_link',
+			'label'         => 'Monograph Link',
+			'description'   => 'Please enter monograph link.',
+			'type'          => 'text'
+        ),
+		array(
             'name'          => 'monograph',
             'label'         => 'Monograph',
             'description'   => '',
