@@ -73,16 +73,39 @@ global $product;
 				//$price = price_array($price_html);
 				//print_r($price);
 				//do_action( 'woocommerce_single_product_summary' );
-				$sizes = get_terms("pa_size");
-				if($sizes) {
+				//$result = array_shift(woocommerce_get_product_terms($product->id, 'pa_size', 'names'));
+				//$sizes = get_the_terms( $product->id, 'pa_size');
+				//sort($sizes);
+				//$prices = get_the_terms( $product->id, 'pa_price');
+				//sort($prices);
+				//echo count($prices);
+				// echo "<pre>";
+					// print_r($prices);
+				// echo "</pre>";
+				// $sizes_prices="";
+				// if( $sizes !='' && count($sizes)>0 && $prices!='' && count($prices)>0) {
+					// for($j=0;$j<count($sizes);$j++) {
+						// $sizes_prices[]=array("size"=>$sizes[$j]->name,'price'=>$prices[$j]->name);
+					// }
 					
-					foreach ( $sizes as $size ) {
-						echo "<input type='radio' name='' value='".$size->name."'>".$size->name;
-					}
-					echo "<pre>";
-						print_r($sizes);
-					echo "</pre>";
-				}
+					// echo "<ul>";
+					// for( $i=0; $i<count($sizes_prices);$i++) {
+						// $size=$sizes_prices[$i]['size'];	
+						// $price=$sizes_prices[$i]['price'];	
+						// $checked="";
+						// if($i==0) { $checked='checked';}						
+						// echo "<li>";
+							// echo "<input type='radio' ".$checked." id='size-".$i."' name='product-size' class='product-size' value='".$size."'>";
+							// echo $size." ML - $".$price;
+						// echo "</li>";
+					// }
+					// echo "</ul>";
+					
+					
+				//} else {
+					//echo '<p class="stock out-of-stock">This product is currently out of stock and unavailable.</p>';
+				//}
+				
 				if($product->product_type=='bundle') {
 				?>	
 					<?php get_cart_bundled();?>
@@ -105,7 +128,7 @@ global $product;
 						</div>
 					</div>
 				<?php	
-				}else{
+				} else {
 					do_action( 'woocommerce_single_product_summary');
 				}
 			?>
