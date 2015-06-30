@@ -38,6 +38,7 @@
         width: 100%;
 	}
     .sidebar {
+		min-height: 200px;
         padding-bottom: 80px;
     }
 }
@@ -58,4 +59,22 @@
 
 .breadcrumb {
     margin-top: 0.5em;
+}
+
+.single_variation_wrapper {
+	.single_variation {
+		display:none;
+	}
+}
+
+.cart_totals {
+	float:right;
+	width:50%;
+	@include media($bp-small) {
+		float:left;
+		width:100%;
+	}
+	table {
+		width:100%;
+	}
 }

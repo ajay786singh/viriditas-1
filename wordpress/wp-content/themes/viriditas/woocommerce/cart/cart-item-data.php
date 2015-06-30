@@ -18,6 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$key = sanitize_text_field( $data['key'] );
 	?>
 		<dt class="variation-<?php echo sanitize_html_class( $key ); ?>"><?php echo wp_kses_post( $data['key'] ); ?>:</dt>
-		<dd class="variation-<?php echo sanitize_html_class( $key ); ?>"><?php echo wp_kses_post( wpautop( $data['value'] ) ); ?></dd>
+		<dd class="variation-<?php echo sanitize_html_class( $key ); ?>">
+			<?php 
+				echo wp_kses_post( $data['value'] ); 
+				if(sanitize_html_class( $key )=='Size') {
+					echo "ml";
+				}
+			?>
+		</dd>
 	<?php endforeach; ?>
 </dl>

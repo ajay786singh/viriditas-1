@@ -54,7 +54,9 @@
 <div id="wrapper" class="wrapper">
 <!-- Header Starts Here -->
 <?php if(get_faqs_box_content()) echo get_faqs_box_content();?>
-<header class="top-header">
+<?php 
+?>
+<header class="<?php echo add_header_class();?>">
 	<div class="container">
 		<div class="header-content">
 			<div class="column-3 logo">
