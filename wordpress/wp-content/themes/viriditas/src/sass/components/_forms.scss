@@ -285,12 +285,12 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		}
 	}
 }
+
 .select2-container .select2-choice {
 	@include border-radius(0px);
 	text-align:left;
 }
-.select2-choice {
-}
+
 .gform_wrapper {
 	form {
 		.top_label  {
