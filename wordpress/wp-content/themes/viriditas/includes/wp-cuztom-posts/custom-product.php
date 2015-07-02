@@ -25,15 +25,15 @@ $products->add_meta_box(
 			'description'   => 'Please enter monograph link.',
 			'type'          => 'text'
         ),
-		array(
-            'name'          => 'monograph',
-            'label'         => 'Monograph',
-            'description'   => '',
-            'type'          => 'post_checkboxes',
-			'args'       => array(
-				'post_type' => 'monograph',
-			)
-        ),
+		// array(
+            // 'name'          => 'monograph',
+            // 'label'         => 'Monograph',
+            // 'description'   => '',
+            // 'type'          => 'post_checkboxes',
+			// 'args'       => array(
+				// 'post_type' => 'monograph',
+			// )
+        // ),
 		// array(
             // 'name'          => 'composition',
             // 'label'         => 'Composition',
@@ -52,7 +52,6 @@ $products->add_meta_box(
             'description'   => '',
             'type'          => 'wysiwyg'
         ),
-		
 		array(
             'name'          => 'dosage',
             'label'         => 'Dosage',
