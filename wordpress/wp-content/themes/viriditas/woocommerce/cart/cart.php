@@ -77,7 +77,11 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 					<td class="product-price">
 						<?php
-							echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+							// if($_product->product_type=='bundle') {
+								// echo "$".number_format($cart_item['cart_price'],2);
+							// } else {
+								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+							//}
 						?>
 					</td>
 
@@ -100,7 +104,11 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 					<td class="product-subtotal">
 						<?php
-							echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
+							// if($_product->product_type=='bundle') {
+								// echo "$".$cart_item['quantity']*number_format($cart_item['cart_price'],2);
+							// } else {
+								echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
+							//}	
 						?>
 					</td>
 				</tr>

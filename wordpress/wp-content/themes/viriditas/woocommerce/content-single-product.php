@@ -60,10 +60,11 @@ global $product;
 			<div class="product-title">
 				<?php the_title("<h4>","</h4>");?>
 				<?php
+					$monograph_link = get_post_meta($post->ID,'_product_details_monograph_link',true);
 					$monograph=get_post_meta($post->ID,'_product_details_monograph',true);
-					if($monograph!='' && $monograph!='-1') {
+					if($monograph_link !='') {
 				?>
-				<a href="<?php echo get_permalink($monograph[0]);?>" class="view-monograph">view monograph</a>
+				<a href="<?php echo $monograph_link;?>" class="view-monograph" target="_blank">view monograph</a>
 				<?php } ?>
 			</div>
 			<div class="product-actions">
@@ -108,7 +109,56 @@ global $product;
 				
 				if($product->product_type=='bundle') {
 				?>	
-					<?php get_cart_bundled();?>
+					<form class="product_bundle cart" action="" method="post" enctype="multipart/form-data">
+					<?php //get_cart_bundled();
+						$sizes = get_the_terms( $product->id, 'pa_size');
+						sort($sizes);
+						$prices = get_the_terms( $product->id, 'pa_price');
+						sort($prices);
+						if(count($sizes) == count($prices)) {
+							
+							$size_price="";
+							for($i=0;$i<count($sizes);$i++) {
+								$size_price[]=array("size"=>$sizes[$i]->name,"price"=>$prices[$i]->name);
+							}
+							echo "<section class='bundle_variations'><ul>";
+							for( $i=0; $i<count($size_price);$i++) {
+								$size=$size_price[$i]['size'];	
+								$price=$size_price[$i]['price'];	
+								$checked="";
+								if($i==0) { $checked='checked';}						
+								echo "<li>";
+									echo "<input type='radio' ".$checked." id='size-".$i."' name='product-size' class='product-size' value='".$size." - ".$price."'>";
+									echo "<label for='size-".$i."'>".$size." ml - $".$price."</label>";
+								echo "</li>";
+							}
+							
+							echo "</ul></section>";
+							$default_size=$size_price[0]['size'];
+							$default_price=$size_price[0]['price'];
+							echo '<input type="hidden" name="cart_size" id="cart_size" value="'.$default_size.'">';
+							echo '<input type="hidden" name="cart_price" id="cart_price" value="'.$default_price.'">';
+							echo '<input type="hidden" name="add-to-cart" value="'.$product->id.'">';
+							echo '<input type="hidden" name="product_id" id="product_id" value="'.$product->id.'">';
+							echo '<input type="hidden" name="product_type" id="product_type" value="herbal_combination">';
+							
+							$compound_page_id=1639;
+							$manage_compound_url=get_permalink($compound_page_id);
+							?>
+							<div class="cart-actions">
+								<div class="column-5"><a href="<?php echo $manage_compound_url;?>" id="" class="button edit-formula">EDIT FORMULA</a></div>
+								<div class="column-2">or</div>
+								<div class="column-5">
+									<!--<a href="#" id="add-to-cart_bundle" class="button">Buy as is</a>-->
+									<button type="submit" class="single_add_to_cart_button button alt">Buy as is</button>
+								</div>
+							</div>
+							<?php
+						} else {
+							echo '<p class="stock out-of-stock">This product is currently out of stock and unavailable.</p>';
+						}
+					?>
+					</form>
 					<div class="popup-overlay"></div>
 					<div class="edit-formula popup-box">
 						<div class="popup-box-content">
