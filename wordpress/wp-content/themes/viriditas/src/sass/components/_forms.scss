@@ -118,6 +118,12 @@ select {
     max-width: 100%;
     width: auto;
 }
+.woocommerce footer {
+	& input[type="text"], & input[type="email"] {
+		font-size:1.2em;
+		padding: 3px 15px;
+	}
+}
 footer {
 	& input[type="text"],input[type="email"] {
 		border: none;

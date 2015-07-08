@@ -283,6 +283,13 @@ function toParams(searchUrl) {
 				settings.loader.loaderHide();
 				if(html!='' && html!=1) {
 					settings.container.append(html);
+					$('.equal-height-item').each(function(e){
+						if(settings.sort_by !='folk_name') {
+							$(this).find('em').hide();
+						}else {
+							$(this).find('em').show();
+						}
+					});
 					if(settings.view_mode == '' || settings.view_mode!='list_view') {
 						$('.equal-height-item').equalHeights();	
 					}

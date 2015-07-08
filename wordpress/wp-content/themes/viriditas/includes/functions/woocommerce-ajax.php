@@ -63,8 +63,17 @@ function load_products () {
 	}
 	if($sort_by!=''){
 		if($sort_by=='folk_name') {
-			$args['orderby']  = 'meta_value';
 			$args['meta_key'] = '_product_details_folk_name';
+			$args['meta_type']  = 'CHAR';
+			$args['orderby']  = array( 'meta_value' => 'ASC','title'=>'ASC' );
+			$args['order']  = 'ASC';
+			$args['meta_query'] = array(
+				array(
+				   'key' => '_product_details_folk_name',
+				   'value' => '' ,
+				   'compare' => '!='
+				)
+			);
 		} else {
 			$args['orderby']=$sort_by;
 		}
@@ -80,9 +89,7 @@ function load_products () {
             // )
         // );
 	}
-	
 	if($sort_by_alpha !='') {
-		//$args['s'] = $sort_by_alpha;
 		$postids = $wpdb->get_col("
 			SELECT p.ID
 			FROM $wpdb->posts p
@@ -127,7 +134,6 @@ function load_products () {
 	
 	ob_start ();
 	$query=new WP_Query($args);
-	//echo $count=$query->found_posts;
 	$max_pages=$query->max_num_pages;
 	if($query->have_posts()){
 		$next = get_next_posts_link('Older', $max_pages);
