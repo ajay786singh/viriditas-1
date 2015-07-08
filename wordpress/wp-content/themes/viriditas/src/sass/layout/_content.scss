@@ -55,6 +55,14 @@ $oddeven-background: $grey;
 	}
 }
 
+.column-2 {
+    @include span-columns(5);
+    position: relative;
+    @include media($bp-large) {
+        @include span-columns(2 of 12);
+    }
+}
+
 .column-3 {
     @include span-columns(5);
     position: relative;
@@ -377,5 +385,17 @@ article {
 	}
 	.popup-box {
 		display:block;
+	}
+}
+.cart-actions {
+	margin-top:20px;
+	overflow:hidden;
+	@include media($bp-large) {
+		.column-2 {
+			margin-top:5px;
+			margin-right:0;
+			text-align:center;
+			
+		}
 	}
 }
