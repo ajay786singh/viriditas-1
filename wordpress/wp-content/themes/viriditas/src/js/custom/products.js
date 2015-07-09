@@ -93,7 +93,7 @@ function toParams(searchUrl) {
 				settings.container.loaderHide();
 				if(html!='' && html!=1) {
 					settings.container.empty().html(html);
-					//settings.container.addCompound('a');
+					
 					jQuery(".compound-product").unbind('click').bind("click", function(e){
 						e.preventDefault();
 						var id=$(this).attr('data-id');
@@ -102,6 +102,7 @@ function toParams(searchUrl) {
 							$(this).addCompound(id,name);
 						}
 					});
+					
 					jQuery(".alphabets-list li a").unbind('click').bind("click", function(e){
 						e.preventDefault();
 						var id=$(this).attr('id');
@@ -174,7 +175,16 @@ function toParams(searchUrl) {
 		var values =[];
 		$('.addition-box').show();
 		$('.hide-info').hide();
+		//$('.hide-info').hide();
 		var total_size = $('.herb-sizes').calculateSize();
+		// if(total_size == '' || total_size == 0) {
+			// $(".compound-error").empty().show().html("Please enter size of this herb.");
+		// }else if(total_size <= 100 ) {
+			// $(".compound-error").empty().hide();
+		// } else {
+			// $(".compound-error").empty().show().html("Total herbs size can't be more than 100%.");
+		// }
+		
 		if($('.additions ul li').length <= 6) {
 			if(total_size <=100) {
 				var data_pricy=$('#compound-'+id).attr('data-pricy');

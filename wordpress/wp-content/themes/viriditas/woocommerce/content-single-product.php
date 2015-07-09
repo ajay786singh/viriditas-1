@@ -110,17 +110,19 @@ global $product;
 				if($product->product_type=='bundle') {
 				?>	
 					<form class="product_bundle cart" action="" method="post" enctype="multipart/form-data">
-					<?php //get_cart_bundled();
+					<?php 
+						//get_cart_bundled();
 						$sizes = get_the_terms( $product->id, 'pa_size');
-						sort($sizes);
 						$prices = get_the_terms( $product->id, 'pa_price');
-						sort($prices);
+						
 						if(count($sizes) == count($prices)) {
 							
 							$size_price="";
 							for($i=0;$i<count($sizes);$i++) {
 								$size_price[]=array("size"=>$sizes[$i]->name,"price"=>$prices[$i]->name);
 							}
+							sort($size_price);
+							
 							echo "<section class='bundle_variations'><ul>";
 							for( $i=0; $i<count($size_price);$i++) {
 								$size=$size_price[$i]['size'];	

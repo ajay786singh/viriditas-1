@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php 
 				echo wp_kses_post( $data['value'] ); 
 				if(sanitize_html_class( $key )=='Size') {
-					echo "ml";
+					echo " ml";
 				}
 				
 			?>
