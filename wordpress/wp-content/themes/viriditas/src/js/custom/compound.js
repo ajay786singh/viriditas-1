@@ -41,6 +41,7 @@ jQuery(document).ready(function($) {
 				$('.pop-up-error').empty().show().html("Total herbs size can't be more than 100%.");
 			}
 		});
+		
 		$('.add-herb').click(function(e) {
 			var herb_size=$('#herb-size').val();
 			var herb_id=$('.herb-name').attr("id");

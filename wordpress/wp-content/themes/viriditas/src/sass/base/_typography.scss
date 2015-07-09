@@ -163,7 +163,10 @@ cite {
         @include span-columns(8);
     }
 }
-
+.compound-error {
+	//display:none;
+	width:100%;
+}
 .error.pop-up-error {
 	display:none;
 	width:100%;
