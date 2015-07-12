@@ -416,13 +416,15 @@ function show_compound_products() {
 	$query=new WP_Query($args);
 	if($query->have_posts()){
 		$pricy=get_option('wc_settings_tab_compound_pricy');
-		if($pricy) {
+		if($pricy !='') {
 			$pricy=explode(",",$pricy);
 		}
 		while($query->have_posts()):$query->the_post();
 			$data_pricy="";
-			if (in_array(get_the_ID(), $pricy)) {
-				$data_pricy="*";
+			if($pricy) {
+				if (in_array(get_the_ID(), $pricy)) {
+					$data_pricy="*";
+				}
 			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
