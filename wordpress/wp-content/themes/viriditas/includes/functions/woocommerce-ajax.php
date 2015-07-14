@@ -332,7 +332,6 @@ function ccw_custom_woo_placeholder(){
 
 function show_compound_products() {
 	global $wp_query,$wpdb;
-	//echo "<pre>"; print_r($_POST); echo "</pre>";
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
 	$keyword=$_POST['search_folk'];
@@ -352,13 +351,6 @@ function show_compound_products() {
 	
 	if($keyword !='') {
 		$args['s'] = $keyword;
-		// $args['meta_query'] = array(
-            // array(
-               // 'key' => '_product_details_folk_name',
-               // 'value' => $keyword,
-               // 'compare' => 'LIKE'
-            // )
-        // );
 	}
 	
 	if($sort_by!=''){
@@ -415,16 +407,12 @@ function show_compound_products() {
 	ob_start ();
 	$query=new WP_Query($args);
 	if($query->have_posts()){
-		$pricy=get_option('wc_settings_tab_compound_pricy');
-		if($pricy !='') {
-			$pricy=explode(",",$pricy);
-		}
 		while($query->have_posts()):$query->the_post();
+		$product_id=get_the_ID();
+			$expensive_herb = get_post_meta($product_id,'_product_details_expensive_herb',true);
 			$data_pricy="";
-			if($pricy) {
-				if (in_array(get_the_ID(), $pricy)) {
-					$data_pricy="*";
-				}
+			if($expensive_herb == 'on') {
+				$data_pricy="*";
 			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
@@ -438,13 +426,10 @@ function show_compound_products() {
 					} else { 
 						echo get_the_title().$data_pricy;
 					}
-				}else {
+				} else {
 					echo get_the_title().$data_pricy;
-				}				
-					
+				}
 			?>
-			
-			
 			</a>
 		</li>
 	<?php

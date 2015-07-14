@@ -2,7 +2,7 @@
 /*
 * Template Name: Manage Compound Page Template
 */
-get_header(); ?>
+get_header();?>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 <section role="content">
     <div class="container">
@@ -55,7 +55,7 @@ get_header(); ?>
 									echo "<li><a href='#' id='sort-".lcfirst($alphabet)."'>".$alphabet."</a></li>";
 								}
 							}
-					echo '</ul>';
+					echo '</ul>';					
 				?>
 			</div>
 		</section>	
@@ -81,14 +81,20 @@ get_header(); ?>
 									$price=$sizeprice[1];
 									$additional_price=$sizeprice[2];
 									$checked="";
-									if($i==1) { $checked='checked';}
+									if($i==1) { 
+										$checked='checked';
+										$default_size=$sizeprice[0];
+										$default_price=$sizeprice[1];
+										echo '<input type="hidden" name="cart_size" id="cart_size" value="'.$default_size.'">';
+										echo '<input type="hidden" name="cart_price" id="cart_price" value="'.$default_price.'">';
+									}
 									echo "<li>";
 										echo "<input type='radio' ".$checked." id='size-".$i."' data-additional='".$additional_price."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
 										echo "<label for='size-".$i."'>".$size." ML - ".$price."$</label>";
 									echo "</li>";
 									$i++;
 								}
-								echo "</ul>";
+								echo "</ul>";								
 							}
 						?>
 					</section>

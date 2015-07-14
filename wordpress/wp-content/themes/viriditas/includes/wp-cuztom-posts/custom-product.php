@@ -15,37 +15,22 @@ $products->add_meta_box(
     array(
         array(
             'name'          => 'folk_name',
-            'label'         => 'Product Folk Name',
-            'description'   => '',
+            'label'         => 'Folk Name',
+            'description'   => 'Please enter folk name for this herb.',
             'type'          => 'text',
+        ),
+		array(
+			'name'          => 'expensive_herb',
+			'label'         => 'Expensive Herb',
+			'description'   => 'Please check this box, if herb is expensive.',
+			'type'          => 'checkbox'
         ),
 		array(
 			'name'          => 'monograph_link',
 			'label'         => 'Monograph Link',
-			'description'   => 'Please enter monograph link.',
+			'description'   => 'Please enter monograph link for this herb.',
 			'type'          => 'text'
         ),
-		// array(
-            // 'name'          => 'monograph',
-            // 'label'         => 'Monograph',
-            // 'description'   => '',
-            // 'type'          => 'post_checkboxes',
-			// 'args'       => array(
-				// 'post_type' => 'monograph',
-			// )
-        // ),
-		// array(
-            // 'name'          => 'composition',
-            // 'label'         => 'Composition',
-            // 'description'   => '',
-            // 'type'          => 'post_checkboxes',
-			// 'args'       => array(
-				// 'post_type' => 'product',
-				// 'product_cat' => 'single-herb-tincture',
-				// 'orderby' => 'title',
-				// 'order' => 'ASC',
-			// )
-        // ),
 		array(
             'name'          => 'warnings',
             'label'         => 'Warnings & Interactions',
