@@ -56,6 +56,9 @@
 		.accordion-panel-content {
 			padding-top:2em;
 			padding-bottom:2em;
+			.single-product-content & {
+				display:block;
+			}
 			.faq-content & {	
 				padding-top:0em;
 				.list {
