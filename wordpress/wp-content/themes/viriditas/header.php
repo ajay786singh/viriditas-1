@@ -24,6 +24,7 @@
 	<script type="text/javascript">
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 		var redirect = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
 	</script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -364,14 +364,19 @@ function toParams(searchUrl) {
 						mobile: true,
 						change:function() {
 							var dk = this;
-							if(taxonomy =='body_system') {
-								if(getParameterByName('pa')) {
-									var url=removeURLParameter('pa');					
-									window.history.pushState({path:url},'',url);
+							if($('body').hasClass('single-product')==true) {
+								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
+								window.location = shop_page_url;
+							} else {					
+								if(taxonomy =='body_system') {
+									if(getParameterByName('pa')) {
+										var url=removeURLParameter('pa');					
+										window.history.pushState({path:url},'',url);
+									}
+									$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
 								}
-								$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+								$this.filterSelectTerms(filter,dk.value);
 							}
-							$this.filterSelectTerms(filter,dk.value);
 						}
 					});
 				}	
@@ -394,7 +399,12 @@ function toParams(searchUrl) {
 						mobile: true,
 						change:function() {
 							var dk = this;
-							$this.filterSelectTerms(filter,dk.value);
+							if($('body').hasClass('single-product')==true) {
+								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
+								window.location = shop_page_url;
+							} else {					
+								$this.filterSelectTerms(filter,dk.value);
+							}
 						}
 					});
 				}	
@@ -466,19 +476,23 @@ jQuery(document).ready(function($){
 			mobile: true,
 			change:function() {
 				var dk = this;
-
-				var url = replaceParam('pc', dk.value);
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('pb');					
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('pa');					
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('pi');					
-				window.history.pushState({path:url},'',url);
-				$('section[role="category"]').filterSelectTerms('pc',dk.value);
-				$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-				$('section[role="actions"]').fetchActions('body_system','pa',pa);
-				$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+				if($('body').hasClass('single-product')==true) {
+					var shop_page_url=shop_page+'?pc='+dk.value;
+					window.location = shop_page_url;
+				} else {					
+					var url = replaceParam('pc', dk.value);
+					window.history.pushState({path:url},'',url);
+					var url=removeURLParameter('pb');					
+					window.history.pushState({path:url},'',url);
+					var url=removeURLParameter('pa');					
+					window.history.pushState({path:url},'',url);
+					var url=removeURLParameter('pi');					
+					window.history.pushState({path:url},'',url);	
+					$('section[role="category"]').filterSelectTerms('pc',dk.value);
+					$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
+					$('section[role="actions"]').fetchActions('body_system','pa',pa);
+					$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+				}
 			}
 		});
 		product_container.empty();

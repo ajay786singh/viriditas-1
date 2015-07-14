@@ -32,6 +32,14 @@ jQuery(document).ready(function($) {
 				}
 			});			
 	});
+	$('.compound-sizes ul li input:radio').unbind('click').bind("click", function(e){
+		var size_price=$(this).attr('value');
+		size_price=size_price.split("-");
+		var size=size_price[0];
+		var price=size_price[1];
+		$('#cart_size').val(size);
+		$('#cart_price').val(price);
+	});
 	$('#add-to-cart_bundle').click(function(){
 		var size_price=$('.bundle_variations ul li input:radio:checked').attr("value");
 			size_price=size_price.split("-");

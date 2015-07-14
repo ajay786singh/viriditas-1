@@ -66,13 +66,6 @@ class WC_Settings_Woocommerce_Compound_Settings {
                 'id'   => 'wc_settings_tab_compound_sizes',
 				'css' =>'min-width:500px;min-height:100px;'
             ),
-			'pricy-products' => array(
-                'name' => __( 'Expensive Products', 'woocommerce-settings-tab-compound' ),
-                'type' => 'textarea',
-                'desc' => __( 'Please enter product id(s) separated with comma.', 'woocommerce-settings-tab-compound' ),
-                'id'   => 'wc_settings_tab_compound_pricy',
-				'css' =>'min-width:500px;min-height:100px;'
-            ),
             'section_end' => array(
                  'type' => 'sectionend',
                  'id' => 'wc_settings_tab_compound_section_end'

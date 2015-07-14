@@ -1,6 +1,6 @@
 <div class="column-3 sidebar">
 	<?php if(is_user_logged_in()){ 	
-			$your_compound_page=1391;
+			$your_compound_page=2219;
 			query_posts('post_type=page&p='.$your_compound_page);
 			if(have_posts()):while(have_posts()):the_post();
 	?>

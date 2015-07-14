@@ -3,9 +3,25 @@
 *  Function to Manage Recipe By User(s)
 */
 
+wp_set_object_terms( 2226, 500, 'pa_size',false );
+// $arry=unserialize('a:2:{s:7:"pa_size";a:6:{s:4:"name";s:7:"pa_size";s:5:"value";s:0:"";s:8:"position";s:1:"0";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}s:8:"pa_price";a:6:{s:4:"name";s:8:"pa_price";s:5:"value";s:0:"";s:8:"position";s:1:"2";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}}');
+// $arry2=unserialize('a:2:{s:7:"pa_size";a:6:{s:4:"name";s:7:"pa_size";s:5:"value";s:0:"";s:8:"position";s:1:"0";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}s:8:"pa_price";a:6:{s:4:"name";s:8:"pa_price";s:5:"value";s:0:"";s:8:"position";s:1:"2";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}}');
+
+// echo "<pre>";
+// print_r($arry);
+// echo "</pre>";
+
+// echo "<pre>";
+// print_r($arry2);
+// echo "</pre>";
+
 function manage_compound() {
 	$current_user = wp_get_current_user();
 	$errors = array();
+	// echo "<pre>";
+	// print_r($_POST);
+	// echo "</pre>";
+	
 	if ( $current_user->ID != 0 ) {
 		//logged in.			
 		$action = trim($_POST['form_type']);
@@ -23,10 +39,6 @@ function manage_compound() {
 		
 		$herbs = array();
 		if(count($compound_herbs)>0) {
-			$pricy=get_option('wc_settings_tab_compound_pricy');
-			if($pricy) {
-				$pricy=explode(",",$pricy);
-			}
 			foreach($compound_herbs as $compound_herb) {
 				$compound_herb = str_replace("size_","",$compound_herb);
 				$compound_herb = explode("_",$compound_herb);
@@ -36,7 +48,8 @@ function manage_compound() {
 				if($herb_size=='' || $herb_size==0) {
 					array_push($errors, "Please add size to herb: <b>".$name."</b>."); 
 				} else {
-					if(in_array($herb_id,$pricy)) {
+					$expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
+					if($expensive_herb == 'on') {
 						if($herb_size > 60) {
 							array_push($errors, "This herb: <b>".$name."</b> can't have size for than 60%."); 
 						} else {
@@ -46,10 +59,10 @@ function manage_compound() {
 					//$main_size=$herb_size/100;
 					$herbs[$herb_id] =array(
 						'product_id' => $herb_id,
-						'optional' => 'no',
-						'bundle_quantity' => $herb_size,
-						'bundle_required_quantity' => $herb_size,
-						'bundle_quantity_max' => $herb_size,
+						'optional' => 'yes',
+						'bundle_quantity' => 1,
+						'bundle_required_quantity' => 1,
+						'bundle_quantity_max' => 1,
 						'visibility' => 'visible'
 					);
 				}	
@@ -68,8 +81,37 @@ function manage_compound() {
 				'post_type'       => 'product',
 				'post_author'       => '1'
 			) );
-		 
+			$product_attributes='';
 			if ( $post_id != 0 ) {
+				$product_attributes['pa_size']=array(
+					'name' => pa_size,
+					'value' => '',
+					'position' => 0,
+					'is_visible' => 1,
+					'is_variation' => 0,
+					'is_taxonomy' => 1,
+				);
+				$product_attributes['pa_price']=array(
+					'name' => pa_price,
+					'value' => '',
+					'position' => 2,
+					'is_visible' => 1,
+					'is_variation' => 0,
+					'is_taxonomy' => 1,
+				);
+				$sizes=get_option('wc_settings_tab_compound_sizes');
+				if($sizes) {
+					$sizes=explode(",",$sizes);
+					$avail_sizes="";
+					$avail_prices="";
+					foreach($sizes as $sizeprice) {
+						$sizeprice=explode("/",$sizeprice);
+						$avail_sizes[]=$sizeprice[0];
+						$avail_prices[]=$sizeprice[1];
+					}								
+					wp_set_object_terms( $post_id, $avail_sizes, 'pa_size' );
+					wp_set_object_terms( $post_id, $avail_prices, 'pa_price' );						
+				}						
 				wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
 				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
@@ -79,7 +121,7 @@ function manage_compound() {
 				update_post_meta( $post_id, 'total_sales', '0');
 				update_post_meta( $post_id, '_downloadable', 'no');
 				update_post_meta( $post_id, '_virtual', 'no');
-				update_post_meta( $post_id, '_regular_price',  $price_per_unit );
+				update_post_meta( $post_id, '_regular_price',  '1' );
 				update_post_meta( $post_id, '_sale_price',  '' );
 				update_post_meta( $post_id, '_purchase_note', "" );
 				update_post_meta( $post_id, '_featured', "no" );
@@ -88,7 +130,7 @@ function manage_compound() {
 				update_post_meta( $post_id, '_width', "" );
 				update_post_meta( $post_id, '_height', "" );
 				update_post_meta($post_id, '_sku', "");
-				update_post_meta( $post_id, '_product_attributes', array());
+				update_post_meta( $post_id, '_product_attributes', $product_attributes);
 				update_post_meta( $post_id, '_sale_price_dates_from', '' );
 				update_post_meta( $post_id, '_sale_price_dates_to', '' );
 				update_post_meta( $post_id, '_price', $price_per_unit );
@@ -107,7 +149,7 @@ function manage_compound() {
 				update_post_meta( $post_id, '_max_bundle_price', $price_per_unit);
 				
 				global $woocommerce;
-				$woocommerce->cart->add_to_cart($post_id,$size);
+				$woocommerce->cart->add_to_cart($post_id,1);
 				$cart_url=$woocommerce->cart->get_cart_url();
 				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
 			}
@@ -120,8 +162,7 @@ function manage_compound() {
 	} else {
 		//Not Logged in.
 		$msg="Please login to add your recipe to cart.";
-	}
-		
+	} 		
 	//Prepare errors for output
 	$output='';
 	$output .= '<div class="error-header">'.$msg.'</div>';
@@ -208,19 +249,6 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
 }
 add_action( 'woocommerce_add_to_cart', 'save_cart_data_bundle_price', 1, 5 );
 
-function add_bundle_price($cart_item_key, $product_id = null, $quantity= null, $variation_id= null, $variation= null) {
-	global $woocommerce;
-	$id=$_POST['product_id'];
-	$product = wc_get_product( $id );
-	if($product->is_type( 'bundle' ) ) {
-		$price=$_POST['cart_price'];
-		update_post_meta($id, '_cart_price', $price);
-	}
-	//print_r($product->product_type);
-	
-}
-//add_action( 'woocommerce_add_to_cart', 'add_bundle_price');
-
 function calculate_bundle_price( $cart_object ) {
     global $woocommerce;
 	$additionalPrice = 100;
@@ -229,7 +257,6 @@ function calculate_bundle_price( $cart_object ) {
 			$bundle_price=WC()->session->get( $key.'_cart_price' );
             $quantity = intval( $value['quantity'] );
             $orgPrice = intval( $value['data']->price );
-            //$value['data']->price = ( ( $bundle_price ) * $quantity );
 			$value['data']->price =  $bundle_price ;
         }           
     }

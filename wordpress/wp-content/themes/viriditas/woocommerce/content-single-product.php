@@ -284,7 +284,7 @@ global $product;
 				<?php } ?>
 				
 				<?php 
-					$indications = get_the_terms( $post->ID, 'indication' ); 
+					/*$indications = get_the_terms( $post->ID, 'indication' ); 
 					if($indications) {
 				?>
 					<div class="accordion-panel">
@@ -299,7 +299,7 @@ global $product;
 							</ul>
 						</div>
 					</div>
-				<?php } ?>				
+				<?php }*/ ?>				
 				<div class="accordion-panel">
 					<h5 class="accordion-panel-header">Questions? Contact Us</h5>
 					<div class="accordion-panel-content">
