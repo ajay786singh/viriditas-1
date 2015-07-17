@@ -61,6 +61,14 @@ function load_products () {
 	}else {
 		$args['order']='ASC';
 	}
+	//$args['meta_key'] ='_allowed_bundle_user';	
+	// $args['meta_query'] = array(
+		// array(
+		   // 'key' => '_allowed_bundle_user',
+		   // 'value' => '' ,
+		   // 'compare' => '=='
+		// )
+	// );
 	if($sort_by!=''){
 		if($sort_by=='folk_name') {
 			$args['meta_key'] = '_product_details_folk_name';
@@ -141,7 +149,7 @@ function load_products () {
 		while($query->have_posts()):$query->the_post();
 	?>	
 		<li class="equal-height-item" id="product-<?php echo get_the_ID();?>">		
-			<?php get_template_part( 'woocommerce/content-product', 'woocommerce'); ?>
+			<?php get_template_part( 'woocommerce/content-product', 'woocommerce');?>
 		</li>
 	<?php
 		endwhile;
@@ -337,6 +345,10 @@ function show_compound_products() {
 	$keyword=$_POST['search_folk'];
 	$sort_by_alpha=$_POST['sort_by_alpha'];
 	$sort_by=$_POST['sort_by'];
+	$compound_id=$_POST['compound_id'];
+	$bundle_herbs="";
+	$postids="";
+	
 	if($action_id !='') {
 		$body_system_id=$action_id;
 	}
@@ -348,6 +360,14 @@ function show_compound_products() {
 		'showposts'=>-1,
 		'post_status'=>array('publish')
 	);
+	
+	if($compound_id!="") {
+		$bundle_data=get_post_meta($compound_id,'_bundle_data',true);
+		foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
+			$bundle_herbs[]= $bundle_herb_id;
+		}
+		$args['post__not_in']=$bundle_herbs;
+	}
 	
 	if($keyword !='') {
 		$args['s'] = $keyword;
@@ -379,6 +399,12 @@ function show_compound_products() {
 		if($postids) {
 			$args['post__in']=$postids;
 		}
+	}
+	
+	if($bundle_herbs !='' && $postids !='') {
+		unset($args['post__not_in']);
+		unset($args['post__in']);
+		$args['post__in']=array_diff($postids, $bundle_herbs);
 	}
 	$filter_terms=array_filter($filter);
 	if(count($filter_terms)== 1) {
@@ -422,7 +448,8 @@ function show_compound_products() {
 				if($sort_by!='' && $sort_by=='folk_name') {
 					$folk_name=get_post_meta(get_the_ID(),'_product_details_folk_name',true);
 					if($folk_name) {
-						echo $folk_name.$data_pricy;
+						echo get_the_title().$data_pricy;
+						echo "<br><i>".$folk_name."</i>";
 					} else { 
 						echo get_the_title().$data_pricy;
 					}

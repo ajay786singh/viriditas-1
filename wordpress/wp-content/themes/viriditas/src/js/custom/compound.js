@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 			}
 			var total_sizes=$('.herb-sizes').calculateSize();
 			if(total_sizes > 100) {
-				$('.pop-up-error').empty().show().html("Total herbs size can't be more than 100%.");
+				$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
 			}
 		});
 		
@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
 					if(total_sizes <= 100) {
 						$('.popup-compound').closePopup();
 					} else {						
-						$('.pop-up-error').empty().show().html("Total herbs size can't be more than 100%.");
+						$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
 					}
 				}
 			} else {
@@ -71,14 +71,16 @@ jQuery(document).ready(function($) {
 			e.preventDefault();
 		});
 		$('.recipe-form').submit(function(e){		
-			e.preventDefault();		
+			e.preventDefault();	
 			var total_sizes=$('.herb-sizes').calculateSize();
+			var total_size=100;
 			var title = $('#recipe-name').val();
 			var cartSize = $('#cart_size').val();
 			var cartPrice = $('#cart_price').val();
-			var form_type=$('#form_type').val();
+			var compound_id=$('#recipe-compound-id').val();
 			var size_price=$('.recipe-size:checked').val();		
 			var herbs=[];
+			var compound_herbs=$('#recipe-compound-herbs').val();
 			var additional_price=$('.recipe-size:checked').attr('data-additional');
 			size_price=size_price.split("-");		
 			var size=size_price[0];		
@@ -90,7 +92,7 @@ jQuery(document).ready(function($) {
 				herbs.push(herb);
 			});
 			var compound_products=$('#compound-products').val();
-			var data= {'action':'manage_compound','title':title,'cart_size':cartSize,'cart_price':cartPrice,'size':size,'price':price,'form_type':form_type,'compound_products':compound_products,'herbs':herbs,'additional_price':additional_price};		
+			var data= {'action':'manage_compound','title':title,'cart_size':cartSize,'cart_price':cartPrice,'size':size,'price':price,'compound_products':compound_products,'herbs':herbs,'additional_price':additional_price,'compound_id':compound_id,'compound_herbs':compound_herbs};		
 			var message=$('.errors');		
 			message.show();		
 			message.loaderShow();		
@@ -98,14 +100,14 @@ jQuery(document).ready(function($) {
 				message.empty();
 				message.loaderHide();
 				message.html("Please enter recipe name.");
-			} else if(total_sizes < 100) {
+			} else if(total_sizes < total_size) {
 				message.empty();
 				message.loaderHide();
 				message.html("Herb sizes should be 100%.");
-			} else if(total_sizes > 100) {
+			} else if(total_sizes > total_size) {
 				message.empty();
 				message.loaderHide();
-				message.html("Herb sizes shouldn't be more than 100%.");
+				message.html("You've reached the max % that can be added to a combination online.");
 			} else {
 				message.empty();
 				message.loaderShow();

@@ -23,14 +23,7 @@ jQuery(document).ready(function($) {
 		var size=size_price[0];
 		var price=size_price[1];
 		$('#cart_size').val(size);
-		$('#cart_price').val(price);
-			$.ajax({
-				type: 'POST',
-				url: ajaxurl,
-				data:{action: 'add_to_price_cookie','price':price},
-				success: function(html) {
-				}
-			});			
+		$('#cart_price').val(price);			
 	});
 	$('.compound-sizes ul li input:radio').unbind('click').bind("click", function(e){
 		var size_price=$(this).attr('value');
