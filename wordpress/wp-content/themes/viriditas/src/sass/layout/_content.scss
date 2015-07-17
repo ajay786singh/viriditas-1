@@ -87,6 +87,14 @@ $oddeven-background: $grey;
     }
 }
 
+.column-8 {
+    @include span-columns(5);
+    position: relative;
+    @include media($bp-large) {
+        @include span-columns(8 of 12);
+    }
+}
+
 .column-9 {
     @include span-columns(5);
     position: relative;

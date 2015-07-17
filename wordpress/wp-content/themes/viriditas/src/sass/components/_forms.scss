@@ -562,3 +562,16 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		margin-bottom: 0px;
 	}
 }
+.base-size {
+	background:$white;
+	border:1px solid $base-border-color;
+	color:$heading;
+	font-size:1.5em;
+	margin-top:15px;
+	@include media($bp-large) {
+		font-size:2em;
+		margin-top:0px;
+	}
+	padding:10px 20px;
+	text-align:center;
+}

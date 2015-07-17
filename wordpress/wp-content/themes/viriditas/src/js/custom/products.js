@@ -74,6 +74,7 @@ function toParams(searchUrl) {
 			search_folk   : getParameterByName('keyword'),
 			sort_by_alpha : getParameterByName('sort_by_alpha'),
 			sort_by       : getParameterByName('sort_by'),
+			compound_id   : getParameterByName('compound'),
 			loader    	  : $('.message')
         }, options);
 		settings.container.empty();
@@ -87,7 +88,8 @@ function toParams(searchUrl) {
 				'filter_type_action':settings.action,
 				'search_folk':settings.search_folk,
 				'sort_by':settings.sort_by,
-				'sort_by_alpha':settings.sort_by_alpha
+				'sort_by_alpha':settings.sort_by_alpha,
+				'compound_id':settings.compound_id
 			},
 			success: function(html) {
 				settings.container.loaderHide();
@@ -161,6 +163,10 @@ function toParams(searchUrl) {
 	},
 	$.fn.calculateSize = function( ) {
 		var sum = 0;
+		var compound_id=$('#recipe-compound-id').val();
+		if(compound_id!=""){
+			sum=25;
+		}
 		$(this).each(function(e) {
 			if(!isNaN(this.value) && this.value.length!=0) {
 				sum += parseFloat(this.value);
@@ -184,9 +190,15 @@ function toParams(searchUrl) {
 		// } else {
 			// $(".compound-error").empty().show().html("Total herbs size can't be more than 100%.");
 		// }
-		
-		if($('.additions ul li').length <= 6) {
-			if(total_size <=100) {
+		var compound_id=$('#recipe-compound-id').val();
+		var total_herbs=7;
+		var total_size=100;
+		if(compound_id !='') {
+			total_herbs=3;
+			total_size=75;
+		} 
+		if($('.additions ul li').length < total_herbs) {
+			if(total_size <=total_size) {
 				var data_pricy=$('#compound-'+id).attr('data-pricy');
 				$('.popup-compound').openPopup();
 				var html="<li id='remove-product-"+id+"'><div class='box'>";
@@ -214,7 +226,7 @@ function toParams(searchUrl) {
 				}
 			}
 		} else {
-			alert("You can add max 7 herbs to your compound.");
+			alert("You can add max "+total_herbs+" herbs to your compound.");
 		}
 		
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){

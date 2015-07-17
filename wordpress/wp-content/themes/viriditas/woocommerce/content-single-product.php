@@ -131,7 +131,7 @@ global $product;
 								if($i==0) { $checked='checked';}						
 								echo "<li>";
 									echo "<input type='radio' ".$checked." id='size-".$i."' name='product-size' class='product-size' value='".$size." - ".$price."'>";
-									echo "<label for='size-".$i."'>".$size." ml - $".$price."</label>";
+									echo "<label for='size-".$i."'>".$size." mL - $".$price."</label>";
 								echo "</li>";
 							}
 							
@@ -144,11 +144,11 @@ global $product;
 							echo '<input type="hidden" name="product_id" id="product_id" value="'.$product->id.'">';
 							echo '<input type="hidden" name="product_type" id="product_type" value="herbal_combination">';
 							
-							$compound_page_id=1639;
+							$compound_page_id=2219;
 							$manage_compound_url=get_permalink($compound_page_id);
 							?>
 							<div class="cart-actions">
-								<div class="column-5"><a href="<?php echo $manage_compound_url;?>" id="" class="button edit-formula">EDIT FORMULA</a></div>
+								<div class="column-5"><a href="<?php echo $manage_compound_url;?>?compound=<?php echo get_the_ID();?>" id="" class="button edit-formula">EDIT FORMULA</a></div>
 								<div class="column-2">or</div>
 								<div class="column-5">
 									<!--<a href="#" id="add-to-cart_bundle" class="button">Buy as is</a>-->
@@ -161,7 +161,7 @@ global $product;
 						}
 					?>
 					</form>
-					<div class="popup-overlay"></div>
+					<!--<div class="popup-overlay"></div>
 					<div class="edit-formula popup-box">
 						<div class="popup-box-content">
 							<h1>Custom Formula</h1>
@@ -178,7 +178,7 @@ global $product;
 							<h1>Custom Formula</h1>
 							<h1>Custom Formula</h1>
 						</div>
-					</div>
+					</div>-->
 				<?php	
 				} else {
 					do_action( 'woocommerce_single_product_summary');

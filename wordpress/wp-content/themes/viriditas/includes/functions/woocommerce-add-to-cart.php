@@ -3,18 +3,6 @@
 *  Function to Manage Recipe By User(s)
 */
 
-wp_set_object_terms( 2226, 500, 'pa_size',false );
-// $arry=unserialize('a:2:{s:7:"pa_size";a:6:{s:4:"name";s:7:"pa_size";s:5:"value";s:0:"";s:8:"position";s:1:"0";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}s:8:"pa_price";a:6:{s:4:"name";s:8:"pa_price";s:5:"value";s:0:"";s:8:"position";s:1:"2";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}}');
-// $arry2=unserialize('a:2:{s:7:"pa_size";a:6:{s:4:"name";s:7:"pa_size";s:5:"value";s:0:"";s:8:"position";s:1:"0";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}s:8:"pa_price";a:6:{s:4:"name";s:8:"pa_price";s:5:"value";s:0:"";s:8:"position";s:1:"2";s:10:"is_visible";i:1;s:12:"is_variation";i:0;s:11:"is_taxonomy";i:1;}}');
-
-// echo "<pre>";
-// print_r($arry);
-// echo "</pre>";
-
-// echo "<pre>";
-// print_r($arry2);
-// echo "</pre>";
-
 function manage_compound() {
 	$current_user = wp_get_current_user();
 	$errors = array();
@@ -24,13 +12,14 @@ function manage_compound() {
 	
 	if ( $current_user->ID != 0 ) {
 		//logged in.			
-		$action = trim($_POST['form_type']);
 		$title = trim($_POST['title']);
 		$size = trim($_POST['size']);
 		$price = trim($_POST['price']);
 		$additional_price = trim($_POST['additional_price']);
 		$compound_products = $_POST['compound_products'];
 		$compound_herbs = $_POST['herbs'];
+		$compound_id = $_POST['compound_id'];
+		$bundle_herbs = $_POST['compound_herbs'];
 		
 		//check for title not blank
 		if (strlen($title) == 0) {
@@ -55,8 +44,7 @@ function manage_compound() {
 						} else {
 							$price=$price+$additional_price;
 						}
-					}
-					//$main_size=$herb_size/100;
+					}			
 					$herbs[$herb_id] =array(
 						'product_id' => $herb_id,
 						'optional' => 'yes',
@@ -70,7 +58,20 @@ function manage_compound() {
 		} else {
 			array_push($errors, "Please add herbs to your recipe."); 
 		}
-		
+		if($bundle_herbs !='') {
+			$bundle_herbs=explode(",",$bundle_herbs);	
+			foreach($bundle_herbs as $bundle_herb) {
+				$herbs[$bundle_herb] =array(
+					'product_id' => $bundle_herb,
+					'optional' => 'yes',
+					'bundle_quantity' => 1,
+					'bundle_required_quantity' => 1,
+					'bundle_quantity_max' => 1,
+					'visibility' => 'visible'
+				);
+			}
+			
+		}
 		$price_per_unit = number_format(($price/$size),2, '.', '');
 		
 		// If no errors were found, proceed with storing the user input
@@ -99,15 +100,29 @@ function manage_compound() {
 					'is_variation' => 0,
 					'is_taxonomy' => 1,
 				);
+				
 				$sizes=get_option('wc_settings_tab_compound_sizes');
+				if($compound_id !='') {
+					$compound_sizes = get_the_terms( $compound_id, 'pa_size');
+					sort($compound_sizes);
+					$compound_prices = get_the_terms( $compound_id, 'pa_price');
+					sort($compound_prices);
+				}
 				if($sizes) {
 					$sizes=explode(",",$sizes);
 					$avail_sizes="";
 					$avail_prices="";
+					$i=0;
 					foreach($sizes as $sizeprice) {
-						$sizeprice=explode("/",$sizeprice);
-						$avail_sizes[]=$sizeprice[0];
-						$avail_prices[]=$sizeprice[1];
+						if($compound_id){
+							$avail_sizes[]=$compound_sizes[$i]->name;
+							$avail_prices[]=$compound_prices[$i]->name;
+						} else {
+							$sizeprice=explode("/",$sizeprice);
+							$avail_sizes[]=$sizeprice[0];
+							$avail_prices[]=$sizeprice[1];
+						}
+						$i++;
 					}								
 					wp_set_object_terms( $post_id, $avail_sizes, 'pa_size' );
 					wp_set_object_terms( $post_id, $avail_prices, 'pa_price' );						
@@ -154,7 +169,7 @@ function manage_compound() {
 				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
 			}
 			else {
-				$msg = '*Error occured while adding the recipe';
+				$msg = '*Error occurred while adding the recipe';
 			}
 		} else {
 			$msg="Check Errors*";
