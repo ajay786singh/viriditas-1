@@ -183,7 +183,7 @@ get_header();
 					
 					<input type="hidden" name="recipe-compound-id" id="recipe-compound-id" value="<?php echo $compound_id;?>">
 					<input type="hidden" name="recipe-compound-herbs" id="recipe-compound-herbs" value="<?php echo $bundle_herb_ids;?>">
-					
+					<input type="hidden" name="product_type" id="product_type" value="bundle">
 					<div class="addition-box">
 						<section class="<?php echo $addition_box_class;?> additions">
 							<h6>Your Additions</h6>

@@ -59,7 +59,27 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 					}
 				?>
 			</div>
-			<div class="price"><?php if ( $price_html = $product->get_price_html() ) : ?><?php echo $price_html; ?><?php endif; ?></div>
+			<div class="price">
+				<?php 
+					if($product->product_type=='bundle'){
+						$id=get_the_ID();
+						$prices = get_the_terms( $product->id, 'pa_price');	
+							if(count($prices)>0) {
+								$amount="";	
+								for($i=0;$i<count($prices);$i++) {
+									$amount[]=number_format($prices[$i]->name,2);
+								}
+								sort($amount);
+								$amount = array_map(function($value) { return '$'.$value; }, $amount);
+								echo '<span class="amount">'.implode("-",$amount)."</span>";
+							}
+					}else {
+						if ( $price_html = $product->get_price_html() ) {
+							echo $price_html;
+						}	
+					}
+				?>
+			</div>
 		</div>
 		<?php /*
 		<div class="product-action">

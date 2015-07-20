@@ -33,13 +33,14 @@ jQuery(document).ready(function($) {
 		$('#cart_size').val(size);
 		$('#cart_price').val(price);
 	});
-	$('#add-to-cart_bundle').click(function(){
+	/*$('#add-to-cart_bundle').click(function(){
 		var size_price=$('.bundle_variations ul li input:radio:checked').attr("value");
 			size_price=size_price.split("-");
 			var size=size_price[0];
 			var price=size_price[1];
 			var product_id=$('#product_id').val();
 			var product_type=$('#product_type').val();
+			alert(product_type);
 			$(".product-actions").addClass("spinner");
 			$(".cart-actions .button").each(function(){
 					$(this).attr("disabled",true);
@@ -56,5 +57,5 @@ jQuery(document).ready(function($) {
 					});
 				}
 			});	
-	});
+	});*/
 });

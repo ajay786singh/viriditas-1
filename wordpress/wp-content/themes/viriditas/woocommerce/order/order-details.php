@@ -45,7 +45,6 @@ $order = wc_get_order( $order_id );
 
 								// Allow other plugins to add additional product information here
 								do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order );
-
 								$item_meta->display();
 
 								if ( $_product && $_product->exists() && $_product->is_downloadable() && $order->is_download_permitted() ) {

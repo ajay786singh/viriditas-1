@@ -1,7 +1,6 @@
 <?php
 //add_filter( 'woocommerce_enqueue_styles', '__return_false' );
 
-
 /*
 * Function to get prodcut categories
 */
@@ -32,6 +31,7 @@ function get_product_categories($exclude=false) {
 */
 function load_products () {
 	global $wp_query,$wpdb;
+	$current_user = wp_get_current_user();
 	$cat_id=$_POST['filter_type_category'];
 	$body_system_id=$_POST['filter_type_body_system'];
 	$action_id = $_POST['filter_type_action'];
@@ -61,14 +61,8 @@ function load_products () {
 	}else {
 		$args['order']='ASC';
 	}
-	//$args['meta_key'] ='_allowed_bundle_user';	
-	// $args['meta_query'] = array(
-		// array(
-		   // 'key' => '_allowed_bundle_user',
-		   // 'value' => '' ,
-		   // 'compare' => '=='
-		// )
-	// );
+	// $args['meta_key'] ='_allowed_bundle_user';
+	
 	if($sort_by!=''){
 		if($sort_by=='folk_name') {
 			$args['meta_key'] = '_product_details_folk_name';
@@ -97,6 +91,37 @@ function load_products () {
             // )
         // );
 	}
+	
+	$compound_ids='';	
+	if($cat_id==1391) {	
+		$post_type='product';
+		$no_of_posts='-1';
+		$taxonomy='product_cat';
+		$argss=array(
+			'post_type' => $post_type,
+			'numberposts' => $no_of_posts,
+		);
+		
+		$argss['tax_query'] = array(
+			array(
+				'taxonomy' => 'product_cat',
+				'field' => 'term_id',
+				'terms' => '1391'
+			),
+		);
+		
+		$results =get_posts( $argss ); 
+		//print_r($results);
+		if($results): 
+			foreach($results as $result) {
+				$hide_user= get_post_meta($result->ID,'_allowed_bundle_user',true);
+				if($hide_user != '') {
+					$compound_ids[] = $result->ID;
+				}
+			}
+			$args['post__not_in']=$compound_ids;
+		endif;
+	}
 	if($sort_by_alpha !='') {
 		$postids = $wpdb->get_col("
 			SELECT p.ID
@@ -106,8 +131,13 @@ function load_products () {
 			AND p.post_type = 'product'
 			ORDER BY p.post_title ASC"
 		);
-		if($postids) {
-			$args['post__in']=$postids;
+		unset($args['post__in']);
+		if($postids !='' && $compound_ids!='') {
+			$args['post__in']=array_diff($postids,$compound_ids);
+		} else { 
+			if($postids !='') {
+				$args['post__in'] = $postids;
+			}
 		}
 	}
 	
