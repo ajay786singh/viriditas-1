@@ -69,46 +69,8 @@ global $product;
 			</div>
 			<div class="product-actions">
 			<?php
-				// $prices = $product->get_price_html();
-				// print_r($prices);
-				//$price = price_array($price_html);
-				//print_r($price);
-				//do_action( 'woocommerce_single_product_summary' );
-				//$result = array_shift(woocommerce_get_product_terms($product->id, 'pa_size', 'names'));
-				//$sizes = get_the_terms( $product->id, 'pa_size');
-				//sort($sizes);
-				//$prices = get_the_terms( $product->id, 'pa_price');
-				//sort($prices);
-				//echo count($prices);
-				// echo "<pre>";
-					// print_r($prices);
-				// echo "</pre>";
-				// $sizes_prices="";
-				// if( $sizes !='' && count($sizes)>0 && $prices!='' && count($prices)>0) {
-					// for($j=0;$j<count($sizes);$j++) {
-						// $sizes_prices[]=array("size"=>$sizes[$j]->name,'price'=>$prices[$j]->name);
-					// }
-					
-					// echo "<ul>";
-					// for( $i=0; $i<count($sizes_prices);$i++) {
-						// $size=$sizes_prices[$i]['size'];	
-						// $price=$sizes_prices[$i]['price'];	
-						// $checked="";
-						// if($i==0) { $checked='checked';}						
-						// echo "<li>";
-							// echo "<input type='radio' ".$checked." id='size-".$i."' name='product-size' class='product-size' value='".$size."'>";
-							// echo $size." ML - $".$price;
-						// echo "</li>";
-					// }
-					// echo "</ul>";
-					
-					
-				//} else {
-					//echo '<p class="stock out-of-stock">This product is currently out of stock and unavailable.</p>';
-				//}
-				
 				if($product->product_type=='bundle') {
-				?>	
+			?>	
 					<form class="product_bundle cart" action="" method="post" enctype="multipart/form-data">
 					<?php 
 						//get_cart_bundled();
@@ -142,7 +104,7 @@ global $product;
 							echo '<input type="hidden" name="cart_price" id="cart_price" value="'.$default_price.'">';
 							echo '<input type="hidden" name="add-to-cart" value="'.$product->id.'">';
 							echo '<input type="hidden" name="product_id" id="product_id" value="'.$product->id.'">';
-							echo '<input type="hidden" name="product_type" id="product_type" value="herbal_combination">';
+							echo '<input type="hidden" name="product_type" id="product_type" value="bundle">';
 							
 							$compound_page_id=2219;
 							$manage_compound_url=get_permalink($compound_page_id);
@@ -161,24 +123,7 @@ global $product;
 						}
 					?>
 					</form>
-					<!--<div class="popup-overlay"></div>
-					<div class="edit-formula popup-box">
-						<div class="popup-box-content">
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-							<h1>Custom Formula</h1>
-						</div>
-					</div>-->
+					
 				<?php	
 				} else {
 					do_action( 'woocommerce_single_product_summary');

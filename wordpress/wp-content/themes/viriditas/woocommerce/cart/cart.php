@@ -68,7 +68,12 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 							// Meta data
 							echo WC()->cart->get_item_data( $cart_item );
-
+							if($_product->product_type=='bundle') {
+								$compound_id=$_product->id;
+								$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
+									echo get_bundle_info($compound_id,$total_size);
+								}
+							}
                				// Backorder notification
                				if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) )
                					echo '<p class="backorder_notification">' . __( 'Available on backorder', 'woocommerce' ) . '</p>';
@@ -114,7 +119,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 				</tr>
 				<?php
 			}
-		}
 
 		do_action( 'woocommerce_cart_contents' );
 		?>
