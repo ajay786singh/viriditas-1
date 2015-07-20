@@ -14,7 +14,7 @@ class App_Shortcode_WorkerMonthlyCalendar extends App_Shortcode {
 			'status' => array(
 				'value' => 'paid,confirmed',
 				'help' => __('Show Appointments with this status (comma-separated list)', 'appointments'),
-				'allowed_values' => array('paid', 'confirmed', 'service', 'completed'),
+				'allowed_values' => array('paid', 'confirmed', 'pending', 'completed'),
 				'example' => 'paid,confirmed',
 			),
 			'worker_id' => array(
@@ -52,7 +52,7 @@ class App_Shortcode_WorkerMonthlyCalendar extends App_Shortcode {
 		;
 		if (!$args['start_at'] && !empty($_GET['wcalendar']) && is_numeric($_GET['wcalendar'])) {
 			$args['start_at'] = (int)$_GET['wcalendar'];
-		} else {
+		} else if (!$args['start_at']) {
 			$args['start_at'] = current_time('timestamp');
 		}
 
@@ -89,7 +89,7 @@ class App_Shortcode_WorkerMonthlyCalendar extends App_Shortcode {
 		$last = ($first + (date('t', $first) * 86400 )) - 1;
 
 		$sql = $wpdb->prepare(
-			"SELECT * FROM {$appointments->app_table} WHERE {$worker_sql} {$status_sql} AND UNIX_TIMESTAMP(start)>%d AND UNIX_TIMESTAMP(end)<%d",
+			"SELECT * FROM {$appointments->app_table} WHERE {$worker_sql} {$status_sql} AND UNIX_TIMESTAMP(start)>%d AND UNIX_TIMESTAMP(end)<%d ORDER BY start",
 			$first, $last
 		);
 		return $wpdb->get_results($sql);
@@ -577,7 +577,12 @@ class App_Shortcode_Pagination extends App_Shortcode {
 				'value' => 0,
 				'help' => __('This is only required if this shortcode resides above any schedule shortcodes. Otherwise it will follow date settings of the schedule shortcodes. Default: "0" (Current week or month)', 'appointments'),
 				'example' => '0',
-			)
+			),
+			'anchors' => array(
+				'value' => 1,
+				'help' => __('Setting this argument to <code>0</code> will prevent pagination links from adding schedule hash anchors. Default: "1"', 'appointments'),
+				'example' => '1',
+			),
 		);
 	}
 
@@ -642,14 +647,19 @@ class App_Shortcode_Pagination extends App_Shortcode {
 			$month_week_previous = __('Previous Month', 'appointments');
 		}
 
+		$hash = !empty($anchors) && (int)$anchors
+			? '#app_schedule'
+			: ''
+		;
+
 		if ( $prev > $prev_min ) {
 			$c .= '<div class="previous">';
-			$c .= '<a href="'. add_query_arg( "wcalendar", $prev ) .'#app_schedule">&laquo; '. $month_week_previous . '</a>';
+			$c .= '<a href="'. add_query_arg( "wcalendar", $prev ) . $hash . '">&laquo; '. $month_week_previous . '</a>';
 			$c .= '</div>';
 		}
 		if ( $next < $next_max ) {
 			$c .= '<div class="next">';
-			$c .= '<a href="'. add_query_arg( "wcalendar", $next ). '#app_schedule">'. $month_week_next . ' &raquo;</a>';
+			$c .= '<a href="'. add_query_arg( "wcalendar", $next ) . $hash . '">'. $month_week_next . ' &raquo;</a>';
 			$c .= '</div>';
 		}
 		$c .= '<div style="clear:both"></div>';
@@ -940,10 +950,12 @@ class App_Shortcode_MyAppointments extends App_Shortcode {
 
 		$ret  = '';
 		$ret .= '<div class="appointments-my-appointments">';
+
 		// Make this a form for BP if confirmation is allowed, but not on admin side user profile page
-		if ( $appointments->bp && $allow_confirm && !is_admin() ) {
+		if ($this->_can_display_editable($allow_confirm)) {
 			$ret .= '<form method="post">';
 		}
+
 		$ret .= $title;
 		$ret  = apply_filters( 'app_my_appointments_before_table', $ret );
 		$ret .= '<table class="my-appointments tablesorter"><thead>';
@@ -1029,21 +1041,21 @@ class App_Shortcode_MyAppointments extends App_Shortcode {
 				$ret .= '</tr>';
 
 			}
-		}
-		else
+		} else {
 			$ret .= '<tr><td colspan="'.$colspan.'">'. __('No appointments','appointments'). '</td></tr>';
+		}
 
 		$ret .= '</tbody></table>';
 		$ret  = apply_filters( 'app_my_appointments_after_table', $ret, $results );
 
-		// Don't let this button appear on user profile page in BP
-		if ( $appointments->bp && $allow_confirm && !is_admin() ) {
-			$ret .='<div class="submit">
-						<input type="submit" name="app_bp_settings_submit" value="'.__('Submit Confirm', 'appointments').'" class="auto">
-						<input type="hidden" name="app_bp_settings_user" value="'. $bp->displayed_user->id .'">';
-			$ret .= wp_nonce_field('app_bp_settings_submit','app_bp_settings_submit', true, false );
-			$ret .= '</div>
-				</form>';
+
+		if ($this->_can_display_editable($allow_confirm)) {
+			$ret .='<div class="submit">' .
+				'<input type="submit" name="app_bp_settings_submit" value="' . esc_attr(__('Submit Confirm', 'appointments')) . '" class="auto">' .
+				'<input type="hidden" name="app_bp_settings_user" value="' . esc_attr($bp->displayed_user->id) . '">' .
+				wp_nonce_field('app_bp_settings_submit', 'app_bp_settings_submit', true, false ) .
+			'</div>';
+			$ret .= '</form>';
 		}
 
 		$ret .= '</div>';
@@ -1103,6 +1115,26 @@ class App_Shortcode_MyAppointments extends App_Shortcode {
 			);
 
 		return $ret;
+	}
+
+	/**
+	 * Checks whether it's sane to display the editable appointments list for current user on a BP profile
+	 *
+	 * @param bool $allow_confirm Shortcode argument.
+	 * @return bool
+	 */
+	private function _can_display_editable ($allow_confirm=false) {
+		if (is_admin()) return false;
+		if (!$allow_confirm) return false;
+
+		if (!function_exists('bp_loggedin_user_id') || !function_exists('bp_displayed_user_id')) return false;
+
+		if (!is_user_logged_in()) return false; // Logged out users aren't being shown editable stuff, ever.
+
+		$bp_ready = class_exists('App_BuddyPress') && App_BuddyPress::is_ready();
+		$allow_current_user = bp_displayed_user_id() === bp_loggedin_user_id();
+
+		return $bp_ready && $allow_current_user;
 	}
 }
 
@@ -1848,6 +1880,10 @@ class App_Shortcode_Confirmation extends App_Shortcode {
 								$(".appointments-additional-field").show();
 							}
 							$(".appointments-confirmation-button").focus();
+							var offset = $(".appointments-confirmation-wrapper").offset();
+							if (offset && "top" in offset && offset.top) {
+								$(window).scrollTop(offset.top);
+							}
 					}
 					},"json");';
 			$script .= '});';
