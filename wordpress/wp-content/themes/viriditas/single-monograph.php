@@ -28,7 +28,7 @@
 			echo do_shortcode('[printfriendly]');
 		?>
 			<?php 
-				$edit_formula_page_id=2259;//Make your compound page id
+				$edit_formula_page_id=2440;//Make your compound page id
 				if($edit_formula_page_id !='') {
 				$edit_formula_page_url=get_permalink($edit_formula_page_id)."?compound=".$post->ID;
 			?>
