@@ -272,7 +272,8 @@ function get_product_info($id) {
 	if($post_query->have_posts()): while( $post_query->have_posts() ) : $post_query->the_post();
 		$id=get_the_ID();
 		$single_product_url=$product_page_url."?show_product=".$id;
-		$html.="<a href='".get_the_permalink($id)."'><i>".get_the_title()."</i></a>";
+		//$html.="<a href='".get_the_permalink($id)."'><i>".get_the_title()."</i></a>";
+		$html.="<span><i>".get_the_title()."</i></span>";
 	endwhile; endif; wp_reset_query();
 	return $html;
 }
@@ -393,10 +394,12 @@ function show_compound_products() {
 	
 	if($compound_id!="") {
 		$bundle_data=get_post_meta($compound_id,'_bundle_data',true);
-		foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
-			$bundle_herbs[]= $bundle_herb_id;
+		if($bundle_data !='') {
+			foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
+				$bundle_herbs[]= $bundle_herb_id;
+			}
+			$args['post__not_in']=$bundle_herbs;
 		}
-		$args['post__not_in']=$bundle_herbs;
 	}
 	
 	if($keyword !='') {

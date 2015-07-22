@@ -17,7 +17,7 @@ add_filter('body_class', 'add_slug_to_body_class');
 * Add Classes to top header
 */
 function add_header_class() {
-	if(is_home() || is_front_page() || is_page('contact')) {
+	if(is_home() || is_front_page() || is_page('contact') || is_singular('monograph')) {
 		$header_class ="top-header";
 	} else {
 		$header_class ="top-header active-header";
