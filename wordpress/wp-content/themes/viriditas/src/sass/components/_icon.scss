@@ -55,3 +55,50 @@
 	background:url(dist/images/spinner.gif) no-repeat center center;
 	opacity:0.7;
 }
+
+.title-monograph {
+	.printfriendly {
+		display:none;
+		margin-left:20px;
+		@include media($bp-large) {
+			display:block;
+		}
+		& a span {
+			background:url(dist/images/print-pdf-icon.jpg) no-repeat center center;
+			background-size:90%;
+			display: none;
+			height: 25px;
+			text-indent: -9999px;
+			width: 62px;
+			@include media($bp-large) {
+				display:block;
+			}
+			img {
+				display:none;
+			}
+		}
+	}
+}
+
+.add-formula {
+	float: right;
+	font-weight:bold;
+	position:relative;
+	a {
+		display: block;
+		line-height: 1.2em;
+		margin-right: 80px;
+		margin-top: 10px;
+		text-align: right;
+		width: 80px;
+	}
+	&:after {
+		content:"";
+		background:url(dist/images/add-formula-icon.jpg) no-repeat;
+		height: 64px;
+		position: absolute;
+		right: 0;
+		top:0;
+		width: 64px;
+	}
+}

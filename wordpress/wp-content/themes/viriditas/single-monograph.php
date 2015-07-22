@@ -22,7 +22,24 @@
 <?php } ?>
 <section role="content">
     <div class="container">
-		<?php the_title("<h4>","</h4>");?>
+		<div class="title-monograph">
+		<?php 
+			the_title("<h3>","</h3>");
+			echo do_shortcode('[printfriendly]');
+		?>
+			<?php 
+				$edit_formula_page_id=2259;//Make your compound page id
+				if($edit_formula_page_id !='') {
+				$edit_formula_page_url=get_permalink($edit_formula_page_id)."?compound=".$post->ID;
+			?>
+			<div class="add-formula">
+				<a href="<?php echo $edit_formula_page_url;?>">Add to this formula</a>
+			</div>
+			<?php 
+				}
+			?>
+		</div>
+		<div class="content-monograph">
 		<?php 
 			$monograph_id=$post->ID;
 			$composition = get_post_meta($post->ID,'_monograph_details_composition',true);
@@ -35,7 +52,7 @@
 			$indications="";
 			$actions="";
 			$product_page_url=get_bloginfo('url')."/products"; 
-			$args = array(
+			/*$args = array(
 				'showposts' => -1,
 				'post_type' => 'product',
 				'meta_key' => '_product_details_monograph'
@@ -50,7 +67,7 @@
 			if(count($product_ids)>0) {
 				$indications = wp_get_object_terms( $product_ids, 'indication' );
 				$actions = wp_get_object_terms( $product_ids, 'actions' );
-			}
+			}*/
 			if($composition!=-1) {
 				echo "<section class='column-7'>";
 					echo "<h5>Composition</h5>";
@@ -120,7 +137,7 @@
 				echo "</section>";	
 			}
 		?>
-		
+		</div>
 	</div>
 </section>
 
