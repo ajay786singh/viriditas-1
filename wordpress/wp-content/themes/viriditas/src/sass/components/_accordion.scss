@@ -70,6 +70,9 @@
 						a {
 							color:$base-font-color;
 							text-decoration:underline;
+							&:hover {
+								color:$hover-link-color;
+							}
 						}
 					}
 				}
