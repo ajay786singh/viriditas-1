@@ -78,36 +78,54 @@ function get_worksheets() {
 
 function get_monographs() {
 	$html='';
-	$args=array(
-		'post_type' => 'monograph',
-		'post_status' => 'publish',
-		'showposts' => '-1',
-	);
-	$query = new WP_Query( $args );
-	if($query->have_posts()):
 		$html.='<h5>Monographs</h5>';	
 		$html.='<div class="accordion">';
-		while($query->have_posts()):$query->the_post();
-				$description    = get_the_content();
-				$description=apply_filters('the_content', $description);
-				$html.="<div class='accordion-panel'>";
-				$html.='<h5 class="accordion-panel-header">'.get_the_title().'</h5>';		
+			$html.="<div class='accordion-panel'>";
+				$html.='<h5 class="accordion-panel-header">Single Herb Tincture</h5>';		
 				$html.="<div class='accordion-panel-content'>";
-					if($description):
-						$html.=$description;         
-					endif;
+				$html.="Test";		
 				$html.="</div>";
 			$html.="</div>";
-		endwhile;
+			
+			$html.="<div class='accordion-panel'>";
+				$html.='<h5 class="accordion-panel-header">Professional Herbal Combination</h5>';		
+				$html.="<div class='accordion-panel-content'>";
+					$args=array(
+						'post_type' => 'monograph',
+						'post_status' => 'publish',
+						'showposts' => '-1',
+					);
+					$query = new WP_Query( $args );
+					if($query->have_posts()):
+						$html.="<ul class='list'>";
+						while($query->have_posts()):$query->the_post();
+							$html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";	
+						endwhile;
+						$html.="</ul>";
+					endif;	
+				$html.="</div>";
+			$html.="</div>";
+			
+		// while($query->have_posts()):$query->the_post();
+				// $description    = get_the_content();
+				// $description=apply_filters('the_content', $description);
+				// $html.="<div class='accordion-panel'>";
+				// $html.='<h5 class="accordion-panel-header">'.get_the_title().'</h5>';		
+				// $html.="<div class='accordion-panel-content'>";
+					// if($description):
+						// $html.=$description;         
+					// endif;
+				// $html.="</div>";
+			// $html.="</div>";
+		// endwhile;
 		$html.="</div>";			
-	endif;	
 	return $html;
 }
 
 function get_faqs_box_content() {
 	$html='<div id="faq-box" class="mfp-hide white-popup-block">';
 	$html.='<p><a class="popup-modal-dismiss" href="#">X</a></p>';
-	$html.='<h1>Ordering Support</h1>';
+	$html.='<h2>Ordering Support</h2>';
 		$html.='<div class="column-9">';
 				$html.='<div class="faq-content">';
 				$html.= get_faqs();

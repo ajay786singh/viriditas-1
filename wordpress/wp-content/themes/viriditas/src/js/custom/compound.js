@@ -64,7 +64,11 @@ jQuery(document).ready(function($) {
 			}
 		});
 		$('a.sort_by').click(function(e){
-			var id=$(this).attr('id');			
+			var id=$(this).attr('id');
+			$('.sort_by').each(function(){
+				$(this).removeClass('active');
+			});	
+			$(this).addClass('active');	
 			var url = replaceParam('sort_by', id);
 			window.history.pushState({path:url},'',url);				
 			$('.compound-list .product-list').showCompound();

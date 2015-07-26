@@ -24,7 +24,7 @@ get_header();
 	<div class="container compounds">
 	
 		<section class="column-4">
-			<h5>Search herb to add</h5>
+			<h5>Step 1. Search for herbs to add</h5>
 			<div class="compound-box" id="compound-box-1">
 				<div class="search-input">
 					<i class="icon-search"></i>
@@ -35,7 +35,16 @@ get_header();
 			</div>
 		</section>	
 		<section class="column-4">
-			<h5><a href="#" class="sort_by" id="title">Latin</a> / <a href="#" class="sort_by" id="folk_name">Folk</a></h5>
+			<?php 
+				$sort_by = $_REQUEST['sort_by'];
+			?>
+			<h5>
+				Step 2. Select herbs 
+				<span>
+					<a href="#" class="sort_by <?php if($sort_by=='' || $sort_by=='title') { echo "active";}?>" id="title">Latin</a> | 
+					<a href="#" class="sort_by <?php if($sort_by=='folk_name') { echo "active" ;}?>" id="folk_name">Folk</a>
+				</span>
+			</h5>
 			<div class="compound-list compound-box" id="compound-box-2">
 				<!-- Pop Up Box Content -->
 				<!--<div class="compound-error error">
@@ -67,7 +76,7 @@ get_header();
 			</div>
 		</section>	
 		<section class="column-4">
-			<h5>Your Recipe</h5>
+			<h5>Step 3. Review Your Recipe</h5>
 			<div class="compound-box" id="compound-box-3">
 				<form action="" class="recipe-form">
 					<section class="compound-header">

@@ -289,7 +289,7 @@ footer {
 		}
 		&:nth-child(2) {
 			margin-bottom: 1em;
-			margin-top: 2.5em;
+			//margin-top: 2.5em;
 		}
     }	
 }
@@ -687,6 +687,9 @@ section[role=content] {
 	overflow: hidden;
 	li {
 		margin-left:0;
+		& a:hover {
+			color:$hover-link-color;
+		}
 	}
 }
 .product-title {
@@ -746,5 +749,30 @@ section[role=content] {
 .content-monograph {
 	h5 {
 		margin-bottom:0.5em;
+	}
+}
+.faq-content {
+	h5 {
+		border-bottom:1px solid $base-border-color;
+		padding-bottom:0.8em;
+	}
+}
+
+.compounds {
+	h5 {
+		margin-bottom:0.85em;
+		span {
+			color:$base-border-color;
+			display: inline-block;
+			font-family:$sans-serif;
+			font-size:0.70em;
+			float: right;
+			a {
+				color:$base-border-color;
+				&.active, &:hover {
+					color:$heading;
+				}
+			}
+		}
 	}
 }
