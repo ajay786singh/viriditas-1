@@ -67,6 +67,10 @@
 			<div class="column-9">								         
 				<nav class="main-menu-desktop">
 					<?php global $woocommerce; ?> 
+						<?php 
+							$host = $_SERVER['HTTP_HOST'];
+							if($host=='192.168.1.13') {
+						?>
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
@@ -83,6 +87,13 @@
 								</li>
 						<?php }  ?>
 						</ul>
+						<?php } else { ?>
+							<style>
+								.main-menu-desktop ul:nth-child(2) {
+									margin-top: 2.5em;
+								}
+							</style>
+						<?php } ?>
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
 				</nav>
 			</div>
