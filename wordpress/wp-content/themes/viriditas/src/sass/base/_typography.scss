@@ -757,3 +757,22 @@ section[role=content] {
 		padding-bottom:0.8em;
 	}
 }
+
+.compounds {
+	h5 {
+		margin-bottom:0.85em;
+		span {
+			color:$base-border-color;
+			display: inline-block;
+			font-family:$sans-serif;
+			font-size:0.70em;
+			float: right;
+			a {
+				color:$base-border-color;
+				&.active, &:hover {
+					color:$heading;
+				}
+			}
+		}
+	}
+}
