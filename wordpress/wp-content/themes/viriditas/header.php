@@ -25,6 +25,7 @@
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 		var redirect = '<?php echo $_SERVER['REQUEST_URI']; ?>';
 		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
+		var compound_page = '<?php echo get_permalink(2219);?>';
 	</script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -67,9 +68,9 @@
 				<nav class="main-menu-desktop">
 					<?php global $woocommerce; ?> 
 						<ul>
-							<?php /* if ( is_user_logged_in() ) { ?>
+							<?php if ( is_user_logged_in() ) { ?>
 								<li>
-								<?php if(is_archive('post-type-archive-product')){?>
+								<?php if(is_archive('post-type-archive-product') || is_singular('product')){?>
 								<a class="popup-modal" href="#faq-box">*FAQ*</a>
 								<?php } ?>
 								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
@@ -80,7 +81,7 @@
 								<a href="" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
 								<?php form_login();?>
 								</li>
-						<?php } */ ?>
+						<?php }  ?>
 						</ul>
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
 				</nav>

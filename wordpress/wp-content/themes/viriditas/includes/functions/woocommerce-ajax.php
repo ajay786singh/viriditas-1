@@ -15,13 +15,21 @@ function get_product_categories($exclude=false) {
 		$result.='<select class="by-category filter">';
 		$result.='<option value="" class="hidden-option">PRODUCT CATEGORY</option>';
 			foreach($product_categories as $product_category) {
-				if($pc!='' && $pc== $product_category->term_id) {
-					$result.="<option selected value='".$product_category->term_id."'>".$product_category->name."</option>";
+				$category_name = $product_category->name;	
+				if($product_category->term_id == '1391') {
+					$category_name = $category_name." / Add to a combination";
+				}
+				if($pc!='' && $pc == $product_category->term_id) {
+					$result.="<option selected value='".$product_category->term_id."'>".$category_name."</option>";
 				}else {
-					$result.="<option value='".$product_category->term_id."'>".$product_category->name."</option>";
+					$result.="<option value='".$product_category->term_id."'>".$category_name."</option>";
 				}
 			}
+			$result.="<option value='2219'>Create your own compound</option>";
 		$result.='</select>';
+		// $compound_page_id=2219;
+		// $compound_page_url=get_permalink($compound_page_id);
+		// $result.='<a href="'.$compound_page_url.'"></a>';
 	}
 	echo $result;
 }

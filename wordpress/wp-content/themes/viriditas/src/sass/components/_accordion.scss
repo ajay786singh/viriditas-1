@@ -1,13 +1,16 @@
 .accordion {
 	margin-bottom:4em;		
 	.faq-content & {	
-		margin-bottom:1em;
+		margin-bottom:2em;
 	}
 	.single-product-content & {
 		margin-top:2em;
 	}
 	.accordion-panel {
 		border-bottom:2px solid $base-border-color;
+		.faq-content & {
+			border-bottom:1px solid $base-border-color;
+		}
 		.accordion-panel-header {
 			position:relative;
 			.faq-content & {	
