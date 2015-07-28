@@ -27,9 +27,6 @@ function get_product_categories($exclude=false) {
 			}
 			$result.="<option value='2219'>Create your own compound</option>";
 		$result.='</select>';
-		// $compound_page_id=2219;
-		// $compound_page_url=get_permalink($compound_page_id);
-		// $result.='<a href="'.$compound_page_url.'"></a>';
 	}
 	echo $result;
 }
@@ -88,18 +85,9 @@ function load_products () {
 			$args['orderby']=$sort_by;
 		}
 	}
-	
 	if($keyword !='') {
 		$args['s'] = $keyword;
-		// $args['meta_query'] = array(
-            // array(
-               // 'key' => '_product_details_folk_name',
-               // 'value' => $keyword,
-               // 'compare' => 'LIKE'
-            // )
-        // );
 	}
-	
 	$compound_ids='';	
 	if($cat_id==1391) {	
 		$post_type='product';
@@ -119,7 +107,6 @@ function load_products () {
 		);
 		
 		$results =get_posts( $argss ); 
-		//print_r($results);
 		if($results): 
 			foreach($results as $result) {
 				$hide_user= get_post_meta($result->ID,'_allowed_bundle_user',true);
@@ -486,16 +473,17 @@ function show_compound_products() {
 			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product">
 			
 			<?php 
+				$title = "<em>".get_the_title().$data_pricy."</em>";
 				if($sort_by!='' && $sort_by=='folk_name') {
 					$folk_name=get_post_meta(get_the_ID(),'_product_details_folk_name',true);
 					if($folk_name) {
-						echo get_the_title().$data_pricy;
-						echo "<br><i>".$folk_name."</i>";
+						echo $folk_name."<br>";
+						echo $title;
 					} else { 
-						echo get_the_title().$data_pricy;
+						echo $title;
 					}
 				} else {
-					echo get_the_title().$data_pricy;
+					echo $title;
 				}
 			?>
 			</a>

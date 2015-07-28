@@ -307,9 +307,9 @@ function toParams(searchUrl) {
 					settings.container.append(html);
 					$('.equal-height-item').each(function(e){
 						if(settings.sort_by !='folk_name') {
-							$(this).find('em').hide();
+							$(this).find('.folk_name').hide();
 						}else {
-							$(this).find('em').show();
+							$(this).find('.folk_name').show();
 						}
 					});
 					if(settings.view_mode == '' || settings.view_mode!='list_view') {

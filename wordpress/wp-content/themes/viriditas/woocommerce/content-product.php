@@ -44,7 +44,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			$img=get_bloginfo('template_url')."/dist/images/product_default.jpg";
 		}
 	?>
-	<a class="product-image" rel="<?php the_ID();?>" href="<?php the_permalink();?>">
+	<a class="product-image" rel="<?php echo $product->id;?>" href="<?php the_permalink();?>">
 		<div class="product-img" style="background-image:url(<?php echo $img;?>);">
 			<img src="<?php echo $img;?>" />		
 		</div>
@@ -52,18 +52,27 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 	<div class="product-meta">
 		<div class="product-title">    
 			<div class="title">
-				<a href="<?php the_permalink();?>" rel="<?php the_ID();?>"><?php the_title(); ?></a>
-				<?php 
-					$folk_name=get_post_meta(get_the_ID(),'_product_details_folk_name',true);
-					if($folk_name) {
-						echo '<br><em class="folk_name">'.$folk_name.'</em>';
-					}
-				?>
+				<a href="<?php the_permalink();?>" rel="<?php echo $product->id;?>">
+					<?php 
+						$product_title = get_the_title();
+						$folk_name=get_post_meta($product->id,'_product_details_folk_name',true);
+						if($folk_name) {
+							echo "<div class='folk_name'>".$folk_name."</div>";
+						}
+						$terms = get_the_terms( $product->id, 'product_cat' );
+						if(count($terms)>0) {
+							//echo $terms[0]->slug;
+							if($terms[0]->slug == 'single-herb-tincture') {
+								$product_title = "<em>".$product_title."</em>";	
+							}
+						}
+						echo $product_title;
+					?>
+				</a>
 			</div>
 			<div class="price">
 				<?php 
 					if($product->product_type=='bundle'){
-						$id=get_the_ID();
 						$prices = get_the_terms( $product->id, 'pa_price');	
 							if(count($prices)>0) {
 								$amount="";	

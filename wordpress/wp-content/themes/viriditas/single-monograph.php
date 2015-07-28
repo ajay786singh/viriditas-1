@@ -74,6 +74,10 @@
 					echo "<ul class='list'>";	
 						for($i=0;$i<count($composition);$i++) {
 							echo "<li class='block-grid-3'>";
+							$folk_name=get_post_meta($composition[$i],'_product_details_folk_name',true);
+							if($folk_name) {
+								echo $folk_name."<br>";
+							} 
 							echo get_product_info($composition[$i]);
 							echo "</li>";
 						}
