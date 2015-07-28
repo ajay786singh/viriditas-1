@@ -86,7 +86,18 @@ function load_products () {
 		}
 	}
 	if($keyword !='') {
-		$args['s'] = $keyword;
+		if($sort_by != '' && $sort_by == 'folk_name') {
+			//echo $sort_by;
+			$args['meta_query'] = array(
+				array(
+				   'key' => '_product_details_folk_name',
+				   'value' => $keyword ,
+				   'compare' => 'LIKE'
+				)
+			);
+		} else {
+			$args['s'] = $keyword;	
+		}
 	}
 	$compound_ids='';	
 	if($cat_id==1391) {	
@@ -118,14 +129,26 @@ function load_products () {
 		endif;
 	}
 	if($sort_by_alpha !='') {
-		$postids = $wpdb->get_col("
-			SELECT p.ID
-			FROM $wpdb->posts p
-			WHERE p.post_title REGEXP '^" . $wpdb->escape($sort_by_alpha) . "'
-			AND p.post_status = 'publish' 
-			AND p.post_type = 'product'
-			ORDER BY p.post_title ASC"
-		);
+		if($sort_by!='' && $sort_by=='folk_name') {
+			$postids = $wpdb->get_col("
+				SELECT wposts.ID 
+				FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta
+				WHERE wposts.ID = wpostmeta.post_id 
+				AND wpostmeta.meta_key = '_product_details_folk_name' 
+				AND wpostmeta.meta_value LIKE '".$wpdb->escape($sort_by_alpha)."%'
+				AND wposts.post_type = 'product' 
+				ORDER BY wpostmeta.meta_value ASC
+				");
+		} else {
+			$postids = $wpdb->get_col("
+				SELECT p.ID
+				FROM $wpdb->posts p
+				WHERE p.post_title REGEXP '^" . $wpdb->escape($sort_by_alpha) . "'
+				AND p.post_status = 'publish' 
+				AND p.post_type = 'product'
+				ORDER BY p.post_title ASC"
+			);
+		}	
 		unset($args['post__in']);
 		if($postids !='' && $compound_ids!='') {
 			$args['post__in']=array_diff($postids,$compound_ids);
