@@ -69,7 +69,7 @@
 					<?php global $woocommerce; ?> 
 						<?php 
 							$host = $_SERVER['HTTP_HOST'];
-							if($host=='192.168.1.13') {
+							if($host=='192.168.1.13' || $host=='localhost') {
 						?>
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>

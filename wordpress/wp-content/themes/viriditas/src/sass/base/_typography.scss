@@ -608,6 +608,11 @@ section[role=content] {
 		margin: 0 0 0.5em;
 		text-transform: uppercase;
     }
+	.list-products & {
+		.heading {
+			margin-top:0.75em;
+		}
+	}
 }
 
 .login-box {
@@ -617,6 +622,7 @@ section[role=content] {
 	}
 	h5 {
 		color:$heading;
+		margin-bottom: 0.75em;
 		text-align:center;
 	}
 	a.lost {

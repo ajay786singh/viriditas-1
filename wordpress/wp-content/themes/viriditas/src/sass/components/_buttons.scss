@@ -153,3 +153,9 @@ input[type="button"] {
 			}
 	}
 }
+
+.login-box #login-form{
+	input[type="submit"] {
+		@extend .button;
+	}
+}

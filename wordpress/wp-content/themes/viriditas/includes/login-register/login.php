@@ -5,7 +5,7 @@ function form_login() {
 	$html='<div class="login-box">';
 	$html.='<form id="login-form" action="login" method="post">';
 	$html.='<img src="'.$logo.'">';
-	$html.='<h5>Login to order Herbal Products</h5>';
+	$html.='<h5>Login to order <br> Herbal Products</h5>';
 	$html.='<div class="status"></div>';
 	//$html.='<label for="username">Username</label>';
 	$html.='<input id="username" type="text" name="username" placeholder="Username" />';

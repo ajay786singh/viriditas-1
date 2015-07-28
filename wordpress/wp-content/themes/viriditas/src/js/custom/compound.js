@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
 						$('#size_'+herb_id).val(herb_size);
 						var total_sizes=$('.herb-sizes').calculateSize();
 						var baseSize=$('.base-size').html();
-						alert(baseSize);
+						//alert(baseSize);
 					if(total_sizes <= 100) {
 						$('.popup-compound').closePopup();
 					} else {						
