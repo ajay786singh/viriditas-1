@@ -80,4 +80,9 @@ section[role="actions"] {
 			}
 		}
 	}
+	.list-products & {
+		& input[type="text"] {
+			font-size:0.8em;
+		}
+	}
 }

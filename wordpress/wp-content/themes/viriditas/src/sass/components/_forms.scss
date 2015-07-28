@@ -186,7 +186,10 @@ footer {
 	z-index: 999;
 	#login-form {
 		margin-bottom: 0.5em;
-		overflow: hidden;		
+		overflow: hidden;	
+		& input[type="text"],& input[type="password"]{
+			@include border-radius(3px);
+		}
 	}
 	.status{
 		color:$heading;

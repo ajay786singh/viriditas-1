@@ -77,47 +77,55 @@ function get_worksheets() {
 }
 
 function get_monographs() {
+	global $wp_query;
 	$html='';
 		$html.='<h5>Monographs</h5>';	
 		$html.='<div class="accordion">';
 			$html.="<div class='accordion-panel'>";
-				$html.='<h5 class="accordion-panel-header">Single Herb Tincture</h5>';		
-				$html.="<div class='accordion-panel-content'>";
-				$html.="Test";		
+				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="single-herb-tincture">Single Herb Tincture</h5>';		
+				$html.="<div class='accordion-panel-content' id='monograph-single-herb-tincture'>";
+					// $single_args=array(
+						// 'post_type' => 'product',
+						// 'post_status' => 'publish',
+						// 'showposts' => '-1',
+						// 'tax_query' => array(
+							// array(
+								// 'taxonomy' => 'product_cat',
+								// 'field'    => 'slug',
+								// 'terms'    => 'single-herb-tincture',
+							// ),
+						// ),
+					// );
+					// $results = new WP_Query( $single_args );
+					// if($results->have_posts()):
+						// $html.="<ul class='list'>";
+						// while($results->have_posts()):the_post();
+							// $html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";	
+						// endwhile;
+						// $html.="</ul>";
+					// endif; wp_reset_query();
 				$html.="</div>";
 			$html.="</div>";
 			
 			$html.="<div class='accordion-panel'>";
-				$html.='<h5 class="accordion-panel-header">Professional Herbal Combination</h5>';		
-				$html.="<div class='accordion-panel-content'>";
-					$args=array(
-						'post_type' => 'monograph',
-						'post_status' => 'publish',
-						'showposts' => '-1',
-					);
-					$query = new WP_Query( $args );
-					if($query->have_posts()):
-						$html.="<ul class='list'>";
-						while($query->have_posts()):$query->the_post();
-							$html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";	
-						endwhile;
-						$html.="</ul>";
-					endif;	
+				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="professional-herbal-combination">Professional Herbal Combination</h5>';		
+				$html.="<div class='accordion-panel-content' id='monograph-professional-herbal-combination'>";
+					// $args=array(
+						// 'post_type' => 'monograph',
+						// 'post_status' => 'publish',
+						// 'showposts' => '-1',
+					// );
+					// $query = new WP_Query( $args );
+					// if($query->have_posts()):
+						// $html.="<ul class='list'>";
+						// while($query->have_posts()):$query->the_post();
+							// $html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";	
+						// endwhile;
+						// $html.="</ul>";
+					// endif;wp_reset_query();	
 				$html.="</div>";
 			$html.="</div>";
 			
-		// while($query->have_posts()):$query->the_post();
-				// $description    = get_the_content();
-				// $description=apply_filters('the_content', $description);
-				// $html.="<div class='accordion-panel'>";
-				// $html.='<h5 class="accordion-panel-header">'.get_the_title().'</h5>';		
-				// $html.="<div class='accordion-panel-content'>";
-					// if($description):
-						// $html.=$description;         
-					// endif;
-				// $html.="</div>";
-			// $html.="</div>";
-		// endwhile;
 		$html.="</div>";			
 	return $html;
 }
@@ -128,12 +136,31 @@ function get_faqs_box_content() {
 	$html.='<h2>Ordering Support</h2>';
 		$html.='<div class="column-9">';
 				$html.='<div class="faq-content">';
-				$html.= get_faqs();
-				$html.= get_worksheets();
-				$html.= get_monographs();
+				$html.= "<section>".get_faqs()."</section>";
+				$html.= "<section>".get_worksheets()."</section>";
+				$html.= "<section>".get_monographs()."</section>";
 				$html.= "<a href='".get_bloginfo('url')."/contact' class='button'>Contact Us</a>";
 				$html.='</div>';
 		$html.='</div>';
 	$html.='</div>';
 	return $html;
 }
+
+function manage_monograph() {
+	global $wp_query;	
+	$category = $_POST['category'];
+	if($category=='single-herb-tincture') {
+		$post_type='product';
+	}else {
+		$post_type="monograph";
+	}
+	echo $post_type;
+	$args=array(
+		'post_type' => 'monograph',
+		'post_status' => 'publish',
+		'showposts' => '-1',
+	);
+	die(0);
+}
+add_action( 'wp_ajax_manage_monograph', 'manage_monograph' );
+add_action( 'wp_ajax_nopriv_manage_monograph', 'manage_monograph' );

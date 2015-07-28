@@ -103,13 +103,15 @@
 				margin-top:0.5em;
 			}
 			li {
-				height:0;
-				margin-bottom:35px;
+				height:auto;
+				margin-bottom:25px;
 				@include media($bp-large) {
 					@include span-columns(12);
 					margin-right:0;
 				}
 				.product-title {
+					display: block;
+					float: left;
 					min-height:1px;
 					padding-bottom:0;
 				}
