@@ -7,17 +7,20 @@ jQuery(document).ready(function($) {
 		if($('.monograph-header').length>0){
 			$('.monograph-header').each(function(){
 				var category = $(this).attr("data-rel");
+				//var cha = $(this).attr("data-rel");
 				var data = {'action':'manage_monograph','category':category};
 				var container=$('#monograph-'+category);	
 				container.empty();	
-				$.ajax({		
-					type: 'POST',		
-					url: ajaxurl,		
-					data: data,		
-					success: function(html) {	
-						container.append(html);
-					}		
-				});	
+				container.addClass("loading");	
+				// $.ajax({		
+					// type: 'POST',		
+					// url: ajaxurl,		
+					// data: data,		
+					// success: function(html) {	
+						// container.removeClass("loading");	
+						// container.append(html);
+					// }		
+				// });	
 			});
 		}
 	}

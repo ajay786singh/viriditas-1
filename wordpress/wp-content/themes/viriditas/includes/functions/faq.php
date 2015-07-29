@@ -148,18 +148,29 @@ function get_faqs_box_content() {
 
 function manage_monograph() {
 	global $wp_query;	
+	$html='';
 	$category = $_POST['category'];
-	if($category=='single-herb-tincture') {
-		$post_type='product';
-	}else {
-		$post_type="monograph";
-	}
-	echo $post_type;
 	$args=array(
-		'post_type' => 'monograph',
+		'post_type' => $post_type,
 		'post_status' => 'publish',
 		'showposts' => '-1',
 	);
+	if($category=='single-herb-tincture') {
+		$post_type='product';
+		$args['product_cat'] = 'single-herb-tincture';
+	} else {
+		$post_type="monograph";
+	}
+	$query=new WP_Query($args);
+	if($query->have_posts()):
+		$html.="<ul class='list'>"; 
+		while($query->have_posts()):the_post();
+			$html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";
+		endwhile;
+		$html.="</ul>"; 
+	else:
+		$html.="<p class='error'>No monograph found.</p>"; 
+	endif;wp_reset_query();
 	die(0);
 }
 add_action( 'wp_ajax_manage_monograph', 'manage_monograph' );
