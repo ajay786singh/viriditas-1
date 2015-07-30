@@ -55,9 +55,6 @@
   </nav><!-- /nav -->
 <div id="wrapper" class="wrapper">
 <!-- Header Starts Here -->
-<?php if(get_faqs_box_content()) echo get_faqs_box_content();?>
-<?php 
-?>
 <header class="<?php echo add_header_class();?>">
 	<div class="container">
 		<div class="header-content">
@@ -74,9 +71,12 @@
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
-								<?php if(is_archive('post-type-archive-product') || is_singular('product')){?>
-								<a class="popup-modal" href="#faq-box">*FAQ*</a>
-								<?php } ?>
+								<?php if(is_archive('post-type-archive-product') || is_singular('product')){ ?>
+								<a class="popup-modal" href="#faq-box">*FAQ*</a>								
+								<?php 
+									if(get_faqs_box_content()) echo get_faqs_box_content();
+									} 
+								?>
 								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
 								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 

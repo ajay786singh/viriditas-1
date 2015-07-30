@@ -6,7 +6,7 @@
 */
 function get_product_categories($exclude=false) {
 	$result="";
-	$pc=$_REQUEST['pc'];
+	$pc = ($_REQUEST['pc'] ? $_REQUEST['pc'] : '');
 	$product_categories = get_terms('product_cat', 'orderby=count&order=desc&hide_empty=1&hierarchical=0&parent=0&exclude='.$exclude);
 	if($product_categories) {	
 		//$result='<div class="shop-header">';
