@@ -170,8 +170,8 @@ function load_products () {
 			$args['tax_query'] = array(
 					array(
 					'taxonomy' => $key,
-					'terms' => $value,
 					'field' => 'term_id',
+					'terms' => $value,
 					)
 			);		
 		}
@@ -181,8 +181,8 @@ function load_products () {
 		foreach ($filter_terms as $key => $value) {
 			$tax_query[] = array(
 					'taxonomy' => $key,
-					'terms' => $value,
 					'field' => 'term_id',
+					'terms' => $value,
 				);				
 		}
 		$args['tax_query'] = $tax_query;

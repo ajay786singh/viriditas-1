@@ -12,6 +12,7 @@
         user-select: none;
         vertical-align: middle;
         white-space: nowrap;
+		@include border-radius(5px);
     }
     .loading {
         @include appearance(none);
