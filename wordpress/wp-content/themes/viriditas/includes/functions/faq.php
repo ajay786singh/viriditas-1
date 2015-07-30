@@ -114,7 +114,7 @@ function get_monographs() {
 						endwhile;
 						$html.="</ul>";
 					else: 
-						$html.="<p class='error'>No monograph found.</p>"; 
+						$html.="<p>No monograph found.</p>";
 					endif; wp_reset_query();
 				$html.="</div>";
 			$html.="</div>";
@@ -138,7 +138,7 @@ function get_monographs() {
 						endforeach;
 						$html.="</ul>";
 					else: 
-						$html.="<p class='error'>No monograph found.</p>"; 
+						$html.="<p>No monograph found.</p>";
 					endif;wp_reset_query();	
 				$html.="</div>";
 			$html.="</div>";
@@ -186,7 +186,7 @@ function manage_monograph() {
 		endwhile;
 		$html.="</ul>"; 
 	else:
-		$html.="<p class='error'>No monograph found.</p>"; 
+		$html.="<p>No monograph found.</p>";
 	endif;wp_reset_query();
 	die(0);
 }
