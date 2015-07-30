@@ -26,7 +26,7 @@ $monograph->add_meta_box(
             'type'          => 'post_checkboxes',
 			'args'       => array(
 				'post_type' => 'product',
-				'product_cat' => 'single-herb-tincture',
+				'product_cat'=>'single-herb-tincture',
 				'orderby' => 'title',
 				'order' => 'ASC',
 			)

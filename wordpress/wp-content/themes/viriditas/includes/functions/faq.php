@@ -77,52 +77,69 @@ function get_worksheets() {
 }
 
 function get_monographs() {
-	global $wp_query;
+	global $wpdb,$wp_query;
 	$html='';
 		$html.='<h5>Monographs</h5>';	
 		$html.='<div class="accordion">';
 			$html.="<div class='accordion-panel'>";
 				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="single-herb-tincture">Single Herb Tincture</h5>';		
 				$html.="<div class='accordion-panel-content' id='monograph-single-herb-tincture'>";
-					// $single_args=array(
-						// 'post_type' => 'product',
-						// 'post_status' => 'publish',
-						// 'showposts' => '-1',
-						// 'tax_query' => array(
-							// array(
-								// 'taxonomy' => 'product_cat',
-								// 'field'    => 'slug',
-								// 'terms'    => 'single-herb-tincture',
-							// ),
-						// ),
-					// );
-					// $results = new WP_Query( $single_args );
-					// if($results->have_posts()):
-						// $html.="<ul class='list'>";
-						// while($results->have_posts()):the_post();
-							// $html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";	
-						// endwhile;
-						// $html.="</ul>";
-					// endif; wp_reset_query();
+					$single_args = array(
+						'post_type' => 'product',
+						'post_status' => 'publish',
+						'showposts' => '-1',
+						'orderby' => 'title',
+						'order' => 'ASC',
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'product_cat',
+								'field'    => 'slug',
+								'terms'    => 'single-herb-tincture',
+							),
+						),
+					);
+					$results = new WP_Query( $single_args );
+					if($results->have_posts()):
+						$letter="A";
+						$html.="<ul class='list'>";
+						while($results->have_posts()):$results->the_post();
+							$title = get_the_title();
+							$monograph = get_post_meta(get_the_ID(),'_product_details_monograph_link',true);
+							$first_letter=substr($title,0,1);
+							if($letter == $first_letter) {	
+								if($monograph !='') {
+									$html.="<li><a href='".$monograph."' target='_blank'>".get_the_title()."</a></li>";		
+								}
+							}
+						endwhile;
+						$html.="</ul>";
+					else: 
+						$html.="<p class='error'>No monograph found.</p>"; 
+					endif; wp_reset_query();
 				$html.="</div>";
 			$html.="</div>";
 			
 			$html.="<div class='accordion-panel'>";
 				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="professional-herbal-combination">Professional Herbal Combination</h5>';		
 				$html.="<div class='accordion-panel-content' id='monograph-professional-herbal-combination'>";
-					// $args=array(
-						// 'post_type' => 'monograph',
-						// 'post_status' => 'publish',
-						// 'showposts' => '-1',
-					// );
-					// $query = new WP_Query( $args );
-					// if($query->have_posts()):
-						// $html.="<ul class='list'>";
-						// while($query->have_posts()):$query->the_post();
-							// $html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";	
-						// endwhile;
-						// $html.="</ul>";
-					// endif;wp_reset_query();	
+					$letter="V";
+					$monograph_query="SELECT * FROM $wpdb->posts
+							WHERE post_title LIKE '$letter%'
+							AND post_type = 'monograph'
+							AND post_status = 'publish'";
+					$monographs = $wpdb->get_results($monograph_query);
+					if ($monographs):
+						$html.="<ul class='list'>";
+						foreach ( $monographs as $post ) :
+							setup_postdata ( $post ); 
+							$id = $post->ID;
+							$title = $post->post_name;
+							$html.="<li><a href='".get_the_permalink($id)."'>".$title."</a></li>";		
+						endforeach;
+						$html.="</ul>";
+					else: 
+						$html.="<p class='error'>No monograph found.</p>"; 
+					endif;wp_reset_query();	
 				$html.="</div>";
 			$html.="</div>";
 			
