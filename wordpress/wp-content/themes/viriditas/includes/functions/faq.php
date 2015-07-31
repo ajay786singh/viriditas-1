@@ -79,11 +79,12 @@ function get_worksheets() {
 function get_monographs() {
 	global $wpdb,$wp_query;
 	$html='';
+	$letter="A";
 		$html.='<h5>Monographs</h5>';	
 		$html.='<div class="accordion">';
 			$html.="<div class='accordion-panel'>";
 				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="single-herb-tincture">Single Herb Tincture</h5>';		
-				$html.="<div class='accordion-panel-content' id='monograph-single-herb-tincture'>";
+				$html.="<div class='accordion-panel-content monographs' id='monograph-single-herb-tincture'>";
 					$single_args = array(
 						'post_type' => 'product',
 						'post_status' => 'publish',
@@ -99,37 +100,37 @@ function get_monographs() {
 						),
 					);
 					$results = new WP_Query( $single_args );
+					$html.="<div id='monograph-1'>";
 					if($results->have_posts()):
-						$letter="A";
-						$html.="<ul class='list'>";
+						$html.="<ul class='list' id='monograph-1-list'>";
 						while($results->have_posts()):$results->the_post();
 							$title = get_the_title();
 							$monograph = get_post_meta(get_the_ID(),'_product_details_monograph_link',true);
 							$first_letter=substr($title,0,1);
-							if($letter == $first_letter) {	
+							//if($letter == $first_letter) {	
 								if($monograph !='') {
 									$html.="<li><a href='".$monograph."' target='_blank'>".get_the_title()."</a></li>";		
 								}
-							}
+							//}
 						endwhile;
 						$html.="</ul>";
 					else: 
 						$html.="<p>No monograph found.</p>";
 					endif; wp_reset_query();
+					$html.="</div>";
 				$html.="</div>";
 			$html.="</div>";
 			
 			$html.="<div class='accordion-panel'>";
 				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="professional-herbal-combination">Professional Herbal Combination</h5>';		
-				$html.="<div class='accordion-panel-content' id='monograph-professional-herbal-combination'>";
-					$letter="V";
+				$html.="<div class='accordion-panel-content monographs' id='monograph-professional-herbal-combination'>";
 					$monograph_query="SELECT * FROM $wpdb->posts
-							WHERE post_title LIKE '$letter%'
-							AND post_type = 'monograph'
+							WHERE post_type = 'monograph'
 							AND post_status = 'publish'";
 					$monographs = $wpdb->get_results($monograph_query);
+					$html.="<div id='monograph-2'>";
 					if ($monographs):
-						$html.="<ul class='list'>";
+						$html.="<ul class='list' id='monograph-2-list'>";
 						foreach ( $monographs as $post ) :
 							setup_postdata ( $post ); 
 							$id = $post->ID;
@@ -140,6 +141,7 @@ function get_monographs() {
 					else: 
 						$html.="<p>No monograph found.</p>";
 					endif;wp_reset_query();	
+					$html.="</div>";
 				$html.="</div>";
 			$html.="</div>";
 			
@@ -166,29 +168,25 @@ function get_faqs_box_content() {
 function manage_monograph() {
 	global $wp_query;	
 	$html='';
-	$category = $_POST['category'];
-	$args=array(
-		'post_type' => $post_type,
-		'post_status' => 'publish',
-		'showposts' => '-1',
-	);
-	if($category=='single-herb-tincture') {
-		$post_type='product';
-		$args['product_cat'] = 'single-herb-tincture';
-	} else {
-		$post_type="monograph";
-	}
-	$query=new WP_Query($args);
-	if($query->have_posts()):
-		$html.="<ul class='list'>"; 
-		while($query->have_posts()):the_post();
-			$html.="<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";
-		endwhile;
-		$html.="</ul>"; 
-	else:
-		$html.="<p>No monograph found.</p>";
-	endif;wp_reset_query();
+	$post_type = $_POST['post_type'];
+	echo $sort_by = $_POST['sort_by'];
+	
 	die(0);
 }
 add_action( 'wp_ajax_manage_monograph', 'manage_monograph' );
 add_action( 'wp_ajax_nopriv_manage_monograph', 'manage_monograph' );
+
+function alphabets_filter($active=false,$id=false) {
+	//echo $active;
+	$html='<ul class="alphabets-list" id="'.$id.'">';
+			$alphas = range('A', 'Z');
+			foreach($alphas as $alphabet) {
+				if(($_REQUEST['sort_by_alpha'] == lcfirst($alphabet)) || ($active==$alphabet)) {
+					$html.="<li><a href='#' data-sort='".lcfirst($alphabet)."' id='sort-".lcfirst($alphabet)."' class='alphabet-active'>".$alphabet."</li>";
+				}else {
+					$html.="<li><a href='#' data-sort='".lcfirst($alphabet)."' id='sort-".lcfirst($alphabet)."'>".$alphabet."</a></li>";
+				}
+			}
+	$html.='</ul>';
+	return $html;
+}

@@ -24,6 +24,7 @@ var scriptList = [
 	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
 	'src/components/readmore/readmore.js',
 	'src/components/magnific-popup/dist/jquery.magnific-popup.js',
+	'src/components/jquery-listnav/jquery-listnav.min.js',
 	'src/js/custom/jquery.ui.map.min.js',
 	'src/js/custom/countries.js',
 	'src/js/custom/map.js',

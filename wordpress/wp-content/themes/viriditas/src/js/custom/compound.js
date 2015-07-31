@@ -121,8 +121,7 @@ jQuery(document).ready(function($) {
 				$.ajax({		
 					type: 'POST',		
 					url: ajaxurl,		
-					data:data,		
-					async: true,
+					data:data,	
 					success: function(html) {				
 						message.loaderHide();		
 						message.empty();		
