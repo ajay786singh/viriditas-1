@@ -32,7 +32,11 @@ function removeURLParameter(parameter) {
 	var url = window.location.search;
 	url = url.substring(1);
 	url=parseQueryString(url,parameter);
-	return "?"+url;
+	//alert(url);
+	if(url!='') {
+		url = "?"+url;
+	}
+	return url;
 }
 function toParams(searchUrl) {
 	var result = {}
@@ -379,15 +383,33 @@ function toParams(searchUrl) {
 							if($('body').hasClass('single-product')==true) {
 								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
 								window.location = shop_page_url;
-							} else {					
-								if(taxonomy =='body_system') {
-									if(getParameterByName('pa')) {
+							} else {	
+								if(dk.value=="") {
+									if($('body').hasClass('single-product')==true) {
+										var shop_page_url=shop_page;
+										window.location = shop_page_url;
+									} else {	
+										this.reset(true);
+										$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										var url=removeURLParameter('pb');					
+										window.history.pushState({path:url},'',url);
 										var url=removeURLParameter('pa');					
 										window.history.pushState({path:url},'',url);
+										var url=removeURLParameter('pi');					
+										window.history.pushState({path:url},'',url);
+										$('.product-list').empty();
+										$('.product-list').showProducts({page:1});
 									}
-									$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+								} else {	
+									if(taxonomy =='body_system') {
+										if(getParameterByName('pa')) {
+											var url=removeURLParameter('pa');					
+											window.history.pushState({path:url},'',url);
+										}
+										$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+									}
+									$this.filterSelectTerms(filter,dk.value);
 								}
-								$this.filterSelectTerms(filter,dk.value);
 							}
 						}
 					});
@@ -414,8 +436,22 @@ function toParams(searchUrl) {
 							if($('body').hasClass('single-product')==true) {
 								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
 								window.location = shop_page_url;
-							} else {					
-								$this.filterSelectTerms(filter,dk.value);
+							} else {		
+								if(dk.value=="") {
+									if($('body').hasClass('single-product')==true) {
+										var shop_page_url=shop_page;
+										window.location = shop_page_url;
+									} else {
+										this.reset(true);
+										var url=removeURLParameter('pa');					
+										window.history.pushState({path:url},'',url);
+										$('.product-list').empty();
+										$('.product-list').showProducts({page:1});
+									}
+									
+								}else {	
+									$this.filterSelectTerms(filter,dk.value);
+								}
 							}
 						}
 					});
@@ -488,7 +524,32 @@ jQuery(document).ready(function($){
 			mobile: true,
 			change:function() {
 				var dk = this;
-				if(dk.value=='2219') {
+				if(dk.value=="") {
+						if($('body').hasClass('single-product')==true) {
+							var shop_page_url=shop_page;
+							window.location = shop_page_url;
+						} else {
+							this.reset(true);
+							$(".by-body_system").dropkick();
+							$(".by-actions").dropkick();
+							$(".by-indication").dropkick();
+							var url = removeURLParameter('pc');					
+							window.history.pushState({path:url},'',url);
+							var url=removeURLParameter('pb');					
+							window.history.pushState({path:url},'',url);
+							var url=removeURLParameter('pa');					
+							window.history.pushState({path:url},'',url);
+							var url=removeURLParameter('pi');					
+							window.history.pushState({path:url},'',url);
+							var url=removeURLParameter('keyword');					
+							window.history.pushState({path:url},'',url);
+							$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
+							$('section[role="actions"]').fetchActions('body_system','pa',pa);
+							$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+							product_container.empty();
+							product_container.showProducts();
+						}	
+				} else if(dk.value=='2219') {
 					window.location=compound_page;
 				} else {
 					if($('body').hasClass('single-product')==true) {
