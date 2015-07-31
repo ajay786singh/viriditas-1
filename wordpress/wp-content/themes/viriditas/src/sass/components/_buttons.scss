@@ -15,7 +15,7 @@ button {
 	float: left;
 	margin: 20px 0;
 	color:$white;
-	&:hover,&:focus {
+	&:hover, &:focus {
 		background: $button-bg-hover;
 		border-color: $light-purple;
 		color:$white;

@@ -109,7 +109,7 @@ function get_monographs() {
 							$first_letter=substr($title,0,1);
 							//if($letter == $first_letter) {	
 								if($monograph !='') {
-									$html.="<li><a href='".$monograph."' target='_blank'>".get_the_title()."</a></li>";		
+									$html.="<li><a href='".$monograph."' target='_blank'><i>".get_the_title()."</i></a></li>";		
 								}
 							//}
 						endwhile;
@@ -126,7 +126,7 @@ function get_monographs() {
 				$html.="<div class='accordion-panel-content monographs' id='monograph-professional-herbal-combination'>";
 					$monograph_query="SELECT * FROM $wpdb->posts
 							WHERE post_type = 'monograph'
-							AND post_status = 'publish'";
+							AND post_status = 'publish' order by post_title ASC";
 					$monographs = $wpdb->get_results($monograph_query);
 					$html.="<div id='monograph-2'>";
 					if ($monographs):
@@ -134,7 +134,7 @@ function get_monographs() {
 						foreach ( $monographs as $post ) :
 							setup_postdata ( $post ); 
 							$id = $post->ID;
-							$title = $post->post_name;
+							$title = $post->post_title;
 							$html.="<li><a href='".get_the_permalink($id)."'>".$title."</a></li>";		
 						endforeach;
 						$html.="</ul>";
@@ -150,6 +150,8 @@ function get_monographs() {
 }
 
 function get_faqs_box_content() {
+	$contact_page_id=1043;
+	$contact_page_url=get_permalink($contact_page_id);	
 	$html='<div id="faq-box" class="mfp-hide white-popup-block">';
 	$html.='<p><a class="popup-modal-dismiss" href="#">X</a></p>';
 	$html.='<h2>Ordering Support</h2>';
@@ -158,7 +160,16 @@ function get_faqs_box_content() {
 				$html.= "<section>".get_faqs()."</section>";
 				$html.= "<section>".get_worksheets()."</section>";
 				$html.= "<section>".get_monographs()."</section>";
-				$html.= "<a href='".get_bloginfo('url')."/contact' class='button'>Contact Us</a>";
+				$html.= "<a href='".$contact_page_url."' class='button show-contact-form'>Contact Us</a>";
+				// $html.= "<section id='faq-contact-form'>";
+				// $contact_form_id=9;
+				// $display_title = false;
+				// $display_description = false;
+				// $display_inactive = false;
+				// $field_values = null; 
+				// $ajax = true;
+				// $html.= do_shortcode('[gravityform id="'.$contact_form_id.'" ajax="'.$ajax.'"]');//gravity_form($contact_form_id, $display_title, $display_description, $display_inactive, $field_values, $ajax);
+				// $html.= "</section>";
 				$html.='</div>';
 		$html.='</div>';
 	$html.='</div>';
