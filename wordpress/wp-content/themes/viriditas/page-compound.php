@@ -62,16 +62,7 @@ get_header();
 				<?php
 					echo '<ul class="product-list">';
 					echo '</ul>';
-					echo '<ul class="alphabets-list">';
-							$alphas = range('A', 'Z');
-							foreach($alphas as $alphabet) {
-								if($_REQUEST['sort_by_alpha']==lcfirst($alphabet)) {
-									echo "<li><a href='#' id='sort-".lcfirst($alphabet)."' class='active'>".$alphabet."</li>";
-								}else {
-									echo "<li><a href='#' id='sort-".lcfirst($alphabet)."'>".$alphabet."</a></li>";
-								}
-							}
-					echo '</ul>';					
+					echo alphabets_filter();					
 				?>
 			</div>
 		</section>	

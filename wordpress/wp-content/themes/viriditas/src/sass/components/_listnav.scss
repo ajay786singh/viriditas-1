@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+/*
+	STYLE SHEET FOR JQUERY LISTNAV PLUGIN V 2.4.0, 3/11/2014
+	For more information, visit http://esteinborn.github.com/jquery-listnav
+*/
+
+.listNav,
+.ln-letters {
+	float: left;
+ 	position:relative;
+	overflow: hidden;
+	width: 20px;
+}
+
+.listNavHide {
+	display: none;
+}
+
+.listNavShow {
+	display: list-item;
+}
+
+.letterCountShow {
+  display: block;
+}
+
+.ln-letters {
+	&:before {
+		color:$alphabets-link-color;
+		content:"\f002";
+		font-family:$icon-font;
+		left: 3px;
+		height: 20px;
+		position: absolute;
+		width: 20px;
+		top: 0px;
+	}
+	a {
+		color:$alphabets-link-color;
+		display:block;
+		float:left;
+		font-size:0.9em;
+		padding:2px 6px;
+		text-decoration:none;
+		&:first-child {
+			margin-top:2em;
+		}
+	}
+	.ln-selected {
+		font-weight:bold;
+	}
+}
+
+.ln-letter-count {
+	position: absolute;
+	top:0;
+	left:0;
+	width:20px;
+	text-align:center;
+	font-size:0.8em;
+	line-height:1.35;
+	color:#336699;
+}
