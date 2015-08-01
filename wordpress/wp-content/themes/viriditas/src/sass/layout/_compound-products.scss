@@ -109,6 +109,7 @@ $pop-up-border-color:#afafaf;
 .additions {
 	border-top:none;
 	& ul li {
+		font-style:italic;
 		overflow: hidden;
 		.box {
 			float:left;

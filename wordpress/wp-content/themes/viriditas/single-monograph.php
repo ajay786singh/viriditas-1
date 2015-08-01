@@ -52,28 +52,17 @@
 			$indications="";
 			$actions="";
 			$product_page_url=get_bloginfo('url')."/products"; 
-			/*$args = array(
-				'showposts' => -1,
-				'post_type' => 'product',
-				'meta_key' => '_product_details_monograph'
-			);
-			$products = new WP_Query($args);
-			if($products->have_posts()):while($products->have_posts()):$products->the_post();
-				$monograph=get_post_meta($post->ID,'_product_details_monograph',true);
-					if(in_array($monograph_id,$monograph)) {
-						$product_ids[]=$post->ID;
-					}
-			endwhile;endif;wp_reset_query();			
-			if(count($product_ids)>0) {
-				$indications = wp_get_object_terms( $product_ids, 'indication' );
-				$actions = wp_get_object_terms( $product_ids, 'actions' );
-			}*/
+			
+			if($composition!=-1) {
+				$indications = wp_get_object_terms( $composition, 'indication' );
+				$actions = wp_get_object_terms( $composition, 'actions' );
+			}
 			if($composition!=-1) {
 				echo "<section class='column-7'>";
 					echo "<h5>Composition</h5>";
-					echo "<ul class='list'>";	
+					echo "<ul class='list composition-list'>";	
 						for($i=0;$i<count($composition);$i++) {
-							echo "<li class='block-grid-3'>";
+							echo "<li>";
 							$folk_name=get_post_meta($composition[$i],'_product_details_folk_name',true);
 							if($folk_name) {
 								echo $folk_name."<br>";
@@ -101,10 +90,10 @@
 			if($indications) {
 				echo "<section class='column-7'>";
 					echo "<h5>Indications</h5>";
-					echo "<ul class='list'>";	
+					echo "<ul class='list composition-list'>";	
 						foreach($indications as $indication) {
 							$indication_url=$product_page_url."?pi=".$indication->term_id;
-							echo "<li><a href='".$indication_url."'>".$indication->name."</a></li>";
+							echo "<li>".$indication->name."</li>";
 						}
 					echo "</ul>";	
 				echo "</section>";	

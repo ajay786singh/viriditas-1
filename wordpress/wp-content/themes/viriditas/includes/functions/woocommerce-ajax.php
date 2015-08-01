@@ -14,6 +14,7 @@ function get_product_categories($exclude=false) {
 		//$result.='</div>';
 		$result.='<select class="by-category filter">';
 		$result.='<option value="" class="hidden-option">PRODUCT CATEGORY</option>';
+		$result.="<option value=''>Show all products</option>";
 			foreach($product_categories as $product_category) {
 				$category_name = $product_category->name;	
 				if($product_category->term_id == '1391') {
@@ -244,6 +245,7 @@ function get_actions() {
 			$result='<div class="filter filter-actions">';
 			$result.='<select class="by-actions">';
 				$result.='<option value="" class="hidden-option">FILTER BY ACTIONS </option>';
+				$result.="<option value=''>Show all</option>";
 			foreach($terms as $term) {
 				if($pa==$term->term_id) {
 					$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
@@ -342,6 +344,7 @@ function get_product_terms() {
 			$result='<div class="filter filter-'.$taxonomy.'">';
 			$result.='<select class="by-'.$taxonomy.'">';
 				$result.='<option value="" class="hidden-option">FILTER BY '.strtoupper($taxonomy_name).'</option>';
+				$result.="<option value=''>Show all</option>";
 			foreach($terms as $term) {
 				if($taxonomy=='body_system') {
 					$parent=$term->parent;

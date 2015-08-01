@@ -60,7 +60,7 @@ h3 {
 }
 
 h4 {
-    font-size: $base-font-size;
+    font-size: $base-font-size * 1.4;
 	margin-top:0;
     @include media($bp-large) {
         font-size: $base-font-size * 1.875;
@@ -72,7 +72,7 @@ h4 {
 }
 
 h5 {
-    font-size: $base-font-size;
+    font-size: $base-font-size * 1.25;
     @include media($bp-large) {
         font-size: $base-font-size * 1.375;
         line-height: 1.5em;
@@ -698,6 +698,14 @@ section[role=content] {
 		}
 	}
 }
+.composition-list {
+	li {
+		margin-bottom:1.5em;
+		span {
+			color:$heading;
+		}
+	}
+}
 .product-title {
 	margin-top: 15px;
 	overflow:hidden;
@@ -742,7 +750,7 @@ section[role=content] {
 	}
 }
 .title-monograph {
-	margin-bottom: 0;
+	margin-bottom: 1em;
 	@include media($bp-large){
 		margin-bottom: 1.5em;
 	}
@@ -761,6 +769,7 @@ section[role=content] {
 	h5 {
 		border-bottom:1px solid $base-border-color;
 		padding-bottom:0.8em;
+		margin-bottom:0;
 	}
 }
 

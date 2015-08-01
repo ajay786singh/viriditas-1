@@ -416,3 +416,22 @@ article {
 .faq-content section {
 	margin-bottom:2.5em;
 }
+
+.composition-list {
+	li {
+		@include span-columns(5);
+		position: relative;
+		@include media($bp-large) {
+			@include span-columns(4 of 12);
+		}
+		&:nth-child(3n) {
+			margin-right:0px;
+		}
+	}
+}
+
+#faq-contact-form {
+	display:none;
+	float: left;
+	width: 100%;
+}	
