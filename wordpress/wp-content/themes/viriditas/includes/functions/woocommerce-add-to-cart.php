@@ -147,7 +147,7 @@ function manage_compound() {
 				update_post_meta( $post_id, '_product_attributes', $product_attributes);
 				update_post_meta( $post_id, '_sale_price_dates_from', '' );
 				update_post_meta( $post_id, '_sale_price_dates_to', '' );
-				update_post_meta( $post_id, '_price', $price_per_unit );
+				update_post_meta( $post_id, '_price', 1 );
 				update_post_meta( $post_id, '_sold_individually', "" );
 				update_post_meta( $post_id, '_manage_stock', "no" );
 				update_post_meta( $post_id, '_backorders', "no" );

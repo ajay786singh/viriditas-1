@@ -407,7 +407,11 @@ function toParams(searchUrl) {
 											var url=removeURLParameter('pa');					
 											window.history.pushState({path:url},'',url);
 										}
-										$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										var pc=getParameterByName("pc");
+										//alert(pc);
+										if(pc!=1391) {
+											$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										}
 									}
 									$this.filterSelectTerms(filter,dk.value);
 								}
@@ -567,7 +571,9 @@ jQuery(document).ready(function($){
 						window.history.pushState({path:url},'',url);	
 						$('section[role="category"]').filterSelectTerms('pc',dk.value);
 						$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-						$('section[role="actions"]').fetchActions('body_system','pa',pa);
+						if(dk.value!=1391) {
+							$('section[role="actions"]').fetchActions('body_system','pa',pa);
+						}
 						$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 					}
 				}	
@@ -577,7 +583,9 @@ jQuery(document).ready(function($){
 		product_container.showProducts();
 		
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
+		if(pc!=1391) {
+			$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
+		}
 		$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 		
 		$('a.sort_by').click(function(){
