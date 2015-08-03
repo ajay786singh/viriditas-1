@@ -55,8 +55,10 @@ get_header();
 					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
 					<a href="#" class="close-button"></a>
 					<div class="pop-up-action">
-						<div class="size-input"><input type="text" name="herb-size" value="0" class="numbers" id="herb-size" maxlength="2" /></div>
-						<div><a href="#" class="button add-herb">Add Herb</a></div>
+						<form action="" method="post" class="add-recipe-herb">
+							<div class="size-input"><input type="text" name="herb-size" value="0" class="numbers" id="herb-size" maxlength="2" /></div>
+							<div><a href="#" class="button add-herb">Add Herb</a></div>
+						</form>
 					</div>
 				</div>
 				<?php
@@ -77,38 +79,6 @@ get_header();
 					<section class="compound-sizes">
 						<h6>Size (mL)</h6>
 						<?php
-							// if($compound_id !='') {
-								// $sizes = get_the_terms( $compound_id, 'pa_size');
-								// $prices = get_the_terms( $compound_id, 'pa_price');
-								// if(count($sizes) == count($prices)) {								
-									// $size_price="";
-									// for($i=0;$i<count($sizes);$i++) {
-										// $size_price[]=array("size"=>$sizes[$i]->name,"price"=>$prices[$i]->name);
-									// }
-									// sort($size_price);
-									
-									// echo "<ul>";
-									// for( $i=0; $i<count($size_price);$i++) {
-										// $size=$size_price[$i]['size'];	
-										// $price=$size_price[$i]['price'];	
-										// $checked="";
-										// if($i==0) { $checked='checked';}						
-										// echo "<li>";
-											// echo "<input type='radio' ".$checked." id='size-".$i."' data-additional='' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
-											// echo "<label for='size-".$i."'>".$size." mL - $".$price."</label>";
-										// echo "</li>";
-									// }
-									
-									// echo "</ul>";
-									// $default_size=$size_price[0]['size'];
-									// $default_price=$size_price[0]['price'];
-									// echo '<input type="hidden" name="cart_size" id="cart_size" value="'.$default_size.'">';
-									// echo '<input type="hidden" name="cart_price" id="cart_price" value="'.$default_price.'">';
-									
-								// } else {
-									// echo '<p class="stock out-of-stock">This product is currently out of stock and unavailable.</p>';
-								// }	
-							// } else {
 								$sizes=get_option('wc_settings_tab_compound_sizes');
 								if($compound_id !='') {
 									$compound_sizes = get_the_terms( $compound_id, 'pa_size');
@@ -176,7 +146,7 @@ get_header();
 							?>
 						</div>	
 						<div class="column-4">
-							<div class="base-size">25%</div>
+							<div class="base-size">100%</div>
 						</div>
 					</section>
 					<?php } ?>

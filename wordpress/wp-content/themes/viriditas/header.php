@@ -71,7 +71,7 @@
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
-								<?php if(is_archive('post-type-archive-product') || is_singular('product')){ ?>
+								<?php if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219')){ ?>
 								<a class="popup-modal" href="#faq-box">*FAQ*</a>								
 								<?php 
 									if(get_faqs_box_content()) echo get_faqs_box_content();

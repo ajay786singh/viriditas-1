@@ -115,6 +115,7 @@ input[type="button"] {
 	margin-top:0;
 	font-size:1em;
 	@include border-radius(0px);
+	text-transform: uppercase;
 }
 
 .appointments-pagination {
@@ -157,5 +158,23 @@ input[type="button"] {
 .login-box #login-form{
 	input[type="submit"] {
 		@extend .button;
+	}
+}
+
+.close-button {
+	@include border-radius(50%);
+	border:1px solid;
+	width:25px;
+	height:25px;
+	display:block;
+	text-decoration:none;
+	text-align:center;
+	font-size:1em;
+	position:absolute;
+	top:15px;
+	right:15px;
+	&:before {
+		content:"\f00d";
+		font-family:$icon-font;
 	}
 }

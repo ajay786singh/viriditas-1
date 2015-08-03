@@ -91,6 +91,9 @@
 				}
 				margin: 0 2% 2em;
 				vertical-align: middle;
+				&.gform_ajax_spinner {
+					width:30px;
+				}
 			}
 		}
 	}	

@@ -12,8 +12,8 @@ jQuery(document).ready(function($) {
 		showCounts: false,
 		noMatchText: 'No monograph found.',
 	});
-	// $('.show-contact-form').unbind('click').bind('click',function(e){
-		// $('#faq-contact-form').toggle();
-		// e.preventDefault();
-	// });
+	$('.show-contact-form').unbind('click').bind('click',function(e){
+		$('#faq-contact-form').toggle();
+		e.preventDefault();
+	});
 });
