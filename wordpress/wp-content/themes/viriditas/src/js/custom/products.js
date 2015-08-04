@@ -168,14 +168,21 @@ function toParams(searchUrl) {
 	$.fn.calculateSize = function( ) {
 		var sum = 0;
 		var compound_id=$('#recipe-compound-id').val();
-		if(compound_id!=""){
-			sum=25;
-		}
+		//if(compound_id!=""){
+			//sum=25;
+		//}
 		$(this).each(function(e) {
 			if(!isNaN(this.value) && this.value.length!=0) {
 				sum += parseFloat(this.value);
 			}
 		});
+		if(compound_id!=""){
+			var baseSize=100;	
+			if(parseInt(sum) <= 75){
+				var val=parseInt(baseSize)-parseInt(sum);	
+				$('.base-size').html(val+"%");
+			}
+		}
 		$('#total_size').html(sum+"%");
 		return sum;
 	},
@@ -185,15 +192,7 @@ function toParams(searchUrl) {
 		var values =[];
 		$('.addition-box').show();
 		$('.hide-info').hide();
-		//$('.hide-info').hide();
 		var total_size = $('.herb-sizes').calculateSize();
-		// if(total_size == '' || total_size == 0) {
-			// $(".compound-error").empty().show().html("Please enter size of this herb.");
-		// }else if(total_size <= 100 ) {
-			// $(".compound-error").empty().hide();
-		// } else {
-			// $(".compound-error").empty().show().html("Total herbs size can't be more than 100%.");
-		// }
 		var compound_id=$('#recipe-compound-id').val();
 		var total_herbs=7;
 		var total_size=100;
@@ -206,7 +205,7 @@ function toParams(searchUrl) {
 				var data_pricy=$('#compound-'+id).attr('data-pricy');
 				$('.popup-compound').openPopup();
 				var html="<li id='remove-product-"+id+"'><div class='box'>";
-					html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'>"+name+data_pricy+"</div>";
+					html+="<a data-pricy='"+data_pricy+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'><i>"+name+data_pricy+"</i></div>";
 					html+="<div class='box'>";
 					html+="<input type='text' data-pricy='"+data_pricy+"' maxlength='2' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value='0'>";
 					html+="<div>%</div></div></li>";
@@ -235,12 +234,14 @@ function toParams(searchUrl) {
 		
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
 			e.preventDefault();
+			//alert(1);
 			var id=$(this).attr('id');
 			var values =[];
-			id=id.replace('remove-','');
+			id = id.replace('remove-','');
 			$('.popup-compound').closePopup();
 			$('#compound-'+id).removeClass('added');
 			$('#remove-product-'+id).remove();
+			$('.herb-sizes').calculateSize();
 			$('.additions ul li a').each(function(){
 				var id = $(this).attr('id');
 				id=id.replace('remove-','');
@@ -406,7 +407,11 @@ function toParams(searchUrl) {
 											var url=removeURLParameter('pa');					
 											window.history.pushState({path:url},'',url);
 										}
-										$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										var pc=getParameterByName("pc");
+										//alert(pc);
+										if(pc!=1391) {
+											$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										}
 									}
 									$this.filterSelectTerms(filter,dk.value);
 								}
@@ -566,7 +571,9 @@ jQuery(document).ready(function($){
 						window.history.pushState({path:url},'',url);	
 						$('section[role="category"]').filterSelectTerms('pc',dk.value);
 						$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-						$('section[role="actions"]').fetchActions('body_system','pa',pa);
+						if(dk.value!=1391) {
+							$('section[role="actions"]').fetchActions('body_system','pa',pa);
+						}
 						$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 					}
 				}	
@@ -576,7 +583,9 @@ jQuery(document).ready(function($){
 		product_container.showProducts();
 		
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
+		if(pc!=1391) {
+			$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
+		}
 		$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 		
 		$('a.sort_by').click(function(){

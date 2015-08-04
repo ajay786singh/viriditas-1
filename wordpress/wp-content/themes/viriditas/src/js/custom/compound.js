@@ -41,7 +41,9 @@ jQuery(document).ready(function($) {
 				$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
 			}
 		});
-		
+		$('.add-recipe-herb').submit(function(){
+			return false;
+		});
 		$('.add-herb').click(function(e) {
 			var herb_size=$('#herb-size').val();
 			var herb_id=$('.herb-name').attr("id");
@@ -53,9 +55,9 @@ jQuery(document).ready(function($) {
 						$('.pop-up-error').empty().hide();
 						$('#size_'+herb_id).val(herb_size);
 						var total_sizes=$('.herb-sizes').calculateSize();
+						var total_size=$('#total_size').html();
 						var baseSize=$('.base-size').html();
-						//alert(baseSize);
-					if(total_sizes <= 100) {
+					if(parseInt(total_size) <= 100) {
 						$('.popup-compound').closePopup();
 					} else {						
 						$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
@@ -125,6 +127,7 @@ jQuery(document).ready(function($) {
 					success: function(html) {				
 						message.loaderHide();		
 						message.empty();		
+						alert(html.search( 'Congrats!!!'));
 						message.append(html);		
 					}		
 				});	

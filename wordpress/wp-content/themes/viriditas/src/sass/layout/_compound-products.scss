@@ -109,7 +109,6 @@ $pop-up-border-color:#afafaf;
 .additions {
 	border-top:none;
 	& ul li {
-		font-style:italic;
 		overflow: hidden;
 		.box {
 			float:left;
@@ -179,20 +178,15 @@ $pop-up-border-color:#afafaf;
 	}
 }
 
-.close-button {
-	@include border-radius(50%);
-	border:1px solid;
-	width:25px;
-	height:25px;
-	display:block;
-	text-decoration:none;
-	text-align:center;
-	font-size:1em;
-	position:absolute;
-	top:15px;
-	right:15px;
-	&:before {
-		content:"\f00d";
-		font-family:$icon-font;
+.base-size {
+	background:$white;
+	border:1px solid $base-border-color;
+	color:$heading;
+	font-size:1.5em;
+	margin-top:15px;
+	@include media($bp-large) {
+		margin-top:0px;
 	}
+	padding:10px;
+	text-align:center;
 }

@@ -260,7 +260,7 @@ global $product;
 							$display_description = false;
 							$display_inactive = false;
 							$field_values = null; 
-							$ajax = true;
+							$ajax = "true";
 							gravity_form($contact_form_id, $display_title, $display_description, $display_inactive, $field_values, $ajax);
 						?>
 					</div>

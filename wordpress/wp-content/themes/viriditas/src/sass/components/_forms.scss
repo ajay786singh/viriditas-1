@@ -75,7 +75,6 @@ select {
 input[type="submit"] {
     -webkit-font-smoothing: antialiased;
     @include appearance(none);
-    background: $light-green;
     border: none;
 	color: $form-submit-button-color;
     cursor: pointer;
@@ -135,9 +134,15 @@ footer {
 		}
 	}
 	input[type="submit"] {
+		background: $light-green;
+		color: $form-submit-button-color;
 		height:35px;
 		padding:7px 15px 7px;
 		margin-left:-4px;
+		&:hover {
+			background: $hover-button-color;
+			color: $form-submit-button-color;
+		}
 		@include border-radius(0);
 		@include media($bp-small) {
 			margin-left:0px;
@@ -525,7 +530,7 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 .woocommerce table.cart td.actions .coupon .button {
 	float:left;
 	margin-bottom: 20px;
-	width:125px;
+	width:auto;
 	@include media($bp-large) {
 		margin-left:10px;
 	}
@@ -564,17 +569,4 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		width:300px;
 		margin-bottom: 0px;
 	}
-}
-.base-size {
-	background:$white;
-	border:1px solid $base-border-color;
-	color:$heading;
-	font-size:1.5em;
-	margin-top:15px;
-	@include media($bp-large) {
-		font-size:2em;
-		margin-top:0px;
-	}
-	padding:10px 20px;
-	text-align:center;
 }
