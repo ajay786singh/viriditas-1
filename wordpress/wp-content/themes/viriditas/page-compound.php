@@ -26,9 +26,9 @@ get_header();
 		<section class="column-4">
 			<h5>Step 1. Search for herbs to add</h5>
 			<div class="compound-box" id="compound-box-1">
-				<div class="search-input">
-					<i class="icon-search"></i>
+				<div class="search-input" id="compound-search-box">
 					<input type="search" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search herb to add" />
+					<input type="submit" id="compound-search" value="Search">
 				</div>				
 				<section role="body-systems"></section>	
 				<section role="actions"></section>				

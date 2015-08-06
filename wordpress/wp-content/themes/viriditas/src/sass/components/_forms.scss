@@ -220,10 +220,6 @@ footer {
 input.search-box {
 	font-size:0.8em;
 	width:150px;
-	.compound-box & {
-		font-size:1em;
-		width:100%;
-	}
 }
 
 li.gfield+li.gfield.gfield_creditcard_warning {
@@ -568,5 +564,25 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	@include media($bp-large) {
 		width:300px;
 		margin-bottom: 0px;
+	}
+}
+
+#compound-search-box {
+	input {
+		display:inline-block;
+	}
+	input[type="search"] {
+		font-size:1em;
+		width:100%;
+	}
+	input[type="submit"] {
+		background: url(dist/images/search-icon.png) 15px 7px no-repeat;
+		font-size: 0;
+		height: 30px;
+		position: absolute;
+		right: 1px;
+		top: 1px;
+		width: 30px;
+		outline:none;
 	}
 }
