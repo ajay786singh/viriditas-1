@@ -124,7 +124,7 @@
 			}
 		}
 	}
-	&.compound-list {
+	&.compound-list {		
 		ul {
 			li {
 				@include span-columns(12);

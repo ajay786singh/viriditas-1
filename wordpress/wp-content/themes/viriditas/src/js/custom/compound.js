@@ -20,6 +20,19 @@ jQuery(document).ready(function($) {
 				e.preventDefault();
 			}
 		});
+		$('#compound-search').on('click',function (e) {
+			var keyword=$('#by_folk_name').val();
+			if(keyword !='') {
+				var url = replaceParam('keyword', keyword);
+				window.history.pushState({path:url},'',url);	
+			} else {
+				var url=removeURLParameter('keyword');					
+				window.history.pushState({path:url},'',url);
+			}
+			$('.compound-list .product-list').showCompound();
+			//e.preventDefault();
+			return false;
+		});
 		$('.popup-compound .close-button').click(function(e){
 			e.preventDefault();
 			$(this).parent().closePopup();
