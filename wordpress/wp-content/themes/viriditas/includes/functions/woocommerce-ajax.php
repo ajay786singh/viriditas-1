@@ -242,20 +242,20 @@ function get_actions() {
 	}
 	$terms = get_terms( $taxonomies, $args );
 	if($terms) {
-			$result='<div class="filter filter-actions">';
-			$result.='<select class="by-actions">';
-				$result.='<option value="" class="hidden-option">FILTER BY ACTIONS </option>';
-				$result.="<option value=''>Show all</option>";
-			foreach($terms as $term) {
-				if($pa==$term->term_id) {
-					$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
-				} else {
-					$result.="<option value='".$term->term_id."'>".$term->name."</option>";
-				}
+		$result='<div class="filter filter-actions">';
+		$result.='<select class="by-actions">';
+			$result.='<option value="" class="hidden-option">FILTER BY ACTIONS </option>';
+			$result.="<option value=''>Show all</option>";
+		foreach($terms as $term) {
+			if($pa==$term->term_id) {
+				$result.="<option selected value='".$term->term_id."'>".$term->name."</option>";
+			} else {
+				$result.="<option value='".$term->term_id."'>".$term->name."</option>";
 			}
-			$result.='</select>';	
-			$result.='</div>';	
 		}
+		$result.='</select>';	
+		$result.='</div>';	
+	}
 	 echo $result;
 	die();
 }

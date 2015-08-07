@@ -42,11 +42,11 @@ jQuery(document).ready(function($) {
 		});
 		$('#herb-size').on('blur',function(e){
 			$('.pop-up-error').empty().hide();
-			var herb_size=$(this).val();
-			var herb_id=$('.herb-name').attr("id");
-			var herb_pricy=$('.herb-name').attr("data-pricy");
-			$('#size_'+herb_id).val(herb_size);
-			if(herb_pricy =='*' && herb_size > 60) {
+			var herbSize=$(this).val();
+			var herbId=$('.herb-name').attr("id");
+			var herbPricy=$('.herb-name').attr("data-pricy");
+			$('#size_'+herbId).val(herbSize);
+			if(herbPricy =='*' && herbSize > 60) {
 				$('.pop-up-error').empty().show().html("Herb size can't be more than 60%.");
 			}
 			var total_sizes=$('.herb-sizes').calculateSize();
@@ -58,15 +58,15 @@ jQuery(document).ready(function($) {
 			return false;
 		});
 		$('.add-herb').click(function(e) {
-			var herb_size=$('#herb-size').val();
-			var herb_id=$('.herb-name').attr("id");
-			var herb_pricy=$('.herb-name').attr("data-pricy");
-			if(herb_size !='' && herb_size > 0) {
-				if(herb_pricy =='*' && herb_size > 60) {
+			var herbSize=$('#herb-size').val();
+			var herbId=$('.herb-name').attr("id");
+			var herbPricy=$('.herb-name').attr("data-pricy");
+			if(herbSize !='' && herbSize > 0) {
+				if(herbPricy =='*' && herbSize > 60) {
 					$('.pop-up-error').empty().show().html("Herb size can't be more than 60%.");
 				} else {
 						$('.pop-up-error').empty().hide();
-						$('#size_'+herb_id).val(herb_size);
+						$('#size_'+herbId).val(herbSize);
 						var total_sizes=$('.herb-sizes').calculateSize();
 						var total_size=$('#total_size').html();
 						var baseSize=$('.base-size').html();
@@ -140,7 +140,7 @@ jQuery(document).ready(function($) {
 					success: function(html) {				
 						message.loaderHide();		
 						message.empty();		
-						alert(html.search( 'Congrats!!!'));
+						//alert(html.search( 'Congrats!!!'));
 						message.append(html);		
 					}		
 				});	
