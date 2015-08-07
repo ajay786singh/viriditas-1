@@ -564,7 +564,7 @@ jQuery(document).ready(function($){
 		product_container.showProducts();
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 		
-		if(pb!='null' && pb!='undefined' && pb!='' && pc!='1391') {
+		if((pa!='') || (pb!='null' && pb!='undefined' && pb!='' && pc!='1391')) {
 			$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
 		}
 		

@@ -196,6 +196,7 @@ global $product;
 				<?php //} ?>
 				<?php 
 					$body_systems = get_the_terms( $post->ID, 'body_system' ); 
+					$body_systems_ids="";
 					if($body_systems) {
 				?>
 					<div class="accordion-panel">
@@ -205,6 +206,7 @@ global $product;
 								<?php
 									foreach($body_systems as $body_system) {
 										if ($body_system->parent == 0) {
+											$body_systems_ids[]=$body_system->term_id;
 											echo "<li><a href='".$product_page_url."/?pb=".$body_system->term_id."'>".$body_system->name."</a></li>";
 										}
 									}
@@ -216,23 +218,31 @@ global $product;
 				
 				<?php 
 					$actions = get_the_terms( $post->ID, 'body_system' ); 
-					if($actions) {
+					$action_terms=array();
+					if(count($actions)>0) {
+						for($i=0; $i<count($actions);$i++) {
+							if ($actions[$i]->parent > 0) {
+								$action_terms[] = "<li><a href='".$product_page_url."/?pa=".$actions[$i]->term_id."'>".$actions[$i]->name."</a></li>";
+							}
+						}
+					}	
+						if(count($action_terms)>0){
 				?>
-					<div class="accordion-panel">
-						<h5 class="accordion-panel-header">Associated Actions</h5>
-						<div class="accordion-panel-content">
-							<ul class="list">
-								<?php
-									foreach($actions as $action) {
-										if ($action->parent > 0) {
-											echo "<li><a href='".$product_page_url."/?pa=".$action->term_id."'>".$action->name."</a></li>";
-										}
-									}
-								?>	
-							</ul>
-						</div>
-					</div>
-				<?php } ?>
+							<div class="accordion-panel">
+								<h5 class="accordion-panel-header">Associated Actions</h5>
+								<div class="accordion-panel-content">
+									<ul class="list">
+										<?php
+											for($j=0;$j<count($action_terms);$j++) {
+												echo $action_terms[$j];
+											}
+										?>	
+									</ul>
+								</div>
+							</div>
+					<?php  
+						}
+					?>
 				
 				<?php 
 					/*$indications = get_the_terms( $post->ID, 'indication' ); 
