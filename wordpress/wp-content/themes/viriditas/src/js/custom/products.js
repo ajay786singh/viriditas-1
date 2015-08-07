@@ -1,3 +1,10 @@
+function getUrlVars() {
+	var vars = {};
+	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		vars[key] = value;
+	});
+	return vars;
+}
 var parseQueryString = function( queryString,parameter ) {
     var params = {}, queries, temp, i, l;
 	var url = [];
@@ -27,16 +34,32 @@ function replaceParam(key, value){
 	params[key] = value;
 	return pathname + "?" + jQuery.param(params)
 }
+
 function removeURLParameter(parameter) {
     //prefer to use l.search if you have a location/link object
-	var url = window.location.search;
-	url = url.substring(1);
-	url=parseQueryString(url,parameter);
-	//alert(url);
-	if(url!='') {
-		url = "?"+url;
-	}
-	return url;
+	var url = window.location.href;
+	var urlparts= url.split('?');   
+    if (urlparts.length>=2) {
+
+        var prefix= encodeURIComponent(parameter)+'=';
+        var pars= urlparts[1].split(/[&;]/g);
+
+        //reverse iteration as may be destructive
+        for (var i= pars.length; i-- > 0;) {    
+            //idiom for string.startsWith
+            if (pars[i].lastIndexOf(prefix, 0) !== -1) {  
+                pars.splice(i, 1);
+            }
+        }
+		if(pars.length==0) {
+			url= urlparts[0];
+		} else {
+			url= urlparts[0]+'?'+pars.join('&');
+		}
+        return url;
+    } else {
+        return url;
+    }
 }
 function toParams(searchUrl) {
 	var result = {}
@@ -391,7 +414,12 @@ function toParams(searchUrl) {
 										window.location = shop_page_url;
 									} else {	
 										this.reset(true);
-										$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										var pc=getUrlVars().pc || '';
+										if(dk.value!='' && pc!='1391') {
+											$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										} else {
+											$('section[role="actions"]').hide();
+										}
 										var url=removeURLParameter('pb');					
 										window.history.pushState({path:url},'',url);
 										var url=removeURLParameter('pa');					
@@ -407,10 +435,11 @@ function toParams(searchUrl) {
 											var url=removeURLParameter('pa');					
 											window.history.pushState({path:url},'',url);
 										}
-										var pc=getParameterByName("pc");
-										//alert(pc);
-										if(pc!=1391) {
+										var pc=getUrlVars().pc || '';
+										if(dk.value!='' && pc!='1391') {
 											$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+										}else {
+											$('section[role="actions"]').dropkick();
 										}
 									}
 									$this.filterSelectTerms(filter,dk.value);
@@ -464,55 +493,14 @@ function toParams(searchUrl) {
 			}
 		});			
 	},
-	$.fn.getProduct= function(product_id) {
-		var $this=$(this);
-		$('.list-products').hide();
-		$this.show().loaderShow();
-		$.ajax({
-			type: 'POST',
-			url: ajaxurl,
-			data:{action: 'get_product_detail','product_id':product_id },
-			success: function(html) {
-				if(html!=''){
-					$this.loaderHide();
-					$this.html(html);
-					jQuery('.accordion-panel-header').click(function (e){
-						jQuery('.accordion-panel').each(function(e) {
-							jQuery(this).removeClass('active-header');
-							jQuery('.accordion-panel-content').slideUp('fast').removeClass('active');
-						});
-						if(jQuery(this).next('.accordion-panel-content').css('display') != 'block'){
-							jQuery('.active').slideUp('fast').removeClass('active');
-							jQuery(this).addClass('active-header');
-							jQuery(this).next('.accordion-panel-content').addClass('active').slideDown('slow');
-							
-						} else {
-							jQuery('.active').slideUp('fast').removeClass('active');
-							jQuery(this).removeClass('active-header');
-						}
-					});
-					$('.back-to-results').click(function(){				
-						var url=removeURLParameter('show_product');					
-						window.history.pushState({path:url},'',url);
-						$('.list-products').show();
-						$('.product-list').empty().showProducts({page:1});
-						$this.empty().hide();
-						return false;
-					});
-				}	
-			}
-		});
-	}
-	$.fn.showProduct= function() {
-		var $this =$(this);
-		$this.find('li a').click(function(){
-			var rel=$(this).attr('rel');
-			var url = replaceParam('show_product', rel);
-			window.history.pushState({path:url},'',url);
-			var product_id = getParameterByName('show_product');
-			$('.single-product-detail').getProduct(product_id);
-			return false;
-		});
+	$.urlParam = function(name){
+		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		if (results==null){
+		   return null;
+		}
+		else{
+		   return results[1] || 0;
+		}
 	}
 }(jQuery));
 
@@ -521,10 +509,10 @@ jQuery(document).ready(function($){
 	if($('body').hasClass('post-type-archive-product') || $('body').hasClass('single-product')) {
 		var product_container = $('.product-list');
 		// Current Filter values
-		var pa=getParameterByName('pa');
-		var pb=getParameterByName('pb');
-		var pc=getParameterByName('pc');
-		var pi=getParameterByName('pi');
+		var pa=getUrlVars().pa || '';
+		var pb=getUrlVars().pb || '';
+		var pc=getUrlVars().pc || '';
+		var pi=getUrlVars().pi || '';
 		$('select.by-category').dropkick({
 			mobile: true,
 			change:function() {
@@ -535,21 +523,15 @@ jQuery(document).ready(function($){
 							window.location = shop_page_url;
 						} else {
 							this.reset(true);
+							var url = window.location.href;
+							url=url.split("?");
+							if(url.length>1){
+								window.history.pushState({path:url[0]},'',url[0]);
+							}
 							$(".by-body_system").dropkick();
 							$(".by-actions").dropkick();
 							$(".by-indication").dropkick();
-							var url = removeURLParameter('pc');					
-							window.history.pushState({path:url},'',url);
-							var url=removeURLParameter('pb');					
-							window.history.pushState({path:url},'',url);
-							var url=removeURLParameter('pa');					
-							window.history.pushState({path:url},'',url);
-							var url=removeURLParameter('pi');					
-							window.history.pushState({path:url},'',url);
-							var url=removeURLParameter('keyword');					
-							window.history.pushState({path:url},'',url);
 							$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-							$('section[role="actions"]').fetchActions('body_system','pa',pa);
 							$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 							product_container.empty();
 							product_container.showProducts();
@@ -560,7 +542,7 @@ jQuery(document).ready(function($){
 					if($('body').hasClass('single-product')==true) {
 						var shop_page_url=shop_page+'?pc='+dk.value;
 						window.location = shop_page_url;
-					} else {					
+					} else {			
 						var url = replaceParam('pc', dk.value);
 						window.history.pushState({path:url},'',url);
 						var url=removeURLParameter('pb');					
@@ -571,21 +553,21 @@ jQuery(document).ready(function($){
 						window.history.pushState({path:url},'',url);	
 						$('section[role="category"]').filterSelectTerms('pc',dk.value);
 						$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-						if(dk.value!=1391) {
-							$('section[role="actions"]').fetchActions('body_system','pa',pa);
-						}
 						$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
+						product_container.empty();
+						product_container.showProducts();
 					}
 				}	
 			}
 		});
 		product_container.empty();
 		product_container.showProducts();
-		
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
-		if(pc!=1391) {
+		
+		if(pb!='null' && pb!='undefined' && pb!='' && pc!='1391') {
 			$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
 		}
+		
 		$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 		
 		$('a.sort_by').click(function(){
