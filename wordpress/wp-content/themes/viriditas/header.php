@@ -39,7 +39,7 @@
 </head>
 <body <?php body_class();?>>
 <?php
-	if(is_page('2219') || is_realy_woocommerce_page()){ 
+	if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219')){ 
 		if(!is_user_logged_in()){
 			wp_redirect(wp_login_url( current_page_url()));
 		}
@@ -71,7 +71,7 @@
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
-								<?php if(is_page('2219') || is_realy_woocommerce_page()){ 
+								<?php if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219')){ 
 									$cart_url = $woocommerce->cart->get_cart_url();
 								?>
 								<a class="icon-cart" href="<?php echo $cart_url;?>">Cart</a>
