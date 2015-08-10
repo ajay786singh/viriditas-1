@@ -102,3 +102,22 @@
 		width: 64px;
 	}
 }
+
+.icon-cart {
+	display: inline-block;
+	font-size:0;
+	height: 20px;
+	margin-right: 10px;
+	position:relative;
+	width: 20px;
+	&:before {
+		content:"\f07a";
+		font-family:$icon-font;   
+		font-size:20px; 
+		height: 100%;
+		left: 0;
+		position: absolute;	
+		width: 100%;
+		top:-5px;
+	}
+}

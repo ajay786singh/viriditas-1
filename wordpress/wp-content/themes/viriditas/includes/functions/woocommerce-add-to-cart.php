@@ -38,7 +38,7 @@ function manage_compound() {
 					$expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
 					if($expensive_herb == 'on') {
 						if($herb_size > 60) {
-							array_push($errors, "This herb: <b>".$name."</b> can't have size for than 60%."); 
+							array_push($errors, "The maximum amount for this herb: <b>".$name."</b> is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428."); 
 						} else {
 							$price=$price+$additional_price;
 						}

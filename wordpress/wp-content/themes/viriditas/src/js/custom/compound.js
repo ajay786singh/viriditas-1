@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
 			var herbPricy=$('.herb-name').attr("data-pricy");
 			$('#size_'+herbId).val(herbSize);
 			if(herbPricy =='*' && herbSize > 60) {
-				$('.pop-up-error').empty().show().html("Herb size can't be more than 60%.");
+				$('.pop-up-error').empty().show().html("The maximum amount for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
 			}
 			var total_sizes=$('.herb-sizes').calculateSize();
 			if(total_sizes > 100) {
@@ -63,7 +63,7 @@ jQuery(document).ready(function($) {
 			var herbPricy=$('.herb-name').attr("data-pricy");
 			if(herbSize !='' && herbSize > 0) {
 				if(herbPricy =='*' && herbSize > 60) {
-					$('.pop-up-error').empty().show().html("Herb size can't be more than 60%.");
+					$('.pop-up-error').empty().show().html("The maximum amount for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
 				} else {
 						$('.pop-up-error').empty().hide();
 						$('#size_'+herbId).val(herbSize);
@@ -140,7 +140,7 @@ jQuery(document).ready(function($) {
 					success: function(html) {				
 						message.loaderHide();		
 						message.empty();		
-						//alert(html.search( 'Congrats!!!'));
+						alert(html.search( 'Congrats!!!'));
 						message.append(html);		
 					}		
 				});	
