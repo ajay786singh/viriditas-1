@@ -47,7 +47,7 @@ global $product;
 			$img = $thumb_url[0];
 			?>
 			<div class="secondary">
-				<img src="<?php echo $img;?>" class="attachment-shop_single wp-post-image" alt="beef osso bucco" title="Beef Osso Bucco">
+				<img src="<?php echo $img;?>" class="attachment-shop_single wp-post-image" alt="<?php the_title();?>">
 			</div>
 			<?php
 		}else {
