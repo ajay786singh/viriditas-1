@@ -16,7 +16,7 @@ function form_login() {
 	$html.= wp_nonce_field( 'ajax-login-nonce', 'security' );
 	$html.='</form>';
 	$html.='<a class="lost" href="'.$forgot.'">Forgot your password?</a>';
-	$html.='<a class="register" href="'.$register.'">Register New?</a>';
+	$html.='<a class="register" href="'.$register.'">New? Register</a>';
 	$html.='</div>';
 	echo $html;
 }
