@@ -186,7 +186,7 @@ jQuery(document).ready(function($) {
 					success: function(html) {				
 						message.loaderHide();		
 						message.empty();		
-						alert(html.search( 'Congrats!!!'));
+						//alert(html.search( 'Congrats!!!'));
 						message.append(html);		
 					}		
 				});	
