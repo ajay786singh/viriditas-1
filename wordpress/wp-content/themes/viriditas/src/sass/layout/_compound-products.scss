@@ -161,23 +161,36 @@ $pop-up-border-color:#afafaf;
 		}
 	}
 }
-
-.popup-compound {
-	background:$white;
-	border:1px solid $pop-up-border-color;
-	@include box-shadow(0 0 2px rgba(0, 0, 0, 0.4) inset);
+.popup-compound  {
+	background: rgba(0,0,0,0.7);
 	display:none;
-	left:0;
-	padding:60px 30px 30px;
-	position:absolute;
-	text-align:center;
-	width:100%;
-	z-index: 1000;
-	.herb-name {
-		font-style:italic;
+	left: 0;
+	height: 100%;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 10000;
+	.popup-compound-content {
+		background:$white;
+		border:1px solid $pop-up-border-color;
+		@include box-shadow(0 0 2px rgba(0, 0, 0, 0.4) inset);
+		left:10%;
+		width:80%;
+		@include media($bp-large) {
+			left:30%;
+			width:40%;
+		}
+		top:35%;
+		padding:60px 30px 30px;
+		position:absolute;
+		text-align:center;
+		z-index: 1000;
+		.herb-name {
+			font-style:italic;
+		}
 	}
 }
-
 .base-size {
 	background:$white;
 	border:1px solid $base-border-color;

@@ -6,6 +6,48 @@ jQuery(document).ready(function($) {
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
 		$('.compound-list .product-list').showCompound();
+		
+		// Function to close pop up for compound on press esc button
+		$(document).keyup(function(e) {
+			if (e.keyCode == 27) {
+				var herbSize=$('#herb-size').val();
+				var totalSize=$('#total_size').html();
+				totalSize=parseInt(totalSize);
+				var baseSize=100;
+				if(totalSize !='' && totalSize > baseSize) {
+					return false;
+				}
+				if(herbSize=="" || herbSize==0){
+					var id=$('.herb-name').attr('id');
+					if(confirm("Are you sure to close without adding this herb to your recipe?")){
+						$(this).removeHerb(id);
+					}
+				} else {
+					$('.popup-compound').closePopup();
+				}  
+			} // esc
+		});
+		
+		//function to close pop up compound on close button click
+		$('.popup-compound .close-button').click(function(e){
+			var herbSize=$('#herb-size').val();
+			var totalSize=$('#total_size').html();
+			var baseSize=100;
+			if(parseInt(totalSize) > baseSize) {
+				return false;
+			} else {				
+				if(herbSize=="" || herbSize==0){
+					var id=$('.herb-name').attr('id');
+					if(confirm("Are you sure to close without adding this herb to your recipe?")){
+						$(this).removeHerb(id);
+					}
+				} else {
+					$('.popup-compound').closePopup();
+				}	
+			}
+			return false;
+		});
+		
 		$('#by_folk_name').keypress(function (e) {
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
@@ -20,6 +62,7 @@ jQuery(document).ready(function($) {
 				e.preventDefault();
 			}
 		});
+		
 		$('#compound-search').on('click',function (e) {
 			var keyword=$('#by_folk_name').val();
 			if(keyword !='') {
@@ -30,16 +73,13 @@ jQuery(document).ready(function($) {
 				window.history.pushState({path:url},'',url);
 			}
 			$('.compound-list .product-list').showCompound();
-			//e.preventDefault();
 			return false;
 		});
-		$('.popup-compound .close-button').click(function(e){
-			e.preventDefault();
-			$(this).parent().closePopup();
-		});
+		
 		$('.numbers').unbind('keydown').bind('keydown',function(e){
 			$(this).onlyNumbers(e);
 		});
+		
 		$('#herb-size').on('blur',function(e){
 			$('.pop-up-error').empty().hide();
 			var herbSize=$(this).val();
@@ -54,22 +94,25 @@ jQuery(document).ready(function($) {
 				$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
 			}
 		});
+		
 		$('.add-recipe-herb').submit(function(){
 			return false;
 		});
-		$('.add-herb').click(function(e) {
+		
+		$('.add-herb').unbind('click').bind('click',function(e) {
 			var herbSize=$('#herb-size').val();
 			var herbId=$('.herb-name').attr("id");
 			var herbPricy=$('.herb-name').attr("data-pricy");
 			if(herbSize !='' && herbSize > 0) {
+					//alert(herbSize);
 				if(herbPricy =='*' && herbSize > 60) {
-					$('.pop-up-error').empty().show().html("The maximum amount for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
+					 $('.pop-up-error').empty().show().html("The maximum amount for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
 				} else {
-						$('.pop-up-error').empty().hide();
-						$('#size_'+herbId).val(herbSize);
-						var total_sizes=$('.herb-sizes').calculateSize();
-						var total_size=$('#total_size').html();
-						var baseSize=$('.base-size').html();
+					$('.pop-up-error').empty().hide();
+					$('#size_'+herbId).val(herbSize);
+					var total_sizes=$('.herb-sizes').calculateSize();
+					var total_size=$('#total_size').html();
+					var baseSize=$('.base-size').html();
 					if(parseInt(total_size) <= 100) {
 						$('.popup-compound').closePopup();
 					} else {						
@@ -79,7 +122,9 @@ jQuery(document).ready(function($) {
 			} else {
 				$('.pop-up-error').empty().show().html("Please enter size of herb for recipe.");
 			}
+			return false;
 		});
+		
 		$('a.sort_by').click(function(e){
 			var id=$(this).attr('id');
 			$('.sort_by').each(function(){
@@ -91,6 +136,7 @@ jQuery(document).ready(function($) {
 			$('.compound-list .product-list').showCompound();
 			e.preventDefault();
 		});
+		
 		$('.recipe-form').submit(function(e){		
 			e.preventDefault();	
 			var total_sizes=$('.herb-sizes').calculateSize();

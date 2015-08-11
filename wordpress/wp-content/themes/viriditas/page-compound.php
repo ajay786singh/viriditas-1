@@ -11,6 +11,20 @@ get_header();
 	$compound_id = $_REQUEST['compound'];
 	$addition_box_class="compound-header";
 ?>
+<div class="popup-compound">
+	<div class="popup-compound-content">
+		<div class="error pop-up-error"></div>
+		<a href="#" class="close-button"></a>
+		<div class="pop-up-action">
+			<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
+			<form action="" method="post" class="add-recipe-herb">
+				<div class="size-input"><input type="text" name="herb-size" value="" placeholder="0" class="numbers" id="herb-size" maxlength="2" /></div>
+				<div><a href="#" class="button add-herb">Add Herb</a></div>
+			</form>
+			<div class="pop-up-note"><?php show_compound_notice();?></div>
+		</div>
+	</div>
+</div>
 <section role="content">
     <div class="container">
 		<div class="secondary">
@@ -50,17 +64,6 @@ get_header();
 				<!--<div class="compound-error error">
 					Error
 				</div>-->
-				<div class="popup-compound">
-					<div class="error pop-up-error"></div>
-					<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
-					<a href="#" class="close-button"></a>
-					<div class="pop-up-action">
-						<form action="" method="post" class="add-recipe-herb">
-							<div class="size-input"><input type="text" name="herb-size" value="0" class="numbers" id="herb-size" maxlength="2" /></div>
-							<div><a href="#" class="button add-herb">Add Herb</a></div>
-						</form>
-					</div>
-				</div>
 				<?php
 					echo '<ul class="product-list">';
 					echo '</ul>';

@@ -10,4 +10,8 @@ jQuery(function($) {
 		e.preventDefault();
 		jQuery.magnificPopup.close();
 	});
+	jQuery(document).keyup(function(e) {
+		if (e.keyCode == 27) jQuery.magnificPopup.close();  // esc
+	});
+
 });

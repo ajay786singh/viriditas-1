@@ -2,6 +2,12 @@
 	background:url(dist/images/loader-small.gif) no-repeat;
 	width:100%;
 	height:75px;
+	&.pop-up-action {
+		background-position: top center;
+		height: 30px;
+		margin-top: 0;
+		padding-top: 0;
+	}
 }
 
 .loading {
