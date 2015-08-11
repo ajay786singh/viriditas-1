@@ -45,4 +45,32 @@ $products->add_meta_box(
         ),
 	)
 );	
+
+//Add or Remove column into Product Page
+// add_filter('manage_edit-product_columns', 'product_list_into_product_list');
+// function product_list_into_product_list($defaults) {
+	// unset($defaults['product_tag']);
+    // $defaults['_product_details_folk_name'] = 'Folk name';
+    // return $defaults;
+// }
+
+
+// Show Coloumn for Products List into Admin
+add_filter('manage_product_posts_columns', 'hype_columns_head_only_products', 10);
+add_action('manage_product_posts_custom_column', 'hype_columns_content_only_products', 10, 2);
+
+// Functions for Products List into Admin
+function hype_columns_head_only_products($defaults) {
+	unset($defaults['product_tag']);
+    $defaults['_product_details_folk_name'] = 'Folk';
+    return $defaults;
+}
+function hype_columns_content_only_products($column_name, $post_ID) {
+    if ($column_name == '_product_details_folk_name') {
+        $folk_name=get_post_meta($post_ID,'_product_details_folk_name',true);
+		if($folk_name=='') {
+			echo "-";
+		}
+    }
+}
 ?>
