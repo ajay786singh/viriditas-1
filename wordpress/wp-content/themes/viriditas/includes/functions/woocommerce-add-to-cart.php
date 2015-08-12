@@ -6,7 +6,6 @@
 function manage_compound() {
 	$current_user = wp_get_current_user();
 	$errors = array();
-	
 	if ( $current_user->ID != 0 ) {
 		//logged in.			
 		$title = trim($_POST['title']);
@@ -18,6 +17,7 @@ function manage_compound() {
 		$compound_herbs = $_POST['herbs'];
 		$compound_id = $_POST['compound_id'];
 		$bundle_herbs = $_POST['compound_herbs'];
+		$expenses = $_POST['additional_price'];
 		
 		//check for title not blank
 		if (strlen($title) == 0) {
@@ -84,7 +84,7 @@ function manage_compound() {
 			$product_attributes='';
 			if ( $post_id != 0 ) {
 				$product_attributes['pa_size']=array(
-					'name' => pa_size,
+					'name' => 'pa_size',
 					'value' => '',
 					'position' => 0,
 					'is_visible' => 1,
@@ -92,7 +92,7 @@ function manage_compound() {
 					'is_taxonomy' => 1,
 				);
 				$product_attributes['pa_price']=array(
-					'name' => pa_price,
+					'name' => 'pa_price',
 					'value' => '',
 					'position' => 2,
 					'is_visible' => 1,
@@ -159,8 +159,8 @@ function manage_compound() {
 				update_post_meta( $post_id, '_bundle_data', $herbs);
 				update_post_meta( $post_id, '_product_image_gallery',  '');
 				update_post_meta( $post_id, '_product_details_folk_name',  '');
-				update_post_meta( $post_id, '_min_bundle_price', $price_per_unit );
-				update_post_meta( $post_id, '_max_bundle_price', $price_per_unit);
+				update_post_meta( $post_id, '_min_bundle_price', 1 );
+				update_post_meta( $post_id, '_max_bundle_price', 1);
 				
 				global $woocommerce;
 				$woocommerce->cart->add_to_cart($post_id,1);
@@ -206,12 +206,17 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
 	if( $_POST['product_type']) {
         WC()->session->set( $cart_item_key.'_product_type', $_POST['product_type'] );
     } else {
-        WC()->session->__unset( $cart_item_key.'product_type' );
+        WC()->session->__unset( $cart_item_key.'_product_type' );
     } 
 	if( $product_id ) {
         WC()->session->set( $cart_item_key.'_product_id', $product_id);
     } else {
         WC()->session->__unset( $cart_item_key.'_product_id' );
+    }
+	if( $_POST['additional_price'] ) {
+        WC()->session->set( $cart_item_key.'_additional_price', $_POST['additional_price']);
+    } else {
+        WC()->session->__unset( $cart_item_key.'_additional_price' );
     }  	
 }
 add_action( 'woocommerce_add_to_cart', 'save_cart_data_bundle_price', 1, 5 );
@@ -221,7 +226,7 @@ function calculate_bundle_price( $cart_object ) {
 	$additionalPrice = 100;
     foreach ( $cart_object->cart_contents as $key => $value ) {       
         if( WC()->session->__isset( $key.'_cart_price' ) ) {
-			$bundle_price=WC()->session->get( $key.'_cart_price' );
+			$bundle_price=WC()->session->get( $key.'_cart_price' ) + WC()->session->get( $key.'_additional_price' );
             $quantity = intval( $value['quantity'] );
             $orgPrice = intval( $value['data']->price );
 			$value['data']->price =  $bundle_price ;
@@ -233,17 +238,19 @@ add_action( 'woocommerce_before_calculate_totals', 'calculate_bundle_price', 1, 
 
 /* Function to add meta value size on cart item list */
 function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null ) {
-    if( $cart_item_key && is_cart() ) {
-			//echo WC()->session->$cart_item_key.'_cart_price' ;
+	if( $cart_item_key && is_cart() ) {
+		//echo WC()->session->$cart_item_key.'_cart_price';
         if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
             echo $title. '<dl class="variation">
                  <dt class="variation-Size">Size: </dt>
-                 <dd class="variation-Size">'.trim(WC()->session->get($cart_item_key.'_cart_size')).' mL</dd>            
+                 <dd class="variation-Size">'.trim(WC()->session->get($cart_item_key.'_cart_size')).'</dd>            
               </dl>';
         } else {
+			$unit=trim(WC()->session->get($cart_item_key.'_unit'));
             echo $title;
+			echo "<span id='size-unit' style='display:none;'>".$unit."</span>";
         }
-    }else {
+    } else {
         echo $title;
     }
 }
@@ -252,7 +259,7 @@ add_filter( 'woocommerce_cart_item_name', 'render_meta_on_cart_item', 1, 3 );
 function render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null ) {
     if( $cart_item_key ) {
         if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
-			$size=trim(WC()->session->get($cart_item_key.'_cart_size'))." mL";	
+			$size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
             echo $quantity. '<dl class="variation">
                  <dt class="variation-Size">Size : </dt>
                  <dd class="variation-Size">'.$size.'</dd>            
@@ -268,7 +275,6 @@ add_filter( 'woocommerce_checkout_cart_item_quantity', 'render_meta_on_checkout_
 function bundle_order_meta_handler( $item_id, $values, $cart_item_key ) {
 	global $woocommerce;	
     if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
-		//$size=trim(WC()->session->get($cart_item_key.'_cart_size')).' ml';	
 		$size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
         wc_add_order_item_meta( $item_id, "Size ", $size ); 
     }
@@ -293,6 +299,7 @@ function add_cart_item_custom_data_vase( $cart_item_meta, $product_id ) {
 	global $woocommerce;
 	$cart_item_meta['cart_price'] = $_POST['cart_price'];
 	$cart_item_meta['cart_size'] = $_POST['cart_size'];
+	$cart_item_meta['additional_price'] = $_POST['additional_price'];
 	return $cart_item_meta; 
 }
 
@@ -303,21 +310,13 @@ function get_cart_items_from_session( $item, $values, $key ) {
 	}
 	if ( array_key_exists( 'cart_size', $values ) ) {
 		$item[ 'cart_size' ] = $values['cart_size'];
+	}
+	if ( array_key_exists( 'additional_price', $values ) ) {
+		$item[ 'additional_price' ] = $values['additional_price'];
 	}		
     return $item;
 }
 add_filter( 'woocommerce_get_cart_item_from_session', 'get_cart_items_from_session', 1, 3 );
-
-/* Function to add product into cart for Professional Herbal Combination */
-// function add_to_cart_bundle() { 	 
-	// $price=$_POST['price'];
-	// $product_type=$_POST['product_type'];
-	// echo $id=$_POST['id'];
-	// $size=$_POST['size'];
-	// die();
-// }	
-// add_action( 'wp_ajax_add_to_cart_bundle', 'add_to_cart_bundle' );
-// add_action( 'wp_ajax_nopriv_add_to_cart_bundle', 'add_to_cart_bundle' );
 
 /*
 * Function to get cart item bundle information
@@ -325,6 +324,10 @@ add_filter( 'woocommerce_get_cart_item_from_session', 'get_cart_items_from_sessi
 function get_bundle_info($id,$size) {
 	$bundle_data=get_post_meta($id,'_bundle_data',true);
 	$result="";
+	$unit=get_post_meta($id,'_product_details_unit',true);
+	if($unit=='') {
+		$unit="mL";
+	}
 	if(count($bundle_data)>0) {
 		$herbs="";
 		foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
@@ -334,7 +337,7 @@ function get_bundle_info($id,$size) {
 			$herb_title=get_the_title($bundle_herb_id);
 			if($herb_size !='') {
 				$herb_size=($herb_size / 100) * $size;
-				$herb_size= " - ".$herb_size." mL";
+				$herb_size= " - ".$herb_size." ".$unit;
 				$herb_title=get_the_title($bundle_herb_id)." ".$herb_size;
 			}
 			

@@ -10,10 +10,10 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-
 ?>
 <dl class="variation">
 	<?php
+		//echo trim(WC()->session->get($cart_item_key.'_unit'));	
 		foreach ( $item_data as $data ) :
 			$key = sanitize_text_field( $data['key'] );
 	?>
@@ -21,9 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<dd class="variation-<?php echo sanitize_html_class( $key ); ?>">
 			<?php 
 				echo wp_kses_post( $data['value'] ); 
-				if(sanitize_html_class( $key )=='Size') {
-					echo " mL";
-				}
 			?>
 		</dd>
 	<?php endforeach; ?>

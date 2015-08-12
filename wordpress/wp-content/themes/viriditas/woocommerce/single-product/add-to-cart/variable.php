@@ -19,61 +19,12 @@ global $woocommerce, $product, $post;
 
 <form class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo $post->ID; ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
 	<?php if ( ! empty( $available_variations ) ) : ?>
-	<?php /*/endforeach;?>
-		<table class="variations" cellspacing="0">
-			<tbody>
-				<?php 
-				sort($available_variations);
-				//$loop = 0; foreach ( $attributes as $name => $options ) : $loop++; 
-				?>
-					<tr>
-						<td class="label"><label for="<?php echo sanitize_title($name); ?>"><?php echo wc_attribute_label( $name ); ?></label></td>
-					</tr> 
-					<tr>
-						<td class="value"><fieldset>
-                        <?php
-                            if ( is_array( $options ) ) {
-								
-								
-                                if ( empty( $_POST ) ) {
-									$selected_value = ( isset( $selected_attributes[ sanitize_title( $name ) ] ) ) ? $selected_attributes[ sanitize_title( $name ) ] : '';
-								} else {
-									$selected_value = isset( $_POST[ 'attribute_' . sanitize_title( $name ) ] ) ? $_POST[ 'attribute_' . sanitize_title( $name ) ] : '';
-								}
-								echo "<ul>";
-								// Get terms if this is a taxonomy - ordered
-                                if ( taxonomy_exists( sanitize_title( $name ) ) ) {
- 
-                                    $terms = get_terms( sanitize_title($name), array('menu_order' => 'ASC') );
-									sort($terms);
-                                    foreach ( $terms as $term ) {
-                                        if ( ! in_array( $term->slug, $options ) ) continue;
-                                        echo '<li><input type="radio" value="' . strtolower($term->slug) . '" ' . checked( strtolower ($selected_value), strtolower ($term->slug), false ) . ' id="'. esc_attr( sanitize_title($name) ) .'" name="attribute_'. sanitize_title($name).'"><label for="'.esc_attr( sanitize_title($name) ).'">' . apply_filters( 'woocommerce_variation_option_name', $term->name ).' ml </label></li>';
-                                    }
-                                } else {
-                                    sort($options);
-									foreach ( $options as $option )
-                                        echo '<li><input type="radio" value="' .esc_attr( sanitize_title( $option ) ) . '" ' . checked( sanitize_title( $selected_value ), sanitize_title( $option ), false ) . ' id="'. esc_attr( sanitize_title($name) ) .'" name="attribute_'. sanitize_title($name).'"><label for="'.esc_attr( sanitize_title($name) ).'">' . apply_filters( 'woocommerce_variation_option_name', $option ) . ' ml </label></li>';
-                                }
-								echo "</ul>";
-                            }
-                        ?>
-                    </fieldset>
-					<?php
-							if ( sizeof($attributes) == $loop )
-								//echo '<a class="reset_variations" href="#reset">' . __( 'Clear selection', 'woocommerce' ) . '</a>';
-					?>
-					</td>
-					</tr>
-		        <?php //endforeach;?>
-			</tbody>
-		</table>
-		<?php //endforeach;*/?>
 		<section class="variations">
 			<?php 
 				echo "<ul>";
 				$i=1;
 				foreach($available_variations as $variation) {
+					//print_r($variation);
 					$size=$variation['attributes']['attribute_pa_size'];
 					$variation_id=$variation['variation_id'];
 					$display_price=$variation['display_price'];
@@ -81,11 +32,12 @@ global $woocommerce, $product, $post;
 					if($i==1) { 
 						$checked = 'checked';
 					}
-					echo "<li><input type='radio' value='".$size."' ".$checked." id='size_".$variation_id."'  name='attribute_pa_size'><label for='size_".$variation_id."'>".$size."ml - $".$display_price."</li>";
+					$size=str_replace('-',' ', $size);
+					$size=str_replace('ml','mL', $size);
+					echo "<li><input type='radio' value='".$size."' ".$checked." id='size_".$variation_id."'  name='attribute_pa_size'><label for='size_".$variation_id."'><span class='size-unit'>".$size." </span> - $".$display_price."</li>";
 					$i++;	
 				}
 				echo "</ul>";
-			
 			?>
 				
 		</section>

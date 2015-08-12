@@ -4,16 +4,6 @@
             padding: 20px 0 50px;
         }
     }
-    /*.button {
-        @extend %button;
-        @include appearance(none);
-        border: none;
-        cursor: pointer;
-        user-select: none;
-        vertical-align: middle;
-        white-space: nowrap;
-		@include border-radius(5px);
-    }*/
     .loading {
         @include appearance(none);
         display: block;

@@ -149,7 +149,7 @@ jQuery(document).ready(function($) {
 			var product_type=$('#product_type').val();			
 			var herbs=[];
 			var compound_herbs=$('#recipe-compound-herbs').val();
-			var additional_price=$('.recipe-size:checked').attr('data-additional');
+			var additional_price=$('#additional_price').val();
 			size_price=size_price.split("-");		
 			var size=size_price[0];		
 			var price=size_price[1];		

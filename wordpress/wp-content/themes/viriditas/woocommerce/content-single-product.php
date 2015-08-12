@@ -73,32 +73,39 @@ global $product;
 			?>	
 					<form class="product_bundle cart" action="" method="post" enctype="multipart/form-data">
 					<?php 
-						//get_cart_bundled();
 						$sizes = get_the_terms( $product->id, 'pa_size');
 						$prices = get_the_terms( $product->id, 'pa_price');
-						
+						$unit=get_post_meta($product->id,'_product_details_unit',true);
+						if($unit=='') {
+							$unit="mL";
+						}
 						if(count($sizes) == count($prices)) {
-							
 							$size_price="";
 							for($i=0;$i<count($sizes);$i++) {
-								$size_price[]=array("size"=>$sizes[$i]->name,"price"=>$prices[$i]->name);
+								$size_unit=explode(" ",$sizes[$i]->name);	
+								$size=$size_unit[0];
+								$size_price[]=array("size"=>$size,"price"=>$prices[$i]->name,"main-size"=>$sizes[$i]->name);
 							}
-							sort($size_price);
+							usort($size_price, function($a, $b) {
+								return $a['size'] - $b['size'];
+							});
 							
 							echo "<section class='bundle_variations'><ul>";
 							for( $i=0; $i<count($size_price);$i++) {
-								$size=$size_price[$i]['size'];	
+								$size=$size_price[$i]['main-size'];	
 								$price=$size_price[$i]['price'];	
 								$checked="";
-								if($i==0) { $checked='checked';}						
+								if($i==0) { $checked='checked';}			
+								$size=str_replace('-',' ', $size);
+								//$size=str_replace('ml','mL', $size);
 								echo "<li>";
 									echo "<input type='radio' ".$checked." id='size-".$i."' name='product-size' class='product-size' value='".$size." - ".$price."'>";
-									echo "<label for='size-".$i."'>".$size." mL - $".$price."</label>";
+									echo "<label for='size-".$i."'>".$size." - $".$price."</label>";
 								echo "</li>";
 							}
 							
 							echo "</ul></section>";
-							$default_size=$size_price[0]['size'];
+							$default_size=$size_price[0]['main-size'];
 							$default_price=$size_price[0]['price'];
 							echo '<input type="hidden" name="cart_size" id="cart_size" value="'.$default_size.'">';
 							echo '<input type="hidden" name="cart_price" id="cart_price" value="'.$default_price.'">';
