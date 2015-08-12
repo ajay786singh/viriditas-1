@@ -3,6 +3,11 @@ jQuery(document).ready(function($) {
 		var container=$(this).attr('id');
 		$('body').addClass('open-popup');
 	});
+	// $('.size-unit').each(function(){
+		// var html=$(this).html();
+		// html=html.replace("-"," ");
+		// $(this).html(html);
+	// });
 	$('.popup-overlay').click(function(){
 		$('body').removeClass('open-popup');
 	});
@@ -32,6 +37,7 @@ jQuery(document).ready(function($) {
 		var price=size_price[1];
 		$('#cart_size').val(size);
 		$('#cart_price').val(price);
+		$("#additional_price").calculateAdditionalPrice();
 	});
 	/*$('#add-to-cart_bundle').click(function(){
 		var size_price=$('.bundle_variations ul li input:radio:checked').attr("value");

@@ -524,6 +524,13 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 #payment {
 	@extend .product-actions;
 }
+
+.woocommerce .shipping {
+	@extend .product-actions;
+	& ul#shipping_method {
+		margin-left: 20px;
+	}
+}
 .woocommerce table.cart td.actions .coupon .button {
 	float:left;
 	margin-bottom: 20px;

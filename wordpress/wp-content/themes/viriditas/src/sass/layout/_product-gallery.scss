@@ -216,6 +216,10 @@
 					float: left;
 					margin-right:15px;
 					margin-top:10px;
+					&.size-unit {
+						margin-top:0;
+						margin-right:5px;
+					}
 					& a.button {
 						margin-bottom:0;
 						@include border-radius(3px);
@@ -240,7 +244,7 @@
 		width: 90px;
 	}
 }
-.woocommerce div.product form.cart .variations label {
+.woocommerce div.product form.cart .variations label,.shipping label {
 	display: inline-block;
 	font-weight:normal;
 	vertical-align: middle;

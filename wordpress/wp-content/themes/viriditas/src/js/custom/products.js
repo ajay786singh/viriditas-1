@@ -211,6 +211,17 @@ function toParams(searchUrl) {
 		$('#total_size').html(sum+"%");
 		return sum;
 	},
+	$.fn.calculateAdditionalPrice = function( ) {
+		var extra=$('.recipe-size:checked').attr('data-additional');	
+		var i=0;
+		$('.herb-sizes').each(function(e) {
+			var pricey=$(this).attr('data-pricy');
+			if(pricey=='*') {
+				i++;
+			}
+		});
+		$(this).val(extra*i);
+	},
 	$.fn.addHerb = function( id, name, expensive ) {
 		if($('.popup-compound').show()==true){
 			$('.popup-compound').closePopup();
@@ -244,7 +255,8 @@ function toParams(searchUrl) {
 						html+="<input type='text' data-pricy='"+expensive+"' maxlength='2' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value='0'>";
 						html+="<div>%</div></div></li>";
 					$('#compound-'+id).addClass('added');
-					$('.additions ul').append(html);			
+					$('.additions ul').append(html);	
+					$("#additional_price").calculateAdditionalPrice();					
 					$('.herb-name').html(name+expensive);
 					$('.herb-name').attr("id",'').attr("id",id);
 					$('.herb-name').attr("data-pricy",'').attr("data-pricy",expensive);
@@ -287,6 +299,7 @@ function toParams(searchUrl) {
 		$('#compound-'+id).removeClass('added');
 		$('#remove-product-'+id).remove();
 		$('.herb-sizes').calculateSize();
+		$("#additional_price").calculateAdditionalPrice();
 		$('.additions ul li a').each(function(){
 			var id = $(this).attr('id');
 			id=id.replace('remove-','');

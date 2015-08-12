@@ -25,7 +25,6 @@ function hype_login_logo() {
 }
 add_action('login_head', 'hype_login_logo');
 
-
 /* Function to add login form*/
 add_action('login_message', 'hype_login_message');
 function hype_login_message() {

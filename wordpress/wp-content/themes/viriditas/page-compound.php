@@ -80,7 +80,7 @@ get_header();
 						<input type="text" id="recipe-name" required name="recipe-name" placeholder="Please give a name to your recipe.">
 					</section>
 					<section class="compound-sizes">
-						<h6>Size (mL)</h6>
+						<h6>Select Size </h6>
 						<?php
 								$sizes=get_option('wc_settings_tab_compound_sizes');
 								if($compound_id !='') {
@@ -117,7 +117,7 @@ get_header();
 										$i++;
 										echo "<li>";
 											echo "<input type='radio' ".$checked." id='size-".$i."' data-additional='".$additional_price."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
-											echo "<label for='size-".$i."'>".$size." mL - $".$price."</label>";
+											echo "<label for='size-".$i."'>".$size." - $".$price."</label>";
 										echo "</li>";
 									}
 									echo "</ul>";								
@@ -157,6 +157,7 @@ get_header();
 					<input type="hidden" name="recipe-compound-id" id="recipe-compound-id" value="<?php echo $compound_id;?>">
 					<input type="hidden" name="recipe-compound-herbs" id="recipe-compound-herbs" value="<?php echo $bundle_herb_ids;?>">
 					<input type="hidden" name="product_type" id="product_type" value="bundle">
+					<input type="hidden" name="additional_price" id="additional_price" value="">
 					<div class="addition-box">
 						<section class="<?php echo $addition_box_class;?> additions">
 							<h6>Your Additions</h6>
