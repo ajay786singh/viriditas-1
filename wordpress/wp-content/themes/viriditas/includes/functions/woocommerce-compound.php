@@ -14,15 +14,16 @@ function show_compound_notice() {
 				$sizeprice=explode("/",$sizeprice);
 				$size=$sizeprice[0];
 				$price=$sizeprice[2];
-				if($count==$i) {
-					$message[]="and $".$price." if added to ".$size."mL";
-				}else {
-					$message[]="$".$price." if added to ".$size."mL";
-				}
+				$message[]=" $".$price." extra when added to ".$size." mL";
+				// if($count==$i) {
+					// $message[]=" $".$price." extra when added to ".$size." mL";
+				// }else {
+					// $message[]="$".$price." if added to ".$size."mL";
+				// }
 				$i++;
 			}
 			$message=implode(", ",$message);
-			$html .="<small><b>Note:</b> This herb is little more pricey: ".$message." </small>";	
+			$html .="<small><b>Note:</b> There is an additional fee for this herb: ".$message." </small>";	
 		}
 	echo $html;
 }
