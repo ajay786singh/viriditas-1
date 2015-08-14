@@ -165,7 +165,7 @@ function manage_compound() {
 				global $woocommerce;
 				$woocommerce->cart->add_to_cart($post_id,1);
 				$cart_url=$woocommerce->cart->get_cart_url();
-				$msg = "Congrats!!! <br> Your recipe has been added to your cart. Please click to view <a href='".$cart_url."'>cart</a>.";
+				$msg = "done";
 			}
 			else {
 				$msg = '*Error occurred while adding the recipe';
@@ -179,12 +179,16 @@ function manage_compound() {
 	} 		
 	//Prepare errors for output
 	$output='';
-	$output .= '<div class="error-header">'.$msg.'</div>';
-	$output .= '<div class="error-content"><ol>';
-	foreach($errors as $val) {
-		$output .= "<li>$val</li>";
+	if($msg == "done") {
+		$output = $msg;
+	} else {		
+		$output = '<div class="error-header">'.$msg.'</div>';
+		$output.= '<div class="error-content"><ol>';
+		foreach($errors as $val) {
+			$output.= "<li>$val</li>";
+		}
+		$output.= '</ol></div>';
 	}
-	$output .= '</ol></div>';
 	echo $output;
 	die();
 }

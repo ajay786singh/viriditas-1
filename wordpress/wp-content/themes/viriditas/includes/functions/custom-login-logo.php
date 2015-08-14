@@ -28,7 +28,7 @@ add_action('login_head', 'hype_login_logo');
 /* Function to add login form*/
 add_action('login_message', 'hype_login_message');
 function hype_login_message() {
-	echo "<h4>To order Viriditas Herbal Products please log in</h4>";
+	echo "<h4>To order Viriditas Herbal Products <br>Please log in</h4>";
 }
 /*change instances of 'Register' to 'New? Register' on login / register page*/
 add_filter(  'gettext',  'register_text'  );

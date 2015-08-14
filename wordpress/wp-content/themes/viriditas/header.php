@@ -25,6 +25,7 @@
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 		var redirect = '<?php echo $_SERVER['REQUEST_URI']; ?>';
 		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
+		var cart_page = '<?php echo get_permalink( woocommerce_get_page_id( 'cart' ) );?>';
 		var compound_page = '<?php echo get_permalink(2219);?>';
 	</script>
 	<script>
