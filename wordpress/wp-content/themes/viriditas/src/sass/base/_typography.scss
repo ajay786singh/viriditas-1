@@ -163,6 +163,9 @@ cite {
         @include span-columns(8);
     }
 }
+.btn-danger {
+	@extend .error;
+}
 .compound-error {
 	//display:none;
 	width:100%;

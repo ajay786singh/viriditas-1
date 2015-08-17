@@ -3,7 +3,7 @@ class Hype_registration_form {
 
     private $username;
     private $email;
-    private $password;
+    //private $password;
     private $website;
     private $first_name;
     private $last_name;
@@ -21,7 +21,7 @@ class Hype_registration_form {
 
     public function registration_form()	{
 	?>
-        <form method="post" class="account-form" autocomplete="off" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+        <form method="post" class="account-form"  autocomplete="off" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
             <div class="login-form">
 				<div class="form-heading">
 					<h3>Login Information</h3>
@@ -42,7 +42,7 @@ class Hype_registration_form {
 					<input name="reg_name" type="text" class="form-control login-field"	value="<?php echo(isset($_POST['reg_name']) ? $_POST['reg_name'] : null); ?>" id="reg-name" required/>
                 </div>
 
-                <div class="form-group">
+                <!--<div class="form-group">
 					<div class="secondary">
 						<label for="reg-pass">Password</label>
 						<input name="reg_password" type="password" class="form-control login-field" value="" id="reg-pass" required/>
@@ -51,12 +51,12 @@ class Hype_registration_form {
 						<label for="reg-c-pass">Confirm Password</label>
 						<input name="reg_c_password" type="password" class="form-control login-field" value="" id="reg-c-pass" required/>
 					</div>
-                </div>
+                </div>-->
 
                 <div class="form-group">
 					<div class="secondary">
 						<label for="reg-email">Email Address</label>
-						<input name="reg_email" type="email" class="form-control" value="<?php echo(isset($_POST['reg_email']) ? $_POST['reg_email'] : null); ?>" id="reg-email" required/>
+						<input name="reg_email" type="email" autocomplete="off"  class="form-control" value="<?php echo(isset($_POST['reg_email']) ? $_POST['reg_email'] : null); ?>" id="reg-email" required/>
 					</div>
 					<div class="secondary">
 						<label for="reg-c-email">Confirm Email Address</label>
@@ -149,7 +149,8 @@ class Hype_registration_form {
 
     function validation() {
 
-        if (empty($this->username) || empty($this->password) || empty($this->email)) {
+       // if (empty($this->username) || empty($this->password) || empty($this->email)) {
+		if (empty($this->username) || empty($this->email)) {
             return new WP_Error('field', 'Required form field is missing');
         }
 
@@ -157,12 +158,22 @@ class Hype_registration_form {
             return new WP_Error('username_length', 'Username too short. At least 4 characters is required');
         }
 
-        if (strlen($this->password) < 5) {
-            return new WP_Error('password', 'Password length must be greater than 5');
-        }
+        // if (strlen($this->password) < 5) {
+            // return new WP_Error('password', 'Password length must be greater than 5');
+        // }
 		
-		if($this->password !='' && ($this->password != $this->c_password)) {
-            return new WP_Error('password', "Password doesn't match with confirm password.");
+		// if($this->password !='' && ($this->password != $this->c_password)) {
+            // return new WP_Error('password', "Password doesn't match with confirm password.");
+        // }
+		$details = array('Username' => $this->username,
+            'First Name' => $this->first_name,
+            'Last Name' => $this->last_name
+        );
+
+        foreach ($details as $field => $detail) {
+            if (!validate_username($detail)) {
+                return new WP_Error('name_invalid', 'Sorry, the "' . $field . '" you entered is not valid');
+            }
         }
 
         if (!is_email($this->email)) {
@@ -183,17 +194,6 @@ class Hype_registration_form {
             }
         }
 
-        $details = array('Username' => $this->username,
-            'First Name' => $this->first_name,
-            'Last Name' => $this->last_name
-        );
-
-        foreach ($details as $field => $detail) {
-            if (!validate_username($detail)) {
-                return new WP_Error('name_invalid', 'Sorry, the "' . $field . '" you entered is not valid');
-            }
-        }
-
     }
 
     function registration()
@@ -202,7 +202,7 @@ class Hype_registration_form {
         $userdata = array(
             'user_login' => esc_attr($this->username),
             'user_email' => esc_attr($this->email),
-            'user_pass' => esc_attr($this->password),
+            //'user_pass' => esc_attr($this->password),
             'first_name' => esc_attr($this->first_name),
             'last_name' => esc_attr($this->last_name)
         );
@@ -234,9 +234,11 @@ class Hype_registration_form {
 			}
 			
             if (!is_wp_error($register_user)) {
+				
                 echo '<div style="margin-bottom: 6px" class="btn btn-block btn-lg btn-danger">';
                 echo '<strong>Registration complete. Goto <a href="' .get_bloginfo('url'). '/login">login page</a></strong>';
                 echo '</div>';
+				wp_redirect( home_url('/welcome')); exit;
 				$_POST = array();
             } else {
                 echo '<div style="margin-bottom: 6px" class="btn btn-block btn-lg btn-danger">';
@@ -255,8 +257,8 @@ class Hype_registration_form {
             $this->username = $_POST['reg_name'];
             $this->email = $_POST['reg_email'];
             $this->c_email = $_POST['reg_c_email'];
-            $this->password = $_POST['reg_password'];
-			$this->c_password = $_POST['reg_c_password'];
+            //$this->password = $_POST['reg_password'];
+			//$this->c_password = $_POST['reg_c_password'];
             $this->first_name = $_POST['reg_fname'];
             $this->last_name = $_POST['reg_lname'];
             $this->billing_company = $_POST['billing_company'];
