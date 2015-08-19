@@ -398,6 +398,7 @@ function show_compound_products() {
 	$sort_by_alpha=$_POST['sort_by_alpha'];
 	$sort_by=$_POST['sort_by'];
 	$compound_id=$_POST['compound_id'];
+	$mono_compound_id=$_POST['mono_compound_id'];
 	$bundle_herbs="";
 	$postids="";
 	
@@ -417,6 +418,16 @@ function show_compound_products() {
 		$bundle_data=get_post_meta($compound_id,'_bundle_data',true);
 		if($bundle_data !='') {
 			foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
+				$bundle_herbs[]= $bundle_herb_id;
+			}
+			$args['post__not_in']=$bundle_herbs;
+		}
+	}
+	
+	if($mono_compound_id!="") {
+		$bundle_data=get_post_meta($mono_compound_id,'_monograph_details_composition',true);
+		if($bundle_data !='') {
+			foreach($bundle_data as $bundle_herb_id) {
 				$bundle_herbs[]= $bundle_herb_id;
 			}
 			$args['post__not_in']=$bundle_herbs;

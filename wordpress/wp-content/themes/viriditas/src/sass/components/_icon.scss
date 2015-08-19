@@ -91,21 +91,20 @@
 	font-weight:bold;
 	position:relative;
 	a {
+		background: url(dist/images/add-formula-icon.jpg) no-repeat;
+		background-position: right top;
 		display: block;
+		height: 60px;
 		line-height: 1.5em;
-		margin-right: 80px;
 		margin-top: 10px;
 		text-align: right;
-		width: 80px;
-	}
-	&:after {
-		content:"";
-		background:url(dist/images/add-formula-icon.jpg) no-repeat;
-		height: 64px;
-		position: absolute;
-		right: 0;
-		top:0;
-		width: 64px;
+		width: 165px;
+		span {
+			display: block;
+			line-height: 1.2em;
+			width: 80px;
+			padding-top: 15px;
+		}
 	}
 }
 

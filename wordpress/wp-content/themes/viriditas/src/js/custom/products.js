@@ -94,15 +94,16 @@ function toParams(searchUrl) {
 (function($) {
     $.fn.showCompound = function( options ) {
 		var settings = $.extend({
-            container     : $(this),
-			page          : 1,
-            body_system   : getParameterByName('pb'),
-			action 		  : getParameterByName('pa'),
-			search_folk   : getParameterByName('keyword'),
-			sort_by_alpha : getParameterByName('sort_by_alpha'),
-			sort_by       : getParameterByName('sort_by'),
-			compound_id   : getParameterByName('compound'),
-			loader    	  : $('.message')
+            container    		: $(this),
+			page          		: 1,
+            body_system   		: getParameterByName('pb'),
+			action 		  		: getParameterByName('pa'),
+			search_folk   		: getParameterByName('keyword'),
+			sort_by_alpha 		: getParameterByName('sort_by_alpha'),
+			sort_by       		: getParameterByName('sort_by'),
+			compound_id   		: getParameterByName('compound'),
+			mono_compound_id	: getParameterByName('mono-compound'),
+			loader    	  		: $('.message')
         }, options);
 		settings.container.empty();
 		settings.container.empty().loaderShow();
@@ -116,7 +117,8 @@ function toParams(searchUrl) {
 				'search_folk':settings.search_folk,
 				'sort_by':settings.sort_by,
 				'sort_by_alpha':settings.sort_by_alpha,
-				'compound_id':settings.compound_id
+				'compound_id':settings.compound_id,
+				'mono_compound_id':settings.mono_compound_id
 			},
 			success: function(html) {
 				settings.container.loaderHide();

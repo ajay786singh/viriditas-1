@@ -28,12 +28,12 @@
 			echo do_shortcode('[printfriendly]');
 		?>
 			<?php 
-				$edit_formula_page_id=2440;//Make your compound page id
-				if($edit_formula_page_id !='') {
-				$edit_formula_page_url=get_permalink($edit_formula_page_id)."?compound=".$post->ID;
+				$make_formula_page_id=2219;//Make your compound page id
+				if($make_formula_page_id !='') {
+				$make_formula_page_url=get_permalink($make_formula_page_id)."?mono-compound=".$post->ID;
 			?>
 			<div class="add-formula">
-				<a href="<?php echo $edit_formula_page_url;?>">Add to this formula</a>
+				<a href="<?php echo $make_formula_page_url;?>"><span>Add to this formula</span></a>
 			</div>
 			<?php 
 				}
