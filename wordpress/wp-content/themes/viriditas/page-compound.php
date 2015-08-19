@@ -9,6 +9,7 @@ get_header();
 	$bundle_herbs="";
 	$bundle_herb_ids="";
 	$compound_id = $_REQUEST['compound'];
+	$mono_compound_id = $_REQUEST['mono-compound'];
 	$addition_box_class="compound-header";
 ?>
 <div class="popup-compound">
@@ -126,26 +127,42 @@ get_header();
 						?>
 					</section>
 					<?php 
-						if($compound_id !='') { 
+						if($compound_id !='' || $mono_compound_id!='') { 
+							if($compound_id!='') {
+								$title=get_the_title($compound_id);
+							}
+							if($mono_compound_id!='') {
+								$title=get_the_title($mono_compound_id);
+							}
 							$addition_box_class="";
 					?>
 					<section class="compound-header">
 						<h6>Base Formulae</h6>
-						<h6><?php echo strtoupper(get_the_title($compound_id));?></h6>
+						<h6><?php echo strtoupper($title);?></h6>
 						<div class="column-8">
 							<?php
-								$bundle_data=get_post_meta($compound_id,'_bundle_data',true);
-								foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
-									$bundle_herbs[]= "<small><i>".get_the_title($bundle_herb_id)."</i></small>";
-									$bundle_herb_ids[]=$bundle_herb_id;
+								if($compound_id!='') {
+									$bundle_data=get_post_meta($compound_id,'_bundle_data',true);
+									foreach($bundle_data as $bundle_herb_id => $bundle_herb_values ) {
+										$bundle_herbs[]= "<small><i>".get_the_title($bundle_herb_id)."</i></small>";
+										$bundle_herb_ids[]=$bundle_herb_id;
+									}
 								}
-								if(count($bundle_herbs) > 1) {
-									echo join(", ",$bundle_herbs);
-									$bundle_herb_ids= join(", ",$bundle_herb_ids);
-								} else {
-									echo $bundle_herbs;
-									$bundle_herb_ids= $bundle_herb_ids;
-								}
+								if($mono_compound_id!='') {
+									$bundle_data=get_post_meta($mono_compound_id,'_monograph_details_composition',true);
+									foreach($bundle_data as $bundle_herb_id ) {
+										$bundle_herbs[]= "<small><i>".get_the_title($bundle_herb_id)."</i></small>";
+										$bundle_herb_ids[]=$bundle_herb_id;
+									}
+								}		
+									if(count($bundle_herbs) > 1) {
+										echo join(", ",$bundle_herbs);
+										$bundle_herb_ids= join(", ",$bundle_herb_ids);
+									} else {
+										echo $bundle_herbs;
+										$bundle_herb_ids= $bundle_herb_ids;
+									}
+								//}
 							?>
 						</div>	
 						<div class="column-4">
@@ -154,8 +171,9 @@ get_header();
 					</section>
 					<?php } ?>
 					
-					<input type="hidden" name="recipe-compound-id" id="recipe-compound-id" value="<?php echo $compound_id;?>">
+					<input type="hidden" name="recipe-compound-id" id="recipe-compound-id" value="<?php echo $compound_id;?> <?php echo $mono_compound_id;?>">
 					<input type="hidden" name="recipe-compound-herbs" id="recipe-compound-herbs" value="<?php echo $bundle_herb_ids;?>">
+					<input type="hidden" name="recipe-mono" id="recipe-mono" value="<?php echo $mono_compound_id;?>">
 					<input type="hidden" name="product_type" id="product_type" value="bundle">
 					<input type="hidden" name="additional_price" id="additional_price" value="">
 					<div class="addition-box">

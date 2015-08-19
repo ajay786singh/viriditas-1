@@ -18,6 +18,7 @@ function manage_compound() {
 		$compound_id = $_POST['compound_id'];
 		$bundle_herbs = $_POST['compound_herbs'];
 		$expenses = $_POST['additional_price'];
+		$recipeMono = $_POST['recipeMono'];
 		
 		//check for title not blank
 		if (strlen($title) == 0) {
@@ -101,7 +102,7 @@ function manage_compound() {
 				);
 				
 				$sizes=get_option('wc_settings_tab_compound_sizes');
-				if($compound_id !='') {
+				if($compound_id !='' && $recipeMono=='') {
 					$compound_sizes = get_the_terms( $compound_id, 'pa_size');
 					sort($compound_sizes);
 					$compound_prices = get_the_terms( $compound_id, 'pa_price');
