@@ -704,8 +704,17 @@ section[role=content] {
 .composition-list {
 	li {
 		margin-bottom:1.5em;
-		span {
-			color:$heading;
+		a {
+			color:$base-font-color;	
+			span {
+				color:$heading;
+			}
+			&:hover {
+				color:$hover-link-color;
+				span {
+					color:$hover-link-color;
+				}
+			}
 		}
 	}
 }
