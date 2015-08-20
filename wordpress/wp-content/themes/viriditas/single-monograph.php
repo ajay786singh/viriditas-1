@@ -62,13 +62,14 @@
 					echo "<h5>Composition</h5>";
 					echo "<ul class='list composition-list'>";	
 						for($i=0;$i<count($composition);$i++) {
-							echo "<li>";
+							$herburl=get_permalink($composition[$i]);
+							echo "<li><a href='".$herburl."'>";
 							$folk_name=get_post_meta($composition[$i],'_product_details_folk_name',true);
 							if($folk_name) {
 								echo $folk_name."<br>";
 							} 
 							echo get_product_info($composition[$i]);
-							echo "</li>";
+							echo "</a></li>";
 						}
 					echo "</ul>";	
 				echo "</section>";	
