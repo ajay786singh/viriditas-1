@@ -14,16 +14,29 @@ function show_compound_notice() {
 				$sizeprice=explode("/",$sizeprice);
 				$size=$sizeprice[0];
 				$price=$sizeprice[2];
-				$message[]=" $".$price." extra when added to ".$size." mL";
-				// if($count==$i) {
-					// $message[]=" $".$price." extra when added to ".$size." mL";
-				// }else {
-					// $message[]="$".$price." if added to ".$size."mL";
-				// }
+				$message[]=" $".$price." extra when added to ".$size;
+			}
+			$message=implode(", ",$message);
+			$html .="<small><b>Note:</b> There is an extra fee for this herb: ".$message." </small>";	
+		}
+	echo $html;
+}
+
+function show_compound_notice_extra() {
+	$sizes=get_option('wc_settings_tab_compound_sizes');
+		if($sizes!='') {
+			$sizes=explode(",",$sizes);								
+			$message="";
+			$count=count($sizes);
+			foreach($sizes as $sizeprice) {
+				$sizeprice=explode("/",$sizeprice);
+				$size=$sizeprice[0];
+				$price=$sizeprice[3];
+				$message[]=" $".$price." extra when added to ".$size;
 				$i++;
 			}
 			$message=implode(", ",$message);
-			$html .="<small><b>Note:</b> There is an additional fee for this herb: ".$message." </small>";	
+			$html .="<small><b>Note:</b> There is an extra fee for this herb: ".$message." </small>";	
 		}
 	echo $html;
 }

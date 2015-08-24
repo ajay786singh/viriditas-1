@@ -60,12 +60,19 @@ class WC_Settings_Woocommerce_Compound_Settings {
                 'id'       => 'wc_settings_tab_compound_section_title'
             ),
             'sizes' => array(
-                'name' => __( 'Size/Price/Additional Price', 'woocommerce-settings-tab-compound' ),
+                'name' => __( 'Size/Price/Extra fee/Double Extra fee', 'woocommerce-settings-tab-compound' ),
                 'type' => 'textarea',
-                'desc' => __( 'Please enter size, price and additional price in this format (500ml/$60/$5). For multiple sizes use comma(,) to separate.', 'woocommerce-settings-tab-compound' ),
+                'desc' => __( 'Please enter size, price, extra fee, double extra fee in this format (500 mL/60/5/10). For multiple sizes use comma(,) to separate.', 'woocommerce-settings-tab-compound' ),
                 'id'   => 'wc_settings_tab_compound_sizes',
 				'css' =>'min-width:500px;min-height:100px;'
             ),
+			// 'compounding_service_fee' => array(
+                // 'name' => __( 'Compounding service fee', 'woocommerce-settings-tab-compound' ),
+                // 'type' => 'text',
+                // 'desc' => __( 'Please enter compounding service fee.', 'woocommerce-settings-tab-compound' ),
+                // 'id'   => 'wc_settings_tab_compound_service_fee',
+				// 'css' =>'min-width:500px;min-height:100px;'
+            // ),
             'section_end' => array(
                  'type' => 'sectionend',
                  'id' => 'wc_settings_tab_compound_section_end'
