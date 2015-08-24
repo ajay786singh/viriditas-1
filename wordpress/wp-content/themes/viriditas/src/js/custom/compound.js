@@ -10,6 +10,7 @@ jQuery(document).ready(function($) {
 		// Function to close pop up for compound on press esc button
 		$(document).keyup(function(e) {
 			if (e.keyCode == 27) {
+				alert(2);
 				var herbSize=$('#herb-size').val();
 				var totalSize=$('#total_size').html();
 				totalSize=parseInt(totalSize);
@@ -34,6 +35,7 @@ jQuery(document).ready(function($) {
 			var totalSize=$('#total_size').html();
 			var baseSize=100;
 			if(parseInt(totalSize) > baseSize) {
+				alert(1);
 				return false;
 			} else {				
 				if(herbSize=="" || herbSize==0){
@@ -87,7 +89,7 @@ jQuery(document).ready(function($) {
 			var herbPricy=$('.herb-name').attr("data-pricy");
 			$('#size_'+herbId).val(herbSize);
 			var compound_id=$('#recipe-compound-id').val();
-			if(herbPricy =='*' && herbSize > 60) {
+			if((herbPricy =='*' || herbPricy =='**') && herbSize > 60) {
 				$('.pop-up-error').empty().show().html("The maximum amount for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
 			}
 			var totalSizes=$('.herb-sizes').calculateSize();
@@ -112,7 +114,7 @@ jQuery(document).ready(function($) {
 			var herbPricy=$('.herb-name').attr("data-pricy");
 			var compound_id=$('#recipe-compound-id').val();
 			if(herbSize !='' && herbSize > 0) {
-				if(herbPricy =='*' && herbSize > 60) {
+				if((herbPricy =='*' || herbPricy =='**') && herbSize > 60) {
 					 $('.pop-up-error').empty().show().html("The maximum addition for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
 				} else {
 					$('.pop-up-error').empty().hide();
@@ -166,7 +168,7 @@ jQuery(document).ready(function($) {
 			var size_price=$('.recipe-size:checked').val();	
 			var productType=$('#product_type').val();	
 			var recipeMono=$('#recipe-mono').val();	
-			alert(recipeMono);	
+			//alert(recipeMono);	
 			var herbs=[];
 			var compound_herbs=$('#recipe-compound-herbs').val();
 			var additionalPrice=$('#additional_price').val();

@@ -7,7 +7,6 @@ function product_remove_post_type_support() {
 	remove_post_type_support( 'product', 'custom-fields' );
 }
 $products->add_taxonomy( 'Body system' );
-//$products->add_taxonomy( 'Actions' );
 $products->add_taxonomy( 'Indication' );
 $products->add_meta_box(
     'Product Details',
@@ -22,8 +21,13 @@ $products->add_meta_box(
 		array(
 			'name'          => 'expensive_herb',
 			'label'         => 'Expensive Herb',
-			'description'   => 'Please check this box, if herb is expensive.',
-			'type'          => 'checkbox'
+			'description'   => 'Is this herb expensive? Pick expensive or extra expensive.',
+			'type'          => 'select',
+			'options'       => array(
+				''    => 'Select expensive or extra expensive',
+				'*'    => 'Expensive',
+				'**'    => 'Extra Expensive',
+			),
         ),
 		array(
 			'name'          => 'monograph_link',

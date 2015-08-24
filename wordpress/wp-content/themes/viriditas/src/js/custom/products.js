@@ -195,15 +195,11 @@ function toParams(searchUrl) {
 	$.fn.checkEditCompoundLimit = function () {
 		var baseSize=$(this).html();
 		baseSize=parseInt(baseSize);
-		//alert(baseSize);
 		return baseSize;
 	},
 	$.fn.calculateSize = function( ) {
 		var sum = 0;
 		var compound_id=$('#recipe-compound-id').val();
-		//if(compound_id!=""){
-			//sum=25;
-		//}
 		$(this).each(function(e) {
 			if(!isNaN(this.value) && this.value.length!=0) {
 				sum += parseFloat(this.value);
@@ -223,14 +219,22 @@ function toParams(searchUrl) {
 	},
 	$.fn.calculateAdditionalPrice = function( ) {
 		var extra=$('.recipe-size:checked').attr('data-additional');	
+		var extra_expensive=$('.recipe-size:checked').attr('data-extra-expensive');	
 		var i=0;
+		var j=0;
+		var totalExtra=0;
 		$('.herb-sizes').each(function(e) {
 			var pricey=$(this).attr('data-pricy');
 			if(pricey=='*') {
 				i++;
+			} 
+			if(pricey=='**') {
+				j++;
 			}
 		});
-		$(this).val(extra*i);
+		totalExtra=parseInt(extra*i) + parseInt(extra_expensive*j);
+		//alert(totalExtra);
+		$(this).val(totalExtra);
 	},
 	$.fn.addHerb = function( id, name, expensive ) {
 		if($('.popup-compound').show()==true){
@@ -256,9 +260,13 @@ function toParams(searchUrl) {
 			alert("You've reached the max % that can be added to a combination online.");
 		} else { 	
 			if($('.additions ul li').length < baseHerbs) {
-				if(expensive=='*') {
-					$(".pop-up-note").show();
-				} 
+				if(expensive!='' && expensive!='-1' && expensive=='*') {
+					$(".pop-up-note.message_expensive").show();
+					$(".pop-up-note.message_extra_expensive").hide();
+				} else if(expensive!='' && expensive!='-1' && expensive=='**') {
+					$(".pop-up-note.message_expensive").hide();
+					$(".pop-up-note.message_extra_expensive").show();
+				}
 				if(totalSize <= baseSize) {
 					var html="<li id='remove-product-"+id+"'><div class='box'>";
 						html+="<a data-pricy='"+expensive+"' href='#' class='remove-compound' id='remove-"+id+"'>X</a></div> <div class='box'><i>"+name+expensive+"</i></div>";

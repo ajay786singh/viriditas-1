@@ -534,8 +534,8 @@ function show_compound_products() {
 		$product_id=get_the_ID();
 			$expensive_herb = get_post_meta($product_id,'_product_details_expensive_herb',true);
 			$data_pricy="";
-			if($expensive_herb == 'on') {
-				$data_pricy="*";
+			if($expensive_herb != '-1' || $expensive_herb == '' ) {
+				$data_pricy=$expensive_herb;
 			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">

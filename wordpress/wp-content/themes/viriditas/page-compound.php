@@ -22,7 +22,8 @@ get_header();
 				<div class="size-input"><input type="text" name="herb-size" value="" placeholder="0" class="numbers" id="herb-size" maxlength="2" /></div>
 				<div><a href="#" class="button add-herb">Add Herb</a></div>
 			</form>
-			<div class="pop-up-note"><?php show_compound_notice();?></div>
+			<div class="pop-up-note message_expensive"><?php show_compound_notice();?></div>
+			<div class="pop-up-note message_extra_expensive"><?php show_compound_notice_extra();?></div>
 		</div>
 	</div>
 </div>
@@ -103,6 +104,7 @@ get_header();
 											$price=$compound_prices[$i]->name;
 										}
 										$additional_price=$sizeprice[2];
+										$extra_expensive=$sizeprice[3];
 										$checked="";
 										if($i==0) { 
 											$checked='checked';
@@ -117,7 +119,7 @@ get_header();
 										}
 										$i++;
 										echo "<li>";
-											echo "<input type='radio' ".$checked." id='size-".$i."' data-additional='".$additional_price."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
+											echo "<input type='radio' ".$checked." id='size-".$i."' data-additional='".$additional_price."' data-extra-expensive='".$extra_expensive."' name='recipe-size' class='recipe-size' value='".$size."-".$price."'>";
 											echo "<label for='size-".$i."'>".$size." - $".$price."</label>";
 										echo "</li>";
 									}
