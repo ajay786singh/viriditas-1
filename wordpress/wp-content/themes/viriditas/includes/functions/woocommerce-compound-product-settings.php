@@ -66,13 +66,13 @@ class WC_Settings_Woocommerce_Compound_Settings {
                 'id'   => 'wc_settings_tab_compound_sizes',
 				'css' =>'min-width:500px;min-height:100px;'
             ),
-			// 'compounding_service_fee' => array(
-                // 'name' => __( 'Compounding service fee', 'woocommerce-settings-tab-compound' ),
-                // 'type' => 'text',
-                // 'desc' => __( 'Please enter compounding service fee.', 'woocommerce-settings-tab-compound' ),
-                // 'id'   => 'wc_settings_tab_compound_service_fee',
-				// 'css' =>'min-width:500px;min-height:100px;'
-            // ),
+			'compounding_service_fee' => array(
+                'name' => __( 'Compounding service fee', 'woocommerce-settings-tab-compound' ),
+                'type' => 'text',
+                'desc' => __( 'Please enter compounding service fee.', 'woocommerce-settings-tab-compound' ),
+                'id'   => 'wc_settings_tab_compound_service_fee',
+				'css' =>'min-width:500px;min-height:30px;'
+            ),
             'section_end' => array(
                  'type' => 'sectionend',
                  'id' => 'wc_settings_tab_compound_section_end'
