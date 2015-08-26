@@ -180,7 +180,7 @@ get_header();
 							$service_fee="0";
 						}
 					?>
-					<input type="text" name="recipe-service-fee" id="recipe-service-fee" value="<?php echo $service_fee;?>" data-value="<?php echo $service_fee;?>">
+					<input type="hidden" name="recipe-service-fee" id="recipe-service-fee" value="<?php echo $service_fee;?>" data-value="<?php echo $service_fee;?>">
 					<input type="hidden" name="recipe-compound-id" id="recipe-compound-id" value="<?php echo $compound_id;?><?php echo $mono_compound_id;?>">
 					<input type="hidden" name="recipe-compound-herbs" id="recipe-compound-herbs" value="<?php echo $bundle_herb_ids;?>">
 					<input type="hidden" name="recipe-mono" id="recipe-mono" value="<?php echo $mono_compound_id;?>">

@@ -254,12 +254,11 @@ function toParams(searchUrl) {
 		$('.hide-info').hide();
 		var totalSize = $('.herb-sizes').calculateSize();
 		var compound_id=$('#recipe-compound-id').val();
-		var baseHerbs=7;
+		var baseHerbs=limitHerbForNewCompound;
 		var baseSize=100;
 		if(compound_id !='') {
-			baseHerbs=3;
+			baseHerbs=limitHerbForEditCompound;
 		}
-		
 		if(totalSize==baseSize) {
 			$('.popup-compound').closePopup();
 			alert("You've reached the max % that can be added to a combination online.");
