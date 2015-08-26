@@ -223,6 +223,12 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
     } else {
         WC()->session->__unset( $cart_item_key.'_additional_price' );
     }  	
+	
+	if( $_POST['service_fee'] ) {
+        WC()->session->set( $cart_item_key.'_service_fee', $_POST['service_fee']);
+    } else {
+        WC()->session->__unset( $cart_item_key.'_service_fee' );
+    }  	
 }
 add_action( 'woocommerce_add_to_cart', 'save_cart_data_bundle_price', 1, 5 );
 
@@ -231,7 +237,7 @@ function calculate_bundle_price( $cart_object ) {
 	$additionalPrice = 100;
     foreach ( $cart_object->cart_contents as $key => $value ) {       
         if( WC()->session->__isset( $key.'_cart_price' ) ) {
-			$bundle_price=WC()->session->get( $key.'_cart_price' ) + WC()->session->get( $key.'_additional_price' );
+			$bundle_price=WC()->session->get( $key.'_cart_price' ) + WC()->session->get( $key.'_additional_price' ) + WC()->session->get( $key.'_service_fee' );
             $quantity = intval( $value['quantity'] );
             $orgPrice = intval( $value['data']->price );
 			$value['data']->price =  $bundle_price ;

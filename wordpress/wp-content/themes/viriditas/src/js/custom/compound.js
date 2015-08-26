@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 		// Function to close pop up for compound on press esc button
 		$(document).keyup(function(e) {
 			if (e.keyCode == 27) {
-				alert(2);
+				//alert(2);
 				var herbSize=$('#herb-size').val();
 				var totalSize=$('#total_size').html();
 				totalSize=parseInt(totalSize);
@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
 			var totalSize=$('#total_size').html();
 			var baseSize=100;
 			if(parseInt(totalSize) > baseSize) {
-				alert(1);
+				//alert(1);
 				return false;
 			} else {				
 				if(herbSize=="" || herbSize==0){
@@ -168,6 +168,7 @@ jQuery(document).ready(function($) {
 			var size_price=$('.recipe-size:checked').val();	
 			var productType=$('#product_type').val();	
 			var recipeMono=$('#recipe-mono').val();	
+			var serviceFee=$('#recipe-service-fee').val();	
 			//alert(recipeMono);	
 			var herbs=[];
 			var compound_herbs=$('#recipe-compound-herbs').val();
@@ -187,7 +188,7 @@ jQuery(document).ready(function($) {
 				baseSize=parseInt(baseSize);
 			}
 			var compound_products=$('#compound-products').val();
-			var data= {'action':'manage_compound','title':title,'product_type':productType,'cart_size':cartSize,'cart_price':cartPrice,'size':size,'price':price,'compound_products':compound_products,'herbs':herbs,'additional_price':additionalPrice,'compound_id':compound_id,'compound_herbs':compound_herbs,'recipeMono':recipeMono};		
+			var data= {'action':'manage_compound','title':title,'product_type':productType,'cart_size':cartSize,'cart_price':cartPrice,'size':size,'price':price,'compound_products':compound_products,'herbs':herbs,'additional_price':additionalPrice,'compound_id':compound_id,'compound_herbs':compound_herbs,'recipeMono':recipeMono,'service_fee':serviceFee};		
 			var message=$('.errors');	
 			message.show();		
 			message.loaderShow();		

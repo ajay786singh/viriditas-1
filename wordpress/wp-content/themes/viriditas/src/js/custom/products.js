@@ -232,6 +232,12 @@ function toParams(searchUrl) {
 				j++;
 			}
 		});
+		if(i>0 || j>0) {
+			$('#recipe-service-fee').val(0);	
+		} else {
+			var serviceFee=$('#recipe-service-fee').attr("data-value");
+			$('#recipe-service-fee').val(serviceFee);
+		}
 		totalExtra=parseInt(extra*i) + parseInt(extra_expensive*j);
 		//alert(totalExtra);
 		$(this).val(totalExtra);
@@ -253,8 +259,7 @@ function toParams(searchUrl) {
 		if(compound_id !='') {
 			baseHerbs=3;
 		}
-		//if()
-		//alert("Total="+totalSize);
+		
 		if(totalSize==baseSize) {
 			$('.popup-compound').closePopup();
 			alert("You've reached the max % that can be added to a combination online.");
@@ -274,10 +279,6 @@ function toParams(searchUrl) {
 						html+="<input type='text' data-pricy='"+expensive+"' maxlength='2' name='"+number_size+"' class='herb-sizes' id='"+number_size+"' value='0'>";
 						html+="<div>%</div></div></li>";
 					$('#compound-'+id).addClass('added');
-					// if(compound_id!='') {
-						// $('.base-size').checkEditCompoundLimit();
-					// }
-					//$('.base-size').checkEditCompoundLimit();
 					$('.additions ul').append(html);	
 					$("#additional_price").calculateAdditionalPrice();					
 					$('.herb-name').html(name+expensive);
@@ -300,7 +301,8 @@ function toParams(searchUrl) {
 				}
 			} else {
 				$('.popup-compound').closePopup();
-				alert("You can add max "+baseHerbs+" herbs to your compound.");
+				var msg="You can add max "+baseHerbs+" herbs to your compound.";
+				alert(msg);
 			}
 		}
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
