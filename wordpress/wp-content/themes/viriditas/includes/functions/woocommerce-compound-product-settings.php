@@ -66,6 +66,20 @@ class WC_Settings_Woocommerce_Compound_Settings {
                 'id'   => 'wc_settings_tab_compound_sizes',
 				'css' =>'min-width:500px;min-height:100px;'
             ),
+			'limit_herb_new_compound' => array(
+                'name' => __( 'Limit no. of herbs for new compound', 'woocommerce-settings-tab-compound' ),
+                'type' => 'text',
+                'desc' => __( 'Please enter no. of herb for new compound.', 'woocommerce-settings-tab-compound' ),
+                'id'   => 'wc_settings_tab_compound_limit_herb_new',
+				'css' =>'min-width:500px;min-height:30px;'
+            ),
+			'limit_herb_edit_compound' => array(
+                'name' => __( 'Limit no. of herbs for edit compound', 'woocommerce-settings-tab-compound' ),
+                'type' => 'text',
+                'desc' => __( 'Please enter no. of herb for edit compound.', 'woocommerce-settings-tab-compound' ),
+                'id'   => 'wc_settings_tab_compound_limit_herb_edit',
+				'css' =>'min-width:500px;min-height:30px;'
+            ),
 			'compounding_service_fee' => array(
                 'name' => __( 'Compounding service fee', 'woocommerce-settings-tab-compound' ),
                 'type' => 'text',

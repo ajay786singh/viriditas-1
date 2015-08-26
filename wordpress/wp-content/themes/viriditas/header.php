@@ -27,6 +27,8 @@
 		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
 		var cart_page = '<?php echo get_permalink( woocommerce_get_page_id( 'cart' ) );?>';
 		var compound_page = '<?php echo get_permalink(2219);?>';
+		var limitHerbForNewCompound = '<?php echo get_option('wc_settings_tab_compound_limit_herb_new');?>';
+		var limitHerbForEditCompound = '<?php echo get_option('wc_settings_tab_compound_limit_herb_edit');?>';
 	</script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
