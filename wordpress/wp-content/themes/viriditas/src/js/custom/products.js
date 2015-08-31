@@ -409,6 +409,7 @@ function toParams(searchUrl) {
 		var $this=$(this), page=0;
 		$this.find('a').click(function(){
 				page = $('#current-page').val();
+				//alert(page);
 				page++;
 				$('#current-page').val(page);
 				var body_system='',indication='';

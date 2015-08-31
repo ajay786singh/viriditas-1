@@ -117,11 +117,18 @@ global $product;
 							$manage_compound_url=get_permalink($compound_page_id);
 							?>
 							<div class="cart-actions">
+								<?php 
+									$_allowed_bundle_user=get_post_meta($product->id,'_allowed_bundle_user',true);
+									$button_text="Add to cart";
+									if($_allowed_bundle_user =='') {
+										$button_text="Buy as is";
+								?>
 								<div class="column-5"><a href="<?php echo $manage_compound_url;?>?compound=<?php echo get_the_ID();?>" id="" class="button edit-formula">EDIT FORMULA</a></div>
 								<div class="column-2">or</div>
+								<?php } ?>
 								<div class="column-5">
 									<!--<a href="#" id="add-to-cart_bundle" class="button">Buy as is</a>-->
-									<button type="submit" class="single_add_to_cart_button button alt">Buy as is</button>
+									<button type="submit" class="single_add_to_cart_button button alt"><?php echo $button_text;?></button>
 								</div>
 							</div>
 							<?php
