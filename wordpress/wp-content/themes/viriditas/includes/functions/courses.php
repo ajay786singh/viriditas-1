@@ -189,7 +189,7 @@ function get_courses() {
 								echo $description;
 								echo "<div class='course-action'>";
 								if($price):
-									echo "<h4>$".$price."+tax</h4>";
+									echo "<h4>$".$price."</h4>";
 								endif;
 								if($register_open=='on') {
 									echo '<a href="'.$course_register_url.'" class="button">Register Now</a>';
