@@ -127,7 +127,9 @@ get_header();
 								}
 							//}
 						?>
+						<?php if($compound_id !='' || $mono_compound_id!='') {  ?>
 						<b>Please note: $5 will be added to your cart for customizing this formula. If you choose to add any of the expensive herbs, this $5 fee will be waived.</b>
+						<?php } ?>
 					</section>
 					<?php 
 						if($compound_id !='' || $mono_compound_id!='') { 
