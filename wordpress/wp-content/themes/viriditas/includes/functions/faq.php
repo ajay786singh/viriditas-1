@@ -160,7 +160,7 @@ function get_faqs_box_content() {
 				$html.= "<section>".get_faqs()."</section>";
 				$html.= "<section>".get_worksheets()."</section>";
 				$html.= "<section>".get_monographs()."</section>";
-				$html.= "<a href='".$contact_page_url."' class='button show-contact-form'>Contact Us</a>";
+				$html.= "<a href='".$contact_page_url."' class='button'>Contact Us</a>";
 				$html.= "<section id='faq-contact-form'>";
 				$contact_form_id=9;
 				$display_title = false;
@@ -169,7 +169,7 @@ function get_faqs_box_content() {
 				$field_values = null; 
 				$ajax = "true";
 				//$html.='[gravityform id="'.$contact_form_id.'" ajax="'.$ajax.'"]';
-				$html.= do_shortcode('[gravityform id="'.$contact_form_id.'" ajax="'.$ajax.'"]');//gravity_form($contact_form_id, $display_title, $display_description, $display_inactive, $field_values, $ajax);
+				//$html.= do_shortcode('[gravityform id="'.$contact_form_id.'" ajax="'.$ajax.'"]');//gravity_form($contact_form_id, $display_title, $display_description, $display_inactive, $field_values, $ajax);
 				$html.= "</section>";
 				$html.='</div>';
 		$html.='</div>';
