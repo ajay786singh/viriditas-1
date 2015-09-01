@@ -34,7 +34,7 @@ class GFSignature extends GFAddOn {
 		$scripts = array(
 			array(
 				'handle'  => 'maskedinput',
-				'src'     => GFCommon::get_base_url() . '/js/jquery.maskedinput.min.js',
+				'src'     => GFCommon::get_base_url() . '/js/jquery.maskedinput-1.3.1.min.js',
 				'version' => GFCommon::$version,
 				'deps'    => array( 'jquery' ),
 				'enqueue' => array(
@@ -424,7 +424,7 @@ class GFSignature extends GFAddOn {
 
 			$path_info      = pathinfo( $value );
 			$filename       = $path_info['filename'];
-			$signature_path = site_url() . "?page=gf_signature&signature={$filename}";
+			$signature_path = home_url() . "?page=gf_signature&signature={$filename}";
 
 			$value = $signature_path;
 
@@ -439,7 +439,7 @@ class GFSignature extends GFAddOn {
 		if ( $field['type'] == 'signature' && ! empty( $value ) ) {
 			$path_info      = pathinfo( $value );
 			$filename       = $path_info['filename'];
-			$signature_path = site_url() . "?page=gf_signature&signature={$filename}";
+			$signature_path = home_url() . "?page=gf_signature&signature={$filename}";
 			$thumb          = GFCommon::get_base_url() . '/images/doctypes/icon_image.gif';
 			$newvalue       = "<a href='$signature_path' target='_blank' title='" . __( 'Click to view', 'gravityformssignature' ) . "'><img src='$thumb'/></a>";
 
@@ -453,7 +453,7 @@ class GFSignature extends GFAddOn {
 		$path_info = pathinfo( $filename );
 		$filename  = $path_info['filename'];
 
-		return site_url() . "?page=gf_signature&signature={$filename}";
+		return home_url() . "?page=gf_signature&signature={$filename}";
 	}
 
 	public function signature_entry_detail( $value, $field, $lead, $form ) {
@@ -501,7 +501,6 @@ class GFSignature extends GFAddOn {
 					'class'   => 'button',
 					'value'   => __( 'Signature', 'gravityformssignature' ),
 					'onclick' => "StartAddField('signature');",
-					'data-type' => 'signature',
 				);
 				break;
 			}
@@ -667,7 +666,7 @@ class GFSignature extends GFAddOn {
 			} else {
 				//rename signature file
 				$new_name = str_replace( 'temp_', '', $filename );
-				$folder   = trailingslashit( RGFormsModel::get_upload_root() ) . 'signatures/';
+				$folder   = RGFormsModel::get_upload_root() . '/signatures/';
 
 				rename( $folder . $filename, $folder . $new_name );
 				$_POST[ "input_{$field['id']}" ] = $new_name;
