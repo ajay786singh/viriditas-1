@@ -150,7 +150,7 @@ function get_monographs() {
 }
 
 function get_faqs_box_content() {
-	$contact_page_id=1043;
+	$contact_page_id=2634;
 	$contact_page_url=get_permalink($contact_page_id);	
 	$html='<div id="faq-box" class="mfp-hide white-popup-block">';
 	$html.='<p><a class="popup-modal-dismiss" href="#">X</a></p>';
