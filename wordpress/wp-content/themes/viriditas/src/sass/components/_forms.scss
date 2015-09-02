@@ -302,6 +302,10 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 }
 
 .gform_wrapper {
+	overflow:auto;
+	@include media($bp-large) {
+		overflow: inherit;
+	}
 	form {
 		.top_label  {
 			& li.gfield {
@@ -599,5 +603,13 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		top: 1px;
 		width: 30px;
 		outline:none;
+	}
+}
+.gform_wrapper .top_label .gfield_list {
+	width:100%;
+}
+.gform_wrapper .gfield_list {
+	& td.gfield_list_cell input {
+		margin-top:15px;
 	}
 }
