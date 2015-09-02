@@ -33,13 +33,29 @@ class Appointment_Forms extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-	
-     	echo $args['before_widget'];
+		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 		}
 		if ( ! empty( $instance['description'] ) ) {
 			echo "<p>".apply_filters( 'widget_description', $instance['description'] )."</p>";
+		}
+		if ( ! empty( $instance['form_pages'] ) ) {
+			//echo "<p>".apply_filters( 'widget_description', $instance['form_pages'] )."</p>";
+			$pages=$instance['form_pages'];
+			global $wp_query;
+			$argss=array(
+				'post_type'=>array('page'),
+				'post__in'=> explode(",",$pages)
+			);
+			$results=new WP_Query($argss);
+			if($results->have_posts()):
+				echo "<ul>";
+					while($results->have_posts()):$results->the_post();
+						echo "<li><a href='".get_the_permalink()."'>".get_the_title()."</a></li>";
+					endwhile;
+				echo "</ul>";
+			endif;wp_reset_query();
 		}
 		echo $args['after_widget'];
 	}

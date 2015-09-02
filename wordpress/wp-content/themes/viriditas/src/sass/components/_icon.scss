@@ -85,7 +85,21 @@
 		}
 	}
 }
-
+.icon-download {
+	display:block;
+	margin-top:10px;
+	padding-left:30px;
+	position:relative;
+	&:before {
+		content:"\f019";
+		font-family:$icon-font;
+		font-size:1.25em;
+		left:0;
+		line-height: 1;
+		position:absolute;
+		top:0;
+	}
+}
 .add-formula {
 	float: right;
 	font-weight:bold;
