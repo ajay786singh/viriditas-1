@@ -250,7 +250,6 @@ add_action( 'woocommerce_before_calculate_totals', 'calculate_bundle_price', 1, 
 /* Function to add meta value size on cart item list */
 function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null ) {
 	if( $cart_item_key && is_cart() ) {
-		//echo WC()->session->$cart_item_key.'_cart_price';
         if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
             echo $title. '<dl class="variation">
                  <dt class="variation-Size">Size: </dt>
@@ -316,7 +315,7 @@ function add_cart_item_custom_data_vase( $cart_item_meta, $product_id ) {
 
 //Get it from the session and add it to the cart variable
 function get_cart_items_from_session( $item, $values, $key ) {
-    if ( array_key_exists( 'cart_price', $values ) ) {
+	if ( array_key_exists( 'cart_price', $values ) ) {
         $item[ 'cart_price' ] = $values['cart_price'];
 	}
 	if ( array_key_exists( 'cart_size', $values ) ) {
