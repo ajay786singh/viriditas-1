@@ -613,3 +613,9 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		margin-top:15px;
 	}
 }
+.gform_wrapper.gf_browser_chrome ul.gform_fields li.gfield input[type=radio] {
+	margin-top:5px;
+}
+.gform_wrapper .ginput_complex .ginput_right select, .gform_wrapper .ginput_complex select {
+	padding:6px 0;
+}
