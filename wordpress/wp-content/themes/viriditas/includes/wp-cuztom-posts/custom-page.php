@@ -19,4 +19,17 @@ $page->add_meta_box(
 		)        
     )
 );
+
+$page->add_meta_box(
+    'appointment_block',
+    'Appointment content (Optional: This will be displayed only with appointment forms.)', 
+    array(
+        array(
+            'name'          => 'appointment_pdf',
+            'label'         => 'Upload appointment form PDF',
+            'description'   => 'This is only for pdf file.',
+            'type'          => 'file',   
+        )
+    )
+);
 ?>
