@@ -46,6 +46,10 @@ require_once('includes/functions/add-single-cart.php');
 // Load Login/Register
 require_once('includes/login-register/register.php');
 require_once('includes/login-register/login.php');
+
+//Load shortcodes
+require_once('includes/widgets/appointment-forms.php');
+
 //Load shortcodes
 //require_once('includes/shortcodes/button.php');
 //require_once('includes/shortcodes/content.php');
