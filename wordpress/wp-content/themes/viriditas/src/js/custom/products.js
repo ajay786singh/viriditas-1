@@ -239,7 +239,6 @@ function toParams(searchUrl) {
 			$('#recipe-service-fee').val(serviceFee);
 		}
 		totalExtra=parseInt(extra*i) + parseInt(extra_expensive*j);
-		//alert(totalExtra);
 		$(this).val(totalExtra);
 	},
 	$.fn.addHerb = function( id, name, expensive ) {
@@ -406,10 +405,10 @@ function toParams(searchUrl) {
 		$(this).removeClass('loading');
 	},
 	$.fn.loadMore = function() {
+		//alert(10);
 		var $this=$(this), page=0;
 		$this.find('a').click(function(){
 				page = $('#current-page').val();
-				//alert(page);
 				page++;
 				$('#current-page').val(page);
 				var body_system='',indication='';
@@ -574,8 +573,9 @@ jQuery(document).ready(function($){
 							$(".by-indication").dropkick();
 							$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 							$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-							product_container.empty();
-							product_container.showProducts();
+							//alert('a');
+							//product_container.empty();
+							//product_container.showProducts();
 						}	
 				} else if(dk.value=='2219') {
 					window.location=compound_page;
@@ -595,8 +595,9 @@ jQuery(document).ready(function($){
 						$('section[role="category"]').filterSelectTerms('pc',dk.value);
 						$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 						$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-						product_container.empty();
-						product_container.showProducts();
+						//alert('B');
+						//product_container.empty();
+						//product_container.showProducts();
 					}
 				}	
 			}
