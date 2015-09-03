@@ -435,3 +435,9 @@ article {
 	float: left;
 	width: 100%;
 }	
+
+.appointment-form-content {
+	@include media($bp-large) {
+		padding-right:50px;
+	}
+}
