@@ -8,7 +8,7 @@ get_header(); ?>
 
 <section role="content">
     <div class="container">
-		<div class="column-9 border-right">
+		<div class="column-9 border-right appointment-form-content">
 			<?php the_title("<h1>","</h1>");?>
 			<?php the_content();?>
 		</div>
