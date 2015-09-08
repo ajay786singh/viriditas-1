@@ -26,7 +26,7 @@ function get_product_categories($exclude=false) {
 					$result.="<option value='".$product_category->term_id."'>".$category_name."</option>";
 				}
 			}
-			$result.="<option value='2219'>Create your own compound</option>";
+			$result.="<option value='2219'>Create a Formula</option>";
 		$result.='</select>';
 	}
 	echo $result;
