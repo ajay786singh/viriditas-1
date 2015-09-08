@@ -475,8 +475,13 @@ function toParams(searchUrl) {
 										window.history.pushState({path:url},'',url);
 										var url=removeURLParameter('pi');					
 										window.history.pushState({path:url},'',url);
-										$('.product-list').empty();
-										$('.product-list').showProducts({page:1});
+										if($('.compounds').length) {
+											$('.compound-list .product-list').showCompound();
+										} else {
+											$('.product-list').empty();
+											$('.product-list').showProducts({page:1});
+										}
+										//$this.filterSelectTerms(filter,dk.value);
 									}
 								} else {	
 									if(taxonomy =='body_system') {
@@ -485,10 +490,15 @@ function toParams(searchUrl) {
 											window.history.pushState({path:url},'',url);
 										}
 										var pc=getUrlVars().pc || '';
-										if(dk.value!='' && pc!='1391') {
+										if(dk.value!='' && $('.compounds').length==1) {
+											$('section[role="actions"]').show();
 											$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
-										}else {
-											$('section[role="actions"]').dropkick();
+										}else {												
+											if(dk.value!='' && pc!='1391') {
+												$('section[role="actions"]').fetchActions('body_system',dk.value,'pa','');
+											}else {
+												$('section[role="actions"]').dropkick();
+											}
 										}
 									}
 									$this.filterSelectTerms(filter,dk.value);
@@ -528,8 +538,12 @@ function toParams(searchUrl) {
 										this.reset(true);
 										var url=removeURLParameter('pa');					
 										window.history.pushState({path:url},'',url);
-										$('.product-list').empty();
-										$('.product-list').showProducts({page:1});
+										if($('.compounds').length) {
+											$('.compound-list .product-list').showCompound();
+										} else {
+											$('.product-list').empty();
+											$('.product-list').showProducts({page:1});
+										}
 									}
 									
 								}else {	
