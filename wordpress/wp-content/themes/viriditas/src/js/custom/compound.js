@@ -90,7 +90,7 @@ jQuery(document).ready(function($) {
 			$('#size_'+herbId).val(herbSize);
 			var compound_id=$('#recipe-compound-id').val();
 			if((herbPricy =='*' || herbPricy =='**') && herbSize > 60) {
-				$('.pop-up-error').empty().show().html("The maximum amount for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
+				$('.pop-up-error').empty().show().html("60% of this herb is the maximum that can be added to a formula online. Please contact Viriditas to request greater than 60%. 416-767-3428");
 			}
 			var totalSizes=$('.herb-sizes').calculateSize();
 			if(totalSizes > 100) {
@@ -115,7 +115,7 @@ jQuery(document).ready(function($) {
 			var compound_id=$('#recipe-compound-id').val();
 			if(herbSize !='' && herbSize > 0) {
 				if((herbPricy =='*' || herbPricy =='**') && herbSize > 60) {
-					 $('.pop-up-error').empty().show().html("The maximum addition for this herb is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428.");
+					 $('.pop-up-error').empty().show().html("60% of this herb is the maximum that can be added to a formula online. Please contact Viriditas to request greater than 60%. 416-767-3428");
 				} else {
 					$('.pop-up-error').empty().hide();
 					$('#size_'+herbId).val(herbSize);
