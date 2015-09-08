@@ -127,6 +127,10 @@ function manage_compound() {
 					wp_set_object_terms( $post_id, $avail_sizes, 'pa_size' );
 					wp_set_object_terms( $post_id, $avail_prices, 'pa_price' );						
 				}						
+				$defaultWeight="1";
+				$defaultHeight="1";
+				$defaultWidth="1";
+				$defaultLength="1";
 				wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
 				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
@@ -140,10 +144,10 @@ function manage_compound() {
 				update_post_meta( $post_id, '_sale_price',  '' );
 				update_post_meta( $post_id, '_purchase_note', "" );
 				update_post_meta( $post_id, '_featured', "no" );
-				update_post_meta( $post_id, '_weight', "" );
-				update_post_meta( $post_id, '_length', "" );
-				update_post_meta( $post_id, '_width', "" );
-				update_post_meta( $post_id, '_height', "" );
+				update_post_meta( $post_id, '_weight', $defaultWeight );
+				update_post_meta( $post_id, '_length', $defaultLength );
+				update_post_meta( $post_id, '_width', $defaultWidth );
+				update_post_meta( $post_id, '_height', $defaultHeight);
 				update_post_meta($post_id, '_sku', "");
 				update_post_meta( $post_id, '_product_attributes', $product_attributes);
 				update_post_meta( $post_id, '_sale_price_dates_from', '' );
