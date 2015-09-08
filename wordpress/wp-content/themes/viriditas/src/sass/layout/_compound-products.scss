@@ -11,6 +11,21 @@ $pop-up-border-color:#afafaf;
 	}
 	text-transform:uppercase;
 }
+.compound-links {
+	span {
+		display:block;
+		width:100%;
+		float:left;
+		.back-to-products {
+			&.back-link {
+				padding-bottom:0;
+			}
+			&.popup-modal {
+				margin-top: 0em;
+			}
+		}
+	}
+}
 
 .compounds {
 	.compound-box {
