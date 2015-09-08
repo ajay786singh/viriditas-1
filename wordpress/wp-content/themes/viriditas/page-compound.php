@@ -12,6 +12,7 @@ get_header();
 	$mono_compound_id = $_REQUEST['mono-compound'];
 	$addition_box_class="compound-header";
 ?>
+
 <div class="popup-compound">
 	<div class="popup-compound-content">
 		<div class="error pop-up-error"></div>
@@ -29,7 +30,7 @@ get_header();
 </div>
 <section role="content">
     <div class="container">
-		<div class="secondary">
+		<div class="column-8">
 		<?php 
 			if($compound_id !='' || $mono_compound_id!='') {  
 				$title="Edit a Formula";
@@ -38,9 +39,10 @@ get_header();
 			}
 			echo "<h1>".$title."</h1>";
 		?>
+		
 		<?php the_content();?>
 		</div>
-		<div class="secondary compound-links">
+		<div class="column-4 compound-links">
 			<span><a class="back-to-products back-link" href="<?php bloginfo('url');?>/products">&larr; Back to products</a></span>
 			<span><a class="back-to-products popup-modal" href="#faq-box">View monographs and worksheets</a></span>
 		</div>	
@@ -205,7 +207,7 @@ get_header();
 								
 							</ul>
 						</section>
-						<?php if($compound_id =='' || $mono_compound_id=='') {?>
+						<?php if($compound_id =='' && $mono_compound_id=='') { ?>
 						<section class="compound-info">*Total must be equal 100%</section>
 						<?php } ?>
 						<section class="compound-header total-box">
