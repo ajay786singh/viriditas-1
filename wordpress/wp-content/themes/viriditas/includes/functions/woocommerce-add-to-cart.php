@@ -39,7 +39,7 @@ function manage_compound() {
 					$expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
 					if($expensive_herb == 'on') {
 						if($herb_size > 60) {
-							array_push($errors, "The maximum amount for this herb: <b>".$name."</b> is 60% when ordering online. To request a greater amount please place your order by phone: 416-767-3428."); 
+							array_push($errors, "60% of this herb: <b>".$name."</b> is the maximum that can be added to a formula online. Please contact Viriditas to request greater than 60%. 416-767-3428"); 
 						} else {
 							$price=$price+$additional_price;
 						}
