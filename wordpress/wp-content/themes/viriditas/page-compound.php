@@ -30,11 +30,19 @@ get_header();
 <section role="content">
     <div class="container">
 		<div class="secondary">
-		<h1>Custom Formulae</h1>
+		<?php 
+			if($compound_id !='' || $mono_compound_id!='') {  
+				$title="Edit a Formula";
+			}else {
+				$title="Create a Formula";
+			}
+			echo "<h1>".$title."</h1>";
+		?>
 		<?php the_content();?>
 		</div>
-		<div class="secondary">
-			<a class="back-to-products" href="<?php bloginfo('url');?>/products">&larr; Back to products</a>
+		<div class="secondary compound-links">
+			<span><a class="back-to-products back-link" href="<?php bloginfo('url');?>/products">&larr; Back to products</a></span>
+			<span><a class="back-to-products popup-modal" href="#faq-box">View monographs and worksheets</a></span>
 		</div>	
 	</div>
 	<div class="container compounds">
@@ -197,7 +205,9 @@ get_header();
 								
 							</ul>
 						</section>
+						<?php if($compound_id =='' || $mono_compound_id=='') {?>
 						<section class="compound-info">*Total must be equal 100%</section>
+						<?php } ?>
 						<section class="compound-header total-box">
 							<h6>TOTAL</h6>
 							<h6 id="total_size">
