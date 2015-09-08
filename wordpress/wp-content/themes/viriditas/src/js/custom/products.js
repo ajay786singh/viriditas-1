@@ -260,7 +260,7 @@ function toParams(searchUrl) {
 		}
 		if(totalSize==baseSize) {
 			$('.popup-compound').closePopup();
-			alert("You've reached the max % that can be added to a combination online.");
+			alert("Please review your percentages for each herb, the total cannot be greater than 100%.");
 		} else { 	
 			if($('.additions ul li').length < baseHerbs) {
 				if(expensive!='' && expensive!='-1' && expensive=='*') {

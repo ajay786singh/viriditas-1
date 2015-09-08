@@ -94,7 +94,7 @@ jQuery(document).ready(function($) {
 			}
 			var totalSizes=$('.herb-sizes').calculateSize();
 			if(totalSizes > 100) {
-				$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
+				$('.pop-up-error').empty().show().html("Please review your percentages for each herb, the total cannot be greater than 100%.");
 			}
 			if(compound_id!='') {
 				var baseSize=$('.base-size').checkEditCompoundLimit();
@@ -135,7 +135,7 @@ jQuery(document).ready(function($) {
 						}
 						
 					} else {						
-						$('.pop-up-error').empty().show().html("You've reached the max % that can be added to a combination online.");
+						$('.pop-up-error').empty().show().html("Please review your percentages for each herb, the total cannot be greater than 100%.");
 					}
 				}
 			} else {
@@ -207,7 +207,7 @@ jQuery(document).ready(function($) {
 			} else if(totalSizes > total_size) {
 				message.empty();
 				message.loaderHide();
-				message.html("You've reached the max % that can be added to a combination online.");
+				message.html("Please review your percentages for each herb, the total cannot be greater than 100%.");
 			} else {
 				message.empty();
 				message.loaderShow();
