@@ -10,6 +10,13 @@ $pop-up-border-color:#afafaf;
 		margin-top: 2.25em;
 	}
 	text-transform:uppercase;
+	.cart & {
+		@include media($bp-large) {
+			float: left;
+			margin-top: 0;
+			padding-bottom:0;
+		}
+	}
 }
 .compound-links {
 	span {
