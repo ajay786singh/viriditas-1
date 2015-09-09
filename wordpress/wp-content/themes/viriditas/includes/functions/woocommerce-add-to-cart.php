@@ -37,7 +37,7 @@ function manage_compound() {
 					array_push($errors, "Please add size to herb: <b>".$name."</b>."); 
 				} else {
 					$expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
-					if($expensive_herb == 'on') {
+					if($expensive_herb == '*' || $expensive_herb == '**') {
 						if($herb_size > 60) {
 							array_push($errors, "60% of this herb: <b>".$name."</b> is the maximum that can be added to a formula online. Please contact Viriditas to request greater than 60%. 416-767-3428"); 
 						} else {
