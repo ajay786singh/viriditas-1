@@ -209,36 +209,50 @@ jQuery(document).ready(function($) {
 				message.loaderHide();
 				message.html("Please review your percentages for each herb, the total cannot be greater than 100%.");
 			} else {
-				message.empty();
-				message.loaderShow();
-				$.ajax({		
-					type: 'POST',		
-					url: ajaxurl,		
-					data:data,	
-					success: function(html) {				
-						message.loaderHide();		
-						message.empty();		
-						if(html=='done') {
-							var msg="<div class='error-header'>Thank you, this recipe has been added to your cart. <a href='"+cart_page+"'>View cart/ checkout</a></div>";
-							$("#compound-products").val('');
-							$("#recipe-name").val('');
-							$('#additional_price').val('');
-							// $('.compound-sizes li input:radio').each(function(){
-								// $(this).attr('checked',false);
-							// });
-							// $('.compound-sizes li:first-child input:radio').attr('checked',true);
-							$('.herb-sizes').each(function(e){
-								var id = $(this).attr('id');
-								id=id.replace("size_",'');
-								$(this).removeHerb(id);
-							});
-							$('.base-size').html('100%');
-							message.append(msg);		
-						}else {
-							message.append(html);
+				var error=0;
+				$('.herb-sizes').each(function(e){
+					var val=$(this).val();
+					if(val==0 || val=='') {
+						$(this).css("border-color",'red');
+						message.empty();
+						message.loaderHide();	
+						message.append("Please specify the percent of herb(s) or remove it from your recipe.");	
+						error++;
+					}else {
+						$(this).css("border-color",'none');
+						if(error!=0) {
+							error--;	
 						}
-					}		
-				});	
+					}
+				})
+				if(error==0 || error<0) {
+					message.empty();
+					message.loaderShow();
+					$.ajax({		
+						type: 'POST',		
+						url: ajaxurl,		
+						data:data,	
+						success: function(html) {				
+							message.loaderHide();		
+							message.empty();		
+							if(html=='done') {
+								var msg="<div class='error-header'>Thank you, this recipe has been added to your cart. <a href='"+cart_page+"'>View cart/ checkout</a></div>";
+								$("#compound-products").val('');
+								$("#recipe-name").val('');
+								$('#additional_price').val('');
+								$('.herb-sizes').each(function(e){
+									var id = $(this).attr('id');
+									id=id.replace("size_",'');
+									$(this).removeHerb(id);
+								});
+								$('.base-size').html('100%');
+								message.append(msg);		
+							}else {
+								message.append(html);
+							}
+						}		
+					});		
+				}	
 			}	
 		});
 	}
