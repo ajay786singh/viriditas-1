@@ -14,16 +14,22 @@ jQuery(document).ready(function($) {
 				var herbSize=$('#herb-size').val();
 				var totalSize=$('#total_size').html();
 				totalSize=parseInt(totalSize);
+				var id=$('.herb-name').attr('id');
+				var dataPricy=$('.herb-name').attr('data-pricy');
 				var baseSize=100;
 				if(totalSize !='' && totalSize > baseSize) {
+					$(this).removeHerb(id);
+					$('.popup-compound').closePopup();
 					return false;
 				}
 				if(herbSize=="" || herbSize==0){
-					var id=$('.herb-name').attr('id');
 					if(confirm("Are you sure to close without adding this herb to your recipe?")){
 						$(this).removeHerb(id);
 					}
 				} else {
+					if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
+						$(this).removeHerb(id);
+					}
 					$('.popup-compound').closePopup();
 				}  
 			} // esc
@@ -33,17 +39,22 @@ jQuery(document).ready(function($) {
 		$('.popup-compound .close-button').click(function(e){
 			var herbSize=$('#herb-size').val();
 			var totalSize=$('#total_size').html();
+			var id=$('.herb-name').attr('id');
+			var dataPricy=$('.herb-name').attr('data-pricy');
 			var baseSize=100;
 			if(parseInt(totalSize) > baseSize) {
-				//alert(1);
+				$(this).removeHerb(id);
+				$('.popup-compound').closePopup();
 				return false;
 			} else {				
 				if(herbSize=="" || herbSize==0){
-					var id=$('.herb-name').attr('id');
 					if(confirm("Are you sure you don't want to add this herb?")){
 						$(this).removeHerb(id);
 					}
 				} else {
+					if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
+						$(this).removeHerb(id);
+					}
 					$('.popup-compound').closePopup();
 				}	
 			}
