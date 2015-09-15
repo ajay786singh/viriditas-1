@@ -253,10 +253,12 @@ function toParams(searchUrl) {
 		$('.hide-info').hide();
 		var totalSize = $('.herb-sizes').calculateSize();
 		var compound_id=$('#recipe-compound-id').val();
-		var baseHerbs=limitHerbForNewCompound;
+		var baseHerbs = limitHerbForNewCompound;
+		var baseHerbsMsg = limitHerbForNewCompound+" herbs is maximum that can be combined in a formula online. Please contact Viriditas to request more than "+limitHerbForNewCompound+" herbs. 416-767-3428";
 		var baseSize=100;
 		if(compound_id !='') {
 			baseHerbs=limitHerbForEditCompound;
+			baseHerbsMsg = limitHerbForEditCompound+" herbs is maximum that can be added to a formula online. Please contact Viriditas to request more than "+limitHerbForEditCompound+" herbs. 416-767-3428";
 		}
 		if(totalSize==baseSize) {
 			$('.popup-compound').closePopup();
@@ -299,8 +301,8 @@ function toParams(searchUrl) {
 				}
 			} else {
 				$('.popup-compound').closePopup();
-				var msg="You can add max "+baseHerbs+" herbs to your compound.";
-				alert(msg);
+				//var msg="You can add max "+baseHerbs+" herbs to your compound.";
+				alert(baseHerbsMsg);
 			}
 		}
 		jQuery(".remove-compound").unbind('click').bind("click", function(e){
