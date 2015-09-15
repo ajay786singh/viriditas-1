@@ -1,4 +1,5 @@
 <?php
+//form_login();
 function form_login() {
 	$logo=get_bloginfo('template_url')."/dist/images/logo.png";
 	$register=get_bloginfo('url')."/register";
@@ -9,11 +10,11 @@ function form_login() {
 	$html.='<h5>Login to order <br> Herbal Products</h5>';
 	$html.='<div class="status"></div>';
 	//$html.='<label for="username">Username</label>';
-	$html.='<input id="username" type="text" name="username" placeholder="Username" />';
+	$html.='<input type="text" id="username" name="username" placeholder="Username" />';
 	//$html.='<label for="password">Password</label>';
-	$html.='<input id="password" type="password" name="password" placeholder="Password" />';
-	$html.='<input class="submit_button" type="submit" value="Login" name="submit" />';
-	$html.= wp_nonce_field( 'ajax-login-nonce', 'security' );
+	$html.='<input type="password" id="password" name="password" placeholder="Password" />';
+	$html.='<input type="submit" class="submit_button" value="Login" name="submit" />';
+	$html.= wp_nonce_field( 'ajax-login-nonce', 'security' ,true, false);
 	$html.='</form>';
 	$html.='<a class="lost" href="'.$forgot.'">Forgot your password?</a>';
 	$html.='<a class="register" href="'.$register.'">New? Register</a>';

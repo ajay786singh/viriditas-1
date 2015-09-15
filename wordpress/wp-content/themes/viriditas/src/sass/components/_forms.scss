@@ -183,10 +183,10 @@ footer {
 .login-box {
 	background: $login-form-bg;
 	display:none;
-	left: -108px;
+	right: -30px;
 	padding: 20px 25px;
 	position: absolute;	
-	top: 30px;
+	top: 35px;
 	width: 225px;
 	z-index: 999;
 	#login-form {
