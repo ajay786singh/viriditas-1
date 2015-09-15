@@ -88,8 +88,10 @@
 							<?php } 
 							else { ?>
 								<li>
-								<a href="" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
-								<?php form_login();?>
+									<div>
+									<a href="#" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
+									<?php form_login();?>
+									</div>
 								</li>
 						<?php }  ?>
 						</ul>
