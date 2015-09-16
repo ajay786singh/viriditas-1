@@ -3,10 +3,11 @@
 .sass-cache/
 robots.txt
 node_modules/
-/src/components
 
 # Wordpress specific
 
+wordpress/*
+wordpress/
 wp-config.php
 uploads/
 upgrade/*
@@ -16,4 +17,3 @@ wp-cache-config.php
 w3tc-config/*
 cache/*
 supercache/*
-
