@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php get_header();?>
 <section role="content">
     <div class="container">
 		<article class="secondary">

@@ -3,7 +3,7 @@
 Template Name: Blog Archive
 */
 get_header(); ?>
-
+ 
 <section role="content">
     <div class="container">
 		<?php get_sidebar();?>
