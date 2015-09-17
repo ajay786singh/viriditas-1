@@ -110,7 +110,8 @@ jQuery(document).ready(function($) {
 			if(compound_id!='') {
 				var baseSize=$('.base-size').checkEditCompoundLimit();
 				if(baseSize>=0 && baseSize < 25 ) {
-					$('.pop-up-error').empty().show().html("You can add only max 75%  of total to a combination online.");	
+					var errorMsg="The base formula cannot be less than 25% of the total. Please reduce your added herb amounts for a combined total of 75% of less. Alternatively, make a compound from scratch by choosing 'create a formula' in the product main menu.";
+					$('.pop-up-error').empty().show().html(errorMsg);	
 				}
 			}
 		});
@@ -137,7 +138,8 @@ jQuery(document).ready(function($) {
 						if(compound_id!='') {
 							var cbaseSize=$('.base-size').checkEditCompoundLimit();
 							if(cbaseSize>=0 && cbaseSize < 25 ) {
-								$('.pop-up-error').empty().show().html("You can add only max 75%  of total to a combination online.");	
+								var errorMsg="The base formula cannot be less than 25% of the total. Please reduce your added herb amounts for a combined total of 75% of less. Alternatively, make a compound from scratch by choosing 'create a formula' in the product main menu.";
+								$('.pop-up-error').empty().show().html(errorMsg);	
 							} else {
 								$('.popup-compound').closePopup();
 							}
@@ -214,7 +216,8 @@ jQuery(document).ready(function($) {
 			} else if(compound_id!="" && baseSize<25) {
 				message.empty();
 				message.loaderHide();
-				message.html("You can add only max 75%  of total to a combination online.");
+				var errorMsg="The base formula cannot be less than 25% of the total. Please reduce your added herb amounts for a combined total of 75% of less. Alternatively, make a compound from scratch by choosing 'create a formula' in the product main menu.";
+				message.html(errorMsg);
 			} else if(totalSizes > total_size) {
 				message.empty();
 				message.loaderHide();
