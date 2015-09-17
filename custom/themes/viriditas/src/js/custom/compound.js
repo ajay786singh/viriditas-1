@@ -23,14 +23,17 @@ jQuery(document).ready(function($) {
 					return false;
 				}
 				if(herbSize=="" || herbSize==0){
-					if(confirm("Are you sure to close without adding this herb to your recipe?")){
-						$(this).removeHerb(id);
-					}
-				} else {
-					if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
-						$(this).removeHerb(id);
-					}
+					$(this).removeHerb(id);
 					$('.popup-compound').closePopup();
+				} else {
+					if(confirm("This herb will not be added to your formula: (cancel) keeps the user on the pop-up, (okay) makes the pop-up disappear.")){
+						$(this).removeHerb(id);
+						$('.popup-compound').closePopup();
+					}	
+					// if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
+						// $(this).removeHerb(id);
+					// }
+					// $('.popup-compound').closePopup();
 				}  
 			} // esc
 		});
@@ -48,14 +51,17 @@ jQuery(document).ready(function($) {
 				return false;
 			} else {				
 				if(herbSize=="" || herbSize==0){
-					if(confirm("Are you sure you don't want to add this herb?")){
-						$(this).removeHerb(id);
-					}
-				} else {
-					if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
-						$(this).removeHerb(id);
-					}
+					$(this).removeHerb(id);
 					$('.popup-compound').closePopup();
+				} else {
+					if(confirm("This herb will not be added to your formula: (cancel) keeps the user on the pop-up, (okay) makes the pop-up disappear.")){
+						$(this).removeHerb(id);
+						$('.popup-compound').closePopup();
+					}	
+					// if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
+						// $(this).removeHerb(id);
+					// }
+					// $('.popup-compound').closePopup();
 				}	
 			}
 			return false;
