@@ -21,7 +21,7 @@ wc_print_notices(); ?>
 		wc_get_endpoint_url( 'customer-logout', '', wc_get_page_permalink( 'myaccount' ) )
 	);
 
-	printf( __( 'From your account dashboard you can view your recent orders, manage your shipping and billing addresses and <a href="%s">edit your password and account details</a>.', 'woocommerce' ),
+	printf( __( 'From your account dashboard you can view your recent orders, manage your shipping and billing addresses and <a href="%s"><b>change password</b> and <b>account details</b></a>.', 'woocommerce' ),
 		wc_customer_edit_account_url()
 	);
 	?>
