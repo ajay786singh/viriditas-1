@@ -283,3 +283,65 @@ class Hype_registration_form {
 }
 
 new Hype_registration_form;
+/* Function to add user fields on admin */
+function add_custom_user_profile_fields( $user ) {
+	//echo "<pre>";print_r( $user);echo "</pre>";
+?>
+	<h3><?php _e('Educational Information', 'viriditas'); ?></h3>
+	
+	<table class="form-table">
+		<tr>
+			<th>
+				<label for="degree-speciality"><?php _e('Degree Speciality', 'viriditas'); ?>
+			</label></th>
+			<td>
+				<input type="text" name="degree_speciality" id="degree_speciality" value="<?php echo esc_attr( get_the_author_meta( 'degree_speciality', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('Please enter your Degree Speciality.', 'viriditas'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label for="degree-speciality"><?php _e('School Attended', 'viriditas'); ?></label>
+			</th>
+			<td>
+				<input type="text" name="school_attended" id="school_attended" value="<?php echo esc_attr( get_the_author_meta( 'school_attended', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('Please enter school attended.', 'viriditas'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label for="year-graduated"><?php _e('Year Graduated', 'viriditas'); ?></label>
+			</th>
+			<td>
+				<input type="text" name="year_graduated" id="year_graduated" value="<?php echo esc_attr( get_the_author_meta( 'year_graduated', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('Please enter year graduated.', 'viriditas'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label for="license"><?php _e('License', 'viriditas'); ?></label>
+			</th>
+			<td>
+				<input type="text" name="license" id="license" value="<?php echo esc_attr( get_the_author_meta( 'license', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('Please enter license.', 'viriditas'); ?></span>
+			</td>
+		</tr>
+	</table>
+<?php }
+
+function save_custom_user_profile_fields( $user_id ) {
+	
+	if ( !current_user_can( 'edit_user', $user_id ) )
+		return FALSE;
+	
+	update_usermeta( $user_id, 'degree_speciality', $_POST['degree_speciality'] );
+	update_usermeta( $user_id, 'school_attended', $_POST['school_attended'] );
+	update_usermeta( $user_id, 'year_graduated', $_POST['year_graduated'] );
+	update_usermeta( $user_id, 'license', $_POST['license'] );
+}
+
+add_action( 'show_user_profile', 'add_custom_user_profile_fields' );
+add_action( 'edit_user_profile', 'add_custom_user_profile_fields' );
+
+add_action( 'personal_options_update', 'save_custom_user_profile_fields' );
+add_action( 'edit_user_profile_update', 'save_custom_user_profile_fields' );
