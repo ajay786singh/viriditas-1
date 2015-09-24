@@ -135,7 +135,7 @@ function get_monographs() {
 							setup_postdata ( $post ); 
 							$id = $post->ID;
 							$title = $post->post_title;
-							$html.="<li><a href='".get_the_permalink($id)."'>".$title."</a></li>";		
+							$html.="<li><a href='".get_the_permalink($id)."' target='_blank'>".$title."</a></li>";		
 						endforeach;
 						$html.="</ul>";
 					else: 
