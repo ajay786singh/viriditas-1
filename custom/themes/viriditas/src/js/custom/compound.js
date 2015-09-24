@@ -26,7 +26,7 @@ jQuery(document).ready(function($) {
 					$(this).removeHerb(id);
 					$('.popup-compound').closePopup();
 				} else {
-					if(confirm("This herb will not be added to your formula: (cancel) keeps the user on the pop-up, (okay) makes the pop-up disappear.")){
+					if(confirm("This herb will not be added to your formula.")){
 						$(this).removeHerb(id);
 						$('.popup-compound').closePopup();
 					}	
@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
 					$(this).removeHerb(id);
 					$('.popup-compound').closePopup();
 				} else {
-					if(confirm("This herb will not be added to your formula: (cancel) keeps the user on the pop-up, (okay) makes the pop-up disappear.")){
+					if(confirm("This herb will not be added to your formula.")){
 						$(this).removeHerb(id);
 						$('.popup-compound').closePopup();
 					}	
