@@ -88,17 +88,17 @@
 					echo apply_filters('the_content', $synthesis);
 				echo "</section>";	
 			}
-			if($indications) {
-				echo "<section class='column-7'>";
-					echo "<h5>Indications</h5>";
-					echo "<ul class='list composition-list'>";	
-						foreach($indications as $indication) {
-							$indication_url=$product_page_url."?pi=".$indication->term_id;
-							echo "<li>".$indication->name."</li>";
-						}
-					echo "</ul>";	
-				echo "</section>";	
-			}
+			// if($indications) {
+				// echo "<section class='column-7'>";
+					// echo "<h5>Indications</h5>";
+					// echo "<ul class='list composition-list'>";	
+						// foreach($indications as $indication) {
+							// $indication_url=$product_page_url."?pi=".$indication->term_id;
+							// echo "<li>".$indication->name."</li>";
+						// }
+					// echo "</ul>";	
+				// echo "</section>";	
+			// }
 			if($contradictions) {
 				echo "<section class='column-7'>";
 					echo "<h5>Contradictions, Warnings and Interactions</h5>";
