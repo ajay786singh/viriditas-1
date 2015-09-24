@@ -67,7 +67,6 @@ function load_products () {
 	}else {
 		$args['order']='ASC';
 	}
-	// $args['meta_key'] ='_allowed_bundle_user';
 	
 	if($sort_by!=''){
 		if($sort_by=='folk_name') {
@@ -101,7 +100,7 @@ function load_products () {
 		}
 	}
 	$compound_ids='';	
-	if($cat_id==1391) {	
+	//if($cat_id==1391) {	
 		$post_type='product';
 		$no_of_posts='-1';
 		$taxonomy='product_cat';
@@ -122,13 +121,15 @@ function load_products () {
 		if($results): 
 			foreach($results as $result) {
 				$hide_user= get_post_meta($result->ID,'_allowed_bundle_user',true);
-				if($hide_user != '') {
+				if($hide_user != '' && $current_user->ID!=$hide_user) {
 					$compound_ids[] = $result->ID;
 				}
 			}
 			$args['post__not_in']=$compound_ids;
 		endif;
-	}
+	// } else {
+		
+	// }
 	if($sort_by_alpha !='') {
 		if($sort_by!='' && $sort_by=='folk_name') {
 			$postids = $wpdb->get_col("
