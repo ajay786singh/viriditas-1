@@ -128,9 +128,9 @@ function manage_compound() {
 					wp_set_object_terms( $post_id, $avail_prices, 'pa_price' );						
 				}						
 				$defaultWeight="1";
-				$defaultHeight="1";
-				$defaultWidth="1";
-				$defaultLength="1";
+				$defaultHeight="25.5";
+				$defaultWidth="9.0";
+				$defaultLength="9.0";
 				wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
 				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
