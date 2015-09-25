@@ -71,4 +71,4 @@ global $woocommerce, $product, $post;
 
 </form>
 
-<?php do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+<?php //do_action( 'woocommerce_after_add_to_cart_form' ); ?>

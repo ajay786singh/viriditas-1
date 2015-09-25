@@ -128,9 +128,9 @@ function manage_compound() {
 					wp_set_object_terms( $post_id, $avail_prices, 'pa_price' );						
 				}						
 				$defaultWeight="1";
-				$defaultHeight="1";
-				$defaultWidth="1";
-				$defaultLength="1";
+				$defaultHeight="25.5";
+				$defaultWidth="9.0";
+				$defaultLength="9.0";
 				wp_set_object_terms( $post_id, 'Professional Herbal Combination', 'product_cat' );
 				wp_set_object_terms($post_id, 'bundle', 'product_type');
 				update_post_meta( $post_id, '_allowed_bundle_user', $current_user->ID );
@@ -360,5 +360,22 @@ function get_bundle_info($id,$size) {
 		$result=implode(", ",$herbs);
 	}	
 	return $result;
+}
+
+
+add_action( 'wp_ajax_remove_bundle_product_from_cart', 'remove_bundle_product_from_cart' );
+add_action( 'wp_ajax_nopriv_remove_bundle_product_from_cart', 'remove_bundle_product_from_cart' );
+function remove_bundle_product_from_cart() {
+	global $woocommerce;
+	$cart = $woocommerce->cart->get_cart();
+	$id = $_POST['product_id'];
+	foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item){
+		
+        if($cart_item['product_id'] == $_POST['product_id'] ){
+			// Remove product in the cart using  cart_item_key.
+            $woocommerce->cart->set_quantity($cart_item_key,0);
+        }
+    }
+	die();
 }
 ?>
