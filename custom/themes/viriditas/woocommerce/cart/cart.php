@@ -83,6 +83,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 							// if($_product->product_type=='bundle') {
 								// echo "$".number_format($cart_item['cart_price'],2);
 							// } else {
+								echo "<span style='display:none;' class='product_type' data-id='".$_product->id."'>".$_product->product_type."</span>";
 								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
 							//}
 						?>

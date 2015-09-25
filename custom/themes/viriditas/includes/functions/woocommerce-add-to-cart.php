@@ -361,4 +361,21 @@ function get_bundle_info($id,$size) {
 	}	
 	return $result;
 }
+
+
+add_action( 'wp_ajax_remove_bundle_product_from_cart', 'remove_bundle_product_from_cart' );
+add_action( 'wp_ajax_nopriv_remove_bundle_product_from_cart', 'remove_bundle_product_from_cart' );
+function remove_bundle_product_from_cart() {
+	global $woocommerce;
+	$cart = $woocommerce->cart->get_cart();
+	$id = $_POST['product_id'];
+	foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item){
+		
+        if($cart_item['product_id'] == $_POST['product_id'] ){
+			// Remove product in the cart using  cart_item_key.
+            $woocommerce->cart->set_quantity($cart_item_key,0);
+        }
+    }
+	die();
+}
 ?>
