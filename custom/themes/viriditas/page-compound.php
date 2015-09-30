@@ -87,12 +87,12 @@ get_header();
 			</div>
 		</section>	
 		<section class="column-4">
-			<h5>Step 3. Review Your Recipe</h5>
+			<h5>Step 3. Review Your Formula</h5>
 			<div class="compound-box" id="compound-box-3">
 				<form action="" class="recipe-form">
 					<section class="compound-header">
-						<h6>Recipe Name</h6>
-						<input type="text" id="recipe-name" required name="recipe-name" placeholder="Please give a name to your recipe.">
+						<h6>Label Your Formula</h6>
+						<input type="text" id="recipe-name" required name="recipe-name" placeholder="Please give a name to your formula.">
 					</section>
 					<section class="compound-sizes">
 						<h6>Select Size </h6>
