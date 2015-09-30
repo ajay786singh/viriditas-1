@@ -32,10 +32,13 @@ get_header();
     <div class="container">
 		<div class="column-8">
 		<?php 
+			
 			if($compound_id !='' || $mono_compound_id!='') {  
 				$title="Edit a Formula";
+				$numberHerbs=get_option('wc_settings_tab_compound_limit_herb_edit');
 			}else {
 				$title="Create a Formula";
+				$numberHerbs=get_option('wc_settings_tab_compound_limit_herb_new');
 			}
 			echo "<h1>".$title."</h1>";
 		?>
@@ -206,6 +209,7 @@ get_header();
 							<ul>
 								
 							</ul>
+							<b>Choose up to <?php echo $numberHerbs;?> herbs</b>
 						</section>
 						<?php if($compound_id =='' && $mono_compound_id=='') { ?>
 						<section class="compound-info">*Total must be equal 100%</section>
