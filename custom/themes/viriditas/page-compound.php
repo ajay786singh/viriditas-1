@@ -18,7 +18,7 @@ get_header();
 		<div class="error pop-up-error"></div>
 		<a href="#" class="close-button"></a>
 		<div class="pop-up-action">
-			<h6>What percent of the total formula will <span class="herb-name"></span> compromise?</h6>
+			<h6>What percent of the total formula will <span class="herb-name"></span> comprise?</h6>
 			<form action="" method="post" class="add-recipe-herb">
 				<div class="size-input"><input type="text" name="herb-size" value="" placeholder="0" class="numbers" id="herb-size" maxlength="2" /></div>
 				<div><a href="#" class="button add-herb">Add Herb</a></div>
