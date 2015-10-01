@@ -676,13 +676,20 @@ jQuery(document).ready(function($){
 			product_container.showProducts();
 			return false;
 		});	
+		if($('#by_folk_name').val()=='') {
+			$('.clear-search a').css("display",'none');
+		}else {
+			$('.clear-search a').css("display",'block');
+		}
 		$('#by_folk_name').keypress(function (e) {
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
 				if(keyword !='') {
 					var url = replaceParam('keyword', keyword);
 					window.history.pushState({path:url},'',url);	
-				}else {
+					$('.clear-search a').css("display",'block');
+				} else {
+					$('.clear-search a').css("display",'none');
 					var url=removeURLParameter('keyword');					
 					window.history.pushState({path:url},'',url);
 				}
@@ -690,6 +697,15 @@ jQuery(document).ready(function($){
 				product_container.showProducts();
 				e.preventDefault();
 			}
+		});
+		$('.clear-search a').click(function(e){
+			$("#by_folk_name").val('');
+			$(this).css("display",'none');
+			var url=removeURLParameter('keyword');					
+			window.history.pushState({path:url},'',url);
+			product_container.empty();
+			product_container.showProducts();
+			e.preventDefault();
 		});
 	}	
 });
