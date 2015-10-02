@@ -53,11 +53,12 @@
 			$actions="";
 			$product_page_url=get_bloginfo('url')."/products"; 
 			
-			if($composition!=-1) {
+			if($composition!='') {
 				$indications = wp_get_object_terms( $composition, 'indication' );
 				$actions = wp_get_object_terms( $composition, 'actions' );
 			}
-			if($composition!=-1) {
+			if($composition!='') {
+				$composition=explode(',',$composition);
 				echo "<section class='column-7'>";
 					echo "<h5>Composition</h5>";
 					echo "<ul class='list composition-list'>";	
