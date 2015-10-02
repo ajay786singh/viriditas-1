@@ -22,14 +22,8 @@ $monograph->add_meta_box(
 		array(
             'name'          => 'composition',
             'label'         => 'Composition',
-            'description'   => '',
-            'type'          => 'post_checkboxes',
-			'args'       => array(
-				'post_type' => 'product',
-				'product_cat'=>'single-herb-tincture',
-				'orderby' => 'title',
-				'order' => 'ASC',
-			)
+            'description'   => 'Please enter product id(s) separated with comma(,).',
+            'type'          => 'text'
         ),
 		array(
             'name'          => 'preparation',
