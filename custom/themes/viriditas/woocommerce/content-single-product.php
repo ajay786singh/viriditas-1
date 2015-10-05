@@ -69,6 +69,8 @@ global $product;
 			</div>
 			<div class="product-actions">
 			<?php
+			//print_r();
+			if($product->post->post_status=='publish') {
 				if($product->product_type=='bundle') {
 			?>	
 					<form class="product_bundle cart" action="" method="post" enctype="multipart/form-data">
@@ -142,6 +144,9 @@ global $product;
 				} else {
 					do_action( 'woocommerce_single_product_summary');
 				}
+			} else {
+				echo '<p class="stock out-of-stock">This product is currently out of stock and unavailable.</p>';
+			}		
 			?>
 			</div>
 			<?php 
