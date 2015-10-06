@@ -312,7 +312,7 @@ function get_product_terms() {
 	$taxonomy_name=implode(" ",explode("_",$taxonomy));
 	$pa=$_POST['pa'];
 	$pb=$_POST['pb'];
-	$pc='327';
+	$pc='';
 	if($_POST['pc']!='') {
 		$pc=$_POST['pc'];
 	}
