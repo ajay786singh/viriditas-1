@@ -145,7 +145,7 @@ global $product;
 					do_action( 'woocommerce_single_product_summary');
 				}
 			} else {
-				echo '<p class="stock out-of-stock">This product is currently out of stock and unavailable.</p>';
+				echo '<p class="stock out-of-stock">This item is not available for order online. Please call: 416-767-3428</p>';
 			}		
 			?>
 			</div>
