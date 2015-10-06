@@ -41,6 +41,10 @@
 			//max-height:10em;
 		}
 	}
+	&.by-indication {
+		overflow:auto;
+		max-height:15em; 
+	}
 }
 
 .dk-selected {
