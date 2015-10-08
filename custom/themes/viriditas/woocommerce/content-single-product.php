@@ -199,20 +199,17 @@ global $product;
 				
 				<?php 
 					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
+					if($warnings) {
 				?>
 					<div class="accordion-panel">
 						<h5 class="accordion-panel-header">Warnings & Interactions</h5>
 						<div class="accordion-panel-content">
 							<?php
-								if($warnings) {
-									echo apply_filters('the_content', $warnings);
-								} else {
-									echo "NONE known.";
-								}
+								echo apply_filters('the_content', $warnings);
 							?>
 						</div>
 					</div>
-				<?php //} ?>
+				<?php } ?>
 				<?php 
 					$body_systems = get_the_terms( $post->ID, 'body_system' ); 
 					$body_systems_ids="";
