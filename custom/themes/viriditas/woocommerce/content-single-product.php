@@ -64,7 +64,7 @@ global $product;
 					$monograph=get_post_meta($post->ID,'_product_details_monograph',true);
 					if($monograph_link !='') {
 				?>
-				<a href="<?php echo $monograph_link;?>" class="view-monograph" target="_blank">view monograph</a>
+				<a href="<?php echo $monograph_link;?>" class="view-monograph" target="_blank">VIEW MONOGRAPH</a>
 				<?php } ?>
 			</div>
 			<div class="product-actions">
