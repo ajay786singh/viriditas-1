@@ -17,4 +17,5 @@
 	<section role="body-systems"></section>
 	<section role="actions"></section>	
 	<section role="indications"></section>	
+	<section role="create-formula"><a class="create-formula" href="<?php echo get_permalink(2219);?>">CREATE A FORMULA</a></section>	
 </div>

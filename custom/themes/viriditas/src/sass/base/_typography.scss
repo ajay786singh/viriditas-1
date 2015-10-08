@@ -807,3 +807,26 @@ section[role=content] {
 .content-left {
 	text-align:left;
 }
+
+.create-formula {
+	border-bottom: 1px solid $base-border-color;
+	color:$heading;
+	display:block;
+	font-family:$header-font-family;
+	overflow: hidden;
+	position: relative;
+	padding: 5px 20px 5px 0;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis; 
+	width: 100%;
+	white-space: nowrap;
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		right: 0; 
+		top: 25%;
+		@include arrow(right,$base-border-color,10px);
+		margin: -0.125em 0.5em 0 0; 
+	}
+}
