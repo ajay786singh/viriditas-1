@@ -12,3 +12,6 @@
 jQuery(function($) {
 	$('.equal-height-1 li').equalHeights();	
 });
+jQuery( window ).resize(function($) {
+	$('.equal-height-1 li').equalHeights();	
+});

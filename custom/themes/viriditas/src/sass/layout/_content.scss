@@ -441,3 +441,15 @@ article {
 		padding-right:50px;
 	}
 }
+.dosage-content {
+	text-align: left;
+	overflow: hidden;
+	border-bottom:1px solid $base-border-color;
+	padding-bottom:20px;
+	margin-bottom:1em;
+	&:nth-last-of-type(1) {
+		border:none;
+		margin-bottom:0;
+		padding-bottom:0;
+	}
+}

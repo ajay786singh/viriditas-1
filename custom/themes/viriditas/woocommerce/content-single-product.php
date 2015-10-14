@@ -180,24 +180,25 @@ global $product;
 					} 
 				} //For Bundled Data
 				?>
-				
 				<?php 
-					$dosage=get_post_meta($post->ID,'_product_details_dosage',true);
+					//$dosage=get_post_meta($post->ID,'_product_details_dosage',true);
+					$dosage = get_option( "theme_options" );
+					$dosage_chart=$dosage['dosage_chart'];
+					$dosage_permission=$dosage['dosage_permission'];
+					$post_categories = wp_get_post_terms($post->ID, 'product_cat', array("fields" => "ids"));
+					$categories=explode(",",$dosage_permission);
+					$diff=array_diff($post_categories ,$categories);
+					if($dosage_permission!="" && count($diff)==0 && $dosage_chart!='') {
 				?>
 					<div class="accordion-panel">
 						<h5 class="accordion-panel-header">Dosage</h5>
 						<div class="accordion-panel-content">
-							<?php 
-								if($dosage) { 
-									echo apply_filters('the_content', $dosage); 
-								} else { 
-									echo "NONE known.";
-								}
-							?>
+							<a href="<?php echo $dosage_chart;?>" target="_blank">View dosage information chart</a>
 						</div>
 					</div>
 				
 				<?php 
+					}
 					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
 					if($warnings) {
 				?>
