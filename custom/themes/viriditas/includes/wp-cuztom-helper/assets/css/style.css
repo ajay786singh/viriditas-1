@@ -8,7 +8,7 @@
 /* Wraps */
 .cuztom .padding-wrap{ padding: 5px 0 0 0; }
 .cuztom .wp-editor-wrap{ margin-bottom: 10px; }
-.cuztom .cuztom-checkboxes-wrap{ margin-right: 10px; display: inline-block; vertical-align: middle; max-height: 300px; overflow-y: scroll; overflow-x: hidden; }
+.cuztom .cuztom-checkboxes-wrap{ margin-right: 10px; display: inline-block; vertical-align: middle; max-height: 100px; overflow-y: scroll; overflow-x: hidden; }
 .cuztom .cuztom-checkbox-wrap{ margin-right: 10px; display: inline-block; vertical-align: middle; }
 
 /* Tabs */
