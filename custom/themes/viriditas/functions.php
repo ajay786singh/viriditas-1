@@ -49,6 +49,9 @@ require_once('includes/login-register/login.php');
 //Load shortcodes
 require_once('includes/widgets/appointment-forms.php');
 
+
+//Load Theme Options
+require_once('includes/theme-options/theme-options.php');
 //Load shortcodes
 //require_once('includes/shortcodes/button.php');
 //require_once('includes/shortcodes/content.php');
