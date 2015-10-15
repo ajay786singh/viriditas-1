@@ -594,7 +594,7 @@ jQuery(document).ready(function($){
 							//product_container.showProducts();
 						}	
 				} else if(dk.value=='your-formulas') {
-					window.location = compound_page;
+					window.location = formulas_page;
 				} else {
 					if($('body').hasClass('single-product')==true) {
 						var shop_page_url=shop_page+'?pc='+dk.value;
