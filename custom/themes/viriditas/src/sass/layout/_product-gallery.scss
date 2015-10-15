@@ -59,6 +59,27 @@
 				padding: 0.75em 1em 0.75em 0;
 				font-size: 1em;
 				min-height: 80px;
+				.title-name {
+					float:left;
+					width:70%;
+				}
+				.cart-action {
+					float:right;
+					width:25%;
+					margin-left:5%;
+					text-align:right;
+					a {
+						color:$heading;
+						&:before {
+							left:100%;
+							right:-1.5em
+						}
+					}
+				}
+			}
+			.herbs-name {
+				font-size:0.8em;
+				font-style:italic;
 			}
 			span.amount {
 				font-size: em(16);

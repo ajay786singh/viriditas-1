@@ -19,7 +19,8 @@ function manage_compound() {
 		$bundle_herbs = $_POST['compound_herbs'];
 		$expenses = $_POST['additional_price'];
 		$recipeMono = $_POST['recipeMono'];
-		
+		$serviceFee=$_POST['service_fee'];
+		$totalPrice = $price+$expenses+$serviceFee;
 		//check for title not blank
 		if (strlen($title) == 0) {
 			array_push($errors, "Please enter your recipe name."); 
@@ -70,7 +71,6 @@ function manage_compound() {
 					'visibility' => 'visible'
 				);
 			}
-			
 		}
 		$price_per_unit = number_format(($price/$size),2, '.', '');
 		
@@ -141,6 +141,8 @@ function manage_compound() {
 				update_post_meta( $post_id, '_downloadable', 'no');
 				update_post_meta( $post_id, '_virtual', 'no');
 				update_post_meta( $post_id, '_regular_price',  '1' );
+				update_post_meta( $post_id, '_selling_price',  $totalPrice );
+				update_post_meta( $post_id, '_selling_size',  $size );
 				update_post_meta( $post_id, '_sale_price',  '' );
 				update_post_meta( $post_id, '_purchase_note', "" );
 				update_post_meta( $post_id, '_featured', "no" );
