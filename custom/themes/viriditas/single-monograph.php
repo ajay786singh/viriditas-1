@@ -102,7 +102,7 @@
 			// }
 			if($contradictions) {
 				echo "<section class='column-7'>";
-					echo "<h5>Contradictions, Warnings and Interactions</h5>";
+					echo "<h5>Contraindications, Warnings and Interactions</h5>";
 					echo apply_filters('the_content', $contradictions);
 				echo "</section>";	
 			}

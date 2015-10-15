@@ -39,7 +39,7 @@ $monograph->add_meta_box(
         ),
 		array(
             'name'          => 'contradictions',
-            'label'         => 'Contradictions, Warnings and Interactions',
+            'label'         => 'Contraindications, Warnings and Interactions',
             'description'   => '',
             'type'          => 'wysiwyg',
         ),
