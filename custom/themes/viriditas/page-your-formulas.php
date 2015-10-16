@@ -39,7 +39,7 @@ get_header();
 			<span><a class="back-to-products popup-modal" href="#faq-box">View monographs and worksheets</a></span>
 		</div>	
 	</div>
-	<div class="container">
+	<div class="container your-formulas">
 		<?php 
 			global $wp_query;
 			$current_user = wp_get_current_user();
