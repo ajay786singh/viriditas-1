@@ -276,4 +276,21 @@ jQuery(document).ready(function($) {
 			}	
 		});
 	}
+	$('.add-to-cart-formulas').click(function(){
+		var productID=$(this).attr('data-id');
+		var cartPrice=$(this).attr('data-price');
+		var cartSize=$(this).attr('data-size');
+		var productType='bundle';		
+		var data= {'action':'add_to_cart_formula','product_type':productType,'cart_size':cartSize,'cart_price':cartPrice, 'product_id':productID};		
+		$('#cart-action-'+productID).css('visibility','visible');
+		$('#cart-action-'+productID).removeClass('added-cart');
+		$.ajax({		
+			type: 'POST',		
+			url: ajaxurl,		
+			data:data,	
+			success: function(html) {				
+				$('#cart-action-'+productID).addClass('added-cart');
+			}
+		});
+	});
 });

@@ -380,4 +380,13 @@ function remove_bundle_product_from_cart() {
     }
 	die();
 }
+
+add_action( 'wp_ajax_add_to_cart_formula', 'add_to_cart_formula' );
+add_action( 'wp_ajax_nopriv_add_to_cart_formula', 'add_to_cart_formula' );
+function add_to_cart_formula() {
+	global $woocommerce;
+	$post_id=$_POST['product_id'];
+	$woocommerce->cart->add_to_cart($post_id,1);
+	die();
+}
 ?>

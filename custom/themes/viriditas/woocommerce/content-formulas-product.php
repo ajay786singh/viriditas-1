@@ -63,54 +63,58 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 							$product_title = "<em>".$product_title."</em>";	
 						}
 					}
-					echo "<div class='title-name'>".$product_title."</div>";
-					echo "<div class='cart-action'><a class='icon-cart' href='#'>Add to cart</a></div>";
+					echo $product_title;
 				?>
 			</div>
-			<div class="price">
-				<?php 
-					$totalPrice=get_post_meta($post->ID,'_selling_price',true);
-					$size=get_post_meta($post->ID,'_selling_size',true);
-					if($totalPrice=="") {
-						$totalPrice=0;
-					}
-					if($size=="") {
-						$size=0;
-					}
-					echo '<span class="amount">'.$size.' - $'.$totalPrice."</span>";
-					// if($product->product_type=='bundle'){
-						// $prices = get_the_terms( $product->id, 'pa_price');	
-							// if(count($prices)>0) {
-								// $amount="";	
-								// for($i=0;$i<count($prices);$i++) {
-									// $amount[]=number_format($prices[$i]->name,2);
-								// }
-								// sort($amount);
-								// $amount = array_map(function($value) { return '$'.$value; }, $amount);
-								// echo '<span class="amount">'.implode("-",$amount)."</span>";
+		</div>	
+		<div class="price">
+			<?php 
+				$totalPrice=get_post_meta($post->ID,'_selling_price',true);
+				$size=get_post_meta($post->ID,'_selling_size',true);
+				if($totalPrice=="") {
+					$totalPrice=0;
+				}
+				if($size=="") {
+					$size=0;
+				}
+				echo '<span class="amount">'.$size.' - $'.$totalPrice."</span>";
+				// if($product->product_type=='bundle'){
+					// $prices = get_the_terms( $product->id, 'pa_price');	
+						// if(count($prices)>0) {
+							// $amount="";	
+							// for($i=0;$i<count($prices);$i++) {
+								// $amount[]=number_format($prices[$i]->name,2);
 							// }
-					// }else {
-						// if ( $price_html = $product->get_price_html() ) {
-							// echo $price_html;
-						// }	
-					// }
-				?>
-			</div>
-			<div class="herbs">
-				<?php 
-					$herbs=get_post_meta($post->ID,'_bundle_data',true);
-					if($herbs) {
-						$herbsHtml='';	
-						foreach($herbs as $herb) {
-							$herb_id=$herb['product_id'];
-							$herbName=get_the_title($herb_id);
-							$required_size=$herb['bundle_required_size'];
-							$herbsHtml[]=$herbName." - ".$required_size."%";
-						}
-						echo "<div class='herbs-name'>".implode(", ", $herbsHtml)."</div>";
+							// sort($amount);
+							// $amount = array_map(function($value) { return '$'.$value; }, $amount);
+							// echo '<span class="amount">'.implode("-",$amount)."</span>";
+						// }
+				// }else {
+					// if ( $price_html = $product->get_price_html() ) {
+						// echo $price_html;
+					// }	
+				// }
+			?>
+		</div>
+		<div class="herbs">
+			<?php 
+				$herbs=get_post_meta($post->ID,'_bundle_data',true);
+				if($herbs) {
+					$herbsHtml='';	
+					foreach($herbs as $herb) {
+						$herb_id=$herb['product_id'];
+						$herbName=get_the_title($herb_id);
+						$expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
+						$required_size=$herb['bundle_required_size'];
+						$herbsHtml[]=$herbName.$expensive_herb." - ".$required_size."%";
 					}
-				?>
-			</div>
+					echo "<div class='herbs-name'>".implode(", ", $herbsHtml)."</div>";
+				}
+			?>
+		</div>
+		<div class="cart-action">
+			<a class="button add-to-cart-formulas" href="#" data-id="<?php echo $post->ID;?>" data-price="<?php echo $totalPrice;?>" data-size="<?php echo $size;?>">Add to cart</a>
+			<div id="cart-action-<?php echo $post->ID;?>"></div>
 		</div>
 		<?php /*
 		<div class="product-action">

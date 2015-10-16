@@ -27,7 +27,7 @@
 		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
 		var cart_page = '<?php echo get_permalink( woocommerce_get_page_id( 'cart' ) );?>';
 		var compound_page = '<?php echo get_permalink(2219);?>';
-		var formulas_page = '<?php echo get_permalink(2859);?>';
+		var formulas_page = '<?php echo get_bloginfo('url');?>/your-custom-formulas/';
 		var limitHerbForNewCompound = '<?php echo get_option('wc_settings_tab_compound_limit_herb_new');?>';
 		var limitHerbForEditCompound = '<?php echo get_option('wc_settings_tab_compound_limit_herb_edit');?>';
 	</script>
@@ -75,7 +75,7 @@
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
-								<?php if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219')){ 
+								<?php if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219') || is_page('your-custom-formulas')){ 
 									$cart_url = $woocommerce->cart->get_cart_url();
 								?>
 								<a class="icon-cart" href="<?php echo $cart_url;?>">Cart</a>
