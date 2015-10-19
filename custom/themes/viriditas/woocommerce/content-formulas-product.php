@@ -113,7 +113,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			?>
 		</div>
 		<div class="cart-action">
-			<a class="button add-to-cart-formulas" href="#" data-id="<?php echo $post->ID;?>" data-price="<?php echo $totalPrice;?>" data-size="<?php echo $size;?>">Add to cart</a>
+			<a class="button add-to-cart-formulas" id="cart-button-<?php echo $post->ID;?>" href="#" data-id="<?php echo $post->ID;?>" data-price="<?php echo $totalPrice;?>" data-size="<?php echo $size;?>">Add to cart</a>
 			<div id="cart-action-<?php echo $post->ID;?>"></div>
 		</div>
 		<?php /*
