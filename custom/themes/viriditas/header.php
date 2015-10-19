@@ -75,7 +75,7 @@
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
-								<?php if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219') || is_page('your-custom-formulas')){ 
+								<?php if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219') || is_page('your-custom-formulas') || is_page('cart') || is_page('checkout') || is_page('my-account')){ 
 									$cart_url = $woocommerce->cart->get_cart_url();
 								?>
 								<a class="icon-cart" href="<?php echo $cart_url;?>">Cart</a>

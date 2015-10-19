@@ -619,3 +619,10 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 .gform_wrapper .ginput_complex .ginput_right select, .gform_wrapper .ginput_complex select,.gform_wrapper .top_label select.medium {
 	padding:6px 0;
 }
+
+#payment #stripe-cc-form label {
+    padding-left: 0;
+	&:before {
+		content:"";
+	}
+}
