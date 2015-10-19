@@ -44,25 +44,16 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 			$img=get_bloginfo('template_url')."/dist/images/product_default.jpg";
 		}
 	?>
-	<div class="product-img" style="background-image:url(<?php echo $img;?>);">
-		<img src="<?php echo $img;?>" />		
+	<div class="product-image">
+		<div class="product-img" style="background-image:url(<?php echo $img;?>);">
+			<img src="<?php echo $img;?>" />		
+		</div>
 	</div>
 	<div class="product-meta">
 		<div class="product-title">    
 			<div class="title">
 				<?php 
 					$product_title = get_the_title();
-					$folk_name=get_post_meta($product->id,'_product_details_folk_name',true);
-					if($folk_name) {
-						echo "<div class='folk_name'>".$folk_name."</div>";
-					}
-					$terms = get_the_terms( $product->id, 'product_cat' );
-					if(count($terms)>0) {
-						//echo $terms[0]->slug;
-						if($terms[0]->slug == 'single-herb-tincture') {
-							$product_title = "<em>".$product_title."</em>";	
-						}
-					}
 					echo $product_title;
 				?>
 			</div>
