@@ -40,43 +40,45 @@ get_header();
 		</div>	
 	</div>
 	<div class="container your-formulas">
-		<?php 
-			global $wp_query;
-			$current_user = wp_get_current_user();
-			//echo $current_user->ID;
-			$args=array(
-				'post_type'=>'product',
-				'showposts'=>-1
-			);
-			$args['tax_query'] = array(
-				array(
-					'taxonomy' => 'product_cat',
-					'field' => 'term_id',
-					'terms' => '1391'
-				),
-			);
-			$args['meta_query'] = array(
-				array(
-				   'key' => '_allowed_bundle_user',
-				   'value' => $current_user->ID,
-				   'compare' => '=='
-				)
-			);
-			$formulas=new WP_Query($args);
-			if($formulas->have_posts()):
-				echo '<div class="product-list"><ul class="thumb_view">';
-				while($formulas->have_posts()):$formulas->the_post();
-					?>
-					<li class="equal-height-item" id="product-<?php echo get_the_ID();?>">		
-						<?php get_template_part( 'woocommerce/content-formulas-product', 'woocommerce');?>
-					</li>
-					<?php
-				endwhile;
-				echo "</ul></div>";
-			else:
-				echo "<h6>No records found.</h6>";
-			endif;
-		?>
+		<div class="column-9">
+			<?php 
+				global $wp_query;
+				$current_user = wp_get_current_user();
+				//echo $current_user->ID;
+				$args=array(
+					'post_type'=>'product',
+					'showposts'=>-1
+				);
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field' => 'term_id',
+						'terms' => '1391'
+					),
+				);
+				$args['meta_query'] = array(
+					array(
+					   'key' => '_allowed_bundle_user',
+					   'value' => $current_user->ID,
+					   'compare' => '=='
+					)
+				);
+				$formulas=new WP_Query($args);
+				if($formulas->have_posts()):
+					echo '<div class="product-list"><ul class="thumb_view">';
+					while($formulas->have_posts()):$formulas->the_post();
+						?>
+						<li class="equal-height-item" id="product-<?php echo get_the_ID();?>">		
+							<?php get_template_part( 'woocommerce/content-formulas-product', 'woocommerce');?>
+						</li>
+						<?php
+					endwhile;
+					echo "</ul></div>";
+				else:
+					echo "<h6>No records found.</h6>";
+				endif;
+			?>
+		</div>	
 	</div>
 </section>
 <?php endwhile; endif; ?>
