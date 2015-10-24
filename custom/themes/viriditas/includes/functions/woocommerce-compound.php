@@ -21,7 +21,6 @@ function show_compound_notice() {
 		}
 	echo $html;
 }
-
 function show_compound_notice_extra() {
 	$sizes=get_option('wc_settings_tab_compound_sizes');
 		if($sizes!='') {

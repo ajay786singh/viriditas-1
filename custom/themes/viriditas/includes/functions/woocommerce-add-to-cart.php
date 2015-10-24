@@ -2,7 +2,6 @@
 /*
 *  Function to Manage Recipe By User(s)
 */
-
 function manage_compound() {
 	$current_user = wp_get_current_user();
 	$errors = array();
@@ -24,8 +23,7 @@ function manage_compound() {
 		//check for title not blank
 		if (strlen($title) == 0) {
 			array_push($errors, "Please enter your recipe name."); 
-		}
-		
+		}	
 		$herbs = array();
 		if(count($compound_herbs)>0) {
 			foreach($compound_herbs as $compound_herb) {
@@ -73,7 +71,6 @@ function manage_compound() {
 			}
 		}
 		$price_per_unit = number_format(($price/$size),2, '.', '');
-		
 		// If no errors were found, proceed with storing the user input
 		if (count($errors) == 0) {
 			$post_id = wp_insert_post( array(
@@ -100,7 +97,6 @@ function manage_compound() {
 					'is_variation' => 0,
 					'is_taxonomy' => 1,
 				);
-				
 				$sizes=get_option('wc_settings_tab_compound_sizes');
 				if($compound_id !='' && $recipeMono=='') {
 					$compound_sizes = get_the_terms( $compound_id, 'pa_size');
@@ -168,7 +164,6 @@ function manage_compound() {
 				update_post_meta( $post_id, '_product_details_folk_name',  '');
 				update_post_meta( $post_id, '_min_bundle_price', 1 );
 				update_post_meta( $post_id, '_max_bundle_price', 1);
-				
 				global $woocommerce;
 				$woocommerce->cart->add_to_cart($post_id,1);
 				$cart_url=$woocommerce->cart->get_cart_url();
@@ -199,10 +194,8 @@ function manage_compound() {
 	echo $output;
 	die();
 }
-
 add_action( 'wp_ajax_manage_compound', 'manage_compound' );
 add_action( 'wp_ajax_nopriv_manage_compound', 'manage_compound' );
-
 function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quantity= null, $variation_id= null, $variation= null ) {
     if( $_POST['cart_price']) {
         WC()->session->set( $cart_item_key.'_cart_price', $_POST['cart_price'] );
@@ -229,7 +222,6 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
     } else {
         WC()->session->__unset( $cart_item_key.'_additional_price' );
     }  	
-	
 	if( $_POST['service_fee'] ) {
         WC()->session->set( $cart_item_key.'_service_fee', $_POST['service_fee']);
     } else {
@@ -237,7 +229,6 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
     }  	
 }
 add_action( 'woocommerce_add_to_cart', 'save_cart_data_bundle_price', 1, 5 );
-
 function calculate_bundle_price( $cart_object ) {
     global $woocommerce;
 	$additionalPrice = 100;
@@ -252,7 +243,6 @@ function calculate_bundle_price( $cart_object ) {
 	$woocommerce->cart->persistent_cart_update();
 }
 add_action( 'woocommerce_before_calculate_totals', 'calculate_bundle_price', 1, 1 );
-
 /* Function to add meta value size on cart item list */
 function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null ) {
 	if( $cart_item_key && is_cart() ) {
@@ -271,7 +261,6 @@ function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_
     }
 }
 add_filter( 'woocommerce_cart_item_name', 'render_meta_on_cart_item', 1, 3 );
-
 function render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null ) {
     if( $cart_item_key ) {
         if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
@@ -286,7 +275,6 @@ function render_meta_on_checkout_order_review_item( $quantity = null, $cart_item
     }
 }
 add_filter( 'woocommerce_checkout_cart_item_quantity', 'render_meta_on_checkout_order_review_item', 1, 3 );
-
 /* Function to add meta value size on order item list */
 function bundle_order_meta_handler( $item_id, $values, $cart_item_key ) {
 	global $woocommerce;	
@@ -303,12 +291,9 @@ function bundle_order_meta_handler( $item_id, $values, $cart_item_key ) {
 			$herbs=get_bundle_info($compound_id,$total_size);
 			wc_add_order_item_meta( $item_id, "Herbs ", $herbs ); 
 		}
-		
-		//wc_add_order_item_meta( $item_id, "Size ", $size ); 
     }
 }
 add_action( 'woocommerce_add_order_item_meta', 'bundle_order_meta_handler', 1, 3 );
-
 //Store the custom field
 add_filter( 'woocommerce_add_cart_item_data', 'add_cart_item_custom_data_vase', 10, 2 );
 function add_cart_item_custom_data_vase( $cart_item_meta, $product_id ) {
@@ -318,7 +303,6 @@ function add_cart_item_custom_data_vase( $cart_item_meta, $product_id ) {
 	$cart_item_meta['additional_price'] = $_POST['additional_price'];
 	return $cart_item_meta; 
 }
-
 //Get it from the session and add it to the cart variable
 function get_cart_items_from_session( $item, $values, $key ) {
 	if ( array_key_exists( 'cart_price', $values ) ) {
@@ -333,7 +317,6 @@ function get_cart_items_from_session( $item, $values, $key ) {
     return $item;
 }
 add_filter( 'woocommerce_get_cart_item_from_session', 'get_cart_items_from_session', 1, 3 );
-
 /*
 * Function to get cart item bundle information
 */
@@ -363,16 +346,13 @@ function get_bundle_info($id,$size) {
 	}	
 	return $result;
 }
-
-
 add_action( 'wp_ajax_remove_bundle_product_from_cart', 'remove_bundle_product_from_cart' );
 add_action( 'wp_ajax_nopriv_remove_bundle_product_from_cart', 'remove_bundle_product_from_cart' );
 function remove_bundle_product_from_cart() {
 	global $woocommerce;
 	$cart = $woocommerce->cart->get_cart();
 	$id = $_POST['product_id'];
-	foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item){
-		
+	foreach ($woocommerce->cart->get_cart() as $cart_item_key => $cart_item){		
         if($cart_item['product_id'] == $_POST['product_id'] ){
 			// Remove product in the cart using  cart_item_key.
             $woocommerce->cart->set_quantity($cart_item_key,0);
@@ -380,7 +360,6 @@ function remove_bundle_product_from_cart() {
     }
 	die();
 }
-
 add_action( 'wp_ajax_add_to_cart_formula', 'add_to_cart_formula' );
 add_action( 'wp_ajax_nopriv_add_to_cart_formula', 'add_to_cart_formula' );
 function add_to_cart_formula() {
