@@ -1,6 +1,5 @@
 <?php
 //add_filter( 'woocommerce_enqueue_styles', '__return_false' );
-
 /*
 * Function to get prodcut categories
 */
@@ -31,7 +30,6 @@ function get_product_categories($exclude=false) {
 	}
 	echo $result;
 }
-
 /*
 * Function to get all products
 */
@@ -66,8 +64,7 @@ function load_products () {
 		$args['order']=$order;
 	}else {
 		$args['order']='ASC';
-	}
-	
+	}	
 	if($sort_by!=''){
 		if($sort_by=='folk_name') {
 			$args['meta_key'] = '_product_details_folk_name';
@@ -115,8 +112,7 @@ function load_products () {
 				'field' => 'term_id',
 				'terms' => '1391'
 			),
-		);
-		
+		);	
 		$results =get_posts( $argss ); 
 		if($results): 
 			foreach($results as $result) {
@@ -128,7 +124,6 @@ function load_products () {
 			$args['post__not_in']=$compound_ids;
 		endif;
 	// } else {
-		
 	// }
 	if($sort_by_alpha !='') {
 		if($sort_by!='' && $sort_by=='folk_name') {
@@ -160,7 +155,6 @@ function load_products () {
 			}
 		}
 	}
-	
 	$filter=array(
 		'product_cat'=>array_filter(array($cat_id)),
 		'body_system'=>array_filter(array($body_system_id)),
@@ -223,7 +217,6 @@ function load_products () {
 }
 add_action( 'wp_ajax_load_products', 'load_products' );
 add_action( 'wp_ajax_nopriv_load_products', 'load_products' );
-
 /*
 * Function to get actions 
 * @param: Category, Body system, Indication
@@ -262,7 +255,6 @@ function get_actions() {
 }
 add_action( 'wp_ajax_get_actions', 'get_actions' );
 add_action( 'wp_ajax_nopriv_get_actions', 'get_actions' );	
-
 /*
 * Function to get Product details with AJAX
 * @param: request product id
@@ -279,7 +271,6 @@ function get_product_detail() {
 }
 add_action( 'wp_ajax_get_product_detail', 'get_product_detail' );
 add_action( 'wp_ajax_nopriv_get_product_detail', 'get_product_detail' );	
-
 /*
 * Function to get Product details without AJAX
 * @param: request product id
@@ -298,12 +289,10 @@ function get_product_info($id) {
 	endwhile; endif; wp_reset_query();
 	return $html;
 }
-
 /*
 * Function to get terms
 * @param: Taxonomy
 */
-
 function get_product_terms() {
 	global $wp_query;
 	$post_type='product';
@@ -333,8 +322,7 @@ function get_product_terms() {
 			);	
 		}
 		$args['tax_query'] = $tax_query;
-	}
-	
+	}	
 	$objects_ids='';	
 	$objects = get_posts( $args );
 		foreach ($objects as $object) {
@@ -376,7 +364,6 @@ function get_product_terms() {
 }
 add_action( 'wp_ajax_get_product_terms', 'get_product_terms' );
 add_action( 'wp_ajax_nopriv_get_product_terms', 'get_product_terms' );
-
 //Change the placeholder image in WooCommerce
 add_action( 'init', 'ccw_custom_woo_placeholder' );
 function ccw_custom_woo_placeholder(){
@@ -386,11 +373,9 @@ function ccw_custom_woo_placeholder(){
 		return $src;
 	}
 }
-
 /*
 * Show Compound List
 */
-
 function show_compound_products() {
 	global $wp_query,$wpdb;
 	$body_system_id=$_POST['filter_type_body_system'];
@@ -402,7 +387,6 @@ function show_compound_products() {
 	$mono_compound_id=$_POST['mono_compound_id'];
 	$bundle_herbs="";
 	$postids="";
-	
 	if($action_id !='') {
 		$body_system_id=$action_id;
 	}
@@ -414,7 +398,6 @@ function show_compound_products() {
 		'showposts'=>-1,
 		'post_status'=>array('publish')
 	);
-	
 	if($compound_id!="") {
 		$bundle_data=get_post_meta($compound_id,'_bundle_data',true);
 		if($bundle_data !='') {
@@ -424,7 +407,6 @@ function show_compound_products() {
 			$args['post__not_in']=$bundle_herbs;
 		}
 	}
-	
 	if($mono_compound_id!="") {
 		$bundle_data=get_post_meta($mono_compound_id,'_monograph_details_composition',true);
 		if($bundle_data !='') {
@@ -434,7 +416,6 @@ function show_compound_products() {
 			$args['post__not_in']=$bundle_herbs;
 		}
 	}
-	
 	if($sort_by!=''){
 		if($sort_by=='folk_name') {
 			$args['meta_key'] = '_product_details_folk_name';
@@ -452,10 +433,8 @@ function show_compound_products() {
 			$args['orderby']=$sort_by;
 		}
 	}
-	
 	if($keyword !='') {
 		if($sort_by != '' && $sort_by == 'folk_name') {
-			//echo $sort_by;
 			$args['meta_query'] = array(
 				array(
 				   'key' => '_product_details_folk_name',
@@ -467,12 +446,10 @@ function show_compound_products() {
 			$args['s'] = $keyword;	
 		}
 	}
-	
 	$filter=array(
 		'body_system'=>array_filter(array($body_system_id)),
 		'product_cat'=>array_filter(array(327)),
 	);
-	
 	if($sort_by_alpha !='') {
 		if($sort_by!='' && $sort_by=='folk_name') {
 			$postids = $wpdb->get_col("
@@ -498,7 +475,6 @@ function show_compound_products() {
 			$args['post__in']=$postids;
 		}
 	}
-	
 	if($bundle_herbs !='' && $postids !='') {
 		unset($args['post__not_in']);
 		unset($args['post__in']);
@@ -527,7 +503,6 @@ function show_compound_products() {
 		}
 		$args['tax_query'] = $tax_query;
 	}
-	
 	ob_start ();
 	$query=new WP_Query($args);
 	if($query->have_posts()){
@@ -540,8 +515,7 @@ function show_compound_products() {
 			}
 	?>	
 		<li id="product-<?php echo get_the_ID();?>">
-			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product">
-			
+			<a href="#" id="compound-<?php echo get_the_ID();?>" data-pricy="<?php echo $data_pricy;?>" data-id="<?php echo get_the_ID();?>" data-name="<?php the_title();?>" class="compound-product">		
 			<?php 
 				$title = "<em>".get_the_title().$data_pricy."</em>";
 				if($sort_by!='' && $sort_by=='folk_name') {

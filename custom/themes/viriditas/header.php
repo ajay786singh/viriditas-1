@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title><?php wp_title( '|', true, 'right' ); ?><?php bloginfo('name') ?></title>
+    <title><?php wp_title( '|', true, 'right' );?><?php bloginfo('name');?></title>
     <?php 
         $args   =array('post_type' => 'post','posts_per_page' => 1);query_posts($args);
         if (have_posts()) : while(have_posts()) : the_post();
@@ -42,13 +42,6 @@
 	</script>
 </head>
 <body <?php body_class();?>>
-<?php
-	if(is_archive('post-type-archive-product') || is_singular('product') || is_page('2219') || is_page('your-custom-formulas')){ 
-		if(!is_user_logged_in()){
-			wp_redirect(wp_login_url( current_page_url()));
-		}
-	}
-?>
 <?php global $woocommerce; ?> 
 <div id="mm-menu-toggle" class="mm-menu-toggle">Menu</div>
   <nav id="mm-menu" class="mm-menu">
@@ -68,10 +61,6 @@
 			<div class="column-9">								         
 				<nav class="main-menu-desktop">
 					<?php global $woocommerce; ?> 
-						<?php 
-							$host = $_SERVER['HTTP_HOST'];
-							if($host=='192.168.1.13' || $host=='localhost' || $host=='hypelabs.ca') {
-						?>
 						<ul>
 							<?php if ( is_user_logged_in() ) { ?>
 								<li>
@@ -82,7 +71,7 @@
 								<a class="popup-modal" href="#faq-box">*FAQ*</a>								
 								<?php 
 									if(get_faqs_box_content()) echo get_faqs_box_content();
-									} 
+								} 
 								?>
 								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
 								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
@@ -96,13 +85,6 @@
 								</li>
 						<?php }  ?>
 						</ul>
-						<?php } else { ?>
-							<style>
-								.main-menu-desktop ul:nth-child(2) {
-									margin-top: 2.5em;
-								}
-							</style>
-						<?php } ?>
 						<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>
 				</nav>
 			</div>
