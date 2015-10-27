@@ -1,16 +1,14 @@
 jQuery(document).ready(function($) {
-	if($('.compounds').length) {
+	if($('.compounds').length>0) {
 		$('.error-info').show();
 		var pa=getParameterByName('pa');
 		var pb=getParameterByName('pb');
 		$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 		$('section[role="actions"]').fetchActions('body_system',pb,'pa',pa);
 		$('.compound-list .product-list').showCompound();
-		
 		// Function to close pop up for compound on press esc button
 		$(document).keyup(function(e) {
 			if (e.keyCode == 27) {
-				//alert(2);
 				var herbSize=$('#herb-size').val();
 				var totalSize=$('#total_size').html();
 				totalSize=parseInt(totalSize);
@@ -30,10 +28,6 @@ jQuery(document).ready(function($) {
 						$(this).removeHerb(id);
 						$('.popup-compound').closePopup();
 					}	
-					// if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
-						// $(this).removeHerb(id);
-					// }
-					// $('.popup-compound').closePopup();
 				}  
 			} // esc
 		});
@@ -58,10 +52,6 @@ jQuery(document).ready(function($) {
 						$(this).removeHerb(id);
 						$('.popup-compound').closePopup();
 					}	
-					// if((dataPricy=='*' || dataPricy=='**') && herbSize > 60 ) {
-						// $(this).removeHerb(id);
-					// }
-					// $('.popup-compound').closePopup();
 				}	
 			}
 			return false;
@@ -276,4 +266,28 @@ jQuery(document).ready(function($) {
 			}	
 		});
 	}
+	$('.add-to-cart-formulas').click(function(e){
+		if($(this).attr('href')=='#') {	
+			var productID=$(this).attr('data-id');
+			var cartPrice=$(this).attr('data-price');
+			var cartSize=$(this).attr('data-size');
+			var productType='bundle';		
+			var data= {'action':'add_to_cart_formula','product_type':productType,'cart_size':cartSize,'cart_price':cartPrice, 'product_id':productID};		
+			$('#cart-action-'+productID).css('visibility','visible');
+			$('#cart-action-'+productID).removeClass('added-cart');
+			$.ajax({		
+				type: 'POST',		
+				url: ajaxurl,		
+				data:data,	
+				success: function(html) {				
+					$('#cart-button-'+productID).attr('href',cart_page)
+					$('#cart-button-'+productID).text('View cart');
+					$('#cart-action-'+productID).addClass('added-cart');
+				}
+			});
+		} else {
+			window.location = cart_page;
+			return true;
+		}
+	});
 });

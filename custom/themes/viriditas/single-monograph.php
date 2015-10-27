@@ -29,7 +29,7 @@
 		?>
 			<?php 
 				$make_formula_page_id=2219;//Make your compound page id
-				if($make_formula_page_id !='') {
+				if(is_user_logged_in() && $make_formula_page_id !='') {
 				$make_formula_page_url=get_permalink($make_formula_page_id)."?mono-compound=".$post->ID;
 			?>
 			<div class="add-formula">

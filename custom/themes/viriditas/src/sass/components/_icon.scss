@@ -112,12 +112,22 @@
 		line-height: 1.5em;
 		margin-top: 10px;
 		text-align: right;
-		width: 165px;
+		width: 125px;
+		background-size:32px 30px;
+		@include media($bp-large) {
+			width: 165px;
+			background-size:64px 60px;
+		}
 		span {
 			display: block;
 			line-height: 1.2em;
 			width: 80px;
-			padding-top: 15px;
+			padding-top: 2px;
+			font-size:0.8em;
+			@include media($bp-large) {
+				font-size:1em;
+				padding-top: 15px;
+			}
 		}
 	}
 }

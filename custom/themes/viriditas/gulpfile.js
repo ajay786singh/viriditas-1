@@ -1,4 +1,3 @@
-
 /* TO-DO:
 1. add sass-linting
 2. Fonts
@@ -21,14 +20,13 @@ var outputDir = 'dist';
 
 var scriptList = [
 	//'src/components/jquery/dist/jquery.js', 
-	'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
+	//'src/components/jquery-viewport-checker/src/jquery.viewportchecker.js',
 	'src/components/readmore/readmore.js',
 	'src/components/magnific-popup/dist/jquery.magnific-popup.js',
 	'src/components/jquery-listnav/jquery-listnav.min.js',
 	'src/js/custom/jquery.ui.map.min.js',
 	'src/js/custom/countries.js',
 	'src/js/custom/map.js',
-	'src/js/custom/equal-height.js',
 	'src/js/custom/appointments.js',
 	'src/js/custom/readmore.js',
 	'src/js/custom/jquery.classie.js',
@@ -46,6 +44,7 @@ var scriptList = [
 	'src/js/custom/compound.js',
 	'src/js/custom/faq.js',
 	'src/js/custom/scroll-to-url-hash.js',
+	'src/js/custom/equal-height.js',
 ];
 
 var fontIcons = [
