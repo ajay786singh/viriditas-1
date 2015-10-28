@@ -1,6 +1,9 @@
 <?php
 /**
  * Bundled Item Price.
+ *
+ * Override this template by copying it to 'yourtheme/woocommerce/single-product/bundled-item-price.php'.
+ *
  * @version 4.7.0
  */
 

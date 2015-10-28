@@ -1,5 +1,9 @@
 *** Canada Post ***
 
+2015.09.29 - version 2.4.1
+* Fixed variable package being overwritten in packages loop.
+* Added tooltips.
+
 2015.05.23 - version 2.4.0
 * Move prices to top of file
 * Update prices based on https://www.canadapost.ca/tools/pg/supportdocuments/lp_pricesheet-e.pdf and https://www.canadapost.ca/tools/pg/supportdocuments/lm_pricesheet-e.pdf

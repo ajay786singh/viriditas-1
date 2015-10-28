@@ -1,3 +1,6 @@
+/* global wc_bundles_admin_params */
+/* global wc_bundles_admin_meta_boxes */
+
 jQuery( function($) {
 
 	function wc_bundles_getEnhancedSelectFormatString() {
@@ -38,7 +41,7 @@ jQuery( function($) {
 					return wc_bundles_admin_params.i18n_selection_too_long_1;
 				}
 
-				return wc_bundles_admin_params.i18n_selection_too_long_n.replace( '%qty%', number );
+				return wc_bundles_admin_params.i18n_selection_too_long_n.replace( '%qty%', limit );
 			},
 			formatLoadMore: function( pageNumber ) {
 				return wc_bundles_admin_params.i18n_load_more;
@@ -70,14 +73,13 @@ jQuery( function($) {
 	// bundle type specific options
 	$( 'body' ).on( 'woocommerce-product-type-change', function( event, select_val, select ) {
 
-		if ( select_val == 'bundle' ) {
+		if ( select_val === 'bundle' ) {
 
 			$( 'input#_downloadable' ).prop( 'checked', false );
 			$( 'input#_virtual' ).removeAttr( 'checked' );
 
 			$( '.show_if_simple' ).show();
 			$( '.show_if_external' ).hide();
-			$( '.show_if_bundle' ).show();
 
 			$( 'input#_downloadable' ).closest( '.show_if_simple' ).hide();
 			$( 'input#_virtual').closest('.show_if_simple' ).hide();
@@ -87,9 +89,6 @@ jQuery( function($) {
 			$( 'input#_per_product_shipping_active' ).change();
 
 			$( '#_nyp' ).change();
-		} else {
-
-			$( '.show_if_bundle' ).hide();
 		}
 
 	} );
@@ -99,7 +98,7 @@ jQuery( function($) {
 	// non-bundled shipping
 	$( 'input#_per_product_shipping_active' ).change( function() {
 
-		if ( $( 'select#product-type' ).val() == 'bundle' ) {
+		if ( $( 'select#product-type' ).val() === 'bundle' ) {
 
 			if ( $( 'input#_per_product_shipping_active' ).is( ':checked' ) ) {
 				$( '.show_if_virtual' ).show();
@@ -117,7 +116,7 @@ jQuery( function($) {
 	// show options if pricing is static
 	$( 'input#_per_product_pricing_active' ).change( function() {
 
-		if ( $( 'select#product-type' ).val() == 'bundle' ) {
+		if ( $( 'select#product-type' ).val() === 'bundle' ) {
 
 			if ( $(this).is( ':checked' ) ) {
 
@@ -149,7 +148,7 @@ jQuery( function($) {
 	// nyp support
 	$( '#_nyp' ).change( function() {
 
-		if ( $( 'select#product-type' ).val() == 'bundle' ) {
+		if ( $( 'select#product-type' ).val() === 'bundle' ) {
 
 			if ( $( '#_nyp' ).is( ':checked' ) ) {
 				$( 'input#_per_product_pricing_active' ).prop( 'checked', false );
@@ -166,7 +165,7 @@ jQuery( function($) {
 	init_wc_bundle_metaboxes();
 
 	function bundle_row_indexes() {
-		$( '.wc-bundled-items .wc-bundled-item' ).each(function( index, el ){
+		$( '.wc-bundled-items .wc-bundled-item' ).each( function( index, el ) {
 			$( '.bundled_item_position', el ).val( parseInt( $(el).index( '.wc-bundled-items .wc-bundled-item' ) ) );
 		} );
 	}
@@ -311,13 +310,18 @@ jQuery( function($) {
 
 		if ( ! bundled_product_id > 0 ) {
 
-			if ( wc_bundles_admin_params.is_wc_version_gte_2_3 == 'yes' ) {
+			if ( wc_bundles_admin_params.is_wc_version_gte_2_3 === 'yes' ) {
 				$( '#bundled_product_data .bundled_product_selector .wc-product-search' ).select2( 'open' );
 			} else {
 				$( '#bundled_product_data .bundled_product_selector .ajax_chosen_select_products' ).trigger( 'chosen:open.chosen' );
 			}
 
 			return false;
+
+		} else {
+			if ( wc_bundles_admin_params.is_wc_version_gte_2_3 === 'yes' ) {
+				$( '#bundled_product_data .bundled_product_selector .wc-product-search' ).select2( 'val', '' );
+			}
 		}
 
 		$( '#bundled_product_data' ).block( block_params );
