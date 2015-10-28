@@ -359,11 +359,12 @@ function get_bundle_info($id,$size) {
 			//$herb_title=get_the_title($bundle_herb_id);
 			$herb_size ="";
 			$herb_size = $bundle_herb_values['bundle_required_size'];
+			$expensive_herb = get_post_meta($bundle_herb_id,'_product_details_expensive_herb',true);	
 			$herb_title=get_the_title($bundle_herb_id);
 			if($herb_size !='') {
 				$herb_size=($herb_size / 100) * $size;
 				$herb_size= " - ".$herb_size." ".$unit;
-				$herb_title=get_the_title($bundle_herb_id)." ".$herb_size;
+				$herb_title=get_the_title($bundle_herb_id).$expensive_herb." ".$herb_size;
 			}
 			
 			$herbs[]="<small><i>".$herb_title."</i></small>";

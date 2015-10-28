@@ -3,8 +3,8 @@ Contributors: picklewagon
 Donate link: http://picklewagon.com/wordpress/new-user-approve/donate
 Tags: users, registration, sign up, user management, login
 Requires at least: 3.5.1
-Tested up to: 4.1
-Stable tag: 1.7.2
+Tested up to: 4.3.1
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,10 @@ as they have their username and passwords.
 5. Custom messages on the login screen.
 
 == Changelog ==
+
+= 1.7.3 =
+* place content in metaboxes in place of dynamically pulling from website
+* tested with WordPress 4.3.1
 
 = 1.7.2 =
 * tested with WordPress 4.1

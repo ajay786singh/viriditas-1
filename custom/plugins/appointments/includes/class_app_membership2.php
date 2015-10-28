@@ -51,7 +51,7 @@ class App_Membership2 {
 		// Apply a discount to logged-in members.
 		add_filter(
 			'app_get_price_prepare',
-			array( $this, 'get_price' ), 10, 2
+			array( $this, 'get_price' ), 10, 3
 		);
 
 		// Add CSS/JS to the top of the settings form
@@ -165,13 +165,13 @@ class App_Membership2 {
 			<span class="description"><?php
 			printf(
 				__( 'The below fields require %s plugin.', 'appointments' ),
-				'<a href="http://premium.wpmudev.org/project/membership/" target="_blank">Membership2</a>'
+				'<a href="http://premium.wpmudev.org/project/membership/" target="_blank">Membership 2</a>'
 			);
 			?></span>
 			</td>
 		</tr>
 		<tr class="payment_row" style="<?php echo $row_style; ?>">
-			<th scope="row"><?php _e( 'Membership2 Integration', 'appointments' ); ?></th>
+			<th scope="row"><?php _e( 'Membership 2 Integration', 'appointments' ); ?></th>
 			<td colspan="2">
 			<table class="ms-membership-list">
 				<tr>
