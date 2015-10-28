@@ -1,3 +1,37 @@
+/* Compatibility */
+
+#bundled_product_data .expand_all, #bundled_product_data .close_all {
+	float: right;
+	margin-left: 14px;
+	line-height: 22px;
+	text-decoration: none;
+}
+
+#bundled_product_data .expand_all:before, #bundled_product_data .close_all:before {
+	font-family: WooCommerce;
+	speak: none;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	margin-right: .618em;
+	content: "";
+	text-decoration: none;
+	font-size: .8em;
+	color: #999;
+}
+
+#bundled_product_data .expand_all:before {
+	content:"\e035";
+}
+
+#bundled_product_data .close_all:before {
+	content:"\e036";
+}
+
+/* Styles */
+
 table.wp-list-table span.product-type.bundle {
 	background-position-x: 0px;
 }

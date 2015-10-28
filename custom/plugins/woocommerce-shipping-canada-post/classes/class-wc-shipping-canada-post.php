@@ -391,6 +391,10 @@ class WC_Shipping_Canada_Post extends WC_Shipping_Method {
 						text-align: left;
 						padding: 0 7px;
 					}
+					.canada_post_boxes .help_tip {
+						float: none !important;
+						margin-right: 24px !important;
+					}
 					.canada_post_services th.sort {
 						width: 16px;
 					}
@@ -413,8 +417,14 @@ class WC_Shipping_Canada_Post extends WC_Shipping_Method {
 							<th><?php _e( 'Inner Length', 'wc_canada_post' ); ?></th>
 							<th><?php _e( 'Inner Width', 'wc_canada_post' ); ?></th>
 							<th><?php _e( 'Inner Height', 'wc_canada_post' ); ?></th>
-							<th><?php _e( 'Box Weight', 'wc_canada_post' ); ?></th>
-							<th><?php _e( 'Max Weight', 'wc_canada_post' ); ?></th>
+							<th>
+								<?php _e( 'Weight of Box', 'wc_canada_post' ); ?>
+								<img class="help_tip" width="16" height="16" data-tip="<?php _e( 'Weight of the actual box and will be added to the weight of the contents. This will increase the cost of shipping.', 'wc_canada_post' ); ?>" src="<?php echo esc_url( WC()->plugin_url() . '/assets/images/help.png' ); ?>" />
+							</th>
+							<th>
+								<?php _e( 'Max Weight', 'wc_canada_post' ); ?>
+								<img class="help_tip" width="16" height="16" data-tip="<?php _e( 'Maximum weight your box can hold. This includes contents weight and box weight.', 'wc_canada_post' ); ?>" src="<?php echo esc_url( WC()->plugin_url() . '/assets/images/help.png' ); ?>" />
+							</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -1448,16 +1458,16 @@ class WC_Shipping_Canada_Post extends WC_Shipping_Method {
 		$boxpack->pack();
 
 		// Get packages
-		$packages = $boxpack->get_packages();
+		$flat_packages = $boxpack->get_packages();
 
-		foreach ( $packages as $package ) {
+		foreach ( $flat_packages as $flat_package ) {
 
-			$dimensions = array( $package->length, $package->width, $package->height );
+			$dimensions = array( $flat_package->length, $flat_package->width, $flat_package->height );
 
 			sort( $dimensions );
 
 			$request  = '<parcel-characteristics>' . "\n";
-    		$request .= '	<weight>' . round( $package->weight, 2 ) . '</weight>' . "\n";
+    		$request .= '	<weight>' . round( $flat_package->weight, 2 ) . '</weight>' . "\n";
     		$request .= '	<dimensions>' . "\n";
 			$request .= '		<height>' . round( $dimensions[0], 1 ) . '</height>' . "\n";
 			$request .= '		<width>' . round( $dimensions[1], 1 ) . '</width>' . "\n";
@@ -1475,7 +1485,7 @@ class WC_Shipping_Canada_Post extends WC_Shipping_Method {
 					$option_request .= '		<option>' . "\n";
 					$option_request .= '			<option-code>' . $option . '</option-code>' . "\n";
 					if ( $option == 'COV' ) {
-						$option_request .= '			<option-amount>' . $package->value . '</option-amount>' . "\n";
+						$option_request .= '			<option-amount>' . $flat_package->value . '</option-amount>' . "\n";
 					}
 					$option_request .= '		</option>' . "\n";
 				}

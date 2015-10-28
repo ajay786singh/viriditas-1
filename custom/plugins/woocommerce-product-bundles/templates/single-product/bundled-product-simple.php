@@ -2,6 +2,8 @@
 /**
  * Simple Bundled Product Template.
  *
+ * Override this template by copying it to 'yourtheme/woocommerce/single-product/bundled-product-simple.php'.
+ *
  * @version 4.9.4
  */
 
@@ -10,8 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $woocommerce_bundles;
-
 ?><div class="cart" data-title="<?php echo esc_attr( $bundled_item->get_raw_title() ); ?>" data-optional="<?php echo $bundled_item->is_optional() ? true : false; ?>" data-type="<?php echo $bundled_product->product_type; ?>" data-bundled_item_id="<?php echo $bundled_item->item_id; ?>" data-product_id="<?php echo $bundle->id . str_replace( '_', '', $bundled_item->item_id ); ?>" data-bundle_id="<?php echo $bundle->id; ?>">
 	<div class="bundled_item_wrap">
 		<div class="bundled_item_cart_content" style="<?php echo $bundled_item->is_optional() && ! $bundled_item->is_optional_checked() ? 'display:none;' : ''; ?>">
@@ -19,7 +19,7 @@ global $woocommerce_bundles;
 
 				if ( ! $bundled_item->is_optional() ) {
 					wc_get_template( 'single-product/bundled-item-price.php', array(
-						'bundled_item' => $bundled_item ), false, $woocommerce_bundles->woo_bundles_plugin_path() . '/templates/'
+						'bundled_item' => $bundled_item ), false, WC_PB()->woo_bundles_plugin_path() . '/templates/'
 					);
 				}
 
@@ -36,7 +36,7 @@ global $woocommerce_bundles;
 				wc_get_template( 'single-product/bundled-item-quantity.php', array(
 						'bundled_item'         => $bundled_item,
 						'bundle_fields_prefix' => $bundle_fields_prefix
-					), false, $woocommerce_bundles->woo_bundles_plugin_path() . '/templates/'
+					), false, WC_PB()->woo_bundles_plugin_path() . '/templates/'
 				);
 
 			?></div>

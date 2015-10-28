@@ -3,7 +3,7 @@
  * Used to create and store a product_id / variation_id representation of a product collection based on the included items' inventory requirements.
  *
  * @class    WC_PB_Stock_Manager
- * @version  4.8.7
+ * @version  4.11.5
  * @since    4.8.7
  */
 
@@ -15,10 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WC_PB_Stock_Manager {
 
 	private $items;
+	public $product;
 
-	public function __construct() {
+	public function __construct( $product = false ) {
 
-		$this->items = array();
+		$this->product = $product;
+		$this->items  = array();
 	}
 
 	/**
@@ -111,15 +113,28 @@ class WC_PB_Stock_Manager {
 	/**
 	 * Validate that all managed items in the collection are in stock.
 	 *
-	 * @param  int    $bundle_id
+	 * @param  int     $bundle_id  product id that collection belongs to
 	 * @return boolean
 	 */
-	public function validate_stock( $bundle_id ) {
+	public function validate_stock( $bundle_id = false ) {
 
 		$managed_items = $this->get_managed_items();
 
 		if ( empty( $managed_items ) ) {
 			return true;
+		}
+
+		if ( $bundle_id ) {
+			_deprecated_function( 'validate_stock', '4.11.5', 'validate_stock is being called with deprecated arguments' );
+		}
+
+		if ( ! $bundle_id && $this->product && $this->product instanceof WC_Product ) {
+			$bundle_id = $this->product->id;
+		} else {
+			if ( WP_DEBUG ) {
+				trigger_error( 'WC_PB_Stock_Manager class instantiated with invalid constructor arguments' );
+			}
+			return false;
 		}
 
 		// Stock Validation
@@ -128,7 +143,7 @@ class WC_PB_Stock_Manager {
 			$quantity = $managed_item[ 'quantity' ];
 
 			// Get the product
-			$product_data = WC_PB_Core_Compatibility::wc_get_product( $managed_item_id );
+			$product_data = wc_get_product( $managed_item_id );
 
 			if ( ! $product_data ) {
 				return false;

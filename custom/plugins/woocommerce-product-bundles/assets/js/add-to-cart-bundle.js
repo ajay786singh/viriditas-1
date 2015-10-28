@@ -1,5 +1,13 @@
 /* jshint -W069 */
 /* jshint -W041 */
+/* global wc_bundle_params */
+
+/**
+ * Bundle scripts, accessible to the outside world
+ */
+
+var wc_pb_bundle_scripts = {};
+
 jQuery( document ).ready( function($) {
 
 	$( 'body' ).on( 'quick-view-displayed', function() {
@@ -11,549 +19,841 @@ jQuery( document ).ready( function($) {
 
 	$.fn.wc_pb_bundle_form = function() {
 
-		// Listeners
+		if ( ! $(this).hasClass( 'bundle_data' ) ) {
+			return true;
+		}
 
-		$( '.bundled_product' )
+		var bundle_data  = $(this);
+		var container_id = $(this).data( 'bundle_id' );
+
+		if ( typeof( container_id ) === 'undefined' ) {
+			container_id = $(this).attr( 'data-bundle-id' );
+
+			if ( container_id ) {
+				$(this).data( 'bundle_id', container_id );
+			} else {
+				return false;
+			}
+		}
+
+		var bundle_form = bundle_data.closest( '.bundle_form' );
+
+		if ( typeof( wc_pb_bundle_scripts[ container_id ] ) !== 'undefined' ) {
+			bundle_form.find( '*' ).off();
+		}
+
+		wc_pb_bundle_scripts[ container_id ] = {
+
+			$bundle_data:                    bundle_data,
+			$bundle_form:                    bundle_form,
+			$bundle_wrap:                    bundle_data.find( '.bundle_wrap' ),
+			$bundled_items:                  bundle_form.find( '.bundled_product' ),
+
+			$bundle_price:                   bundle_data.find( '.bundle_price' ),
+			$bundle_error:                   bundle_data.find( '.bundle_error' ),
+			$bundle_error_content:           bundle_data.find( '.bundle_error ul.msg' ),
+			$bundle_button:                  bundle_data.find( '.bundle_button' ),
+
+			bundled_items:                   {},
+
+			$initial_stock_status:           false,
+
+			update_bundle_lock:              false,
+
+			validation_messages:             [],
+
+			init: function() {
+
+				/**
+				 * Bind bundle event handlers
+				 */
+
+				this.bind_event_handlers();
+
+				/**
+				 * Init bundled items
+				 */
+
+				this.init_bundled_items();
+
+
+				/**
+				 * Initial states and loading
+				 */
+
+				var bundle        = this;
+				var bundle_data   = bundle.$bundle_data;
+
+				// Ensure error div exists (template back-compat)
+				if ( bundle.$bundle_error_content.length == 0 ) {
+					if ( bundle.$bundle_error.length > 0 ) {
+						bundle.$bundle_error.remove();
+					}
+					bundle.$bundle_price.after( '<div class="bundle_error" style="display:none"><ul class="msg woocommerce-info"></ul></div>' );
+					bundle.$bundle_error         = bundle_data.find( '.bundle_error' );
+					bundle.$bundle_error_content = bundle.$bundle_error.find( '.msg' );
+				}
+
+				// Add-ons support - move totals container
+				var addons_totals = bundle_data.find( '#product-addons-total' );
+				bundle.$bundle_price.after( addons_totals );
+
+				if ( bundle.$bundle_wrap.find( 'p.stock' ).length > 0 ) {
+					bundle.$initial_stock_status = bundle.$bundle_wrap.find( 'p.stock' ).clone();
+				}
+
+				// Init variations and addons scripts
+				$.each( bundle.bundled_items, function( index, bundled_item ) {
+					bundled_item.init_scripts();
+				} );
+
+				bundle.update_bundle();
+
+				bundle.$bundle_data.trigger( 'woocommerce-product-bundle-initialized', [ bundle ] );
+
+			},
 
 			/**
-			 * Update totals upon changing quantities
+			 * Attach bundle-level event handlers
 			 */
-			.on( 'change', 'input.bundled_qty', function( event ) {
 
-				var form = $(this).closest( '.bundle_form' );
-				var min  = parseFloat( $(this).attr( 'min' ) );
-				var max  = parseFloat( $(this).attr( 'max' ) );
+			bind_event_handlers: function() {
 
-				if ( min >= 0 && parseFloat( $(this).val() ) < min ) {
-					$(this).val( min );
+				var bundle = this;
+
+				this.$bundle_data
+
+					.on( 'woocommerce-nyp-updated-item', function( event ) {
+
+						var item = $(this);
+						var nyp  = item.find( '.nyp' );
+
+						if ( nyp.is( ':visible' ) ) {
+
+							var bundle_price_data = bundle.$bundle_data.data( 'bundle_price_data' );
+
+							bundle_price_data[ 'total' ] = nyp.data( 'price' );
+
+							bundle.update_bundle();
+						}
+
+						event.stopPropagation();
+					} )
+
+					.on( 'change', '.bundle_button input.qty', function( event ) {
+
+						bundle.update_bundle();
+					} );
+			},
+
+			/**
+			 * Initialize bundled item objects
+			 */
+
+			init_bundled_items: function() {
+
+				var bundle = this;
+
+				bundle.$bundled_items.each( function( index ) {
+
+					bundle.bundled_items[ index ] = new WC_PB_Bundled_Item( bundle, $(this), index );
+
+					bundle.bind_bundled_item_event_handlers( bundle.bundled_items[ index ] );
+
+				} );
+
+			},
+
+			/**
+			 * Attach bundled-item-level event handlers
+			 */
+
+			bind_bundled_item_event_handlers: function( bundled_item ) {
+
+				var bundle = this;
+
+				bundled_item.$self
+
+					/**
+					 * Update totals upon changing quantities
+					 */
+					.on( 'change', 'input.bundled_qty', function( event ) {
+
+						var min  = parseFloat( $(this).attr( 'min' ) );
+						var max  = parseFloat( $(this).attr( 'max' ) );
+
+						if ( min >= 0 && parseFloat( $(this).val() ) < min ) {
+							$(this).val( min );
+						}
+
+						if ( max > 0 && parseFloat( $(this).val() ) > max ) {
+							$(this).val( max );
+						}
+
+						bundle.update_bundle();
+					} )
+
+					.on( 'change', '.bundled_product_optional_checkbox input', function( event ) {
+
+						if ( $(this).is( ':checked' ) ) {
+
+							bundled_item.$bundled_item_content.slideDown( 200 );
+							bundled_item.set_selected( true );
+
+							// tabular mini-extension compat
+							bundled_item.$self.find( '.bundled_item_qty_col .quantity' ).removeClass( 'quantity_hidden' );
+
+							// Allow variations script to flip images in bundled_product_images div
+							bundled_item.$self.find( '.variations_form .variations select:eq(0)' ).trigger( 'change' );
+
+						} else {
+
+							bundled_item.$bundled_item_content.slideUp( 200 );
+							bundled_item.set_selected( false );
+
+							// tabular mini-extension compat
+							bundled_item.$self.find( '.bundled_item_qty_col .quantity' ).addClass( 'quantity_hidden' );
+
+							// Reset image in bundled_product_images div
+							bundled_item.$bundled_item_image.addClass( 'images' );
+							bundled_item.$self.find( '.variations_form' ).trigger( 'reset_image' );
+							bundled_item.$bundled_item_image.removeClass( 'images' );
+						}
+
+						bundle.update_bundle();
+
+						event.stopPropagation();
+					} )
+
+					.on( 'found_variation', function( event, variation ) {
+
+						var variations        = $(this).find( '.variations_form' );
+						var bundled_item_id   = bundled_item.bundled_item_id;
+						var bundle_price_data = bundle.$bundle_data.data( 'bundle_price_data' );
+
+						if ( bundle_price_data[ 'per_product_pricing' ] == true ) {
+							// put variation price in price table
+							bundle_price_data[ 'prices' ][ bundled_item_id ]         = variation.price;
+							bundle_price_data[ 'regular_prices' ][ bundled_item_id ] = variation.regular_price;
+						}
+
+						bundle.$bundle_wrap.find( 'input.bundle_variation_id_' + bundled_item_id ).val( variation.variation_id ).change();
+
+						for ( var attribute in variation.attributes ) {
+							var escaped_attr = attribute.replace( /%/g,'\\%' );
+							bundle.$bundle_wrap.find( 'input.bundle_' + escaped_attr + '_' + bundled_item_id ).val( variations.find( 'select[name="' + escaped_attr + '"]' ).val() );
+						}
+
+						// Remove .images class from bundled_product_images div in order to avoid styling issues
+						bundled_item.$bundled_item_image.removeClass( 'images' );
+
+						bundle.update_bundle();
+
+						event.stopPropagation();
+					} )
+
+					.on( 'reset_image', function( event ) {
+
+						// Remove .images class from bundled_product_images div in order to avoid styling issues
+						bundled_item.$bundled_item_image.removeClass( 'images' );
+
+					} )
+
+					.on( 'woocommerce-product-addons-update', function( event ) {
+
+						event.stopPropagation();
+					} )
+
+					.on( 'woocommerce_variation_select_focusin', function( event ) {
+
+						event.stopPropagation();
+					} )
+
+					.on( 'woocommerce_variation_select_change', function( event ) {
+
+						var variations = $(this).find( '.variations_form' );
+
+						// Add .images class to bundled_product_images div ( required by the variations script to flip images )
+						if ( bundled_item.is_selected() ) {
+							bundled_item.$bundled_item_image.addClass( 'images' );
+						}
+
+						$(this).find( '.variations .attribute-options select' ).each( function() {
+
+							if ( $(this).val() === '' ) {
+								variations.find( '.bundled_item_wrap .stock' ).addClass( 'disabled' );
+								bundle.update_bundle();
+								return false;
+							}
+						} );
+
+						event.stopPropagation();
+					} );
+
+
+				bundled_item.$bundled_item_cart
+
+					.on( 'woocommerce-product-addons-update', function( event ) {
+
+						bundle.update_bundle();
+
+						event.stopPropagation();
+					} )
+
+					.on( 'woocommerce-nyp-updated-item', function( event ) {
+
+						var item_id = bundled_item.bundled_item_id;
+						var nyp     = $(this).find( '.nyp' );
+
+						if ( nyp.is( ':visible' ) ) {
+
+							var bundle_price_data = bundle.$bundle_data.data( 'bundle_price_data' );
+
+							bundle_price_data[ 'prices' ][ item_id ] = nyp.data( 'price' );
+
+							bundle.update_bundle();
+						}
+
+						event.stopPropagation();
+					} );
+
+			},
+
+			/**
+			 * Schedules an update of the bundle totals
+			 * Uses a dumb scheduler to avoid queueing multiple calls of wc_pb_update_bundle_task - the "scheduler" simply introduces a 50msec execution delay during which all update requests are dropped
+			 */
+			update_bundle: function() {
+
+				var bundle = this;
+
+				// Dumb task scheduler
+				if ( bundle.update_bundle_lock === true ) {
+					return false;
 				}
 
-				if ( max > 0 && parseFloat( $(this).val() ) > max ) {
-					$(this).val( max );
+				bundle.update_bundle_lock = true;
+
+				window.setTimeout( function() {
+
+					bundle.update_bundle_task();
+					bundle.update_bundle_lock = false;
+
+				}, 20 );
+			},
+
+			update_bundle_task: function() {
+
+				var bundle                   = this;
+				var form                     = bundle.$bundle_form;
+
+				var out_of_stock_found       = false;
+				var $overridden_stock_status = false;
+
+				var all_set                  = true;
+
+				var addons_prices            = {};
+				var bundled_item_quantities  = {};
+
+				var bundle_price_data = bundle.$bundle_data.data( 'bundle_price_data' );
+
+				/*
+				 * Validation
+				 */
+
+				// Reset validation messages
+
+				bundle.validation_messages = [];
+
+				// Validate bundled items
+
+				$.each( bundle.bundled_items, function( index, bundled_item ) {
+
+					var cart            = bundled_item.$bundled_item_cart;
+					var bundled_item_id = bundled_item.bundled_item_id;
+					var item_quantity   = bundled_item.get_quantity();
+
+					// Set quantity based on optional flag
+					if ( ! bundled_item.is_selected() ) {
+						bundled_item_quantities[ bundled_item_id ] = 0;
+					} else {
+						bundled_item_quantities[ bundled_item_id ] = item_quantity;
+					}
+
+					// Check variable products
+					if ( bundled_item.product_type === 'variable' && cart.find( '.bundled_item_wrap input[name="variation_id"]' ).val() == '' ) {
+
+						bundle.$bundle_wrap.find( 'input.bundle_variation_id_' + bundled_item_id ).val( '' );
+						bundle.$bundle_wrap.find( 'input.bundle_attribute_' + bundled_item_id ).val( '' );
+
+						bundle_price_data[ 'prices' ][ bundled_item_id ]         = 0;
+						bundle_price_data[ 'regular_prices' ][ bundled_item_id ] = 0;
+
+						if ( bundled_item.is_selected() ) {
+							all_set = false;
+							return false;
+						}
+					}
+
+				} );
+
+				if ( ! all_set ) {
+					bundle.add_validation_message( wc_bundle_params.i18n_select_options );
 				}
 
-				wc_pb_update_bundle( form );
-			} )
+				// Validate constraints
+				bundle.$bundle_data.triggerHandler( 'woocommerce-product-bundle-validate', [ bundle ] );
 
-			.on( 'change', '.bundled_product_optional_checkbox input', function( event ) {
+				/*
+				 * Validation Passed
+				 */
 
-				var form = $(this).closest( '.bundle_form' );
+				if ( bundle.passes_validation() ) {
 
-				if ( $(this).is( ':checked' ) ) {
+					var bundle_quantity = parseInt( bundle.$bundle_button.find( 'input.qty' ).val() );
 
-					$(this).closest( '.bundled_product' ).find( '.bundled_item_optional_content, .bundled_item_cart_content' ).slideDown( 200 );
-					$(this).closest( '.bundled_product' ).find( '.cart' ).data( 'optional_status', true );
+					$.each( bundle.bundled_items, function( index, bundled_item ) {
 
-					// Allow variations script to flip images in bundled_product_images div
-					$(this).closest( '.bundled_product' ).find( '.variations_form .variations select' ).trigger( 'change' );
+						var item    = bundled_item.$bundled_item_cart;
+						var item_id = bundled_item.bundled_item_id;
+
+						// Save addons prices
+						addons_prices[ item_id ] = 0;
+
+						item.find( '.addon' ).each(function() {
+							var addon_cost = 0;
+
+							if ( $(this).is('.addon-custom-price') ) {
+								addon_cost = $(this).val();
+							} else if ( $(this).is('.addon-input_multiplier') ) {
+								if( isNaN( $(this).val() ) || $(this).val() == '' ) { // Number inputs return blank when invalid
+									$(this).val('');
+									$(this).closest('p').find('.addon-alert').show();
+								} else {
+									if( $(this).val() != '' ){
+										$(this).val( Math.ceil( $(this).val() ) );
+									}
+									$(this).closest('p').find('.addon-alert').hide();
+								}
+								addon_cost = $(this).data('price') * $(this).val();
+							} else if ( $(this).is('.addon-checkbox, .addon-radio') ) {
+								if ( $(this).is(':checked') )
+									addon_cost = $(this).data('price');
+							} else if ( $(this).is('.addon-select') ) {
+								if ( $(this).val() )
+									addon_cost = $(this).find('option:selected').data('price');
+							} else {
+								if ( $(this).val() )
+									addon_cost = $(this).data('price');
+							}
+
+							if ( ! addon_cost )
+								addon_cost = 0;
+
+							addons_prices[ item_id ] = parseFloat( addons_prices[ item_id ] ) + parseFloat( addon_cost );
+
+						} );
+
+						// Store quantity for easy access by 3rd parties
+						item.data( 'quantity', bundled_item_quantities[ item_id ] );
+					} );
+
+					// Unavailable when priced statically and price is undefined
+					if ( ( bundle_price_data[ 'per_product_pricing' ] == false ) && ( bundle_price_data[ 'total' ] === '' ) ) {
+						bundle.hide_bundle();
+						return;
+					}
+
+					if ( bundle_price_data[ 'per_product_pricing' ] == true ) {
+
+						bundle_price_data[ 'total' ]         = 0;
+						bundle_price_data[ 'regular_total' ] = 0;
+
+						for ( var item_id_ppp in bundle_price_data[ 'prices' ] ) {
+
+							bundle_price_data[ 'total' ]         += ( parseFloat( bundle_price_data[ 'prices' ][ item_id_ppp ] ) + parseFloat( addons_prices[ item_id_ppp ] ) ) * bundled_item_quantities[ item_id_ppp ];
+							bundle_price_data[ 'regular_total' ] += ( parseFloat( bundle_price_data[ 'regular_prices' ][ item_id_ppp ] ) + parseFloat( addons_prices[ item_id_ppp ] ) ) * bundled_item_quantities[ item_id_ppp ];
+						}
+
+					} else {
+
+						bundle_price_data[ 'total_backup' ]         = parseFloat( bundle_price_data[ 'total' ] );
+						bundle_price_data[ 'regular_total_backup' ] = parseFloat( bundle_price_data[ 'regular_total' ] );
+
+						for ( var item_id_sp in addons_prices ) {
+
+							bundle_price_data[ 'total' ]         += parseFloat( addons_prices[ item_id_sp ] ) * bundled_item_quantities[ item_id_sp ];
+							bundle_price_data[ 'regular_total' ] += parseFloat( addons_prices[ item_id_sp ] ) * bundled_item_quantities[ item_id_sp ];
+						}
+					}
+
+					var bundle_addon = bundle.$bundle_data.find( '#product-addons-total' );
+
+					if ( bundle_addon.length > 0 ) {
+						bundle_addon.data( 'price', bundle_price_data[ 'total' ] );
+						bundle.$bundle_data.trigger( 'woocommerce-product-addons-update' );
+					}
+
+					var per_product_priced_composite = false;
+
+					if ( bundle_price_data[ 'bundle_is_composited' ] === true ) {
+
+						var composite_price_data     = bundle.$bundle_form.closest( '.composite_form' ).find( '.composite_data' ).data( 'price_data' );
+						per_product_priced_composite = composite_price_data[ 'per_product_pricing' ];
+
+						wc_bundle_params.i18n_total = wc_bundle_params.i18n_subtotal;
+					}
+
+
+					if ( bundle_price_data[ 'per_product_pricing' ] == true || ( bundle_price_data[ 'bundle_is_composited' ] == true && per_product_priced_composite == true ) ) {
+
+						if ( bundle_price_data[ 'total' ] == 0 && bundle_price_data[ 'show_free_string' ] == true ) {
+
+							bundle.$bundle_price.html( '<p class="price"><span class="total">' + wc_bundle_params.i18n_total + '</span>' + wc_bundle_params.i18n_free + '</p>' );
+
+						} else {
+
+							var sales_price_format   = wc_pb_woocommerce_number_format( wc_pb_number_format( bundle_quantity * bundle_price_data[ 'total' ] ) );
+							var regular_price_format = wc_pb_woocommerce_number_format( wc_pb_number_format( bundle_quantity * bundle_price_data[ 'regular_total' ] ) );
+
+							if ( bundle_price_data[ 'regular_total' ] > bundle_price_data[ 'total' ] ) {
+								bundle.$bundle_price.html( '<p class="price">' + bundle_price_data[ 'price_string' ].replace( '%s', '<span class="total">' + wc_bundle_params.i18n_total + '</span><del>' + regular_price_format + '</del> <ins>' + sales_price_format + '</ins>' ) + '</p>' );
+							} else {
+								bundle.$bundle_price.html( '<p class="price">' + bundle_price_data[ 'price_string' ].replace( '%s', '<span class="total">' + wc_bundle_params.i18n_total + '</span>' + sales_price_format ) + '</p>' );
+							}
+
+							// Display recurring price html data for optional bundled subs
+							var bundled_subs = bundle.get_bundled_subscriptions();
+
+							if ( bundled_subs ) {
+								$.each( bundled_subs, function( index, bundled_sub ) {
+
+									var bundled_item_id = bundled_sub.bundled_item_id;
+
+									if ( bundled_item_quantities[ bundled_item_id ] > 0 ) {
+										bundle.$bundle_price.find( '.bundled_subscriptions_price_html' ).show();
+										bundle.$bundle_price.find( '.bundled_sub_price_html_' + bundled_item_id ).show().addClass( 'visible' );
+									}
+								} );
+
+								bundle.$bundle_price.find( '.bundled_subscriptions_price_html .bundled_sub_price_html.visible' ).first().find( '.plus' ).hide();
+							}
+						}
+
+					} else {
+
+						bundle.$bundle_price.html( '' );
+					}
+
+					// Check if any item is out of stock
+					$.each( bundle.bundled_items, function( index, bundled_item ) {
+
+						if ( ! bundled_item.is_selected() ) {
+							return true;
+						}
+
+						var $item_stock_p = bundled_item.$bundled_item_cart.find( 'p.stock:not(.disabled)' );
+
+						if ( $item_stock_p.hasClass( 'out-of-stock' ) ) {
+							out_of_stock_found = true;
+						}
+
+					} );
+
+					if ( out_of_stock_found ) {
+						bundle.$bundle_button.find( 'button' ).prop( 'disabled', true ).addClass( 'disabled' );
+					} else {
+						bundle.$bundle_button.find( 'button' ).prop( 'disabled', false ).removeClass( 'disabled' );
+					}
+
+					// Show price and add-to-cart button
+
+					var button_behaviour = bundle.$bundle_data.data( 'button_behaviour' );
+
+					if ( button_behaviour !== 'new' ) {
+						bundle.$bundle_wrap.slideDown( 200 );
+					} else {
+						bundle.$bundle_price.slideDown( 200 );
+						bundle.$bundle_error.slideUp( 200 );
+					}
+
+					bundle.$bundle_wrap.trigger( 'woocommerce-product-bundle-show' );
+
+					// Composite product compatibility - Save price
+					form.find( '.component_data' ).data( 'price', bundle_price_data[ 'total' ] );
+					form.find( '.component_data' ).data( 'regular_price', bundle_price_data[ 'regular_total' ] );
+
+					// Composite product compatibility - Save state
+					form.find( '.component_data' ).data( 'component_set', true );
+
+					// Restore initial values
+					bundle_price_data[ 'total' ]         = bundle_price_data[ 'total_backup' ];
+					bundle_price_data[ 'regular_total' ] = bundle_price_data[ 'regular_total_backup' ];
 
 				} else {
 
-					$(this).closest( '.bundled_product' ).find( '.bundled_item_optional_content, .bundled_item_cart_content' ).slideUp( 200 );
-					$(this).closest( '.bundled_product' ).find( '.cart' ).data( 'optional_status', false );
-
-					// Reset image in bundled_product_images div
-					$(this).closest( '.bundled_product' ).find( '.bundled_product_images' ).addClass( 'images' );
-					$(this).closest( '.bundled_product' ).find( '.variations_form' ).trigger( 'reset_image' );
-					$(this).closest( '.bundled_product' ).find( '.bundled_product_images' ).removeClass( 'images' );
+					bundle.hide_bundle();
 				}
 
-				wc_pb_update_bundle( form );
+				// Override bundle availability
 
-				event.stopPropagation();
-			} )
+				$.each( bundle.bundled_items, function( index, bundled_item ) {
 
-			.on( 'found_variation', function( event, variation ) {
-
-				var variations        = $(this).find( '.variations_form' );
-				var form              = variations.closest( '.bundle_form' );
-				var bundled_item_id   = variations.attr( 'data-bundled_item_id' );
-
-				if ( typeof bundled_item_id === 'undefined' ) {
-					bundled_item_id = variations.attr( 'data-bundled-item-id' );
-				}
-
-				var bundle_price_data = form.find( '.bundle_data' ).data( 'bundle_price_data' );
-
-				if ( bundle_price_data[ 'per_product_pricing' ] == true ) {
-					// put variation price in price table
-					bundle_price_data[ 'prices' ][ bundled_item_id ]         = variation.price;
-					bundle_price_data[ 'regular_prices' ][ bundled_item_id ] = variation.regular_price;
-				}
-
-				form.find( '.bundle_data .bundle_wrap' ).find( 'input.bundle_variation_id_' + bundled_item_id ).val( variation.variation_id ).change();
-
-				for ( var attribute in variation.attributes ) {
-					var escaped_attr = attribute.replace( /%/g,'\\%' );
-					form.find( '.bundle_data .bundle_wrap' ).find( 'input.bundle_' + escaped_attr + '_' + bundled_item_id ).val( variations.find( 'select[name="' + escaped_attr + '"]' ).val() );
-				}
-
-				// Remove .images class from bundled_product_images div in order to avoid styling issues
-				$(this).find( '.bundled_product_images' ).removeClass( 'images' );
-
-				wc_pb_update_bundle( form );
-
-				event.stopPropagation();
-			} )
-
-			.on( 'reset_image', function( event ) {
-
-				// Remove .images class from bundled_product_images div in order to avoid styling issues
-				$(this).find( '.bundled_product_images' ).removeClass( 'images' );
-
-			} )
-
-			.on( 'woocommerce-product-addons-update', function( event ) {
-
-				event.stopPropagation();
-			} )
-
-			.on( 'woocommerce_variation_select_focusin', function( event ) {
-
-				event.stopPropagation();
-			} )
-
-			.on( 'woocommerce_variation_select_change', function( event ) {
-
-				var cart       = $(this).find( '.cart' );
-				var variations = $(this).find( '.variations_form' );
-				var form       = variations.closest( '.bundle_form' );
-
-				// Add .images class to bundled_product_images div ( required by the variations script to flip images )
-				if ( cart.data( 'optional' ) == false || cart.data( 'optional_status' ) == true ) {
-					$(this).find( '.bundled_product_images' ).addClass( 'images' );
-				}
-
-				$(this).find( '.variations .attribute-options select' ).each( function() {
-					if ( $(this).val() === '' ) {
-						variations.find( '.bundled_item_wrap .single_variation' ).html( '' );
-						wc_pb_update_bundle( form );
-						return false;
+					if ( ! bundled_item.is_selected() ) {
+						return true;
 					}
+
+					var $item_stock_p = bundled_item.$bundled_item_cart.find( 'p.stock:not(.disabled)' );
+
+					if ( $item_stock_p.hasClass( 'out-of-stock' ) ) {
+						$overridden_stock_status = $item_stock_p.clone().html( wc_bundle_params.i18n_partially_out_of_stock );
+					}
+
+					if ( $item_stock_p.hasClass( 'available-on-backorder' ) && ! out_of_stock_found ) {
+						$overridden_stock_status = $item_stock_p.clone().html( wc_bundle_params.i18n_partially_on_backorder );
+					}
+
 				} );
 
-				event.stopPropagation();
-			} );
+				var $current_stock_status = bundle.$bundle_wrap.find( 'p.stock' );
 
-
-		$( '.bundled_product .cart' )
-
-			.on( 'woocommerce-product-addons-update', function( event ) {
-
-				var item = $(this).closest( '.cart' );
-				var form = item.closest( '.bundle_form' );
-
-				wc_pb_update_bundle( form, true );
-
-				event.stopPropagation();
-			} )
-
-			.on( 'woocommerce-nyp-updated-item', function( event ) {
-
-				var item    = $(this);
-				var form    = item.closest( '.bundle_form' );
-				var item_id = item.attr( 'data-bundled_item_id' );
-				var nyp     = item.find( '.nyp' );
-
-				if ( typeof item_id === 'undefined' ) {
-					item_id = item.attr( 'data-bundled-item-id' );
+				if ( $overridden_stock_status ) {
+					if ( $current_stock_status.length > 0 ) {
+						if ( $current_stock_status.hasClass( 'inactive' ) ) {
+							$current_stock_status.replaceWith( $overridden_stock_status.hide() );
+							$overridden_stock_status.slideDown( 200 );
+						} else {
+							$current_stock_status.replaceWith( $overridden_stock_status );
+						}
+					} else {
+						bundle.$bundle_button.before( $overridden_stock_status.hide() );
+						$overridden_stock_status.slideDown( 200 );
+					}
+				} else {
+					if ( bundle.$initial_stock_status ) {
+						$current_stock_status.replaceWith( bundle.$initial_stock_status );
+					} else {
+						$current_stock_status.addClass( 'inactive' ).slideUp( 200 );
+					}
 				}
 
-				if ( nyp.is( ':visible' ) ) {
+				bundle.$bundle_wrap.trigger( 'woocommerce-composited-product-update' );
 
-					var bundle_price_data = form.find( '.bundle_data' ).data( 'bundle_price_data' );
+			},
 
-					bundle_price_data[ 'prices' ][ item_id ] = nyp.data( 'price' );
+			/**
+			 * Hide the add-to-cart button and show validation messages.
+			 */
 
-					wc_pb_update_bundle( form );
+			hide_bundle: function( hide_message ) {
+
+				var bundle   = this;
+				var form     = bundle.$bundle_form;
+				var messages = $( '<ul/>' );
+
+				if ( typeof( hide_message ) === 'undefined' ) {
+
+					var hide_messages = bundle.get_validation_messages();
+
+					if ( hide_messages.length > 0 ) {
+						$.each( hide_messages, function( i, message ) {
+							messages.append( $( '<li/>' ).html( message ) );
+						} );
+					} else {
+						messages.append( $( '<li/>' ).html( wc_bundle_params.i18n_unavailable_text ) );
+					}
+
+				} else {
+					messages.append( $( '<li/>' ).html( hide_message.toString() ) );
 				}
 
-				event.stopPropagation();
-			} );
+				// Composite products compatibility
+				form.find( '.component_data' ).data( 'component_set', false );
 
+				var button_behaviour = bundle.$bundle_data.data( 'button_behaviour' );
 
-		$( '.bundle_data' )
+				if ( button_behaviour === 'new' ) {
 
-			.on( 'woocommerce-nyp-updated-item', function( event ) {
+					bundle.$bundle_price.slideUp( 200 );
+					bundle.$bundle_error_content.html( messages.html() );
+					bundle.$bundle_error.slideDown( 200 );
+					bundle.$bundle_button.find( 'button' ).prop( 'disabled', true ).addClass( 'disabled' );
 
-				var item = $(this);
-				var form = item.closest( '.bundle_form' );
-				var nyp  = item.find( '.nyp' );
+				} else {
 
-				if ( nyp.is( ':visible' ) ) {
-
-					var bundle_price_data = form.find( '.bundle_data' ).data( 'bundle_price_data' );
-
-					bundle_price_data[ 'total' ] = nyp.data( 'price' );
-
-					wc_pb_update_bundle( form );
+					bundle.$bundle_wrap.slideUp( 200 );
 				}
 
-				event.stopPropagation();
-			} )
+				bundle.$bundle_wrap.trigger( 'woocommerce-product-bundle-hide' );
 
-			.on( 'change', '.bundle_button input.qty', function( event ) {
+			},
 
-				var field = $(this);
-				var form  = field.closest( '.bundle_form' );
+			get_bundled_subscriptions: function() {
 
-				wc_pb_update_bundle( form );
-			} );
+				var bundle       = this;
 
-		/**
-		 * Initial states and loading
-		 */
+				var bundled_subs = {};
+				var has_sub      = false;
 
-		// Add-ons support: move totals
+				$.each( bundle.bundled_items, function( index, bundled_item ) {
 
-		var wc_pb_addons_totals = $(this).find( '#product-addons-total' );
+					if ( bundled_item.product_type === 'subscription' ) {
 
-		$(this).find( '.bundle_price' ).after( wc_pb_addons_totals );
+						bundled_subs[ index ] = bundled_item;
+						has_sub               = true;
+					}
 
-		if ( $(this).find( '.bundle_wrap p.stock' ).length > 0 ) {
-			this.data( 'stock_status', $(this).find( '.bundle_wrap p.stock' ).clone().wrap( '<p>' ).parent().html() );
-		}
+				} );
 
-		// Init variations JS and addons
-		$(this).parent().find( '.bundled_product' ).each( function() {
+				if ( has_sub ) {
+					return bundled_subs;
+				}
 
-			var cart = $(this).find( '.cart' );
+				return false;
 
-			$(this).find( '.bundled_product_optional_checkbox input' ).change();
+			},
 
-			if ( cart.data( 'type' ) == 'variable' && ! cart.hasClass( 'variations_form' ) ) {
+			add_validation_message: function( message ) {
 
-				// Initialize variations script
-				cart.addClass( 'variations_form' ).wc_variation_form();
-				cart.find( '.variations select' ).change();
+				this.validation_messages.push( message.toString() );
+
+			},
+
+			get_validation_messages: function() {
+
+				return this.validation_messages;
+
+			},
+
+			passes_validation: function() {
+
+				if ( this.validation_messages.length > 0 ) {
+					return false;
+				}
+
+				return true;
+
 			}
-		} );
 
-		wc_pb_update_bundle( $(this).closest( '.bundle_form' ) );
+		};
 
+		wc_pb_bundle_scripts[ container_id ].init();
 	};
 
-	/**
-	 * Schedules an update of the bundle totals
-	 * Uses a dumb scheduler to avoid queueing multiple calls of wc_pb_update_bundle_task - the "scheduler" simply introduces a 50msec execution delay during which all update requests are dropped
-	 */
-	function wc_pb_update_bundle( form, update_only ) {
+	 /*
+     * Bundled item class
+     */
 
-		var bundle_data = form.find( '.bundle_data' );
+	function WC_PB_Bundled_Item( bundle, $bundled_item, index ) {
 
-		// Dumb task scheduler
-		if ( bundle_data.data( 'update_lock' ) === true ) {
-			return false;
+		this.$self                     = $bundled_item;
+		this.$bundled_item_cart        = $bundled_item.find( '.cart' );
+		this.$bundled_item_content     = $bundled_item.find( '.bundled_item_optional_content, .bundled_item_cart_content' );
+		this.$bundled_item_image       = $bundled_item.find( '.bundled_product_images' );
+
+		this.bundled_item_index        = index;
+		this.bundled_item_id           = this.$bundled_item_cart.data( 'bundled_item_id' );
+		this.bundled_item_title        = this.$bundled_item_cart.data( 'title' );
+
+		this.product_type              = this.$bundled_item_cart.data( 'type' );
+
+		if ( typeof( this.bundled_item_id ) === 'undefined' ) {
+			this.bundled_item_id = this.$bundled_item_cart.attr( 'data-bundled-item-id' );
 		}
 
-		bundle_data.data( 'update_lock', true );
+		this.get_quantity = function() {
 
-		window.setTimeout( function() {
+			return this.$self.find( 'input.bundled_qty' ).val();
+		};
 
-			wc_pb_update_bundle_task( form, update_only );
-			bundle_data.data( 'update_lock', false );
+		this.is_optional = function() {
 
-		}, 50 );
+			return this.$bundled_item_cart.data( 'optional' );
+		};
 
+		this.is_selected = function() {
+
+			var selected = true;
+
+			if ( this.$bundled_item_cart.data( 'optional' ) == true ) {
+				if ( this.$bundled_item_cart.data( 'optional_status' ) == false ) {
+					selected = false;
+				}
+			}
+
+			return selected;
+		};
+
+		this.set_selected = function( status ) {
+
+			if ( this.is_optional() ) {
+				this.$bundled_item_cart.data( 'optional_status', status );
+			}
+		};
+
+		this.init_scripts = function() {
+
+			this.$self.find( '.bundled_product_optional_checkbox input' ).change();
+
+			if ( this.product_type === 'variable' && ! this.$bundled_item_cart.hasClass( 'variations_form' ) ) {
+
+				// Initialize variations script
+				this.$bundled_item_cart.addClass( 'variations_form' ).wc_variation_form();
+				this.$bundled_item_cart.find( '.variations select:eq(0)' ).change();
+			}
+
+		};
+	}
+
+	/**
+	 * Helper functions
+	 */
+
+	function wc_pb_update_bundle( form, update_only ) {
+
+		var bundle_data  = form.find( '.bundle_data' );
+		var container_id = bundle_data.data( 'bundle_id' );
+
+		if ( typeof( wc_pb_bundle_scripts[ container_id ] ) !== 'undefined' ) {
+			var bundle = wc_pb_bundle_scripts[ container_id ];
+
+			return bundle.update_bundle();
+		}
+
+		return false;
 	}
 
 	function wc_pb_update_bundle_task( form, update_only ) {
 
-		if ( typeof update_only === 'undefined' ) {
-			update_only = false;
+		var bundle_data  = form.find( '.bundle_data' );
+		var container_id = bundle_data.data( 'bundle_id' );
+
+		if ( typeof( wc_pb_bundle_scripts[ container_id ] ) !== 'undefined' ) {
+			var bundle = wc_pb_bundle_scripts[ container_id ];
+
+			return bundle.update_bundle_task();
 		}
 
-		var all_set = true;
-
-		var addons_prices           = {};
-		var bundled_item_quantities = {};
-
-		var bundle_price_data = form.find( '.bundle_data' ).data( 'bundle_price_data' );
-
-		// Reset bundle stock status
-		if ( typeof( form.find( '.bundle_data' ).data( 'stock_status' ) ) !== 'undefined' ) {
-			form.find( '.bundle_data .bundle_wrap p.stock' ).replaceWith( form.find( '.bundle_data' ).data( 'stock_status' ) );
-		} else {
-			form.find( '.bundle_data .bundle_wrap p.stock' ).remove();
-		}
-
-		// Validate bundle
-
-		form.find( '.bundled_product .cart' ).each( function() {
-
-			var cart            = $(this);
-			var bundled_item_id = cart.attr( 'data-bundled_item_id' );
-			var item_quantity   = cart.find( 'input.qty' ).val();
-
-			if ( typeof bundled_item_id === 'undefined' ) {
-				bundled_item_id = cart.attr( 'data-bundled-item-id' );
-			}
-
-			// Set quantity based on optional flag
-			if ( cart.data( 'optional' ) == true && cart.data( 'optional_status' ) == false ) {
-				bundled_item_quantities[ bundled_item_id ] = 0;
-			} else {
-				bundled_item_quantities[ bundled_item_id ] = item_quantity;
-			}
-
-			// Check variable products
-			if ( cart.data( 'type' ) == 'variable' && cart.find( '.bundled_item_wrap input[name="variation_id"]' ).val() == '' ) {
-
-				form.find( '.bundle_data .bundle_wrap' ).find( 'input.bundle_variation_id_' + bundled_item_id ).val( '' );
-
-				bundle_price_data[ 'prices' ][ bundled_item_id ]         = 0;
-				bundle_price_data[ 'regular_prices' ][ bundled_item_id ] = 0;
-
-				if ( cart.data( 'optional' ) == false || cart.data( 'optional_status' ) == true ) {
-					all_set = false;
-					return false;
-				}
-			}
-
-		} );
-
-		if ( all_set ) {
-
-			var bundle_quantity = parseInt( form.find( '.bundle_data .bundle_button input.qty' ).val() );
-
-			form.find( '.bundled_product .cart' ).each( function() {
-
-				var item    = $(this);
-				var item_id = item.attr( 'data-bundled_item_id' );
-
-				if ( typeof item_id === 'undefined' ) {
-					item_id = item.attr( 'data-bundled-item-id' );
-				}
-
-				// Save addons prices
-				addons_prices[ item_id ] = 0;
-
-				item.find( '.addon' ).each(function() {
-					var addon_cost = 0;
-
-					if ( $(this).is('.addon-custom-price') ) {
-						addon_cost = $(this).val();
-					} else if ( $(this).is('.addon-input_multiplier') ) {
-						if( isNaN( $(this).val() ) || $(this).val() == '' ) { // Number inputs return blank when invalid
-							$(this).val('');
-							$(this).closest('p').find('.addon-alert').show();
-						} else {
-							if( $(this).val() != '' ){
-								$(this).val( Math.ceil( $(this).val() ) );
-							}
-							$(this).closest('p').find('.addon-alert').hide();
-						}
-						addon_cost = $(this).data('price') * $(this).val();
-					} else if ( $(this).is('.addon-checkbox, .addon-radio') ) {
-						if ( $(this).is(':checked') )
-							addon_cost = $(this).data('price');
-					} else if ( $(this).is('.addon-select') ) {
-						if ( $(this).val() )
-							addon_cost = $(this).find('option:selected').data('price');
-					} else {
-						if ( $(this).val() )
-							addon_cost = $(this).data('price');
-					}
-
-					if ( ! addon_cost )
-						addon_cost = 0;
-
-					addons_prices[ item_id ] = parseFloat( addons_prices[ item_id ] ) + parseFloat( addon_cost );
-
-				} );
-
-				// Store quantity for easy access by 3rd parties
-				$(this).data( 'quantity', bundled_item_quantities[ item_id ] );
-			} );
-
-			// Unavailable when priced statically and price is undefined
-			if ( ( bundle_price_data[ 'per_product_pricing' ] === false ) && ( bundle_price_data[ 'total' ] === '' ) ) {
-
-				wc_pb_hide_bundle( form, wc_bundle_params.i18n_unavailable_text );
-				return;
-			}
-
-			if ( bundle_price_data[ 'per_product_pricing' ] == true ) {
-
-				bundle_price_data[ 'total' ]         = 0;
-				bundle_price_data[ 'regular_total' ] = 0;
-
-				for ( var item_id_ppp in bundle_price_data[ 'prices' ] ) {
-
-					bundle_price_data[ 'total' ]         += ( parseFloat( bundle_price_data[ 'prices' ][ item_id_ppp ] ) + parseFloat( addons_prices[ item_id_ppp ] ) ) * bundled_item_quantities[ item_id_ppp ];
-					bundle_price_data[ 'regular_total' ] += ( parseFloat( bundle_price_data[ 'regular_prices' ][ item_id_ppp ] ) + parseFloat( addons_prices[ item_id_ppp ] ) ) * bundled_item_quantities[ item_id_ppp ];
-				}
-
-			} else {
-
-				bundle_price_data[ 'total_backup' ]         = parseFloat( bundle_price_data[ 'total' ] );
-				bundle_price_data[ 'regular_total_backup' ] = parseFloat( bundle_price_data[ 'regular_total' ] );
-
-				for ( var item_id_sp in addons_prices ) {
-
-					bundle_price_data[ 'total' ]         += parseFloat( addons_prices[ item_id_sp ] ) * bundled_item_quantities[ item_id_sp ];
-					bundle_price_data[ 'regular_total' ] += parseFloat( addons_prices[ item_id_sp ] ) * bundled_item_quantities[ item_id_sp ];
-				}
-			}
-
-			var bundle_addon = form.find( '.bundle_data #product-addons-total' );
-
-			if ( bundle_addon.length > 0 ) {
-				bundle_addon.data( 'price', bundle_price_data[ 'total' ] );
-				form.find( '.bundle_data' ).trigger( 'woocommerce-product-addons-update' );
-			}
-
-			var per_product_priced_composite = false;
-
-			if ( bundle_price_data[ 'bundle_is_composited' ] === true ) {
-
-				var composite_price_data     = form.closest( '.composite_form' ).find( '.composite_data' ).data( 'price_data' );
-				per_product_priced_composite = composite_price_data[ 'per_product_pricing' ];
-
-				wc_bundle_params.i18n_total = wc_bundle_params.i18n_subtotal;
-			}
-
-
-			if ( bundle_price_data[ 'per_product_pricing' ] === true || ( bundle_price_data[ 'bundle_is_composited' ] === true && per_product_priced_composite === true ) ) {
-
-				if ( bundle_price_data[ 'total' ] == 0 && bundle_price_data[ 'show_free_string' ] == true ) {
-
-					form.find( '.bundle_data .bundle_price' ).html( '<p class="price"><span class="total">' + wc_bundle_params.i18n_total + '</span>' + wc_bundle_params.i18n_free + '</p>' );
-
-				} else {
-
-					var sales_price_format   = wc_pb_woocommerce_number_format( wc_pb_number_format( bundle_quantity * bundle_price_data[ 'total' ] ) );
-					var regular_price_format = wc_pb_woocommerce_number_format( wc_pb_number_format( bundle_quantity * bundle_price_data[ 'regular_total' ] ) );
-
-					if ( bundle_price_data[ 'regular_total' ] > bundle_price_data[ 'total' ] ) {
-						form.find( '.bundle_data .bundle_price' ).html( '<p class="price">' + bundle_price_data[ 'price_string' ].replace( '%s', '<span class="total">' + wc_bundle_params.i18n_total + '</span><del>' + regular_price_format + '</del> <ins>' + sales_price_format + '</ins>' ) + '</p>' );
-					} else {
-						form.find( '.bundle_data .bundle_price' ).html( '<p class="price">' + bundle_price_data[ 'price_string' ].replace( '%s', '<span class="total">' + wc_bundle_params.i18n_total + '</span>' + sales_price_format ) + '</p>' );
-					}
-
-					// Display recurring price html data for optional bundled subs
-					var bundled_subs = form.find( '.bundled_product .cart[data-type="subscription"]' );
-
-					if ( bundled_subs.length > 0 ) {
-						bundled_subs.each( function() {
-
-							var cart            = $(this);
-							var bundled_item_id = cart.attr( 'data-bundled_item_id' );
-
-							if ( typeof bundled_item_id === 'undefined' ) {
-								bundled_item_id = cart.attr( 'data-bundled-item-id' );
-							}
-
-							if ( bundled_item_quantities[ bundled_item_id ] > 0 ) {
-								form.find( '.bundle_data .bundle_price .bundled_subscriptions_price_html' ).show();
-								form.find( '.bundle_data .bundle_price .bundled_sub_price_html_' + bundled_item_id ).show().addClass( 'visible' );;
-							}
-						} );
-
-						form.find( '.bundle_data .bundle_price .bundled_subscriptions_price_html .bundled_sub_price_html.visible' ).first().find( '.plus' ).hide();
-					}
-				}
-
-			} else {
-				form.find( '.bundle_data .bundle_price' ).html( '' );
-			}
-
-			// set bundle stock status as out of stock if any selected variation is out of stock
-			form.find( '.bundled_product .cart' ).each( function() {
-
-				if ( $(this).data( 'optional' ) == true && $(this).data( 'optional_status' ) == false ) {
-					return true;
-				}
-
-				var $item_stock_p = $(this).find( 'p.stock' );
-
-				if ( $item_stock_p.hasClass( 'out-of-stock' ) ) {
-
-					if ( form.find( '.bundle_data .bundle_wrap p.stock' ).length > 0 ) {
-						form.find( '.bundle_data .bundle_wrap p.stock' ).replaceWith( $item_stock_p.clone().html( wc_bundle_params.i18n_partially_out_of_stock ) );
-					} else {
-						form.find( '.bundle_data .bundle_wrap .bundle_price' ).after( $item_stock_p.clone().html( wc_bundle_params.i18n_partially_out_of_stock ) );
-					}
-				}
-
-				if ( $item_stock_p.hasClass( 'available-on-backorder' ) && ! form.find( '.bundle_data .bundle_wrap p.stock' ).hasClass( 'out-of-stock' ) ) {
-
-					if ( form.find( '.bundle_data .bundle_wrap p.stock' ).length > 0 ) {
-						form.find( '.bundle_data .bundle_wrap p.stock' ).replaceWith( $item_stock_p.clone().html( wc_bundle_params.i18n_partially_on_backorder ) );
-					} else {
-						form.find( '.bundle_data .bundle_wrap .bundle_price' ).after( $item_stock_p.clone().html( wc_bundle_params.i18n_partially_on_backorder ) );
-					}
-				}
-
-			} );
-
-			if ( form.find( '.bundle_data .bundle_wrap p.stock' ).hasClass( 'out-of-stock' ) ) {
-				form.find( '.bundle_data .bundle_button button' ).prop( 'disabled', true ).addClass( 'disabled' );
-			} else {
-				form.find( '.bundle_data .bundle_button button' ).prop( 'disabled', false ).removeClass( 'disabled' );
-			}
-
-			// Show price and add-to-cart button
-
-			var button_behaviour = form.find( '.bundle_data' ).data( 'button_behaviour' );
-
-			if ( button_behaviour !== 'new' ) {
-				form.find( '.bundle_data .bundle_wrap' ).slideDown( 200 );
-			}
-
-			form.find( '.bundle_data .bundle_wrap' ).trigger( 'woocommerce-product-bundle-show' );
-
-			// Composite product compatibility - Save price
-			form.find( '.component_data' ).data( 'price', bundle_price_data[ 'total' ] );
-			form.find( '.component_data' ).data( 'regular_price', bundle_price_data[ 'regular_total' ] );
-
-			// Composite product compatibility - Save state
-			form.find( '.component_data' ).data( 'component_set', true );
-
-			// Restore initial values
-			bundle_price_data[ 'total' ]         = bundle_price_data[ 'total_backup' ];
-			bundle_price_data[ 'regular_total' ] = bundle_price_data[ 'regular_total_backup' ];
-
-		} else {
-
-			if ( ! update_only ) {
-				wc_pb_hide_bundle( form );
-			}
-		}
-
-		form.find( '.bundle_data .bundle_wrap' ).trigger( 'woocommerce-composited-product-update' );
+		return false;
 	}
 
 	function wc_pb_hide_bundle( form, hide_message ) {
 
-		if ( typeof hide_message == 'undefined' ) {
-			hide_message = wc_bundle_params.i18n_select_options;
+		var bundle_data  = form.find( '.bundle_data' );
+		var container_id = bundle_data.data( 'bundle_id' );
+
+		if ( typeof( wc_pb_bundle_scripts[ container_id ] ) !== 'undefined' ) {
+			var bundle = wc_pb_bundle_scripts[ container_id ];
+
+			return bundle.hide_bundle( hide_message );
 		}
 
-		// Composite products compatibility
-		form.find( '.component_data' ).data( 'component_set', false );
-
-		var button_behaviour = form.find( '.bundle_data' ).data( 'button_behaviour' );
-
-		if ( button_behaviour == 'new' ) {
-
-			form.find( '.bundle_data .bundle_price' ).html( hide_message );
-			form.find( '.bundle_data .bundle_button button' ).prop( 'disabled', true ).addClass( 'disabled' );
-
-		} else {
-
-			form.find( '.bundle_data .bundle_wrap' ).slideUp( 200 );
-		}
-
-		form.find( '.bundle_data .bundle_wrap' ).trigger( 'woocommerce-product-bundle-hide' );
+		return false;
 	}
 
-	/**
-	 * Helper functions for variations
-	 */
-
 	function wc_pb_attempt_show_bundle( form, update_only ) {
-		wc_pb_update_bundle( form, update_only );
+
+		wc_pb_update_bundle( form );
 	}
 
 	function wc_pb_woocommerce_number_format( price ) {

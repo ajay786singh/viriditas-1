@@ -2,6 +2,8 @@
 /**
  * Bundled Product Quantity Template.
  *
+ * Override this template by copying it to 'yourtheme/woocommerce/single-product/bundled-item-quantity.php'.
+ *
  * @version 4.8.8
  */
 

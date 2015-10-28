@@ -2,6 +2,8 @@
 /**
  * Bundle add-to-cart button template.
  *
+ * Override this template by copying it to 'yourtheme/woocommerce/single-product/add-to-cart/bundle-button.php'.
+ *
  * @version 4.7.4
  */
 

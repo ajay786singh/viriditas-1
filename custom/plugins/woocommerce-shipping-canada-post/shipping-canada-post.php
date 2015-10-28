@@ -3,7 +3,7 @@
 	Plugin Name: WooCommerce Canada Post
 	Plugin URI: http://www.woothemes.com/products/canada-post-shipping-method/
 	Description: Obtain shipping rates dynamically via the Canada Post API for your orders.
-	Version: 2.4.0
+	Version: 2.4.1
 	Author: WooThemes
 	Author URI: http://woothemes.com
 
@@ -124,6 +124,8 @@ if ( is_woocommerce_active() ) {
 			wp_redirect( admin_url( ( function_exists( 'WC' ) ? 'admin.php?page=wc-settings&tab=shipping&section=wc_shipping_canada_post' : 'admin.php?page=woocommerce_settings&tab=shipping&section=WC_Shipping_Canada_Post' ) ) );
 			exit;
 		}
+
+		wp_die( __( 'Invalid Response', 'wc_canada_post' ) );
 	}
 	add_action( 'woocommerce_api_canada_post_return', 'wc_canada_post_api_canada_post_return' );
 

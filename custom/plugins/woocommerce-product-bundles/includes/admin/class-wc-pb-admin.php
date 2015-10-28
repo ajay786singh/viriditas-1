@@ -5,7 +5,7 @@
  * Loads admin tabs and adds related hooks / filters.
  *
  * @class WC_PB_Admin
- * @version 4.9.4
+ * @version 4.11.4
  */
 
 // Exit if accessed directly
@@ -46,6 +46,93 @@ class WC_PB_Admin {
 
 		// Bundled product config options
 		add_action( 'woocommerce_bundled_product_admin_config_html', array( $this, 'bundled_product_admin_config_html' ), 10, 4 );
+
+		// Bundle tab settings
+		add_action( 'woocommerce_bundled_products_admin_config', array( $this, 'bundled_products_admin_config' ) );
+	}
+
+	/**
+	 * Render main settings in 'woocommerce_bundled_products_admin_config' action.
+	 *
+	 * @return void
+	 */
+	public function bundled_products_admin_config() {
+
+		global $post, $wpdb;
+
+		$bundle_data          = maybe_unserialize( get_post_meta( $post->ID, '_bundle_data', true ) );
+		$bundled_variable_num = 0;
+
+		?><div class="options_group wc-metaboxes-wrapper wc-bundle-metaboxes-wrapper">
+
+			<div id="wc-bundle-metaboxes-wrapper-inner">
+
+				<p class="toolbar">
+					<a href="#" class="close_all"><?php _e('Close all', 'woocommerce'); ?></a>
+					<a href="#" class="expand_all"><?php _e('Expand all', 'woocommerce'); ?></a>
+				</p>
+
+				<div class="wc-bundled-items wc-metaboxes"><?php
+
+					if ( ! empty( $bundle_data ) ) {
+
+						$loop = 0;
+
+						foreach ( $bundle_data as $item_id => $item_data ) {
+
+							$sep        = explode( '_', $item_id );
+							$product_id = $item_data[ 'product_id' ];
+
+							$suffix = (string) $product_id != (string) $item_id ? '#' . $sep[1] : '';
+							$title  = WC_PB()->helpers->get_product_title( $product_id, $suffix );
+
+							if ( ! $title ) {
+								continue;
+							}
+
+							?><div class="wc-bundled-item wc-metabox closed" rel="<?php echo $loop; ?>">
+								<h3>
+									<button type="button" class="remove_row button"><?php echo __( 'Remove', 'woocommerce' ); ?></button>
+									<div class="handlediv" title="<?php echo __( 'Click to toggle', 'woocommerce' ); ?>"></div>
+									<strong class="item-title"><?php echo $title . ' &ndash; #'. $product_id; ?></strong>
+								</h3>
+								<div class="item-data wc-metabox-content">
+									<input type="hidden" name="bundle_data[<?php echo $loop; ?>][bundle_order]" class="bundled_item_position" value="<?php echo $loop; ?>" />
+									<input type="hidden" name="bundle_data[<?php echo $loop; ?>][item_id]" class="item_id" value="<?php echo $item_id; ?>" />
+									<input type="hidden" name="bundle_data[<?php echo $loop; ?>][product_id]" class="product_id" value="<?php echo $product_id; ?>" /><?php
+
+									do_action( 'woocommerce_bundled_product_admin_config_html', $loop, $product_id, $item_data, $post->ID );
+
+								?></div>
+							</div><?php
+
+							$loop++;
+						}
+					}
+				?></div>
+			</div>
+
+		</div><!-- options group -->
+
+		<p class="bundled_products_toolbar toolbar">
+			<span class="bundled_products_toolbar_wrapper">
+				<span class="bundled_product_selector"><?php
+
+					if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_3() ) {
+
+						?><input type="hidden" class="wc-product-search" style="width: 250px;" id="bundled_product" name="bundled_product" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products" data-multiple="false" data-selected="" value="" /><?php
+
+					} else {
+
+						?><select id="bundled_product" name="bundled_product" class="ajax_chosen_select_products" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce' ); ?>">
+							<option></option>
+						</select><?php
+					}
+
+				?></span>
+				<button type="button" class="button button-primary add_bundled_product"><?php _e( 'Add Product', 'woocommerce-product-bundles' ); ?></button>
+			</span>
+		</p><?php
 	}
 
 	/**
@@ -57,11 +144,9 @@ class WC_PB_Admin {
 	 * @param  int   $post_id
 	 * @return void
 	 */
-	function bundled_product_admin_config_html( $loop, $product_id, $item_data, $post_id ) {
+	public function bundled_product_admin_config_html( $loop, $product_id, $item_data, $post_id ) {
 
-		global $woocommerce_bundles;
-
-		$bundled_product = WC_PB_Core_Compatibility::wc_get_product( $product_id );
+		$bundled_product = wc_get_product( $product_id );
 
 		if ( $bundled_product->product_type == 'variable' ) {
 
@@ -86,7 +171,7 @@ class WC_PB_Admin {
 				<div class="form-field">
 					<select multiple="multiple" name="bundle_data[<?php echo $loop; ?>][allowed_variations][]" style="width: 95%;" data-placeholder="<?php _e( 'Choose variations&hellip;', 'woocommerce-product-bundles' ); ?>" class="<?php echo WC_PB_Core_Compatibility::is_wc_version_gte_2_3() ? 'wc-enhanced-select' : 'chosen_select'; ?>" > <?php
 
-					$variations = $woocommerce_bundles->helpers->get_product_variations( $product_id );
+					$variations = WC_PB()->helpers->get_product_variations( $product_id );
 					$attributes = maybe_unserialize( get_post_meta( $product_id, '_product_attributes', true ) );
 
 					// filtered variation attributes
@@ -94,9 +179,24 @@ class WC_PB_Admin {
 
 					foreach ( $variations as $variation ) {
 
-						$description = '';
+						$description    = '';
+						$variation_data = array();
 
-						$variation_data = get_post_meta( $variation );
+						// sweep the post meta for attributes
+						if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_4() ) {
+							$variation_data = wc_get_product_variation_attributes( $variation );
+						} else {
+							$post_meta = get_post_meta( $variation );
+
+							foreach ( $post_meta as $field => $value ) {
+
+								if ( ! strstr( $field, 'attribute_' ) ) {
+									continue;
+								}
+
+								$variation_data[ $field ] = $value[0];
+							}
+						}
 
 						foreach ( $attributes as $attribute ) {
 
@@ -106,11 +206,11 @@ class WC_PB_Admin {
 							}
 
 							// Get current value for variation (if set)
-							$variation_selected_value = isset( $variation_data[ 'attribute_' . sanitize_title( $attribute['name'] ) ][0] ) ? $variation_data[ 'attribute_' . sanitize_title( $attribute['name'] ) ][0] : '';
+							$variation_selected_value = isset( $variation_data[ 'attribute_' . sanitize_title( $attribute[ 'name' ] ) ] ) ? $variation_data[ 'attribute_' . sanitize_title( $attribute[ 'name' ] ) ] : '';
 
 							// Name will be something like attribute_pa_color
-							$description_name 	= esc_html( wc_attribute_label( $attribute[ 'name' ] ) );
-							$description_value 	= __( 'Any', 'woocommerce' ) . ' ' . $description_name;
+							$description_name  = esc_html( wc_attribute_label( $attribute[ 'name' ] ) );
+							$description_value = __( 'Any', 'woocommerce' ) . ' ' . $description_name;
 
 							// Get terms for attribute taxonomy or value if its a custom attribute
 							if ( $attribute[ 'is_taxonomy' ] ) {
@@ -126,9 +226,9 @@ class WC_PB_Admin {
 									if ( $variation_selected_value == $term->slug || $variation_selected_value == '' ) {
 										if ( $filter_variations == 'yes' && is_array( $allowed_variations ) && in_array( $variation, $allowed_variations ) ) {
 											if ( ! isset( $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
-												$filtered_attributes[ $attribute[ 'name' ] ] [] = $variation_selected_value;
+												$filtered_attributes[ $attribute[ 'name' ] ][] = $variation_selected_value;
 											} elseif ( ! in_array( $variation_selected_value, $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
-												$filtered_attributes[ $attribute[ 'name' ] ] [] = $variation_selected_value;
+												$filtered_attributes[ $attribute[ 'name' ] ][] = $variation_selected_value;
 											}
 										}
 									}
@@ -147,9 +247,9 @@ class WC_PB_Admin {
 									if ( sanitize_title( $variation_selected_value ) == sanitize_title( $option ) || $variation_selected_value == '' ) {
 										if ( $filter_variations == 'yes' && is_array( $allowed_variations ) && in_array( $variation, $allowed_variations ) ) {
 											if ( ! isset( $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
-												$filtered_attributes[ $attribute[ 'name' ] ] [] = sanitize_title( $variation_selected_value );
+												$filtered_attributes[ $attribute[ 'name' ] ][] = sanitize_title( $variation_selected_value );
 											} elseif ( ! in_array( sanitize_title( $variation_selected_value ), $filtered_attributes[ $attribute[ 'name' ] ] ) ) {
-												$filtered_attributes[ $attribute[ 'name' ] ] [] = sanitize_title( $variation_selected_value );
+												$filtered_attributes[ $attribute[ 'name' ] ][] = sanitize_title( $variation_selected_value );
 											}
 										}
 									}
@@ -188,14 +288,15 @@ class WC_PB_Admin {
 					foreach ( $attributes as $attribute ) {
 
 						// Only deal with attributes that are variations
-						if ( ! $attribute[ 'is_variation' ] )
+						if ( ! $attribute[ 'is_variation' ] ) {
 							continue;
+						}
 
 						// Get current value for variation (if set)
 						$variation_selected_value = ( isset( $default_attributes[ sanitize_title( $attribute[ 'name' ] ) ] ) ) ? $default_attributes[ sanitize_title( $attribute[ 'name' ] ) ] : '';
 
 						// Name will be something like attribute_pa_color
-						echo '<select name="bundle_data[' . $loop . '][default_attributes][' . sanitize_title( $attribute[ 'name' ] ).']"><option value="">' . __( 'No default', 'woocommerce' ) . ' ' . wc_attribute_label( $attribute[ 'name' ] ) . '&hellip;</option>';
+						echo '<select name="bundle_data[' . $loop . '][default_attributes][' . sanitize_title( $attribute[ 'name' ] ) .']"><option value="">' . __( 'No default', 'woocommerce' ) . ' ' . wc_attribute_label( $attribute[ 'name' ] ) . '&hellip;</option>';
 
 						// Get terms for attribute taxonomy or value if its a custom attribute
 						if ( $attribute[ 'is_taxonomy' ] ) {
@@ -346,9 +447,7 @@ class WC_PB_Admin {
 	 *
 	 * @return void
 	 */
-	function woo_bundles_admin_scripts() {
-
-		global $woocommerce_bundles;
+	public function woo_bundles_admin_scripts() {
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
@@ -358,9 +457,9 @@ class WC_PB_Admin {
 			$writepanel_dependency = 'woocommerce_admin_meta_boxes';
 		}
 
-		wp_register_script( 'woo_bundles_writepanel', $woocommerce_bundles->woo_bundles_plugin_url() . '/assets/js/bundled-product-write-panels' . $suffix . '.js', array( 'jquery', 'jquery-ui-datepicker', $writepanel_dependency ), $woocommerce_bundles->version );
-		wp_register_style( 'woo_bundles_css', $woocommerce_bundles->woo_bundles_plugin_url() . '/assets/css/bundles-write-panels.css', array( 'woocommerce_admin_styles' ), $woocommerce_bundles->version );
-		wp_register_style( 'woo_bundles_edit_order_css', $woocommerce_bundles->woo_bundles_plugin_url() . '/assets/css/bundles-edit-order.css', array( 'woocommerce_admin_styles' ), $woocommerce_bundles->version );
+		wp_register_script( 'woo_bundles_writepanel', WC_PB()->woo_bundles_plugin_url() . '/assets/js/bundled-product-write-panels' . $suffix . '.js', array( 'jquery', 'jquery-ui-datepicker', $writepanel_dependency ), WC_PB()->version );
+		wp_register_style( 'woo_bundles_css', WC_PB()->woo_bundles_plugin_url() . '/assets/css/bundles-write-panels.css', array( 'woocommerce_admin_styles' ), WC_PB()->version );
+		wp_register_style( 'woo_bundles_edit_order_css', WC_PB()->woo_bundles_plugin_url() . '/assets/css/bundles-edit-order.css', array( 'woocommerce_admin_styles' ), WC_PB()->version );
 
 		// Get admin screen id
 		$screen = get_current_screen();
@@ -403,7 +502,7 @@ class WC_PB_Admin {
 	 *
 	 * @return void
 	 */
-	function woo_bundles_product_write_panel_tab() {
+	public function woo_bundles_product_write_panel_tab() {
 
 		echo '<li class="bundled_product_tab show_if_bundle bundled_product_options linked_product_options"><a href="#bundled_product_data">'.__( 'Bundled Products', 'woocommerce-product-bundles' ).'</a></li>';
 	}
@@ -413,87 +512,10 @@ class WC_PB_Admin {
 	 *
 	 * @return void
 	 */
-	function woo_bundles_product_write_panel() {
-
-		global $woocommerce_bundles, $post, $wpdb;
-
-		$bundle_data = maybe_unserialize( get_post_meta( $post->ID, '_bundle_data', true ) );
-
-		$bundled_variable_num = 0;
+	public function woo_bundles_product_write_panel() {
 
 		?><div id="bundled_product_data" class="panel woocommerce_options_panel">
-
-			<div class="options_group wc-metaboxes-wrapper wc-bundle-metaboxes-wrapper">
-
-				<div id="wc-bundle-metaboxes-wrapper-inner">
-
-					<p class="toolbar">
-						<a href="#" class="close_all"><?php _e('Close all', 'woocommerce'); ?></a>
-						<a href="#" class="expand_all"><?php _e('Expand all', 'woocommerce'); ?></a>
-					</p>
-
-					<div class="wc-bundled-items wc-metaboxes"><?php
-
-						if ( ! empty( $bundle_data ) ) {
-
-							$loop = 0;
-
-							foreach ( $bundle_data as $item_id => $item_data ) {
-
-								$sep        = explode( '_', $item_id );
-								$product_id = $item_data[ 'product_id' ];
-
-								$suffix = (string) $product_id != (string) $item_id ? '#' . $sep[1] : '';
-								$title  = $woocommerce_bundles->helpers->get_product_title( $product_id, $suffix );
-
-								if ( ! $title ) {
-									continue;
-								}
-
-								?><div class="wc-bundled-item wc-metabox closed" rel="<?php echo $loop; ?>">
-									<h3>
-										<button type="button" class="remove_row button"><?php echo __( 'Remove', 'woocommerce' ); ?></button>
-										<div class="handlediv" title="<?php echo __( 'Click to toggle', 'woocommerce' ); ?>"></div>
-										<strong class="item-title"><?php echo $title . ' &ndash; #'. $product_id; ?></strong>
-									</h3>
-									<div class="item-data wc-metabox-content">
-										<input type="hidden" name="bundle_data[<?php echo $loop; ?>][bundle_order]" class="bundled_item_position" value="<?php echo $loop; ?>" />
-										<input type="hidden" name="bundle_data[<?php echo $loop; ?>][item_id]" class="item_id" value="<?php echo $item_id; ?>" />
-										<input type="hidden" name="bundle_data[<?php echo $loop; ?>][product_id]" class="product_id" value="<?php echo $product_id; ?>" /><?php
-
-										do_action( 'woocommerce_bundled_product_admin_config_html', $loop, $product_id, $item_data, $post->ID );
-
-									?></div>
-								</div><!-- metabox --><?php
-
-								$loop++;
-							}
-						}
-					?></div>
-				</div>
-
-			</div><!-- options group -->
-
-			<p class="bundled_products_toolbar toolbar">
-				<span class="bundled_products_toolbar_wrapper">
-					<span class="bundled_product_selector"><?php
-
-						if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_3() ) {
-
-							?><input type="hidden" class="wc-product-search" style="width: 250px;" id="bundled_product" name="bundled_product" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products" data-multiple="false" data-selected="" value="" /><?php
-
-						} else {
-
-							?><select id="bundled_product" name="bundled_product" class="ajax_chosen_select_products" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce' ); ?>">
-								<option></option>
-							</select><?php
-						}
-
-					?></span>
-					<button type="button" class="button button-primary add_bundled_product"><?php _e( 'Add Product', 'woocommerce-product-bundles' ); ?></button>
-				</span>
-			</p>
-
+			<?php do_action( 'woocommerce_bundled_products_admin_config' ); ?>
 		</div><?php
 	}
 
@@ -502,7 +524,7 @@ class WC_PB_Admin {
 	 *
 	 * @return void
 	 */
-	function woo_bundles_stock_group() {
+	public function woo_bundles_stock_group() {
 
 		global $post;
 
@@ -519,7 +541,7 @@ class WC_PB_Admin {
 	 * @param  array    $options    product options
 	 * @return array                modified product options
 	 */
-	function woo_bundles_type_options( $options ) {
+	public function woo_bundles_type_options( $options ) {
 
 		$options[ 'per_product_shipping_active' ] = array(
 			'id' 			=> '_per_product_shipping_active',
@@ -546,7 +568,7 @@ class WC_PB_Admin {
 	 * @param  int    $post_id    the product post id
 	 * @return void
 	 */
-	function woo_bundles_process_bundle_meta( $post_id ) {
+	public function woo_bundles_process_bundle_meta( $post_id ) {
 
 		// Per-Item Pricing
 
@@ -572,10 +594,10 @@ class WC_PB_Admin {
 		} else {
 			update_post_meta( $post_id, '_per_product_shipping_active', 'no' );
 			update_post_meta( $post_id, '_virtual', 'no' );
-			update_post_meta( $post_id, '_weight', stripslashes( $_POST['_weight'] ) );
-			update_post_meta( $post_id, '_length', stripslashes( $_POST['_length'] ) );
-			update_post_meta( $post_id, '_width', stripslashes( $_POST['_width'] ) );
-			update_post_meta( $post_id, '_height', stripslashes( $_POST['_height'] ) );
+			update_post_meta( $post_id, '_weight', stripslashes( $_POST[ '_weight' ] ) );
+			update_post_meta( $post_id, '_length', stripslashes( $_POST[ '_length' ] ) );
+			update_post_meta( $post_id, '_width', stripslashes( $_POST[ '_width' ] ) );
+			update_post_meta( $post_id, '_height', stripslashes( $_POST[ '_height' ] ) );
 		}
 
 		$posted_bundle_data = isset( $_POST[ 'bundle_data' ] ) ? $_POST[ 'bundle_data' ] : false;
@@ -596,6 +618,9 @@ class WC_PB_Admin {
 			update_post_meta( $post_id, '_bundle_data', $processed_bundle_data );
 		}
 
+		// Delete no longer used meta
+		delete_post_meta( $post_id, '_min_bundle_price' );
+		delete_post_meta( $post_id, '_max_bundle_price' );
 	}
 
 	/**
@@ -603,9 +628,7 @@ class WC_PB_Admin {
 	 *
 	 * @return 	mixed     bundle data array configuration or false if unsuccessful
 	 */
-	function build_bundle_config( $post_id, $posted_bundle_data ) {
-
-		global $woocommerce_bundles;
+	public function build_bundle_config( $post_id, $posted_bundle_data ) {
 
 		// Process Bundled Product Configuration
 		$bundle_data         = array();
@@ -633,7 +656,7 @@ class WC_PB_Admin {
 				$terms        = get_the_terms( $id, 'product_type' );
 				$product_type = ! empty( $terms ) && isset( current( $terms )->name ) ? sanitize_title( current( $terms )->name ) : 'simple';
 
-				$is_sub = class_exists( 'WC_Subscriptions' ) && $woocommerce_bundles->compatibility->is_subscription( $id );
+				$is_sub = class_exists( 'WC_Subscriptions' ) && WC_PB()->compatibility->is_subscription( $id );
 
 				if ( ( $id && $id > 0 ) && ( $product_type === 'simple' || $product_type === 'variable' || $is_sub ) && ( $post_id != $id ) ) {
 
@@ -819,7 +842,7 @@ class WC_PB_Admin {
 
 								// if filters are set, check that the selections are valid
 
-								if ( isset( $data[ 'filter_variations' ] ) && isset( $data[ 'allowed_variations' ] ) ) {
+								if ( isset( $data[ 'filter_variations' ] ) && ! empty( $data[ 'allowed_variations' ] ) ) {
 
 									$allowed_variations = $data[ 'allowed_variations' ];
 
@@ -829,38 +852,50 @@ class WC_PB_Admin {
 									// populate array with valid attributes
 									foreach ( $allowed_variations as $variation ) {
 
-										$product_custom_fields = get_post_custom( $variation );
+										$variation_data = array();
 
-										foreach ( $product_custom_fields as $name => $value ) {
+										// sweep the post meta for attributes
+										if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_4() ) {
+											$variation_data = wc_get_product_variation_attributes( $variation );
+										} else {
+											$post_meta = get_post_meta( $variation );
 
-											if ( ! strstr( $name, 'attribute_' ) ) {
-												continue;
+											foreach ( $post_meta as $field => $value ) {
+
+												if ( ! strstr( $field, 'attribute_' ) ) {
+													continue;
+												}
+
+												$variation_data[ $field ] = $value[0];
 											}
+										}
+
+										foreach ( $variation_data as $name => $value ) {
 
 											$attribute_name  = substr( $name, strlen( 'attribute_' ) );
-											$attribute_value = sanitize_title( $value[0] );
+											$attribute_value = sanitize_title( $value );
 
 											// ( populate array )
-											if ( ! isset( $filtered_attributes[ $attribute_name ] ) ) {
-												$filtered_attributes[ $attribute_name ][] = $attribute_value;
-											} elseif ( ! in_array( $attribute_value, $filtered_attributes[ $attribute_name ] ) ) {
-												$filtered_attributes[ $attribute_name ][] = $attribute_value;
+											if ( ! isset( $filtered_attributes[ sanitize_title( $attribute_name ) ] ) ) {
+												$filtered_attributes[ sanitize_title( $attribute_name ) ][] = $attribute_value;
+											} elseif ( ! in_array( $attribute_value, $filtered_attributes[ sanitize_title( $attribute_name ) ] ) ) {
+												$filtered_attributes[ sanitize_title( $attribute_name ) ][] = $attribute_value;
 											}
 										}
 
 									}
 
 									// check validity
-									foreach ( $data[ 'default_attributes' ] as $name => $value ) {
+									foreach ( $data[ 'default_attributes' ] as $sanitized_name => $value ) {
 
 										if ( $value === '' ) {
 											continue;
 										}
 
-										if ( ! in_array( sanitize_title( $value ), $filtered_attributes[ sanitize_title( $name ) ] ) && ! in_array( '', $filtered_attributes[ sanitize_title( $name ) ] ) ) {
+										if ( ! in_array( sanitize_title( $value ), $filtered_attributes[ $sanitized_name ] ) && ! in_array( '', $filtered_attributes[ $sanitized_name ] ) ) {
 
 											// set option to "Any"
-											$data[ 'default_attributes' ][ sanitize_title( $name ) ] = '';
+											$data[ 'default_attributes' ][ $sanitized_name ] = '';
 
 											// throw an error
 											$this->add_admin_error( sprintf( __( 'The defaults that you selected for \'%1$s%2$s\' (#%3$s) are inconsistent with the set of active variations. Always double-check your preferences before saving, and always save any changes made to the variation filters before choosing new defaults.', 'woocommerce-product-bundles' ), get_the_title( $id ), ( $id != $val ? ' #' . $times[$id] : '' ), $id ) );
@@ -871,11 +906,8 @@ class WC_PB_Admin {
 								}
 
 								// save
-								foreach ( $data[ 'default_attributes' ] as $name => $value ) {
-
-									if ( $value ) {
-										$bundle_data[ $val ][ 'bundle_defaults' ][ sanitize_title( $name ) ] = $value;
-									}
+								foreach ( $data[ 'default_attributes' ] as $sanitized_name => $value ) {
+									$bundle_data[ $val ][ 'bundle_defaults' ][ $sanitized_name ] = $value;
 								}
 
 								$bundle_data[ $val ][ 'override_defaults' ] = 'yes';
@@ -975,7 +1007,7 @@ class WC_PB_Admin {
 	 * @param  array    $options    product types array
 	 * @return array                modified product types array
 	 */
-	function woo_bundles_product_selector_filter( $options ) {
+	public function woo_bundles_product_selector_filter( $options ) {
 
 		$options[ 'bundle' ] = __( 'Product bundle', 'woocommerce-product-bundles' );
 
@@ -987,9 +1019,7 @@ class WC_PB_Admin {
 	 *
 	 * @return void
 	 */
-	function ajax_add_bundled_product() {
-
-		global $woocommerce_bundles;
+	public function ajax_add_bundled_product() {
 
 		check_ajax_referer( 'wc_bundles_add_bundled_product', 'security' );
 
@@ -997,8 +1027,8 @@ class WC_PB_Admin {
 		$post_id    = intval( $_POST[ 'post_id' ] );
 		$product_id = intval( $_POST[ 'product_id' ] );
 
-		$title      = $woocommerce_bundles->helpers->get_product_title( $product_id );
-		$product    = WC_PB_Core_Compatibility::wc_get_product( $product_id );
+		$title      = WC_PB()->helpers->get_product_title( $product_id );
+		$product    = wc_get_product( $product_id );
 
 		$response   = array();
 
@@ -1034,11 +1064,9 @@ class WC_PB_Admin {
 	 * @param  array   $paths paths to check
 	 * @return array          modified paths to check
 	 */
-	function woo_bundles_template_scan_path( $paths ) {
+	public function woo_bundles_template_scan_path( $paths ) {
 
-		global $woocommerce_bundles;
-
-		$paths[ 'WooCommerce Product Bundles' ] = $woocommerce_bundles->woo_bundles_plugin_path() . '/templates/';
+		$paths[ 'WooCommerce Product Bundles' ] = WC_PB()->woo_bundles_plugin_path() . '/templates/';
 
 		return $paths;
 	}

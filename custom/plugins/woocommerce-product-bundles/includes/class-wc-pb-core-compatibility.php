@@ -47,6 +47,16 @@ class WC_PB_Core_Compatibility {
 	}
 
 	/**
+	 * Returns true if the installed version of WooCommerce is 2.4 or greater
+	 *
+	 * @since 4.10.2
+	 * @return boolean true if the installed version of WooCommerce is 2.2 or greater
+	 */
+	public static function is_wc_version_gte_2_4() {
+		return self::get_wc_version() && version_compare( self::get_wc_version(), '2.4', '>=' );
+	}
+
+	/**
 	 * Returns true if the installed version of WooCommerce is 2.2 or greater
 	 *
 	 * @since 4.7.6

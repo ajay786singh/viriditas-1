@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Bundled Item Container.
  *
  * The bunded item class is a container that initializes and holds all pricing, availability and variation/attribute-related data of a bundled item.
  *
- * @class 	WC_Bundled_Item
- * @version 4.9.4
+ * @class   WC_Bundled_Item
+ * @version 4.11.5
  * @since   4.2.0
  */
 
@@ -32,9 +31,9 @@ class WC_Bundled_Item {
 
 	private $per_product_pricing;
 
-	private $title;
-	private $description;
-	private $visibility;
+	public $title;
+	public $description;
+	public $visibility;
 
 	private $selection_overrides;
 	private $allowed_variations;
@@ -45,19 +44,20 @@ class WC_Bundled_Item {
 	private $nyp;
 
 	private $stock_status;
+	private $total_stock;
 
+	/**
+	 * Bundled item prices (after discount).
+	 * @var double
+	 */
 	public $min_price;
 	public $max_price;
 	public $min_regular_price;
 	public $max_regular_price;
-
 	public $min_recurring_price;
 	public $max_recurring_price;
 	public $min_regular_recurring_price;
 	public $max_regular_recurring_price;
-
-	public $min_price_incl_tax;
-	public $min_price_excl_tax;
 
 	private $product_attributes;
 	private $selected_product_attributes;
@@ -66,20 +66,19 @@ class WC_Bundled_Item {
 
 	private $is_front_end;
 
-	function __construct( $bundled_item_id, $parent ) {
+	public function __construct( $bundled_item_id, $parent ) {
 
 		$this->item_id    = $bundled_item_id;
 		$this->product_id = $parent->bundle_data[ $bundled_item_id ][ 'product_id' ];
 		$this->bundle_id  = $parent->id;
-
 		$this->item_data  = $parent->bundle_data[ $bundled_item_id ];
 
 		// Do not process bundled item stock data in the back end, in order to speed things up just a bit
-		$this->is_front_end = ( ! is_admin() ) || ( defined( 'DOING_AJAX' ) && true == DOING_AJAX );
+		$this->is_front_end = ( ! is_admin() ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX );
 
 		do_action( 'woocommerce_before_init_bundled_item', $this );
 
-		$bundled_product = WC_PB_Core_Compatibility::wc_get_product( $this->product_id );
+		$bundled_product = wc_get_product( $this->product_id );
 
 		// if not present, item cannot be purchased
 		if ( $bundled_product ) {
@@ -113,17 +112,16 @@ class WC_Bundled_Item {
 
 	/**
 	 * Initializes a bundled item for access by the container: Calculates min and max prices, checks availability info, etc.
+	 *
 	 * @return void
 	 */
-	function init() {
+	public function init() {
 
-		global $woocommerce_bundles;
+		$product_id             = $this->product_id;
+		$bundled_product        = $this->product;
 
-		$product_id      = $this->product_id;
-		$bundled_product = $this->product;
-
-		$quantity = $this->get_quantity();
-		$discount = $this->get_discount();
+		$quantity               = $this->get_quantity();
+		$discount               = $this->get_discount();
 
 		$this->add_price_filters();
 
@@ -146,57 +144,37 @@ class WC_Bundled_Item {
 				if ( $bundled_product->is_on_backorder() && $bundled_product->backorders_require_notification() ) {
 					$this->stock_status = 'available-on-backorder';
 				}
+
+				$this->total_stock = $bundled_product->get_total_stock();
 			}
 
-			//	Recurring price
+			if ( $this->is_priced_per_product() ) {
 
-			$regular_recurring_fee = $bundled_product->get_regular_price();
-			$recurring_fee         = $bundled_product->get_price();
+				//	Recurring price
 
-			$this->min_regular_recurring_price = $this->max_regular_recurring_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $regular_recurring_fee );
-			$this->min_recurring_price         = $this->max_recurring_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $recurring_fee );
+				$regular_recurring_fee             = $bundled_product->get_regular_price();
+				$recurring_fee                     = $bundled_product->get_price();
 
-			if ( $regular_recurring_fee > $recurring_fee ) {
-				$this->on_sale = true;
-			}
+				$this->min_regular_recurring_price = $this->max_regular_recurring_price = $regular_recurring_fee;
+				$this->min_recurring_price         = $this->max_recurring_price         = $recurring_fee;
 
-			//	Sign up price
+				if ( $regular_recurring_fee > $recurring_fee ) {
+					$this->on_sale = true;
+				}
 
-			$regular_signup_fee      = $bundled_product->get_sign_up_fee();
-			$signup_fee              = $this->get_sign_up_fee( $regular_signup_fee, $bundled_product );
+				//	Sign up price
 
-			$regular_up_front_fee    = $regular_signup_fee + $this->get_prorated_price_for_subscription( $regular_recurring_fee );
-			$up_front_fee            = $signup_fee + $this->get_prorated_price_for_subscription( $recurring_fee );
+				$regular_signup_fee      = $bundled_product->get_sign_up_fee();
+				$signup_fee              = $this->get_sign_up_fee( $regular_signup_fee, $bundled_product );
 
-			$this->min_regular_price = $this->max_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $regular_up_front_fee );
-			$this->min_price         = $this->max_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $up_front_fee );
+				$regular_up_front_fee    = $regular_signup_fee + $this->get_prorated_price_for_subscription( $regular_recurring_fee );
+				$up_front_fee            = $signup_fee + $this->get_prorated_price_for_subscription( $recurring_fee );
 
-			if ( $regular_up_front_fee > $up_front_fee ) {
-				$this->on_sale = true;
-			}
+				$this->min_regular_price = $this->max_regular_price = $regular_up_front_fee;
+				$this->min_price         = $this->max_price         = $up_front_fee;
 
-			// Save prices incl or excl tax
-
-			if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes === 'yes' && $this->is_front_end ) {
-
-				if ( $woocommerce_bundles->helpers->wc_option_tax_display_shop === 'incl' ) {
-
-					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
-						$this->min_price_incl_tax = $up_front_fee;
-						$this->min_price_excl_tax = $bundled_product->get_price_excluding_tax( $quantity, $up_front_fee ) / $quantity;
-					} else {
-						$this->min_price_incl_tax = $this->min_price;
-						$this->min_price_excl_tax = $up_front_fee;
-					}
-				} else {
-
-					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
-						$this->min_price_incl_tax = $up_front_fee;
-						$this->min_price_excl_tax = $this->min_price;
-					} else {
-						$this->min_price_incl_tax = $bundled_product->get_price_including_tax( $quantity, $up_front_fee ) / $quantity;
-						$this->min_price_excl_tax = $up_front_fee;
-					}
+				if ( $regular_up_front_fee > $up_front_fee ) {
+					$this->on_sale = true;
 				}
 			}
 
@@ -204,7 +182,7 @@ class WC_Bundled_Item {
 		/*	Simple Products
 		/*-----------------------------------------------------------------------------------*/
 
-		} elseif ( $bundled_product->product_type == 'simple' ) {
+		} elseif ( $bundled_product->product_type === 'simple' ) {
 
 			if ( $this->is_front_end ) {
 
@@ -220,49 +198,27 @@ class WC_Bundled_Item {
 					$this->stock_status = 'available-on-backorder';
 				}
 
+				$this->total_stock = $bundled_product->get_total_stock();
 			}
 
-			$regular_price = $bundled_product->get_regular_price();
-			$price         = $bundled_product->get_price();
+			if ( $this->is_priced_per_product() ) {
 
-			// Name your price support
+				$regular_price = $bundled_product->get_regular_price();
+				$price         = $bundled_product->get_price();
 
-			if ( $woocommerce_bundles->compatibility->is_nyp( $bundled_product ) ) {
+				// Name your price support
 
-				$regular_price = $price = WC_Name_Your_Price_Helpers::get_minimum_price( $product_id ) ? WC_Name_Your_Price_Helpers::get_minimum_price( $product_id ) : 0;
-				$this->nyp = true;
-			}
+				if ( WC_PB()->compatibility->is_nyp( $bundled_product ) ) {
 
-			$this->min_regular_price = $this->max_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $regular_price );
-			$this->min_price         = $this->max_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_product, $price );
+					$regular_price = $price = WC_Name_Your_Price_Helpers::get_minimum_price( $product_id ) ? WC_Name_Your_Price_Helpers::get_minimum_price( $product_id ) : 0;
+					$this->nyp = true;
+				}
 
-			if ( $regular_price > $price ) {
-				$this->on_sale = true;
-			}
+				$this->min_regular_price = $this->max_regular_price = $regular_price;
+				$this->min_price         = $this->max_price         = $price;
 
-			// Save prices incl or excl tax
-
-			if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes === 'yes' && $this->is_front_end ) {
-
-				if ( $woocommerce_bundles->helpers->wc_option_tax_display_shop === 'incl' ) {
-
-					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
-						$this->min_price_incl_tax = $price;
-						$this->min_price_excl_tax = $bundled_product->get_price_excluding_tax( $quantity, $price ) / $quantity;
-					} else {
-						$this->min_price_incl_tax = $this->min_price;
-						$this->min_price_excl_tax = $price;
-					}
-
-				} else {
-
-					if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax === 'yes' ) {
-						$this->min_price_incl_tax = $price;
-						$this->min_price_excl_tax = $this->min_price;
-					} else {
-						$this->min_price_incl_tax = $bundled_product->get_price_including_tax( $quantity, $price ) / $quantity;
-						$this->min_price_excl_tax = $price;
-					}
+				if ( $regular_price > $price ) {
+					$this->on_sale = true;
 				}
 			}
 
@@ -272,231 +228,285 @@ class WC_Bundled_Item {
 
 		} elseif ( $bundled_product->product_type === 'variable' ) {
 
-			$min_variation_regular_price  = '';
-			$min_variation_price          = '';
-			$max_variation_regular_price  = '';
-			$max_variation_price          = '';
+			$calc_prices   = $this->is_priced_per_product() && $bundled_product->get_price() > 0;
+			$min_variation = $max_variation = false;
 
-			$min_variation_price_incl_tax = '';
-			$min_variation_price_excl_tax = '';
+			// Without any variation filters present, we can just rely on parent methods
+			if ( empty( $this->allowed_variations ) ) {
 
-			// check stock status of variations - if all of them are out of stock, the product cannot be purchased
-			$variation_in_stock_exists    = $this->is_front_end ? false : true;
-			$all_variations_on_backorder  = $this->is_front_end ? true : false;
+				if ( $this->is_front_end ) {
 
-			// sold individually status
-			if ( $this->is_front_end && $bundled_product->is_sold_individually() == 'yes' ) {
-				$this->sold_individually = true;
-			}
+					if ( $bundled_product->is_sold_individually() ) {
+						$this->sold_individually = true;
+					}
 
-			// Process variations
-			foreach ( $bundled_product->get_children() as $child_id ) {
+					$this->total_stock = $bundled_product->get_total_stock();
 
-				// Do not continue if variation is filtered
-				if ( ! empty( $this->allowed_variations ) ) {
-					if ( is_array( $this->allowed_variations ) && ! in_array( $child_id, $this->allowed_variations ) ) {
-						continue;
+					if ( ! $bundled_product->is_in_stock() || ( ! $bundled_product->backorders_allowed() && $bundled_product->managing_stock() && $this->total_stock < $quantity ) ) {
+						$this->stock_status = 'out-of-stock';
+					} else {
+						$variation_in_stock_exists = false;
+						foreach ( $bundled_product->get_children( true ) as $child_id ) {
+							if ( 'yes' === get_post_meta( $child_id, '_manage_stock', true ) ) {
+								$stock = get_post_meta( $child_id, '_stock', true );
+								if ( $stock >= $quantity ) {
+									$variation_in_stock_exists = true;
+									break;
+								}
+							} else {
+								$variation_in_stock_exists = true;
+								break;
+							}
+						}
+						if ( ! $variation_in_stock_exists ) {
+							$this->stock_status = 'out-of-stock';
+						}
+					}
+
+					if ( $bundled_product->is_on_backorder() && $bundled_product->backorders_require_notification() ) {
+						$this->stock_status = 'available-on-backorder';
 					}
 				}
 
-				// Use this to improve performance instead of grabbing it like so: $variation = $bundled_product->get_child( $child_id, $args )
-				$variation = $woocommerce_bundles->helpers->get_variation( $child_id, $bundled_product );
+				if ( $calc_prices ) {
 
-				if ( ! empty( $variation->variation_id ) ) {
+					if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_4() ) {
 
-					if ( $this->is_front_end ) {
+						$this->remove_price_filters();
+						$variation_prices = $bundled_product->get_variation_prices( false );
+						$this->add_price_filters();
 
-						// check stock status of variation - if one of them is in stock, the product can be purchased
-						if ( ! $variation_in_stock_exists && $variation->is_in_stock() && $variation->has_enough_stock( $quantity ) ) {
-							$variation_in_stock_exists = true;
+						if ( ! empty( $discount ) && apply_filters( 'woocommerce_bundled_item_discount_from_regular', true, $this ) ) {
+							$variation_price_ids = array_keys( $variation_prices[ 'regular_price' ] );
+						} else {
+							$variation_price_ids = array_keys( $variation_prices[ 'price' ] );
 						}
 
-						if ( $all_variations_on_backorder && ( ! $variation->is_on_backorder() || ! $bundled_product->backorders_require_notification() ) ) {
+						$min_variation_price_id = current( $variation_price_ids );
+						$max_variation_price_id = end( $variation_price_ids );
+
+					} else {
+
+						if ( ! empty( $discount ) && apply_filters( 'woocommerce_bundled_item_discount_from_regular', true, $this ) ) {
+
+							// Product may need to be synced
+							if ( $bundled_product->get_variation_regular_price( 'min', false ) === false ) {
+								$this->remove_price_filters();
+								$bundled_product->variable_product_sync();
+								$this->add_price_filters();
+							}
+
+							$min_variation_price_id = get_post_meta( $this->product_id, '_min_regular_price_variation_id', true );
+							$max_variation_price_id = get_post_meta( $this->product_id, '_max_regular_price_variation_id', true );
+
+						} else {
+
+							// Product may need to be synced
+							if ( $bundled_product->get_variation_price( 'min', false ) === false ) {
+								$this->remove_price_filters();
+								$bundled_product->variable_product_sync();
+								$this->add_price_filters();
+							}
+
+							$min_variation_price_id = get_post_meta( $this->product_id, '_min_price_variation_id', true );
+							$max_variation_price_id = get_post_meta( $this->product_id, '_max_price_variation_id', true );
+						}
+					}
+
+					$min_variation = $bundled_product->get_child( $min_variation_price_id );
+					$max_variation = $bundled_product->get_child( $max_variation_price_id );
+				}
+
+			// When variation filters are present, we need to iterate over the variations
+			} else {
+
+				$variation_in_stock_exists   = $this->is_front_end ? false : true;
+				$all_variations_on_backorder = $this->is_front_end ? true : false;
+
+				$min_variation_price         = '';
+				$max_variation_price         = '';
+
+				$this->total_stock = max( 0, wc_stock_amount( $bundled_product->stock ) );
+
+				foreach ( $bundled_product->get_children( true ) as $child_id ) {
+
+					// Do not continue if variation is filtered
+					if ( is_array( $this->allowed_variations ) && ! in_array( $child_id, $this->allowed_variations ) ) {
+						continue;
+					}
+
+					$variation = $bundled_product->get_child( $child_id );
+
+					if ( ! $variation ) {
+						continue;
+					}
+
+					// Stock status
+					if ( ! $variation_in_stock_exists ) {
+						if ( $variation->is_in_stock() && $variation->has_enough_stock( $quantity ) ) {
+							$variation_in_stock_exists = true;
+						}
+					}
+
+					// Total stock
+					if ( $variation->managing_stock() ) {
+						$this->total_stock += max( 0, wc_stock_amount( $variation->stock ) );
+					}
+
+					// Backorder
+					if ( $all_variations_on_backorder ) {
+						if ( $bundled_product->backorders_allowed() && $bundled_product->backorders_require_notification() ) {
+							if ( ! $variation->is_on_backorder() ) {
+								$all_variations_on_backorder = false;
+							}
+						} else {
 							$all_variations_on_backorder = false;
 						}
 					}
 
-					// Price info
+					// Prices
+					if ( $calc_prices ) {
 
-					// Calculate min / max variation price only if filters are present.
-					// Otherwise, its much faster to grab those from the parent product.
+						if ( ! empty( $discount ) && apply_filters( 'woocommerce_bundled_item_discount_from_regular', true, $this ) ) {
 
-					if ( $this->is_priced_per_product() && ! empty( $this->allowed_variations ) ) {
-
-						$variation_regular_price_raw = $variation->get_regular_price();
-						$variation_price_raw         = $variation->get_price();
-
-						$variation_regular_price     = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $variation, $variation_regular_price_raw );
-						$variation_price             = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $variation, $variation_price_raw );
-
-						// on sale status
-						if ( $variation_regular_price > $variation_price ) {
-							$this->on_sale = true;
-						}
-
-						// Prices incl and excl tax
-
-						if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes == 'yes' && $this->is_front_end ) {
-
-							if ( $woocommerce_bundles->helpers->wc_option_tax_display_shop == 'incl' ) {
-
-								if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax == 'yes' ) {
-									$variation_price_incl_tax = $variation_price_raw;
-									$variation_price_excl_tax = $bundled_product->get_price_excluding_tax( $quantity, $variation_price_raw ) / $quantity;
-								} else {
-									$variation_price_incl_tax = $variation_price;
-									$variation_price_excl_tax = $variation_price_raw;
-								}
-
-							} else {
-
-								if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax == 'yes' ) {
-									$variation_price_incl_tax = $variation_price_raw;
-									$variation_price_excl_tax = $variation_price;
-								} else {
-									$variation_price_incl_tax = $bundled_product->get_price_including_tax( $quantity, $variation_price_raw ) / $quantity;
-									$variation_price_excl_tax = $variation_price_raw;
-								}
-							}
-						}
-
-						// lowest price
-						if ( ! is_numeric( $min_variation_regular_price ) || $variation_regular_price < $min_variation_regular_price ) {
-							$min_variation_regular_price = $variation_regular_price;
-						}
-						if ( ! is_numeric( $min_variation_price ) || $variation_price < $min_variation_price ) {
-							$min_variation_price = $variation_price;
-						}
-
-						// highest price
-						if ( ! is_numeric( $max_variation_regular_price ) || $variation_regular_price > $max_variation_regular_price ) {
-							$max_variation_regular_price = $variation_regular_price;
-						}
-						if ( ! is_numeric( $max_variation_price ) || $variation_price > $max_variation_price ) {
-							$max_variation_price = $variation_price;
-						}
-
-						// taxed
-						if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes == 'yes' && $this->is_front_end ) {
-
-							if ( ! is_numeric( $min_variation_price_incl_tax ) || $variation_price_incl_tax < $min_variation_price_incl_tax ) {
-								$min_variation_price_incl_tax = $variation_price_incl_tax;
+							// lowest price
+							if ( '' === $min_variation_price || $variation->regular_price < $min_variation_price ) {
+								$min_variation_price = $variation->regular_price;
+								$min_variation       = $variation;
 							}
 
-							if ( ! is_numeric( $min_variation_price_excl_tax ) || $variation_price_excl_tax < $min_variation_price_excl_tax ) {
-								$min_variation_price_excl_tax = $variation_price_excl_tax;
+							// highest price
+							if ( '' === $max_variation_price || $variation->regular_price > $max_variation_price ) {
+								$max_variation_price = $variation->regular_price;
+								$max_variation       = $variation;
 							}
-						}
-					}
-				}
-			}
 
-			if ( $variation_in_stock_exists == false ) {
-				$this->stock_status = 'out-of-stock';
-			}
-
-			if ( $all_variations_on_backorder ) {
-				$this->stock_status = 'available-on-backorder';
-			}
-
-			// When no variation filters are present, its much faster to grab the min/max variation price data from the parent product meta.
-			if ( empty( $this->allowed_variations ) ) {
-
-				if ( ! empty( $discount ) ) {
-
-					// Product may need to be synced
-					if ( $bundled_product->get_variation_regular_price( 'min', false ) === false ) {
-						$bundled_product->variable_product_sync();
-					}
-
-					// Grab the min/max regular price variation since discounts are calculated on top of the regular price only.
-					$min_variation_id            = get_post_meta( $this->product_id, '_min_regular_price_variation_id', true );
-					$min_variation               = $woocommerce_bundles->helpers->get_variation( $min_variation_id, $bundled_product );
-
-					$min_variation_price_raw     = $min_variation->get_price();
-
-					$min_variation_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $min_variation, $min_variation->get_regular_price() );
-					$min_variation_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $min_variation, $min_variation_price_raw );
-
-
-					$max_variation_id            = get_post_meta( $this->product_id, '_max_regular_price_variation_id', true );
-					$max_variation               = $woocommerce_bundles->helpers->get_variation( $max_variation_id, $bundled_product );
-
-					$max_variation_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $max_variation, $max_variation->get_regular_price() );
-					$max_variation_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $max_variation, $max_variation->get_price() );
-
-					$this->on_sale = $max_variation_regular_price > 0 || $max_variation_price > 0;
-
-				} else {
-
-					// Product may need to be synced
-					if ( $bundled_product->get_variation_price( 'min', false ) === false ) {
-						$bundled_product->variable_product_sync();
-					}
-
-					// Grab the min/max price variation since there is no discount.
-					$min_variation_id            = get_post_meta( $this->product_id, '_min_price_variation_id', true );
-					$min_variation               = $woocommerce_bundles->helpers->get_variation( $min_variation_id, $bundled_product );
-
-					$min_variation_price_raw     = $min_variation->get_price();
-
-					$min_variation_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $min_variation, $min_variation->get_regular_price() );
-					$min_variation_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $min_variation, $min_variation_price_raw );
-
-
-					$max_variation_id            = get_post_meta( $this->product_id, '_max_price_variation_id', true );
-					$max_variation               = $woocommerce_bundles->helpers->get_variation( $max_variation_id, $bundled_product );
-
-					$max_variation_regular_price = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $max_variation, $max_variation->get_regular_price() );
-					$max_variation_price         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $max_variation, $max_variation->get_price());
-
-					// sale status can be obtained from the parent since all variations are active
-					if ( $this->is_priced_per_product() ) {
-						$this->on_sale = $bundled_product->is_on_sale();
-					}
-				}
-
-				// Prices incl and excl tax
-
-				if ( $woocommerce_bundles->helpers->wc_option_calculate_taxes == 'yes' && $this->is_front_end ) {
-
-					if ( $woocommerce_bundles->helpers->wc_option_tax_display_shop == 'incl' ) {
-
-						if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax == 'yes' ) {
-							$min_variation_price_incl_tax = $min_variation_price_raw;
-							$min_variation_price_excl_tax = $bundled_product->get_price_excluding_tax( $quantity, $min_variation_price_raw ) / $quantity;
 						} else {
-							$min_variation_price_incl_tax = $min_variation_price;
-							$min_variation_price_excl_tax = $min_variation_price_raw;
-						}
 
-					} else {
+							// lowest price
+							if ( '' === $min_variation_price || $variation->price < $min_variation_price ) {
+								$min_variation_price = $variation->price;
+								$min_variation       = $variation;
+							}
 
-						if ( $woocommerce_bundles->helpers->wc_option_prices_include_tax == 'yes' ) {
-							$min_variation_price_incl_tax = $min_variation_price_raw;
-							$min_variation_price_excl_tax = $min_variation_price;
-						} else {
-							$min_variation_price_incl_tax = $bundled_product->get_price_including_tax( $quantity, $min_variation_price_raw ) / $quantity;
-							$min_variation_price_excl_tax = $min_variation_price_raw;
+							// highest price
+							if ( '' === $max_variation_price || $variation->price > $max_variation_price ) {
+								$max_variation_price = $variation->price;
+								$max_variation       = $variation;
+							}
 						}
 					}
 				}
 
+				if ( ! $variation_in_stock_exists ) {
+					$this->stock_status = 'out-of-stock';
+				}
+
+				if ( $all_variations_on_backorder ) {
+					$this->stock_status = 'available-on-backorder';
+				}
 			}
 
-			$this->min_price          = ( $min_variation_regular_price < $min_variation_price ) ? $min_variation_regular_price : $min_variation_price;
-			$this->min_regular_price  = $min_variation_regular_price;
+			if ( $min_variation && $max_variation ) {
 
-			$this->max_price          = ( $max_variation_regular_price < $max_variation_price ) ? $max_variation_regular_price : $max_variation_price;
-			$this->max_regular_price  = $max_variation_regular_price;
+				$this->min_price             = $min_variation->get_price();
+				$this->max_price             = $max_variation->get_price();
+				$min_variation_regular_price = $min_variation->get_regular_price();
+				$max_variation_regular_price = $max_variation->get_regular_price();
 
+				// the variation with the lowest price may have a higher regular price then the variation with the highest price
+				$this->min_regular_price = min( $min_variation_regular_price, $max_variation_regular_price );
+				$this->max_regular_price = max( $min_variation_regular_price, $max_variation_regular_price );
 
-			$this->min_price_excl_tax = $min_variation_price_excl_tax;
-			$this->min_price_incl_tax = $min_variation_price_incl_tax;
+				if ( $this->min_regular_price > $this->min_price ) {
+					$this->on_sale = true;
+				}
+			}
 		}
 
 		$this->remove_price_filters();
+	}
 
+	/**
+	 * Get bundled item price after discount.
+	 *
+	 * @param  string  $min_or_max
+	 * @param  boolean $display
+	 * @return double
+	 */
+	public function get_bundled_item_price( $min_or_max = 'min', $display = false ) {
+
+		if ( ! $this->exists() ) {
+			return false;
+		}
+
+		$price = $min_or_max === 'min' ? $this->min_price : $this->max_price;
+
+		return $display ? WC_PB_Helpers::get_product_display_price( $this->product, $price ) : $price;
+	}
+
+	/**
+	 * Get bundled item regular price after discount.
+	 *
+	 * @param  string  $min_or_max
+	 * @param  boolean $display
+	 * @return double
+	 */
+	public function get_bundled_item_regular_price( $min_or_max = 'min', $display = false ) {
+
+		if ( ! $this->exists() ) {
+			return false;
+		}
+
+		$price = $min_or_max === 'min' ? $this->min_regular_price : $this->max_regular_price;
+
+		return $display ? WC_PB_Helpers::get_product_display_price( $this->product, $price ) : $price;
+	}
+
+	/**
+	 * Min bundled item price incl tax.
+	 *
+	 * @return double
+	 */
+	public function get_bundled_item_price_including_tax( $min_or_max = 'min' ) {
+
+		if ( ! $this->exists() ) {
+			return false;
+		}
+
+		$price = $min_or_max === 'min' ? $this->min_price : $this->max_price;
+
+		if ( $price && get_option( 'woocommerce_calc_taxes' ) === 'yes' ) {
+
+			if ( get_option( 'woocommerce_prices_include_tax' ) !== 'yes' ) {
+				$price = $this->product->get_price_including_tax( 1, $price );
+			}
+		}
+
+		return $price;
+	}
+
+	/**
+	 * Min bundled item price excl tax.
+	 *
+	 * @return double
+	 */
+	public function get_bundled_item_price_excluding_tax( $min_or_max = 'min' ) {
+
+		if ( ! $this->exists() ) {
+			return false;
+		}
+
+		$price = $min_or_max === 'min' ? $this->min_price : $this->max_price;
+
+		if ( $price && get_option( 'woocommerce_calc_taxes' ) === 'yes' ) {
+
+			if ( get_option( 'woocommerce_prices_include_tax' ) === 'yes' ) {
+				$price = $this->product->get_price_excluding_tax( 1, $price );
+			}
+		}
+
+		return $price;
 	}
 
 	/**
@@ -504,7 +514,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean
 	 */
-	function is_priced_per_product() {
+	public function is_priced_per_product() {
 
 		$is_ppp = false;
 
@@ -520,7 +530,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return  boolean  true if on sale
 	 */
-	function is_on_sale() {
+	public function is_on_sale() {
 
 		$on_sale = $this->on_sale;
 
@@ -536,7 +546,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return  boolean  true if purchasable
 	 */
-	function is_purchasable() {
+	public function is_purchasable() {
 
 		return $this->purchasable;
 	}
@@ -546,19 +556,20 @@ class WC_Bundled_Item {
 	 *
 	 * @return  boolean  true if purchasable
 	 */
-	function exists() {
+	public function exists() {
 
 		return ! empty( $this->product );
 	}
 
 	/**
 	 * Bundled item out of stock status.
+	 * Takes min quantity into account.
 	 *
 	 * @return  boolean  true if out of stock
 	 */
-	function is_out_of_stock() {
+	public function is_out_of_stock() {
 
-		if ( $this->stock_status == 'out-of-stock' ) {
+		if ( $this->stock_status === 'out-of-stock' ) {
 			return true;
 		}
 
@@ -566,13 +577,28 @@ class WC_Bundled_Item {
 	}
 
 	/**
+	 * Bundled item in stock status.
+	 * Takes min quantity into account.
+	 *
+	 * @return  boolean  true if in stock
+	 */
+	public function is_in_stock() {
+
+		if ( $this->stock_status === 'out-of-stock' ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Bundled item backorder status.
 	 *
 	 * @return  boolean  true if on backorder
 	 */
-	function is_on_backorder() {
+	public function is_on_backorder() {
 
-		if ( $this->stock_status == 'available-on-backorder' ) {
+		if ( $this->stock_status === 'available-on-backorder' ) {
 			return true;
 		}
 
@@ -584,9 +610,9 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean  true if sold individually
 	 */
-	function is_sold_individually() {
+	public function is_sold_individually() {
 
-		if ( $this->sold_individually == true ) {
+		if ( $this->sold_individually ) {
 			return true;
 		}
 
@@ -598,7 +624,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean  true if item is NYP
 	 */
-	function is_nyp() {
+	public function is_nyp() {
 
 		return $this->nyp;
 	}
@@ -609,11 +635,9 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean  true if the item has variables to adjust before adding to cart
 	 */
-	function has_variables() {
+	public function has_variables() {
 
-		global $woocommerce_bundles;
-
-		if ( $this->is_nyp() || $woocommerce_bundles->compatibility->has_required_addons( $this->product_id ) || $this->product->product_type === 'variable' ) {
+		if ( $this->is_nyp() || WC_PB()->compatibility->has_required_addons( $this->product_id ) || $this->product->product_type === 'variable' ) {
 			return true;
 		}
 
@@ -625,7 +649,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean  true if the item is a sub
 	 */
-	function is_sub() {
+	public function is_sub() {
 
 		if ( $this->product->product_type === 'subscription' ) {
 			return true;
@@ -639,7 +663,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return array
 	 */
-	function get_product_variation_attributes() {
+	public function get_product_variation_attributes() {
 
 		if ( ! empty( $this->product_attributes ) ) {
 			return $this->product_attributes;
@@ -655,11 +679,24 @@ class WC_Bundled_Item {
 	}
 
 	/**
+	 * Returns the selected variation attribute if this product is variable.
+	 *
+	 * @return string
+	 */
+	public function get_selected_product_variation_attribute( $attribute_name ) {
+
+		$defaults       = $this->get_selected_product_variation_attributes();
+		$attribute_name = sanitize_title( $attribute_name );
+
+		return isset( $defaults[ $attribute_name ] ) ? $defaults[ $attribute_name ] : '';
+	}
+
+	/**
 	 * Returns the selected variation attributes if this product is variable.
 	 *
 	 * @return array
 	 */
-	function get_selected_product_variation_attributes() {
+	public function get_selected_product_variation_attributes() {
 
 		if ( ! empty( $this->selected_product_attributes ) ) {
 			return $this->selected_product_attributes;
@@ -686,7 +723,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return array
 	 */
-	function get_product_variations() {
+	public function get_product_variations() {
 
 		if ( ! empty( $this->product_variations ) ) {
 			return $this->product_variations;
@@ -716,11 +753,9 @@ class WC_Bundled_Item {
 
 			// add only active variations
 			foreach ( $bundled_item_variations as $variation_data ) {
-
 				if ( ! empty( $variation_data ) ) {
 					$this->product_variations[] = $variation_data;
 				}
-
 			}
 
 			return $this->product_variations;
@@ -736,7 +771,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product_Variable  $bundled_product  variable bundled product
 	 * @return array                                  modified ids of variations to load
 	 */
-	function bundled_item_children( $children, $bundled_product ) {
+	public function bundled_item_children( $children, $bundled_product ) {
 
 		if ( empty( $this->allowed_variations ) || ! is_array( $this->allowed_variations ) ) {
 			return $children;
@@ -763,9 +798,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product_Variation   $bundled_variation  the variation in question
 	 * @return array                                      modified variation data
 	 */
-	function bundled_item_available_variation( $variation_data, $bundled_product, $bundled_variation ) {
-
-		global $woocommerce_bundles;
+	public function bundled_item_available_variation( $variation_data, $bundled_product, $bundled_variation ) {
 
 		$bundled_item_id = $this->item_id;
 
@@ -788,18 +821,24 @@ class WC_Bundled_Item {
 		// Modify product id for JS (deprecated)
 		$variation_data[ 'product_id' ]    = $bundled_item_id;
 
-		// Add price data
-		$variation_data[ 'regular_price' ] = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_variation, $bundled_variation->get_regular_price() );
-		$variation_data[ 'price' ]         = $woocommerce_bundles->helpers->get_product_price_incl_or_excl_tax( $bundled_variation, $bundled_variation->get_price() );
+		// Add price data with WC 2.2 missing display_regular_price/display_price compatibility
+		$variation_data[ 'regular_price' ] = isset( $variation_data[ 'display_regular_price' ] ) ? $variation_data[ 'display_regular_price' ] : WC_PB_Helpers::get_product_display_price( $bundled_variation, $bundled_variation->get_regular_price() );
+		$variation_data[ 'price' ]         = isset( $variation_data[ 'display_price' ] ) ? $variation_data[ 'display_price' ] : WC_PB_Helpers::get_product_display_price( $bundled_variation, $bundled_variation->get_price() );
 
-		$variation_data[ 'price_html' ]    = $this->is_priced_per_product() ? ( $variation_data[ 'price_html' ] === '' ? '<p class="price">' . $bundled_variation->get_price_html() . '</p>' : $variation_data[ 'price_html' ] ) : '';
+		$variation_price_html = '';
+
+		if ( $this->is_priced_per_product() ) {
+			$variation_price_html = $variation_data[ 'price_html' ] === '' ? '<p class="price">' . $bundled_variation->get_price_html() . '</p>' : $variation_data[ 'price_html' ];
+		}
+
+		$variation_data[ 'price_html' ] = $variation_price_html;
 
 		// Modify availability data
 		$quantity     = $this->get_quantity();
 		$quantity_max = $this->get_quantity( 'max' );
 		$availability = $this->get_availability( $bundled_variation );
 
-		if ( ! $bundled_variation->is_in_stock() || ! $bundled_variation->has_enough_stock( $quantity ) ) {
+		if ( ! $this->is_in_stock() || ! $bundled_variation->is_in_stock() || ! $bundled_variation->has_enough_stock( $quantity ) ) {
 			$variation_data[ 'is_in_stock' ] = false;
 		}
 
@@ -811,8 +850,8 @@ class WC_Bundled_Item {
 
 		$variation_data[ 'availability_html' ] = $availability_html;
 
-		$variation_data[ 'min_qty' ] = $quantity;
-		$variation_data[ 'max_qty' ] = $quantity_max;
+		$variation_data[ 'min_qty' ]           = $quantity;
+		$variation_data[ 'max_qty' ]           = $quantity_max;
 
 		return $variation_data;
 	}
@@ -822,13 +861,14 @@ class WC_Bundled_Item {
 	 *
 	 * @return void
 	 */
-	function add_price_filters() {
+	public function add_price_filters() {
 
-		add_filter( 'woocommerce_get_price', array( $this, 'get_price' ), 15, 2 );
-		add_filter( 'woocommerce_get_sale_price', array( $this, 'get_sale_price' ), 15, 2 );
-		add_filter( 'woocommerce_get_regular_price', array( $this, 'get_regular_price' ), 15, 2 );
-		add_filter( 'woocommerce_get_price_html', array( $this, 'get_price_html' ), 10, 2 );
-		add_filter( 'woocommerce_get_variation_price_html', array( $this, 'get_price_html' ), 10, 2 );
+		add_filter( 'woocommerce_get_price', array( $this, 'filter_get_price' ), 15, 2 );
+		add_filter( 'woocommerce_get_sale_price', array( $this, 'filter_get_sale_price' ), 15, 2 );
+		add_filter( 'woocommerce_get_regular_price', array( $this, 'filter_get_regular_price' ), 15, 2 );
+		add_filter( 'woocommerce_get_price_html', array( $this, 'filter_get_price_html' ), 10, 2 );
+		add_filter( 'woocommerce_show_variation_price', array( $this, 'filter_show_variation_price' ), 10, 3 );
+		add_filter( 'woocommerce_get_variation_price_html', array( $this, 'filter_get_price_html' ), 10, 2 );
 	}
 
 	/**
@@ -836,13 +876,31 @@ class WC_Bundled_Item {
 	 *
 	 * @return void
 	 */
-	function remove_price_filters() {
+	public function remove_price_filters() {
 
-		remove_filter( 'woocommerce_get_price', array( $this, 'get_price' ), 15, 2 );
-		remove_filter( 'woocommerce_get_sale_price', array( $this, 'get_sale_price' ), 15, 2 );
-		remove_filter( 'woocommerce_get_regular_price', array( $this, 'get_regular_price' ), 15, 2 );
-		remove_filter( 'woocommerce_get_price_html', array( $this, 'get_price_html' ), 10, 2 );
-		remove_filter( 'woocommerce_get_variation_price_html', array( $this, 'get_price_html' ), 10, 2 );
+		remove_filter( 'woocommerce_get_price', array( $this, 'filter_get_price' ), 15, 2 );
+		remove_filter( 'woocommerce_get_sale_price', array( $this, 'filter_get_sale_price' ), 15, 2 );
+		remove_filter( 'woocommerce_get_regular_price', array( $this, 'filter_get_regular_price' ), 15, 2 );
+		remove_filter( 'woocommerce_get_price_html', array( $this, 'filter_get_price_html' ), 10, 2 );
+		remove_filter( 'woocommerce_show_variation_price', array( $this, 'filter_show_variation_price' ), 10, 3 );
+		remove_filter( 'woocommerce_get_variation_price_html', array( $this, 'filter_get_price_html' ), 10, 2 );
+	}
+
+	/**
+	 * Filter condition for allowing WC to calculate variation price_html.
+	 *
+	 * @param  boolean              $show
+	 * @param  WC_Product_Variable  $product
+	 * @param  WC_Product_Variation $variation
+	 * @return boolean
+	 */
+	public function filter_show_variation_price( $show, $product, $variation ) {
+
+		if ( $this->is_priced_per_product() && $this->max_price > 0 && $this->max_price > $this->min_price ) {
+			$show = true;
+		}
+
+		return $show;
 	}
 
 	/**
@@ -852,7 +910,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product   $product    the bundled product
 	 * @return double                   modified price
 	 */
-	function get_price( $price, $product ) {
+	public function filter_get_price( $price, $product ) {
 
 		if ( $product->id !== $this->product->id || $price === '' ) {
 			return $price;
@@ -883,7 +941,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product   $product    the bundled product
 	 * @return double                   modified reg price
 	 */
-	function get_sale_price( $sale_price, $product ) {
+	public function filter_get_sale_price( $sale_price, $product ) {
 
 		if ( $product->id !== $this->product->id ) {
 			return $sale_price;
@@ -894,7 +952,7 @@ class WC_Bundled_Item {
 		}
 
 		$discount   = $this->get_discount();
-		$sale_price = empty( $discount ) ? ( double ) $sale_price : $this->get_price( $product->price, $product );
+		$sale_price = empty( $discount ) ? ( double ) $sale_price : $this->filter_get_price( $product->price, $product );
 
 		return $sale_price;
 	}
@@ -906,7 +964,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product   $product    the bundled product
 	 * @return double                   modified reg price
 	 */
-	function get_regular_price( $regular_price, $product ) {
+	public function filter_get_regular_price( $regular_price, $product ) {
 
 		if ( $product->id !== $this->product->id ) {
 			return $regular_price;
@@ -926,9 +984,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product  $product       the bundled product
 	 * @return string                     modified price string
 	 */
-	function get_price_html( $price_html, $product ) {
-
-		global $woocommerce_bundles;
+	public function filter_get_price_html( $price_html, $product ) {
 
 		if ( ! $this->is_priced_per_product() ) {
 			return '';
@@ -947,7 +1003,7 @@ class WC_Bundled_Item {
 	 * @param  WC_Product   $product    the bundled sub
 	 * @return double                   modified price
 	 */
-	function get_sign_up_fee( $sign_up_fee, $product ) {
+	public function get_sign_up_fee( $sign_up_fee, $product ) {
 
 		if ( $product->id !== $this->product->id ) {
 			return $price;
@@ -967,8 +1023,8 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean
 	 */
-	function has_title_override() {
-		if ( ! empty( $this->item_data[ 'override_title' ] ) && $this->item_data[ 'override_title' ] == 'yes' ) {
+	public function has_title_override() {
+		if ( ! empty( $this->item_data[ 'override_title' ] ) && $this->item_data[ 'override_title' ] === 'yes' ) {
 			return true;
 		}
 
@@ -980,7 +1036,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return string item title
 	 */
-	function get_title() {
+	public function get_title() {
 		return apply_filters( 'woocommerce_bundled_item_title', $this->title, $this );
 	}
 
@@ -989,7 +1045,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return string item title
 	 */
-	function get_raw_title() {
+	public function get_raw_title() {
 
 		$title = $this->get_title();
 
@@ -1005,8 +1061,8 @@ class WC_Bundled_Item {
 	 *
 	 * @return string item title
 	 */
-	function get_description() {
-		return apply_filters( 'woocommerce_bundled_item_description', $this->description, $this );
+	public function get_description() {
+		return apply_filters( 'woocommerce_bundled_item_description', wpautop( do_shortcode( wp_kses_post( $this->description ) ) ), $this );
 	}
 
 	/**
@@ -1014,7 +1070,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean true if visible
 	 */
-	function is_visible() {
+	public function is_visible() {
 		return $this->visibility === 'visible' ? true : false;
 	}
 
@@ -1023,7 +1079,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean true if secret
 	 */
-	function is_secret() {
+	public function is_secret() {
 		return $this->visibility === 'secret' ? true : false;
 	}
 
@@ -1032,7 +1088,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean true if optional
 	 */
-	function is_optional() {
+	public function is_optional() {
 		return $this->optional === 'yes' ? true : false;
 	}
 
@@ -1041,14 +1097,27 @@ class WC_Bundled_Item {
 	 *
 	 * @return int
 	 */
-	function get_quantity( $min_or_max = 'min' ) {
+	public function get_quantity( $min_or_max = 'min' ) {
 
 		$qty = $this->quantity;
 
 		if ( $min_or_max === 'min' ) {
+
+			if ( $qty > 1 && $this->is_sold_individually() ) {
+				$qty = 1;
+			}
+
 			$qty = apply_filters( 'woocommerce_bundled_item_quantity', $qty, $this );
+
 		} elseif ( $min_or_max === 'max' ) {
-			$qty = ! empty( $this->item_data[ 'bundle_quantity_max' ] ) ? apply_filters( 'woocommerce_bundled_item_quantity_max', max( $this->item_data[ 'bundle_quantity_max' ], $qty ), $this ) : $qty;
+
+			$qty = ! empty( $this->item_data[ 'bundle_quantity_max' ] ) ? max( $this->item_data[ 'bundle_quantity_max' ], $qty ) : $qty;
+
+			if ( $qty > 1 && $this->is_sold_individually() ) {
+				$qty = 1;
+			}
+
+			$qty = apply_filters( 'woocommerce_bundled_item_quantity_max', $qty, $this );
 		}
 
 		return $qty;
@@ -1059,7 +1128,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return int
 	 */
-	function get_discount() {
+	public function get_discount() {
 		return apply_filters( 'woocommerce_bundled_item_discount', $this->discount, $this );
 	}
 
@@ -1068,7 +1137,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return int
 	 */
-	function get_sign_up_discount() {
+	public function get_sign_up_discount() {
 		return apply_filters( 'woocommerce_bundled_item_sign_up_discount', $this->sign_up_discount, $this );
 	}
 
@@ -1077,7 +1146,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean
 	 */
-	function is_optional_checked() {
+	public function is_optional_checked() {
 
 		if ( ! $this->is_optional() ) {
 			return false;
@@ -1097,7 +1166,7 @@ class WC_Bundled_Item {
 	 *
 	 * @return boolean true if visible
 	 */
-	function is_thumbnail_visible() {
+	public function is_thumbnail_visible() {
 		return $this->hide_thumbnail === 'yes' ? false : true;
 	}
 
@@ -1106,12 +1175,16 @@ class WC_Bundled_Item {
 	 *
 	 * @return string
 	 */
-	function get_classes() {
+	public function get_classes() {
 
 		$classes = array();
 
 		if ( $this->get_quantity( 'min' ) !== $this->get_quantity( 'max' ) & ! $this->is_out_of_stock() ) {
 			$classes[] = 'has_qty_input'; // add 'float_qty_input' class to float the quantity input right
+		}
+
+		if ( ! $this->is_thumbnail_visible() ) {
+			$classes[] = 'thumbnail_hidden';
 		}
 
 		return implode( ' ', apply_filters( 'woocommerce_bundled_item_classes', $classes, $this ) );
@@ -1122,18 +1195,19 @@ class WC_Bundled_Item {
 	 *
 	 * @return array
 	 */
-	function get_availability( $product = false ) {
+	public function get_availability( $product = false ) {
 
 		if ( ! $product ) {
 			$product = $this->product;
 		}
 
 		$quantity     = $this->get_quantity();
+		$total_stock  = ! empty( $product->variation_id ) ? $product->get_total_stock() : $this->total_stock;
 		$availability = $class = '';
 
 		if ( $product->managing_stock() ) {
 
-			if ( $product->is_in_stock() && $product->get_total_stock() > get_option( 'woocommerce_notify_no_stock_amount' ) && $product->get_total_stock() >= $quantity ) {
+			if ( $product->is_in_stock() && $total_stock > get_option( 'woocommerce_notify_no_stock_amount' ) && $total_stock >= $quantity ) {
 
 				switch ( get_option( 'woocommerce_stock_format' ) ) {
 
@@ -1142,8 +1216,8 @@ class WC_Bundled_Item {
 					break;
 
 					case 'low_amount' :
-						if ( $product->get_total_stock() <= get_option( 'woocommerce_notify_low_stock_amount' ) ) {
-							$availability = sprintf( __( 'Only %s left in stock', 'woocommerce' ), $product->get_total_stock() );
+						if ( $total_stock <= get_option( 'woocommerce_notify_low_stock_amount' ) ) {
+							$availability = sprintf( __( 'Only %s left in stock', 'woocommerce' ), $total_stock );
 
 							if ( $product->backorders_allowed() && $product->backorders_require_notification() ) {
 								$availability .= ' ' . __( '(can be backordered)', 'woocommerce' );
@@ -1154,7 +1228,7 @@ class WC_Bundled_Item {
 					break;
 
 					default :
-						$availability = sprintf( __( '%s in stock', 'woocommerce' ), $product->get_total_stock() );
+						$availability = sprintf( __( '%s in stock', 'woocommerce' ), $total_stock );
 
 						if ( $product->backorders_allowed() && $product->backorders_require_notification() ) {
 							$availability .= ' ' . __( '(can be backordered)', 'woocommerce' );
@@ -1166,10 +1240,10 @@ class WC_Bundled_Item {
 
 			} elseif ( $product->backorders_allowed() && $product->backorders_require_notification() ) {
 
-				if ( $product->get_total_stock() >= $quantity || get_option( 'woocommerce_stock_format' ) === 'no_amount' || $product->get_total_stock() <= 0 ) {
+				if ( $total_stock >= $quantity || get_option( 'woocommerce_stock_format' ) === 'no_amount' || $total_stock <= 0 ) {
 					$availability = __( 'Available on backorder', 'woocommerce' );
 				} else {
-					$availability = __( 'Available on backorder', 'woocommerce' ) . ' ' . sprintf( __( '(only %s left in stock)', 'woocommerce-product-bundles' ), $product->get_total_stock() );
+					$availability = __( 'Available on backorder', 'woocommerce' ) . ' ' . sprintf( __( '(only %s left in stock)', 'woocommerce-product-bundles' ), $total_stock );
 				}
 
 				$class = 'available-on-backorder';
@@ -1181,12 +1255,12 @@ class WC_Bundled_Item {
 
 			} else {
 
-				if ( $product->is_in_stock() && $product->get_total_stock() > get_option( 'woocommerce_notify_no_stock_amount' ) ) {
+				if ( $product->is_in_stock() && $total_stock > get_option( 'woocommerce_notify_no_stock_amount' ) ) {
 
 					if ( get_option( 'woocommerce_stock_format' ) === 'no_amount' ) {
 						$availability = __( 'Insufficient stock', 'woocommerce-product-bundles' );
 					} else {
-						$availability = __( 'Insufficient stock', 'woocommerce-product-bundles' ) . ' ' . sprintf( __( '(only %s left in stock)', 'woocommerce-product-bundles' ), $product->get_total_stock() );
+						$availability = __( 'Insufficient stock', 'woocommerce-product-bundles' ) . ' ' . sprintf( __( '(only %s left in stock)', 'woocommerce-product-bundles' ), $total_stock );
 					}
 
 					$class = 'out-of-stock';

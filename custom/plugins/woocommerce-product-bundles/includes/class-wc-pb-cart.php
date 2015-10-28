@@ -2,8 +2,8 @@
 /**
  * Product Bundle cart functions and filters.
  *
- * @class 	WC_PB_Cart
- * @version 4.9.4
+ * @class   WC_PB_Cart
+ * @version 4.11.5
  * @since   4.5.0
  */
 
@@ -17,7 +17,7 @@ class WC_PB_Cart {
 	/**
 	 * Setup cart class
 	 */
-	function __construct() {
+	public function __construct() {
 
 		// Validate bundle add-to-cart
 		add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'woo_bundles_validation' ), 10, 6 );
@@ -72,9 +72,7 @@ class WC_PB_Cart {
 	 * @param  array    $cart_item_data     cart item data
 	 * @return boolean                      modified add to cart validation flag
 	 */
-	function woo_bundles_validation( $add, $product_id, $product_quantity, $variation_id = '', $variations = array(), $cart_item_data = array() ) {
-
-		global $woocommerce_bundles;
+	public function woo_bundles_validation( $add, $product_id, $product_quantity, $variation_id = '', $variations = array(), $cart_item_data = array() ) {
 
 		// Get product type
 		$terms        = get_the_terms( $product_id, 'product_type' );
@@ -89,7 +87,7 @@ class WC_PB_Cart {
 
 		if ( $product_type === 'bundle' ) {
 
-			$product = WC_PB_Core_Compatibility::wc_get_product( $product_id );
+			$product = wc_get_product( $product_id );
 
 			if ( ! $product ) {
 				return false;
@@ -101,7 +99,7 @@ class WC_PB_Cart {
 
 			// If a stock-managed product / variation exists in the bundle multiple times, its stock will be checked only once for the sum of all bundled quantities.
 			// The stock manager class keeps a record of stock-managed product / variation ids
-			$bundled_stock = new WC_PB_Stock_Manager();
+			$bundled_stock = new WC_PB_Stock_Manager( $product );
 
 			// Grab bundled items
 			$bundled_items = $product->get_bundled_items();
@@ -155,15 +153,7 @@ class WC_PB_Cart {
 					$item_quantity = $item_quantity_min;
 				}
 
-				// Sold individually?
-				$item_sold_individually = get_post_meta( $id, '_sold_individually', true );
-
-				if ( $item_sold_individually === 'yes' && $item_quantity > 1 ) {
-					$item_quantity = $item_quantity_min;
-				}
-
-
-				if ( $item_quantity < $item_quantity_min && $item_sold_individually !== 'yes' ) {
+				if ( $item_quantity < $item_quantity_min ) {
 
 					wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be added to the cart. The quantity of &quot;%2$s&quot; cannot be lower than %3$d.', 'woocommerce-product-bundles' ), get_the_title( $product_id ), $bundled_item->get_raw_title(), $item_quantity_min ), 'error' );
 					return false;
@@ -190,6 +180,8 @@ class WC_PB_Cart {
 				// Validate variation id
 				if ( $bundled_product_type === 'variable' ) {
 
+					$variation_id = '';
+
 					if ( isset( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'variation_id' ] ) && $order_again ) {
 
 						$variation_id = $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'variation_id' ];
@@ -199,7 +191,7 @@ class WC_PB_Cart {
 						$variation_id = $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_variation_id_' . $bundled_item_id ];
 					}
 
-					if ( isset( $variation_id ) && is_numeric( $variation_id ) && $variation_id > 1 ) {
+					if ( $variation_id && is_numeric( $variation_id ) && $variation_id > 1 ) {
 
 						if ( get_post_meta( $variation_id, '_price', true ) === '' ) {
 
@@ -209,32 +201,17 @@ class WC_PB_Cart {
 
 						// Add item for validation
 						$bundled_stock->add_item( $id, $variation_id, $quantity );
-
-					} else {
-
-						wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be added to the cart. Please choose &quot;%2$s&quot; options&hellip;', 'woocommerce-product-bundles' ), get_the_title( $product_id ), $bundled_item->product->get_title() ), 'error' );
-						return false;
 					}
 
+					// Verify all attributes for the variable product were set
+					$bundled_variation  = wc_get_product( $variation_id );
+					$attributes         = ( array ) maybe_unserialize( get_post_meta( $id, '_product_attributes', true ) );
+					$variation_data     = array();
+					$missing_attributes = array();
+					$all_set            = true;
 
-					// Verify all attributes for the variable product were set - TODO: verify with filters
-
-					$attributes = ( array ) maybe_unserialize( get_post_meta( $id, '_product_attributes', true ) );
-		    		$variations = array();
-		    		$all_set 	= true;
-
-		    		$variation_data = array();
-
-					$custom_fields = get_post_meta( $variation_id );
-
-					// Get the variation attributes from meta
-					foreach ( $custom_fields as $name => $value ) {
-
-						if ( ! strstr( $name, 'attribute_' ) ) {
-							continue;
-						}
-
-						$variation_data[ $name ] = sanitize_title( $value[0] );
+					if ( $bundled_variation ) {
+						$variation_data = $bundled_variation->variation_data;
 					}
 
 					// Verify all attributes
@@ -248,38 +225,74 @@ class WC_PB_Cart {
 
 						if ( ! empty( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) ) {
 
-					        // Get value from post data
-					        // Don't use woocommerce_clean as it destroys sanitized characters
-					        $value = sanitize_title( trim( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) ) );
+							if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_4() ) {
 
-					        // Get valid value from variation
-					        $valid_value = $variation_data[ $taxonomy ];
+								 // Get value from post data
+								if ( $attribute[ 'is_taxonomy' ] ) {
+									$value = sanitize_title( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) );
+								} else {
+									$value = wc_clean( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) );
+								}
 
-					        // Allow if valid
-					        if ( $valid_value == '' || $valid_value == $value ) {
-					            continue;
-					        }
+							} else {
 
-						} elseif ( isset( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'attributes' ] ) && isset( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'variation_id' ] ) && $order_again ) {
+								// Get value from post data
+								$value = sanitize_title( trim( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) ) );
+							}
 
-							$value = sanitize_title( trim( stripslashes( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'attributes' ][ $taxonomy ] ) ) );
+							// Get valid value from variation
+							$valid_value = $variation_data[ $taxonomy ];
 
-					        $valid_value = $variation_data[ $taxonomy ];
+							// Allow if valid
+							if ( $valid_value === '' || $valid_value === $value ) {
+								continue;
+							}
 
-					        if ( $valid_value == '' || $valid_value == $value ) {
-					            continue;
-					        }
+						} elseif ( isset( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'attributes' ][ $taxonomy ] ) && isset( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'variation_id' ] ) && $order_again ) {
+
+							if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_4() ) {
+
+								 // Get value from post data
+								if ( $attribute[ 'is_taxonomy' ] ) {
+									$value = sanitize_title( stripslashes( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'attributes' ][ $taxonomy ] ) );
+								} else {
+									$value = wc_clean( stripslashes( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'attributes' ][ $taxonomy ] ) );
+								}
+
+							} else {
+
+								// Get value from post data
+								$value = sanitize_title( trim( stripslashes( $cart_item_data[ 'stamp' ][ $bundled_item_id ][ 'attributes' ][ $taxonomy ] ) ) );
+							}
+
+							$valid_value = $variation_data[ $taxonomy ];
+
+							if ( $valid_value === '' || $valid_value === $value ) {
+								continue;
+							}
+
+						} else {
+
+							$missing_attributes[] = wc_attribute_label( $attribute[ 'name' ] );
 						}
 
-					    $all_set = false;
+						$all_set = false;
 					}
 
 					if ( ! $all_set ) {
 
-						wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be added to the cart. Please choose &quot;%2$s&quot; options&hellip;', 'woocommerce-product-bundles' ), get_the_title( $product_id ), $bundled_item->product->get_title() ), 'error' );
-						return false;
-					}
+						if ( $missing_attributes && WC_PB_Core_Compatibility::is_wc_version_gte_2_3() ) {
 
+							$required_fields_notice = sprintf( _n( '%1$s is a required &quot;%2$s&quot; field', '%1$s are required &quot;%2$s&quot; fields', sizeof( $missing_attributes ), 'woocommerce-product-bundles' ), wc_format_list_of_items( $missing_attributes ), $bundled_item->product->get_title() );
+    						wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be added to the cart. %2$s.', 'woocommerce-product-bundles' ), get_the_title( $product_id ), $required_fields_notice ), 'error' );
+    						return false;
+
+						} else {
+
+							wc_add_notice( sprintf( __( '&quot;%1$s&quot; cannot be added to the cart. Please choose &quot;%2$s&quot; options&hellip;', 'woocommerce-product-bundles' ), get_the_title( $product_id ), $bundled_item->product->get_title() ), 'error' );
+							return false;
+						}
+					}
 
 				} elseif ( $bundled_product_type === 'simple' || $bundled_product_type === 'subscription' ) {
 
@@ -295,12 +308,12 @@ class WC_PB_Cart {
 
 			// Check stock for stock-managed bundled items
 			// If out of stock, don't proceed
-			if ( false === apply_filters( 'woocommerce_add_to_cart_bundle_validation', $bundled_stock->validate_stock( $product_id ), $product_id, $bundled_stock ) ) {
+			if ( false === apply_filters( 'woocommerce_add_to_cart_bundle_validation', $bundled_stock->validate_stock(), $product_id, $bundled_stock ) ) {
 				return false;
 			}
 
 			// Composite Products compatibility
-			$woocommerce_bundles->compatibility->stock_data = $bundled_stock;
+			WC_PB_Compatibility::$stock_data = $bundled_stock;
 		}
 
 		return $add;
@@ -314,9 +327,7 @@ class WC_PB_Cart {
 	 * @param  int      $product_id	       the product id
 	 * @return array                       modified cart item data
 	 */
-	function woo_bundles_add_cart_item_data( $cart_item_data, $product_id ) {
-
-		global $woocommerce_bundles;
+	public function woo_bundles_add_cart_item_data( $cart_item_data, $product_id ) {
 
 		// Get product type
 		$terms        = get_the_terms( $product_id, 'product_type' );
@@ -328,7 +339,7 @@ class WC_PB_Cart {
 				return $cart_item_data;
 			}
 
-			$product = WC_PB_Core_Compatibility::wc_get_product( $product_id );
+			$product = wc_get_product( $product_id );
 
 			// grab bundled items
 			$bundled_items = $product->get_bundled_items();
@@ -404,26 +415,42 @@ class WC_PB_Cart {
 
 						$taxonomy = 'attribute_' . sanitize_title( $attribute[ 'name' ] );
 
-						// has already been checked for validity in function 'woo_bundles_validation'
-						$value    = sanitize_title( trim( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) ) );
+						// Value has already been checked for validity in function 'woo_bundles_validation'
+						if ( WC_PB_Core_Compatibility::is_wc_version_gte_2_4() ) {
 
-						if ( $attribute[ 'is_taxonomy' ] ) {
+							// Get value from post data
+							if ( $attribute[ 'is_taxonomy' ] ) {
+								$value = sanitize_title( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) );
+							} else {
+								$value = wc_clean( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) );
+							}
 
 							$attr_stamp[ $taxonomy ] = $value;
 
 						} else {
-						    // For custom attributes, get the name from the slug
-						    $options = array_map( 'trim', explode( WC_DELIMITER, $attribute[ 'value' ] ) );
-						    foreach ( $options as $option ) {
-						    	if ( sanitize_title( $option ) == $value ) {
-						    		$value = $option;
-						    		break;
-						    	}
-						    }
 
-							$attr_stamp[ $taxonomy ] = $value;
+							// Get value from post data
+							$value = sanitize_title( trim( stripslashes( $_REQUEST[ apply_filters( 'woocommerce_product_bundle_field_prefix', '', $product_id ) . 'bundle_' . $taxonomy . '_' . $bundled_item_id ] ) ) );
+
+							if ( $attribute[ 'is_taxonomy' ] ) {
+
+								$attr_stamp[ $taxonomy ] = $value;
+
+							} else {
+
+								// For custom attributes, get the name from the slug
+								$options = array_map( 'trim', explode( WC_DELIMITER, $attribute[ 'value' ] ) );
+
+								foreach ( $options as $option ) {
+									if ( sanitize_title( $option ) == $value ) {
+										$value = $option;
+										break;
+									}
+								}
+
+								$attr_stamp[ $taxonomy ] = $value;
+							}
 						}
-
 					}
 
 					$stamp[ $bundled_item_id ][ 'attributes' ] 		= $attr_stamp;
@@ -445,7 +472,6 @@ class WC_PB_Cart {
 
 			return $cart_item_data;
 		}
-
 	}
 
 	/**
@@ -461,9 +487,7 @@ class WC_PB_Cart {
 	 * @param  array    $cart_item_data     cart item data array
 	 * @return void
 	 */
-	function woo_bundles_add_bundle_to_cart( $bundle_cart_key, $bundle_id, $bundle_quantity, $variation_id, $variation, $cart_item_data ) {
-
-		global $woocommerce_bundles;
+	public function woo_bundles_add_bundle_to_cart( $bundle_cart_key, $bundle_id, $bundle_quantity, $variation_id, $variation, $cart_item_data ) {
 
 		if ( isset( $cart_item_data[ 'stamp' ] ) && ! isset( $cart_item_data[ 'bundled_by' ] ) ) {
 
@@ -508,10 +532,10 @@ class WC_PB_Cart {
 				}
 
 				// Load child cart item data from the parent cart item data array
-				$bundled_item_cart_data = $woocommerce_bundles->compatibility->get_bundled_cart_item_data_from_parent( $bundled_item_cart_data, $cart_item_data );
+				$bundled_item_cart_data = apply_filters( 'woocommerce_bundled_item_cart_data', $bundled_item_cart_data, $cart_item_data );
 
 				// Prepare for adding children to cart
-				$woocommerce_bundles->compatibility->before_bundled_add_to_cart( $product_id, $quantity, $variation_id, $variations, $bundled_item_cart_data );
+				do_action( 'woocommerce_bundled_item_before_add_to_cart', $product_id, $quantity, $variation_id, $variations, $bundled_item_cart_data );
 
 				// Add to cart
 				$bundled_item_cart_key = $this->bundled_add_to_cart( $bundle_id, $product_id, $quantity, $variation_id, $variations, $bundled_item_cart_data );
@@ -521,7 +545,7 @@ class WC_PB_Cart {
 				}
 
 				// Finish
-				$woocommerce_bundles->compatibility->after_bundled_add_to_cart( $product_id, $quantity, $variation_id, $variations, $bundled_item_cart_data );
+				do_action( 'woocommerce_bundled_item_after_add_to_cart', $product_id, $quantity, $variation_id, $variations, $bundled_item_cart_data );
 			}
 		}
 	}
@@ -539,8 +563,6 @@ class WC_PB_Cart {
 	 * @return bool
 	 */
 	public function bundled_add_to_cart( $bundle_id, $product_id, $quantity = 1, $variation_id = '', $variation = '', $cart_item_data ) {
-
-		global $woocommerce_bundles;
 
 		if ( $quantity <= 0 ) {
 			return false;
@@ -562,7 +584,7 @@ class WC_PB_Cart {
 		}
 
 		// Get the product
-		$product_data = WC_PB_Core_Compatibility::wc_get_product( $variation_id ? $variation_id : $product_id );
+		$product_data = wc_get_product( $variation_id ? $variation_id : $product_id );
 
 		// If cart_item_key is set, the item is already in the cart and its quantity will be handled by woo_bundles_update_quantity_in_cart.
 		if ( ! $cart_item_key ) {
@@ -588,61 +610,83 @@ class WC_PB_Cart {
 	 * When the shipping mode is set to "bundled", all bundled items are marked as virtual when they are added to the cart.
 	 * Otherwise, the container itself is a virtual product in the first place.
 	 *
+	 * @param  array             $cart_item
+	 * @param  WC_Product_Bundle $bundle
+	 * @return array
+	 */
+	private function get_bundled_cart_item( $cart_item, $bundle ) {
+
+		$bundled_item_id      = $cart_item[ 'bundled_item_id' ];
+
+		$per_product_pricing  = $bundle->is_priced_per_product();
+		$per_product_shipping = $bundle->is_shipped_per_product();
+
+		if ( ! $per_product_pricing ) {
+
+			$cart_item[ 'data' ]->price = 0;
+
+			if ( isset( $cart_item[ 'data' ]->subscription_sign_up_fee ) ) {
+				$cart_item[ 'data' ]->subscription_sign_up_fee = 0;
+			}
+
+		} else {
+
+			$discount = $cart_item[ 'stamp' ][ $cart_item[ 'bundled_item_id' ] ][ 'discount' ];
+
+			if ( ! empty( $discount ) || has_filter( 'woocommerce_bundle_is_composited' ) ) {
+
+				$bundled_item = $bundle->get_bundled_item( $bundled_item_id );
+
+				$bundled_item->add_price_filters();
+
+				$cart_item[ 'data' ]->price = $cart_item[ 'data' ]->get_price();
+
+				$bundled_item->remove_price_filters();
+			}
+		}
+
+		if ( $cart_item[ 'data' ]->needs_shipping() ) {
+
+			if ( false === apply_filters( 'woocommerce_bundled_item_shipped_individually', $per_product_shipping, $cart_item[ 'data' ], $bundled_item_id, $bundle ) ) {
+
+				if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $cart_item[ 'data' ], $bundled_item_id, $bundle ) ) {
+					$cart_item[ 'data' ]->bundled_weight = $cart_item[ 'data' ]->get_weight();
+				}
+
+				$cart_item[ 'data' ]->bundled_value = $cart_item[ 'data' ]->price;
+				$cart_item[ 'data' ]->virtual       = 'yes';
+			}
+		}
+
+		return apply_filters( 'woocommerce_bundled_cart_item', $cart_item, $bundle );
+	}
+
+	/**
+	 * When a bundle is static-priced, the price of all bundled items is set to 0.
+	 * When the shipping mode is set to "bundled", all bundled items are marked as virtual when they are added to the cart.
+	 * Otherwise, the container itself is a virtual product in the first place.
+	 *
 	 * @param  array    $cart_item   cart item data
 	 * @param  string   $cart_key    cart item key
 	 * @return array                 modified cart item data
 	 */
-	function woo_bundles_add_cart_item_filter( $cart_item, $cart_key ) {
+	public function woo_bundles_add_cart_item_filter( $cart_item, $cart_key ) {
 
 		$cart_contents = WC()->cart->cart_contents;
 
-		if ( isset( $cart_item[ 'bundled_by' ] ) ) {
+		if ( isset( $cart_item[ 'bundled_by' ] ) && isset( $cart_item[ 'bundled_item_id' ] ) ) {
 
 			$bundle_cart_key = $cart_item[ 'bundled_by' ];
+			$bundled_item_id = $cart_item[ 'bundled_item_id' ];
 
 			if ( isset( $cart_contents[ $bundle_cart_key ] ) ) {
 
-				$parent          = $cart_contents[ $bundle_cart_key ][ 'data' ];
-				$bundled_item_id = $cart_item[ 'bundled_item_id' ];
+				$bundle = $cart_contents[ $bundle_cart_key ][ 'data' ];
 
-				$per_product_pricing  = $parent->is_priced_per_product();
-				$per_product_shipping = $parent->is_shipped_per_product();
-
-				if ( $per_product_pricing == false ) {
-
-					$cart_item[ 'data' ]->price = 0;
-
-					if ( isset( $cart_item[ 'data' ]->subscription_sign_up_fee ) ) {
-						$cart_item[ 'data' ]->subscription_sign_up_fee = 0;
-					}
-
+				if ( $bundle->has_bundled_item( $bundled_item_id ) ) {
+					$cart_item = $this->get_bundled_cart_item( $cart_item, $bundle );
 				} else {
-
-					$discount = $cart_item[ 'stamp' ][ $cart_item[ 'bundled_item_id' ] ][ 'discount' ];
-
-					if ( ! empty( $discount ) || has_filter( 'woocommerce_bundle_is_composited' ) ) {
-
-						$bundled_item = $parent->get_bundled_item( $bundled_item_id );
-
-						$bundled_item->add_price_filters();
-
-						$cart_item[ 'data' ]->price = $cart_item[ 'data' ]->get_price();
-
-						$bundled_item->remove_price_filters();
-					}
-				}
-
-				if ( $cart_item[ 'data' ]->needs_shipping() ) {
-
-					if ( false === apply_filters( 'woocommerce_bundled_item_shipped_individually', $per_product_shipping, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
-
-						if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
-							$cart_item[ 'data' ]->bundled_weight = $cart_item[ 'data' ]->get_weight();
-						}
-
-						$cart_item[ 'data' ]->bundled_value = $cart_item[ 'data' ]->price;
-						$cart_item[ 'data' ]->virtual       = 'yes';
-					}
+					$cart_item[ 'quantity' ] = 0;
 				}
 			}
 		}
@@ -658,80 +702,59 @@ class WC_PB_Cart {
 	 * @param  array    $cart_item_key          item cart key
 	 * @return array                            modified cart item data
 	 */
-	function woo_bundles_get_cart_data_from_session( $cart_item, $item_session_values, $cart_item_key ) {
+	public function woo_bundles_get_cart_data_from_session( $cart_item, $item_session_values, $cart_item_key ) {
 
 		$cart_contents = ! empty( WC()->cart ) ? WC()->cart->cart_contents : '';
 
-		if ( isset( $item_session_values[ 'bundled_items' ] ) && ! empty( $item_session_values[ 'bundled_items' ] ) ) {
-			$cart_item[ 'bundled_items' ] = $item_session_values[ 'bundled_items' ];
+		if ( ! empty( $item_session_values[ 'bundled_items' ] ) ) {
+
+			if ( $cart_item[ 'data' ]->product_type === 'bundle' ) {
+
+				if ( ! isset( $cart_item[ 'bundled_items' ] ) ) {
+					$cart_item[ 'bundled_items' ] = $item_session_values[ 'bundled_items' ];
+				}
+
+			} else {
+
+				if ( isset( $cart_item[ 'bundled_items' ] ) ) {
+					unset( $cart_item[ 'bundled_items' ] );
+				}
+			}
 		}
 
-		if ( isset( $item_session_values[ 'stamp' ] ) ) {
+		if ( ! isset( $cart_item[ 'stamp' ] ) && isset( $item_session_values[ 'stamp' ] ) ) {
 			$cart_item[ 'stamp' ] = $item_session_values[ 'stamp' ];
 		}
 
-		if ( isset( $item_session_values[ 'bundled_by' ] ) ) {
+		if ( isset( $item_session_values[ 'bundled_by' ] ) && isset( $item_session_values[ 'bundled_item_id' ] ) ) {
 
-			// load 'bundled_by' field
-			$cart_item[ 'bundled_by' ] = $item_session_values[ 'bundled_by' ];
+			$bundle_cart_key = $item_session_values[ 'bundled_by' ];
+			$bundled_item_id = $item_session_values[ 'bundled_item_id' ];
 
-			// load product bundle post meta identifier
-			$cart_item[ 'bundled_item_id' ] = $item_session_values[ 'bundled_item_id' ];
+			if ( isset( $cart_contents[ $bundle_cart_key ] ) && ! empty( $cart_contents[ $bundle_cart_key ][ 'bundled_items' ] ) ) {
 
-			// now modify item depending on bundle pricing & shipping options
-			$bundle_cart_key = $cart_item[ 'bundled_by' ];
+				// load 'bundled_by' field
+				if ( ! isset( $cart_item[ 'bundled_by' ] ) ) {
+					$cart_item[ 'bundled_by' ] = $bundle_cart_key;
+				}
 
-			if ( isset( $cart_contents[ $bundle_cart_key ] ) ) {
+				// load product bundle post meta identifier
+				if ( ! isset( $cart_item[ 'bundled_item_id' ] ) ) {
+					$cart_item[ 'bundled_item_id' ] = $bundled_item_id;
+				}
 
-				$parent          = $cart_contents[ $bundle_cart_key ][ 'data' ];
-				$bundled_item_id = $cart_item[ 'bundled_item_id' ];
+				$bundle = $cart_contents[ $bundle_cart_key ][ 'data' ];
 
-				if ( $parent->has_bundled_item( $bundled_item_id ) ) {
-
-					$per_product_pricing  = $parent->is_priced_per_product();
-					$per_product_shipping = $parent->is_shipped_per_product();
-
-					if ( $per_product_pricing == false ) {
-
-						$cart_item[ 'data' ]->price = 0;
-
-						if ( isset( $cart_item[ 'data' ]->subscription_sign_up_fee ) ) {
-							$cart_item[ 'data' ]->subscription_sign_up_fee = 0;
-						}
-
-					} else {
-
-						$discount = $cart_item[ 'stamp' ][ $cart_item[ 'bundled_item_id' ] ][ 'discount' ];
-
-						if ( ! empty( $discount ) || has_filter( 'woocommerce_bundle_is_composited' ) ) {
-
-							$bundled_item = $parent->get_bundled_item( $bundled_item_id );
-
-							$bundled_item->add_price_filters();
-
-							$cart_item[ 'data' ]->price = $cart_item[ 'data' ]->get_price();
-
-							$bundled_item->remove_price_filters();
-
-						}
-					}
-
-					if ( $cart_item[ 'data' ]->needs_shipping() ) {
-
-						if ( false === apply_filters( 'woocommerce_bundled_item_shipped_individually', $per_product_shipping, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
-
-							if ( apply_filters( 'woocommerce_bundled_item_has_bundled_weight', false, $cart_item[ 'data' ], $bundled_item_id, $parent ) ) {
-								$cart_item[ 'data' ]->bundled_weight = $cart_item[ 'data' ]->get_weight();
-							}
-
-							$cart_item[ 'data' ]->bundled_value = $cart_item[ 'data' ]->price;
-							$cart_item[ 'data' ]->virtual       = 'yes';
-						}
-					}
-
+				if ( $bundle->has_bundled_item( $bundled_item_id  ) ) {
+					$cart_item = $this->get_bundled_cart_item( $cart_item, $bundle );
 				} else {
-
 					$cart_item[ 'quantity' ] = 0;
+				}
+
+			} else {
+
+				if ( isset( $cart_item[ 'bundled_by' ] ) ) {
+					unset( $cart_item[ 'bundled_by' ] );
 				}
 			}
 		}
@@ -746,7 +769,7 @@ class WC_PB_Cart {
 	 * @param  string    $cart_item_key  the cart item key
 	 * @return string                    modified remove link
 	 */
-	function woo_bundles_cart_item_remove_link( $link, $cart_item_key ) {
+	public function woo_bundles_cart_item_remove_link( $link, $cart_item_key ) {
 
 		if ( isset( WC()->cart->cart_contents[ $cart_item_key ][ 'bundled_by' ] ) ) {
 
@@ -767,7 +790,7 @@ class WC_PB_Cart {
 	 * @param  string   $cart_item_key  cart item key
 	 * @return int                      modified quantity
 	 */
-	function woo_bundles_cart_item_quantity( $quantity, $cart_item_key ) {
+	public function woo_bundles_cart_item_quantity( $quantity, $cart_item_key ) {
 
 		if ( isset( WC()->cart->cart_contents[ $cart_item_key ][ 'stamp' ] ) ) {
 
@@ -786,7 +809,7 @@ class WC_PB_Cart {
 	 * @param  integer  $quantity       the item quantity
 	 * @return void
 	 */
-	function woo_bundles_update_quantity_in_cart( $cart_item_key, $quantity = 0 ) {
+	public function woo_bundles_update_quantity_in_cart( $cart_item_key, $quantity = 0 ) {
 
 		if ( ! empty( WC()->cart->cart_contents[ $cart_item_key ] ) ) {
 
@@ -826,7 +849,7 @@ class WC_PB_Cart {
 	 * @param  WC_Order $order              the order
 	 * @return array                        modified cart item data
 	 */
-	function woo_bundles_order_again( $cart_item_data, $order_item, $order ) {
+	public function woo_bundles_order_again( $cart_item_data, $order_item, $order ) {
 
 		if ( isset( $order_item[ 'bundled_by' ] ) && isset( $order_item[ 'stamp' ] ) ) {
 			$cart_item_data[ 'is_bundled' ] = 'yes';
@@ -848,7 +871,7 @@ class WC_PB_Cart {
 	 * @param  string   $cart_item_key  the cart item key
 	 * @return string                   modified subtotal string.
 	 */
-	function woo_bundles_cart_item_price_html( $price, $values, $cart_item_key ) {
+	public function woo_bundles_cart_item_price_html( $price, $values, $cart_item_key ) {
 
 		if ( isset( $values[ 'bundled_by' ] ) ) {
 
@@ -864,10 +887,9 @@ class WC_PB_Cart {
 
 		if ( isset( $values[ 'bundled_items' ] ) ) {
 
-			if ( $values[ 'data' ]->is_priced_per_product() == true && $values[ 'data' ]->get_price() == 0 ) {
+			if ( $values[ 'data' ]->is_priced_per_product() && $values[ 'data' ]->get_price() == 0 ) {
 				return '';
 			}
-
 		}
 
 		return $price;
@@ -881,7 +903,7 @@ class WC_PB_Cart {
 	 * @param  string   $cart_item_key  the cart item key
 	 * @return string                   modified subtotal string.
 	 */
-	function woo_bundles_item_subtotal( $subtotal, $values, $cart_item_key ) {
+	public function woo_bundles_item_subtotal( $subtotal, $values, $cart_item_key ) {
 
 		if ( isset( $values[ 'bundled_by' ] ) ) {
 
@@ -889,7 +911,7 @@ class WC_PB_Cart {
 
 			if ( isset( WC()->cart->cart_contents[ $bundle_cart_key ] ) ) {
 
-				if ( ( WC()->cart->cart_contents[ $bundle_cart_key ][ 'data' ]->is_priced_per_product() == false ) || isset( WC()->cart->cart_contents[ $bundle_cart_key ][ 'composite_parent' ] ) ) {
+				if ( ( false === WC()->cart->cart_contents[ $bundle_cart_key ][ 'data' ]->is_priced_per_product() ) || isset( WC()->cart->cart_contents[ $bundle_cart_key ][ 'composite_parent' ] ) ) {
 					return '';
 				} else {
 					return __( 'Subtotal', 'woocommerce-product-bundles' ) . ': ' . $subtotal;
@@ -956,7 +978,7 @@ class WC_PB_Cart {
 	 * @param  string       $subtotal   formatted subtotal
 	 * @return string                   modified formatted subtotal
 	 */
-	function format_product_subtotal( $product, $subtotal ) {
+	public function format_product_subtotal( $product, $subtotal ) {
 
 		$cart = WC()->cart;
 
@@ -997,7 +1019,7 @@ class WC_PB_Cart {
 	 * @param  WC_Cart $cart
 	 * @return void
 	 */
-	function woo_bundles_cart_item_removed( $cart_item_key, $cart ) {
+	public function woo_bundles_cart_item_removed( $cart_item_key, $cart ) {
 
 		if ( ! empty( $cart->removed_cart_contents[ $cart_item_key ][ 'bundled_items' ] ) ) {
 
@@ -1025,7 +1047,7 @@ class WC_PB_Cart {
 	 * @param  WC_Cart $cart
 	 * @return void
 	 */
-	function woo_bundles_cart_item_restored( $cart_item_key, $cart ) {
+	public function woo_bundles_cart_item_restored( $cart_item_key, $cart ) {
 
 		if ( ! empty( $cart->cart_contents[ $cart_item_key ][ 'bundled_items' ] ) ) {
 
@@ -1055,7 +1077,7 @@ class WC_PB_Cart {
 	 * @param  array  $packages
 	 * @return array
 	 */
-	function woo_bundles_shipping_packages_fix( $packages ) {
+	public function woo_bundles_shipping_packages_fix( $packages ) {
 
 		if ( ! empty( $packages ) ) {
 
