@@ -1,5 +1,30 @@
-v1.4.8
-- Add integration for Membership 2
+v1.5.2
+- Fix work hours array filtering.
+- Fix ampersand escapes in JS redirection URL filtering.
+- Fix numeric requests overflowing the integer value.
+- Fix selected service in filtered list.
+- Fix macro expansion in worker reminder emails.
+- Fix WP_Widget constructor calls.
+- Add MarketPress 3.0 compatibility.
+- Add extra parameters to scheduling hours filter hook signatures.
+
+v1.5.1
+- Fix underscore templating conflict issue on certain configurations.
+- Add a bit more elaborate logging and exception handling.
+- Fix Google configuration override API so traditional hook works.
+- Fix paddings issue applied on appointments creation admin-side.
+- Fix schema updates on network environments.
+- Fix page reloads on login required in certain scenarios.
+
+v1.5
+- Deprecate the old Google API client library and update to v1.1.4.
+- Fix style helpers conflict.
+- Fix reapplied appointment ordering.
+- Fix Twitter login popup initial redirect.
+- Fix time format values for adding appointments back end.
+- Fix type casting in price boolean checks.
+- Fix logic error in client name resolution fallback.
+- Add cancel link to worker reminder emails.
 
 v1.4.7
 - Expose removal notification message body for filtering and expand additional fields e-mail macros.
@@ -433,4 +458,4 @@ V1.0.0:
 - Initial release
 
 
-347441-1437407492
+347441-1446022956

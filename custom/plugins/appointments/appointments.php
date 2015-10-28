@@ -3,7 +3,7 @@
 Plugin Name: Appointments+
 Description: Lets you accept appointments from front end and manage or create them from admin side
 Plugin URI: http://premium.wpmudev.org/project/appointments-plus/
-Version: 1.4.8
+Version: 1.5.2
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
 Textdomain: appointments
@@ -32,7 +32,7 @@ if ( !class_exists( 'Appointments' ) ) {
 
 class Appointments {
 
-	var $version = "1.4.8";
+	var $version = "1.5.2";
 
 	function __construct() {
 
@@ -94,6 +94,13 @@ class Appointments {
 
 		// API login after the options have been initialized
 		add_action('init', array($this, 'setup_api_logins'), 10);
+
+		// Check for cookies
+		if (!empty($this->options['login_required']) && 'yes' === $this->options['login_required']) {
+			// If we require a login and we had an user logged in,
+			// we don't need cookies after they log out
+			add_action('wp_logout', array($this, 'drop_cookies_on_logout'));
+		}
 
 		// Widgets
 		require_once( $this->plugin_dir . '/includes/widgets.php' );
@@ -194,7 +201,7 @@ class Appointments {
 		// Google+ login
 		if (!class_exists('LightOpenID')) {
 			if( function_exists('curl_init') || in_array('https', stream_get_wrappers()) ) {
-				include_once( $this->plugin_dir . '/includes/lightopenid/openid.php' );
+				include_once( $this->plugin_dir . '/includes/external/lightopenid/openid.php' );
 				$this->openid = new LightOpenID;
 			}
 		}
@@ -391,6 +398,7 @@ class Appointments {
 	 * @return array of objects
 	 */
 	function get_workers( $order_by="ID" ) {
+        $order_by = apply_filters( 'app_get_workers_orderby', $order_by );
 		$order_by = $this->sanitize_order_by( $order_by );
 		$workers = wp_cache_get( 'all_workers_' . str_replace( ' ', '_', $order_by ) );
 		if ( false === $workers ) {
@@ -1393,15 +1401,15 @@ class Appointments {
 	 * Check and return necessary fields to the front end
 	 * @return json object
 	 */
-	function pre_confirmation() {
+	function pre_confirmation () {
 
-		$values 		= explode( ":", $_POST["value"] );
-		$location 		= $values[0];
-		$service 		= $values[1];
-		$worker 		= $values[2];
-		$start 			= $values[3];
-		$end 			= $values[4];
-		$post_id		= $values[5];
+		$values = explode( ":", $_POST["value"] );
+		$location = $values[0];
+		$service = $values[1];
+		$worker = $values[2];
+		$start = $values[3];
+		$end = $values[4];
+		$post_id = $values[5];
 
 		// A little trick to pass correct lsw variables to the get_price, is_busy and get_capacity functions
 		$_REQUEST["app_location_id"] = $location;
@@ -1416,11 +1424,11 @@ class Appointments {
 			)));
 		}
 
-		$price = $this->get_price( );
+		$price = $this->get_price();
 
 		// It is possible to apply special discounts
-		$price = apply_filters( 'app_display_amount', $price, $service, $worker );
-		$price = apply_filters( 'app_pre_confirmation_price', $price, $service, $worker, $start, $end );
+		$price = apply_filters('app_display_amount', $price, $service, $worker);
+		$price = apply_filters('app_pre_confirmation_price', $price, $service, $worker, $start, $end);
 
 		$display_currency = !empty($this->options["currency"])
 			? App_Template::get_currency_symbol($this->options["currency"])
@@ -1429,76 +1437,83 @@ class Appointments {
 
 		global $wpdb;
 
-		if ( $this->is_busy( $start,  $end, $this->get_capacity() ) )
-			die( json_encode( array("error"=>apply_filters( 'app_booked_message',__( 'We are sorry, but this time slot is no longer available. Please refresh the page and try another time slot. Thank you.', 'appointments')))));
+		if ($this->is_busy($start,  $end, $this->get_capacity())) {
+			die(json_encode(array(
+				"error" => apply_filters(
+					'app_booked_message',
+					__( 'We are sorry, but this time slot is no longer available. Please refresh the page and try another time slot. Thank you.', 'appointments')
+				)
+			)));
+		}
 
-		$service_obj = $this->get_service( $service );
-		$service = '<label><span>'. __('Service name: ', 'appointments' ).  '</span>'. apply_filters( 'app_confirmation_service', stripslashes( $service_obj->name ), $service_obj->name ) . '</label>';
-		$start = '<label><span>'.__('Date and time: ', 'appointments' ). '</span>'. apply_filters( 'app_confirmation_start', date_i18n( $this->datetime_format, $start ), $start ) . '</label>';
-		$end = '<label><span>'.__('Lasts (approx): ', 'appointments' ). '</span>'. apply_filters( 'app_confirmation_lasts', $service_obj->duration . " ". __('minutes', 'appointments'), $service_obj->duration ) . '</label>';
-		if ( $price > 0 )
-			$price = '<label><span>'.__('Price: ', 'appointments' ).  '</span>'. apply_filters( 'app_confirmation_price', $price . " " . $display_currency, $price ) . '</label>';
-		else
-			$price = 0;
+		$service_obj = $this->get_service($service);
+		$service = '<label><span>' . __('Service name: ', 'appointments') .  '</span>'. apply_filters('app_confirmation_service', stripslashes($service_obj->name), $service_obj->name) . '</label>';
+		$start = '<label><span>' . __('Date and time: ', 'appointments') . '</span>'. apply_filters('app_confirmation_start', date_i18n($this->datetime_format, $start), $start) . '</label>';
+		$end = '<label><span>' . __('Lasts (approx): ', 'appointments') . '</span>'. apply_filters('app_confirmation_lasts', $service_obj->duration . " " . __('minutes', 'appointments'), $service_obj->duration) . '</label>';
 
-		if ( $worker )
-			$worker = '<label><span>'. __('Service provider: ', 'appointments' ).  '</span>'. apply_filters( 'app_confirmation_worker', stripslashes( $this->get_worker_name( $worker ) ), $worker ) . '</label>';
-		else
-			$worker = '';
+		$price = $price > 0
+			? '<label><span>' . __('Price: ', 'appointments') .  '</span>'. apply_filters('app_confirmation_price', $price . " " . $display_currency, $price) . '</label>'
+			: 0
+		;
 
-		if ( $this->options["ask_name"] )
-			$ask_name = "ask";
-		else
-			$ask_name = "";
+		$worker = !empty($worker)
+			? '<label><span>' . __('Service provider: ', 'appointments' ) . '</span>'. apply_filters('app_confirmation_worker', stripslashes($this->get_worker_name($worker)), $worker) . '</label>'
+			: ''
+		;
 
-		if ( $this->options["ask_email"] )
-			$ask_email = "ask";
-		else
-			$ask_email = "";
+		$ask_name = !empty($this->options['ask_name'])
+			? 'ask'
+			: ''
+		;
 
-		if ( $this->options["ask_phone"] )
-			$ask_phone = "ask";
-		else
-			$ask_phone = "";
+		$ask_email = !empty($this->options['ask_email'])
+			? 'ask'
+			: ''
+		;
 
-		if ( $this->options["ask_address"] )
-			$ask_address = "ask";
-		else
-			$ask_address = "";
+		$ask_phone = !empty($this->options['ask_phone'])
+			? 'ask'
+			: ''
+		;
 
-		if ( $this->options["ask_city"] )
-			$ask_city = "ask";
-		else
-			$ask_city = "";
+		$ask_address = !empty($this->options['ask_address'])
+			? 'ask'
+			: ''
+		;
 
-		if ( $this->options["ask_note"] )
-			$ask_note = "ask";
-		else
-			$ask_note = "";
+		$ask_city = !empty($this->options['ask_city'])
+			? 'ask'
+			: ''
+		;
 
-		if ( isset( $this->options["gcal"] ) && 'yes' == $this->options["gcal"] )
-			$ask_gcal = "ask";
-		else
-			$ask_gcal = "";
+		$ask_note = !empty($this->options['ask_note'])
+			? 'ask'
+			: ''
+		;
+
+		$ask_gcal = isset( $this->options["gcal"] ) && 'yes' == $this->options["gcal"]
+			? 'ask'
+			: ''
+		;
 
 		$reply_array = array(
-							'service'	=> $service,
-							'worker'	=> $worker,
-							'start'		=> $start,
-							'end'		=> $end,
-							'price'		=> $price,
-							'name'		=> $ask_name,
-							'email'		=> $ask_email,
-							'phone'		=> $ask_phone,
-							'address'	=> $ask_address,
-							'city'		=> $ask_city,
-							'note'		=> $ask_note,
-							'gcal'		=> $ask_gcal
-						);
+			'service'	=> $service,
+			'worker'	=> $worker,
+			'start'		=> $start,
+			'end'		=> $end,
+			'price'		=> $price,
+			'name'		=> $ask_name,
+			'email'		=> $ask_email,
+			'phone'		=> $ask_phone,
+			'address'	=> $ask_address,
+			'city'		=> $ask_city,
+			'note'		=> $ask_note,
+			'gcal'		=> $ask_gcal
+		);
 
-		$reply_array = apply_filters( 'app_pre_confirmation_reply', $reply_array );
+		$reply_array = apply_filters('app_pre_confirmation_reply', $reply_array);
 
-		die( json_encode( $reply_array ));
+		die(json_encode($reply_array));
 	}
 
 	/**
@@ -1507,34 +1522,38 @@ class Appointments {
 	 */
 	function post_confirmation() {
 
-		if ( !$this->check_spam() )
-			die( json_encode( array("error"=>apply_filters( 'app_spam_message',__( 'You have already applied for an appointment. Please wait until you hear from us.', 'appointments')))));
+		if (!$this->check_spam()) {
+			die(json_encode(array(
+				"error" => apply_filters(
+					'app_spam_message',
+					__( 'You have already applied for an appointment. Please wait until you hear from us.', 'appointments')
+				),
+			)));
+		}
 
 		global $wpdb, $current_user, $post;
 
-		$values 		= explode( ":", $_POST["value"] );
-		$location 		= $values[0];
-		$service 		= $values[1];
-		$worker 		= $values[2];
-		$start 			= $values[3];
-		$end 			= $values[4];
-		$post_id		= $values[5];
+		$values = explode( ":", $_POST["value"] );
+		$location = $values[0];
+		$service = $values[1];
+		$worker = $values[2];
+		$start = $values[3];
+		$end = $values[4];
+		$post_id = $values[5];
 
-		if ( is_user_logged_in( ) ) {
+		if (is_user_logged_in()) {
 			$user_id = $current_user->ID;
 			$userdata = get_userdata( $current_user->ID );
 			$user_email = $userdata->email;
 
 			$user_name = $userdata->display_name;
-			if ( !$user_name ){
-                                $first_name = get_user_meta($worker, 'first_name', true);
-                                $last_name = get_user_meta($worker, 'last_name', true);
-                                $user_name = $first_name . " " . $last_name;
-                        }
-			if ( "" == trim( !$user_name ) )
-				$user_name = $userdata->user_login;
-		}
-		else{
+			if (!$user_name) {
+                $first_name = get_user_meta($worker, 'first_name', true);
+                $last_name = get_user_meta($worker, 'last_name', true);
+                $user_name = $first_name . " " . $last_name;
+            }
+			if ("" == trim($user_name)) $user_name = $userdata->user_login;
+		} else {
 			$user_id = 0;
 			$user_email = '';
 			$user_name = '';
@@ -1548,19 +1567,19 @@ class Appointments {
 
 		// Default status
 		$status = 'pending';
-
-		if ( 'yes' != $this->options["payment_required"] && isset( $this->options["auto_confirm"] ) && 'yes' == $this->options["auto_confirm"] )
+		if ('yes' != $this->options["payment_required"] && isset($this->options["auto_confirm"]) && 'yes' == $this->options["auto_confirm"]) {
 			$status = 'confirmed';
+		}
 
 		// We may have 2 prices now: 1) Service full price, 2) Amount that will be paid to Paypal
-		$price = $this->get_price( );
-		$price = apply_filters( 'app_post_confirmation_price', $price, $service, $worker, $start, $end );
-		$paypal_price = $this->get_price( true );
-		$paypal_price = apply_filters( 'app_post_confirmation_paypal_price', $paypal_price, $service, $worker, $start, $end );
+		$price = $this->get_price();
+		$price = apply_filters('app_post_confirmation_price', $price, $service, $worker, $start, $end);
+		$paypal_price = $this->get_price(true);
+		$paypal_price = apply_filters('app_post_confirmation_paypal_price', $paypal_price, $service, $worker, $start, $end);
 
 		// Break here - is the appointment free and, if so, shall we auto-confirm?
 		if (
-			!$price && !$paypal_price // Free appointment ...
+			!(float)$price && !(float)$paypal_price // Free appointment ...
 			&&
 			'pending' === $status && "yes" === $this->options["payment_required"] // ... in a paid environment ...
 			&&
@@ -1572,100 +1591,98 @@ class Appointments {
 			;
 		}
 
-		if ( isset( $_POST["app_name"] ) )
-			$name = sanitize_text_field( $_POST["app_name"] );
-		else
-			$name = $user_name;
-
+		$name = !empty($_POST['app_name'])
+			? sanitize_text_field($_POST["app_name"])
+			: $user_name
+		;
 		$name_check = apply_filters( "app_name_check", true, $name );
-		if ( !$name_check )
-			$this->json_die( 'name' );
+		if (!$name_check) $this->json_die( 'name' );
 
-		if ( isset( $_POST["app_email"] ) )
-			$email = $_POST["app_email"];
-		else
-			$email = $user_email;
+		$email = !empty($_POST['app_email']) && is_email($_POST['app_email'])
+			? $_POST['app_email']
+			: $user_email
+		;
+		if ($this->options["ask_email"] && !is_email($email)) $this->json_die( 'email' );
 
-		if ( $this->options["ask_email"] && !is_email( $email ) )
-			$this->json_die( 'email' );
+		$phone = !empty($_POST['app_phone'])
+			? sanitize_text_field($_POST["app_phone"])
+			: ''
+		;
+		$phone_check = apply_filters("app_phone_check", true, $phone);
+		if (!$phone_check) $this->json_die('phone');
 
-		if ( isset( $_POST["app_phone"] ) )
-			$phone = sanitize_text_field( $_POST["app_phone"] );
-		else
-			$phone = '';
+		$address = !empty($_POST['app_address'])
+			? sanitize_text_field($_POST["app_address"])
+			: ''
+		;
+		$address_check = apply_filters("app_address_check", true, $address);
+		if (!$address_check) $this->json_die('address');
 
-		$phone_check = apply_filters( "app_phone_check", true, $phone );
-		if ( !$phone_check )
-			$this->json_die( 'phone' );
+		$city = !empty($_POST['app_city'])
+			? sanitize_text_field($_POST["app_city"])
+			: ''
+		;
+		$city_check = apply_filters("app_city_check", true, $city);
+		if (!$city_check) $this->json_die( 'city' );
 
-		if ( isset( $_POST["app_address"] ) )
-			$address = sanitize_text_field( $_POST["app_address"] );
-		else
-			$address = '';
+		$note = !empty($_POST['app_note'])
+			? sanitize_text_field($_POST["app_note"])
+			: ''
+		;
 
-		$address_check = apply_filters( "app_address_check", true, $address );
-		if ( !$address_check )
-			$this->json_die( 'address' );
-
-		if ( isset( $_POST["app_city"] ) )
-			$city = sanitize_text_field( $_POST["app_city"] );
-		else
-			$city = '';
-
-		$city_check = apply_filters( "app_city_check", true, $city );
-		if ( !$city_check )
-			$this->json_die( 'city' );
-
-		if ( isset( $_POST["app_note"] ) )
-			$note = sanitize_text_field( $_POST["app_note"] );
-		else
-			$note = '';
-
-		if ( isset( $_POST["app_gcal"] ) && $_POST["app_gcal"] )
-			$gcal = $_POST["app_gcal"];
-		else
-			$gcal = '';
+		$gcal = !empty($_POST['app_gcal'])
+			? $_POST['app_gcal']
+			: ''
+		;
 
 		do_action('app-additional_fields-validate');
 
 		// It may be required to add additional data here
-		$note = apply_filters( 'app_note_field', $note );
+		$note = apply_filters('app_note_field', $note);
 
-		$service_result = $this->get_service( $service );
+		$service_result = $this->get_service($service);
 
-		if ( $service_result !== null )
-			$duration = $service_result->duration;
-		if ( !$duration )
-			$duration = $this->get_min_time(); // In minutes
+		if ($service_result !== null) $duration = $service_result->duration;
+		if (!$duration) $duration = $this->get_min_time(); // In minutes
 
 		$duration = apply_filters( 'app_post_confirmation_duration', $duration, $service, $worker, $user_id );
 
-		if ( $this->is_busy( $start,  $start + ($duration * 60), $this->get_capacity() ) )
-			die( json_encode( array("error"=>apply_filters( 'app_booked_message', __( 'We are sorry, but this time slot is no longer available. Please refresh the page and try another time slot. Thank you.', 'appointments')))));
+		if ($this->is_busy($start,  $start + ($duration * 60), $this->get_capacity())) {
+			die(json_encode(array(
+				"error" => apply_filters(
+					'app_booked_message',
+					__('We are sorry, but this time slot is no longer available. Please refresh the page and try another time slot. Thank you.', 'appointments')
+				),
+			)));
+		}
 
-		$status = apply_filters( 'app_post_confirmation_status', $status, $price, $service, $worker, $user_id );
+		$status = apply_filters('app_post_confirmation_status', $status, $price, $service, $worker, $user_id);
 
-		$result = $wpdb->insert( $this->app_table,
-							array(
-								'created'	=>	date ("Y-m-d H:i:s", $this->local_time ),
-								'user'		=>	$user_id,
-								'name'		=>	$name,
-								'email'		=>	$email,
-								'phone'		=>	$phone,
-								'address'	=>	$address,
-								'city'		=>	$city,
-								'location'	=>	$location,
-								'service'	=>	$service,
-								'worker'	=> 	$worker,
-								'price'		=>	$price,
-								'status'	=>	$status,
-								'start'		=>	date ("Y-m-d H:i:s", $start),
-								'end'		=>	date ("Y-m-d H:i:s", $start + ($duration * 60 ) ),
-								'note'		=>	$note
-							)
-						);
-		if ( !$result ) {
-			die( json_encode( array("error"=>__( 'Appointment could not be saved. Please contact website admin.', 'appointments'))));
+		$result = $wpdb->insert(
+			$this->app_table,
+			array(
+				'created'	=>	date ("Y-m-d H:i:s", $this->local_time ),
+				'user'		=>	$user_id,
+				'name'		=>	$name,
+				'email'		=>	$email,
+				'phone'		=>	$phone,
+				'address'	=>	$address,
+				'city'		=>	$city,
+				'location'	=>	$location,
+				'service'	=>	$service,
+				'worker'	=> 	$worker,
+				'price'		=>	$price,
+				'status'	=>	$status,
+				'start'		=>	date ("Y-m-d H:i:s", $start),
+				'end'		=>	date ("Y-m-d H:i:s", $start + ($duration * 60 ) ),
+				'note'		=>	$note
+			)
+		);
+
+		if (!$result) {
+			die(json_encode(array(
+				"error" => __( 'Appointment could not be saved. Please contact website admin.', 'appointments'),
+			)));
 		}
 
 		// A new appointment is accepted, so clear cache
@@ -1675,13 +1692,19 @@ class Appointments {
 		do_action( 'app_new_appointment', $insert_id );
 
 		// Send confirmation for pending, payment not required cases, if selected so
-		if ( 'yes' != $this->options["payment_required"] && isset( $this->options["send_notification"] )
-			&& 'yes' == $this->options["send_notification"] && 'pending' == $status )
+		if (
+			'yes' != $this->options["payment_required"] &&
+			isset($this->options["send_notification"]) &&
+			'yes' == $this->options["send_notification"] &&
+			'pending' == $status
+		) {
 			$this->send_notification( $insert_id );
+		}
 
 		// Send confirmation if we forced it
-		if ( 'confirmed' == $status && isset( $this->options["send_confirmation"] ) && 'yes' == $this->options["send_confirmation"] )
+		if ('confirmed' == $status && isset($this->options["send_confirmation"]) && 'yes' == $this->options["send_confirmation"]) {
 			$this->send_confirmation( $insert_id );
+		}
 
 		// Add to GCal API
 		if (is_object($this->gcal_api) && $this->gcal_api->is_syncable_status($status)) {
@@ -1689,51 +1712,42 @@ class Appointments {
 		}
 
 		// GCal button
-		if ( isset( $this->options["gcal"] ) && 'yes' == $this->options["gcal"] && $gcal )
+		if (isset($this->options["gcal"]) && 'yes' == $this->options["gcal"] && $gcal) {
 			$gcal_url = $this->gcal( $service, $start, $start + ($duration * 60 ), false, $address, $city );
-		else
+		} else {
 			$gcal_url = '';
-
-		// Check if this is a App Product page and add variation if it is
-		$post = get_post( $post_id );
-		if ( $this->check_marketpress_plugin() && 'product' == $post->post_type && strpos( $post->post_content, '[app_' ) !== false ) {
-			$mp = 1;
-			$variation = $this->add_variation( $insert_id, $post_id, $service, $worker, $start, $end );
 		}
-		else
-			$mp = $variation = 0;
 
-		if ( isset( $this->options["gcal_same_window"] ) && $this->options["gcal_same_window"] )
-			$gcal_same_window = 1;
-		else
-			$gcal_same_window = 0;
+		$additional = array(
+			'mp' => 0,
+			'variation' => null,
+		);
+		$additional = apply_filters('app-appointment-appointment_created', $additional, $insert_id, $post_id, $service, $worker, $start, $end);
+		$mp = isset($additional['mp']) ? $additional['mp'] : 0;
+		$variation = isset($additional['variation']) ? $additional['variation'] : 0;
 
-		if ( isset( $this->options["payment_required"] ) && 'yes' == $this->options["payment_required"] ) {
-			die( json_encode(
-							array(
-							"cell"				=> $_POST["value"],
-							"app_id"			=> $insert_id,
-							"refresh"			=> 0,
-							"price"				=> $paypal_price,
-							"service_name"		=> stripslashes( $service_result->name ),
-							'gcal_url'			=> $gcal_url,
-							'gcal_same_window'	=> $gcal_same_window,
-							'mp'				=> $mp,
-							'variation'			=> $variation
-							)
-						)
-					);
-		}
-		else {
-			die( json_encode(
-							array(
-							"cell"				=> $_POST["value"],
-							"app_id"			=> $insert_id,
-							"refresh"			=> 1,
-							'gcal_url'			=> $gcal_url,
-							'gcal_same_window'	=> $gcal_same_window,
-							)
-				));
+		$gcal_same_window = !empty($this->options["gcal_same_window"]) ? 1 : 0;
+
+		if (isset( $this->options["payment_required"] ) && 'yes' == $this->options["payment_required"]) {
+			die(json_encode(array(
+				"cell" => $_POST["value"],
+				"app_id" => $insert_id,
+				"refresh" => 0,
+				"price" => $paypal_price,
+				"service_name" => stripslashes( $service_result->name ),
+				'gcal_url' => $gcal_url,
+				'gcal_same_window' => $gcal_same_window,
+				'mp' => $mp,
+				'variation' => $variation
+			)));
+		} else {
+			die(json_encode(array(
+				"cell" => $_POST["value"],
+				"app_id" => $insert_id,
+				"refresh" => 1,
+				'gcal_url' => $gcal_url,
+				'gcal_same_window' => $gcal_same_window,
+			)));
 		}
 	}
 
@@ -1749,24 +1763,27 @@ class Appointments {
 	function gcal( $service, $start, $end, $php=false, $address, $city ) {
 		// Find time difference from Greenwich as GCal asks UTC
 		$tdif = current_time('timestamp') - time();
-		$text = sprintf( __('%s Appointment', 'appointments'), $this->get_service_name( $service ) );
-		if ( !$php )
-			$text = esc_js( $text );
+		$text = sprintf(__('%s Appointment', 'appointments'), $this->get_service_name($service));
 
-		if ( isset( $this->options["gcal_location"] ) && '' != trim( $this->options["gcal_location"] ) )
-			$location = esc_js( str_replace( array('ADDRESS', 'CITY'), array($address, $city), $this->options["gcal_location"] ) );
-		else
-			$location = esc_js( get_bloginfo( 'description' ) );
+		if (!$php) $text = esc_js( $text );
+
+		$location = isset($this->options["gcal_location"]) && '' != trim($this->options["gcal_location"])
+			? esc_js(str_replace(array('ADDRESS', 'CITY'), array($address, $city), $this->options["gcal_location"]))
+			: esc_js(get_bloginfo('description'))
+		;
 
 		$param = array(
-					'action'	=> 'TEMPLATE',
-					'text'		=> $text,
-					'dates'		=> date( "Ymd\THis\Z", $start - $tdif ) . "/" . date( "Ymd\THis\Z", $end - $tdif ),
-					'sprop'		=> 'website:' . home_url(),
-					'location'	=> $location
-				);
+			'action' => 'TEMPLATE',
+			'text' => $text,
+			'dates' => date("Ymd\THis\Z", $start - $tdif) . "/" . date("Ymd\THis\Z", $end - $tdif),
+			'sprop' => 'website:' . home_url(),
+			'location' => $location
+		);
 
-		return add_query_arg( apply_filters( 'app_gcal_variables', $param, $service, $start, $end ), 'http://www.google.com/calendar/event' );
+		return esc_url(add_query_arg(
+			apply_filters('app_gcal_variables', $param, $service, $start, $end),
+			'http://www.google.com/calendar/event'
+		));
 	}
 
 	/**
@@ -2148,8 +2165,8 @@ class Appointments {
 			$start = 8;
 			$end = 18;
 		}
-		$start = apply_filters( 'app_schedule_starting_hour', $start );
-		$end = apply_filters( 'app_schedule_ending_hour', $end );
+		$start = apply_filters( 'app_schedule_starting_hour', $start, $day_start, 'day' );
+		$end = apply_filters( 'app_schedule_ending_hour', $end, $day_start, 'day' );
 
 		$first = $start *3600 + $day_start; // Timestamp of the first cell
 		$last = $end *3600 + $day_start; // Timestamp of the last cell
@@ -2181,20 +2198,21 @@ class Appointments {
 		// mainly for service duration based calculus start/stop times
 		$step = apply_filters('app-timetable-step_increment', $step);
 
-		for ( $t=$first; $t<$last; $t=$t+$step ) {
+		for ( $t=$first; $t<$last; ) {
 
 			$ccs = apply_filters('app_ccs', $t); 				// Current cell starts
 			$cce = apply_filters('app_cce', $ccs + $step);		// Current cell ends
 
 // Fix for service durations calculus and workhours start conflict with different duration services
 // Example: http://premium.wpmudev.org/forums/topic/problem-with-time-slots-not-properly-allocating-free-time
-			if (!empty($start_unpacked_days) && !(defined('APP_USE_LEGACY_DURATION_CALCULUS') && APP_USE_LEGACY_DURATION_CALCULUS)) {
-				$this_day_key = date('l', $t);
+            $this_day_key = date('l', $t);
+            if (!empty($start_unpacked_days) && !(defined('APP_USE_LEGACY_DURATION_CALCULUS') && APP_USE_LEGACY_DURATION_CALCULUS)) {
 				if (!empty($start_unpacked_days[$this_day_key])) {
 					// Check slot start vs opening start
 					$this_day_opening_timestamp = strtotime(date('Y-m-d ' . $start_unpacked_days[$this_day_key]['start'], $ccs));
 					if ($t < $this_day_opening_timestamp) {
 						$t = ($t - $step) + (apply_filters('app_safe_time', 1) * 60);
+                        $t = apply_filters('app_next_time_step', $t+$step, $ccs, $step); //Allows dynamic/variable step increment.
 						continue;
 					}
 
@@ -2214,6 +2232,7 @@ class Appointments {
 					$break_end_ts = strtotime(date('Y-m-d ' . $break_ends, $ccs));
 					if ($t == $break_start_ts) {
 						$t += ($break_end_ts - $break_start_ts) - $step;
+                        $t = apply_filters('app_next_time_step', $t+$step, $ccs, $step); //Allows dynamic/variable step increment.
 						continue;
 					}
 				} else if (is_array($active) && in_array('yes', array_values($active))) {
@@ -2228,6 +2247,7 @@ class Appointments {
 					}
 					if ($has_break_time) {
 						$t += ($has_break_time - $step);
+                        $t = apply_filters('app_next_time_step', $t+$step, $ccs, $step); //Allows dynamic/variable step increment.
 						continue;
 					}
 				}
@@ -2269,6 +2289,8 @@ class Appointments {
 						$this->secs2hours( $ccs - $day_start ). '<input type="hidden" class="appointments_take_appointment" value="'.$this->pack( $ccs, $cce ).'" />';
 
 			$ret .= '</div>';
+
+            $t = apply_filters('app_next_time_step', $t+$step, $t, $step); //Allows dynamic/variable step increment.
 		}
 
 		$ret .= '<div style="clear:both"></div>';
@@ -2314,8 +2336,8 @@ class Appointments {
 			$start = 8;
 			$end = 18;
 		}
-		$start = apply_filters( 'app_schedule_starting_hour', $start );
-		$end = apply_filters( 'app_schedule_ending_hour', $end );
+		$start = apply_filters( 'app_schedule_starting_hour', $start, $date, 'week' );
+		$end = apply_filters( 'app_schedule_ending_hour', $end, $date, 'week' );
 
 		$first = $start *3600 + $sunday; // Timestamp of the first cell of first Sunday
 		$last = $end *3600 + $sunday; // Timestamp of the last cell of first Sunday
@@ -2700,7 +2722,9 @@ class Appointments {
 			$css_plus_duration = $ccs + ($duration *60);
 
 			foreach( $days as $day_name=>$day ) {
-				if ( $day_name == $this_days_name && isset( $day["active"] ) && 'yes' == $day["active"] ) {
+				// // Jose's fix pt1 (c19c7d65bb860a265ceb7f6a6075ae668bd60100)
+				//if ( $day_name == $this_days_name && isset( $day["active"] ) && 'yes' == $day["active"] ) {
+				if ( $day_name == $this_days_name ) {
 
 					// Special case: End time is 00:00
 					$end_mil = $this->to_military( $day["end"] );
@@ -2910,9 +2934,12 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$result = $this->get_work_break( $this->location, $this->worker, 'open' );
 		if ( $result !== null ) {
 			$days = maybe_unserialize( $result->hours );
+			$days = array_filter($days);
 			if ( is_array( $days ) ) {
 				$min = 24; $max = 0;
 				foreach ( $days as $day ) {
+					// Jose's fix pt2 (c19c7d65bb860a265ceb7f6a6075ae668bd60100)
+					/*
 					if ( isset( $day["active"] ) && 'yes' == $day["active"] ) {
 						$start = date( "G", strtotime( $this->to_military( $day["start"] ) ) );
 						$end_timestamp = strtotime( $this->to_military( $day["end"] ) );
@@ -2928,6 +2955,20 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 						if ( 0 == $end && '00' == date( "i", $end_timestamp ) )
 							$max = 24;
 					}
+					*/
+					$start = date( "G", strtotime( $this->to_military( $day["start"] ) ) );
+	                $end_timestamp = strtotime( $this->to_military( $day["end"] ) );
+	                $end = date( "G", $end_timestamp );
+	                // Add 1 hour if there are some minutes left. e.g. for 10:10pm, make max as 23
+	                if ( '00' != date( "i", $end_timestamp ) && $end != 24 )
+	                    $end = $end + 1;
+	                if ( $start < $min )
+	                    $min = $start;
+	                if ( $end > $max )
+	                    $max = $end;
+	                // Special case: If end is 0:00, regard it as 24
+	                if ( 0 == $end && '00' == date( "i", $end_timestamp ) )
+	                    $max = 24;
 				}
 				return array( "min"=>$min, "max"=>$max );
 			}
@@ -3046,6 +3087,26 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 
 			do_action( 'app_save_user_meta', $current_user->ID, array( 'name'=>$name, 'email'=>$email, 'phone'=>$phone, 'address'=>$address, 'city'=>$city ) );
 		}
+	}
+
+	/**
+	 * Make sure we clean up cookies after logging out.
+	 */
+	public function drop_cookies_on_logout () {
+		if (empty($this->options['login_required']) || 'yes' !== $this->options['login_required']) return false;
+
+		$path = defined('COOKIEPATH')
+			? COOKIEPATH
+			: '/'
+		;
+		$domain = defined('COOKIEDOMAIN')
+			? COOKIEDOMAIN
+			: ''
+		;
+		$drop = $this->local_time - 3600;
+
+		@setcookie("wpmudev_appointments", "", $drop, $path, $domain);
+		@setcookie("wpmudev_appointments_userdata", "", $drop, $path, $domain);
 	}
 
 
@@ -3208,7 +3269,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		if ( !$this->options['twitter-app_id'] )
 			$this->options = get_option( 'appointments_options' );
 		if (!class_exists('TwitterOAuth'))
-			include WP_PLUGIN_DIR . '/appointments/includes/twitteroauth/twitteroauth.php';
+			include WP_PLUGIN_DIR . '/appointments/includes/external/twitteroauth/twitteroauth.php';
 		$twitter = new TwitterOAuth(
 			$this->options['twitter-app_id'],
 			$this->options['twitter-app_secret'],
@@ -3737,329 +3798,21 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 			// Also check if it is activated
 			if ( isset( $this->options["use_mp"] ) && $this->options["use_mp"] ) {
 				$this->mp = true;
-				add_action( 'manage_posts_custom_column', array($this, 'edit_products_custom_columns'), 1 );
-				add_action( 'wp_ajax_nopriv_mp-update-cart', array($this, 'pre_update_cart'), 1 );
-				add_action( 'wp_ajax_mp-update-cart', array($this, 'pre_update_cart'), 1 );
-				add_action( 'wp', array($this, 'remove_from_cart_manual'), 1 );
-				add_filter( 'the_content', array($this, 'product_page'), 18 );
-				add_action( 'mp_order_paid', array($this, 'handle_mp_payment'));
-				add_filter( 'mp_product_list_meta', array($this, 'mp_product_list_meta'), 10, 2);
-				add_filter( 'mp_order_notification_body', array($this, 'modify_email'), 10, 2 );
-				add_filter( 'mp_product_name_display_in_cart', array($this, 'modify_name'), 10, 2 );
-				add_filter( 'mp_buy_button_tag', array($this, 'mp_buy_button_tag'), 10, 3 );
+				if (defined('MP_VERSION') && version_compare(MP_VERSION, '3.0', '>=')) {
+					require_once('includes/class_app_mp_bridge.php');
+					App_MP_Bridge::serve();
+				} else {
+					require_once('includes/class_app_mp_bridge_legacy.php');
+					App_MP_Bridge_Legacy::serve();
+				}
 				return true;
 			}
 		}
 		return false;
 	}
 
-	/**
-	 * Remove duplicate buttons on Product List page and modify button text, also replace form with a link
-	 * @param $button, $product_id, $context: See MarketPress
-	 * @return string
-	 * @Since 1.2.5
-	 */
-	function mp_buy_button_tag( $button, $product_id, $context ) {
 
-		$book_now = apply_filters( 'app_mp_book_now', __('Choose Option &raquo;','appointments') );
 
-		$product = get_post( $product_id );
-		if ( 'list' != $context || !$this->is_app_mp_page( $product ) )
-			return $button;
-
-		if ( isset($_REQUEST['order'] ) ) {
-			$button = preg_replace(
-				'%<input class="mp_button_buynow"(.*?)value="(.*?)" />%is',
-				'<input class="mp_button_buynow" type="submit" name="buynow" value="'.$book_now.'" />',
-				$button
-			);
-			$button = preg_replace(
-				'%<input class="mp_button_addcart"(.*?)value="(.*?)" />%is',
-				'<input class="mp_button_buynow" type="submit" name="buynow" value="'.$book_now.'" />',
-				$button
-			);
-			$button = preg_replace(
-				'%<form(.*?)></form>%is',
-				'<a class="mp_link_buynow" href="'.get_permalink($product_id).'">'.$book_now.'</a>',
-				$button
-			);
-
-			return $button;
-		}
-		else return '';
-	}
-
-	/**
-	 * Determine if a page is A+ Product page from the shortcodes used
-	 * @param $product custom post object
-	 * @return bool
-	 * @Since 1.0.1
-	 */
-	function is_app_mp_page( $product ) {
-		$result = false;
-		if ( is_object( $product ) && strpos( $product->post_content, '[app_' ) !== false )
-			$result = true;
-		// Maybe required for templates
-		return apply_filters( 'app_is_mp_page', $result, $product );
-	}
-
-	/**
-	 * Hide column details for A+ products
-	 * @Since 1.0.1
-	 */
-	function edit_products_custom_columns( $column ) {
-		global $post, $mp;
-		if (!$this->is_app_mp_page($post)) return;
-		$hook = version_compare($mp->version, '2.8.8', '<')
-			? 'manage_posts_custom_column'
-			: 'manage_product_posts_custom_column'
-		;
-		if ('variations' == $column || 'sku' == $column || 'pricing' == $column) {
-			remove_action($hook, array($mp, 'edit_products_custom_columns'));
-			echo '-';
-		} else {
-			add_action($hook, array($mp, 'edit_products_custom_columns'));
-		}
-	}
-
-	/**
-	 * Remove download link from confirmation email
-	 * @Since 1.0.1
-	 */
-	function modify_email( $body, $order ) {
-
-		if ( !is_object( $order ) || !is_array( $order->mp_cart_info ) )
-			return $body;
-
-		$order_id = $order->post_title; // Strange, but true :)
-
-		foreach ( $order->mp_cart_info as $product_id=>$product_detail ) {
-			$product = get_post( $product_id );
-			// Find if this is an A+ product and change link if it is
-			if ( $this->is_app_mp_page( $product ) )
-				$body = str_replace( get_permalink( $product_id ) . "?orderid=$order_id", '-', $body );
-		}
-
-		// Addons may want to modify MP email
-		return apply_filters( 'app_mp_email', $body, $order );
-	}
-
-	/**
-	 * Modify display name in the cart
-	 * @Since 1.0.1
-	 */
-	function modify_name( $name, $product_id ) {
-		$product = get_post( $product_id );
-		$var_names = get_post_meta( $product_id, 'mp_var_name', true );
-		if ( !$this->is_app_mp_page( $product ) || !is_array( $var_names ) )
-			return $name;
-
-		list( $app_title, $app_id ) = split( ':', $name );
-		if ( $app_id ) {
-			global $wpdb;
-			$result = $this->get_app( $app_id );
-			if ( $result ) {
-				$name = $name . " (". date_i18n( $this->datetime_format, strtotime( $result->start ) ) . ")";
-				$name = apply_filters( 'app_mp_product_name_in_cart', $name, $this->get_service_name( $result->service ), $this->get_worker_name( $result->worker ), $result->start, $result );
-			}
-		}
-		return $name;
-	}
-
-	/**
-	 * Handle after a successful Marketpress payment
-	 * @Since 1.0.1
-	 */
-	function handle_mp_payment( $order ) {
-
-		if ( !is_object( $order ) || !is_array( $order->mp_cart_info ) )
-			return;
-
-		foreach ( $order->mp_cart_info as $product_id=>$product_detail ) {
-			$product = get_post( $product_id );
-			// Find if this is an A+ product
-			if ( $this->is_app_mp_page( $product ) && is_array( $product_detail ) ) {
-				foreach( $product_detail as $var ) {
-					// Find variation = app id which should also be downloadable
-					if ( isset( $var['name'] ) && isset( $var['download'] ) ) {
-						list( $product_name, $app_id ) = split( ':', $var['name'] );
-						$app_id = (int)trim( $app_id );
-						if ( $this->change_status( 'paid', $app_id ) ) {
-							do_action( 'app_mp_order_paid', $app_id, $order ); // FIRST do the action
-							if (!empty($this->options["send_confirmation"]) && 'yes' == $this->options["send_confirmation"]) $this->send_confirmation($app_id);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Add to array of product pages where we have A+ shortcodes
-	 * @Since 1.0.1
-	 */
-	function add_to_mp( $post_id ) {
-		$this->mp_posts[] = $post_id;
-	}
-
-	/**
-	 * If this is an A+ product page add js codes to footer to hide some MP fields
-	 * @param content: post content
-	 * @Since 1.0.1
-	 */
-	function product_page( $content ) {
-
-		global $post;
-		if ( is_object( $post ) && in_array( $post->ID, $this->mp_posts ) )
-			$this->add2footer( '$(".mp_quantity,.mp_product_price,.mp_buy_form,.mp_product_variations,.appointments-paypal").hide();' );
-
-		return $content;
-	}
-
-	/**
-	 * Hide meta (Add to chart button, price) for an A+ product
-	 * @Since 1.0.1
-	 */
-	function mp_product_list_meta( $meta, $post_id) {
-
-		if ( in_array( $post_id, $this->mp_posts ) )
-			return '<a class="mp_link_buynow" href="' . get_permalink($post_id) . '">' . __('Choose Option &raquo;', 'mp') . '</a>';
-		else
-			return	$meta;
-	}
-
-	/**
-	 * Adds and returns a variation to the app product
-	 * @Since 1.0.1
-	 */
-	function add_variation( $app_id, $post_id, $service, $worker, $start, $end ) {
-
-		$meta = get_post_meta( $post_id, 'mp_var_name', true );
-		// MP requires at least 2 variations, so we add a dummy one	if there is none
-		if ( !$meta || !is_array( $meta ) ) {
-			add_post_meta( $post_id, 'mp_var_name', array( 0 ) );
-			add_post_meta( $post_id, 'mp_sku', array( 0 ) );
-
-			// Find minimum service price here:
-			global $wpdb;
-			$min_price = $wpdb->get_var( "SELECT MIN(price) FROM " . $this->services_table . " WHERE price>0 " );
-			if ( !$min_price )
-				$min_price = 0;
-
-			add_post_meta( $post_id, 'mp_price', array( $min_price ) );
-			// Variation ID
-			$meta = array( 0 );
-		}
-
-		$max = count( $meta );
-		$meta[$max] = $app_id;
-		update_post_meta( $post_id, 'mp_var_name', $meta );
-
-		$sku = get_post_meta( $post_id, 'mp_sku', true );
-		$sku[$max] = $this->service;
-		update_post_meta( $post_id, 'mp_sku', $sku );
-
-		$price = get_post_meta( $post_id, 'mp_price', true );
-		$price[$max] = apply_filters( 'app_mp_price', $this->get_price( true ), $service, $worker, $start, $end ); // Filter added at V1.2.3.1
-		update_post_meta( $post_id, 'mp_price', $price );
-
-		// Add a download link, so that app will be a digital product
-		$file = get_post_meta($post_id, 'mp_file', true);
-		if ( !$file )
-			add_post_meta( $post_id, 'mp_file', get_permalink( $post_id ) );
-
-		return $max;
-	}
-
-	/**
-	 * If a pending app is removed automatically, also remove it from the cart
-	 * @Since 1.0.1
-	 */
-	function remove_from_cart( $app ) {
-		global $mp;
-		$changed = false;
-		$cart = $mp->get_cart_cookie();
-
-		if ( is_array( $cart ) ) {
-			foreach ( $cart as $product_id=>$product_detail ) {
-				$product = get_post( $product_id );
-				$var_names = get_post_meta( $product_id, 'mp_var_name', true );
-				// Find if this is an A+ product
-				if ( $this->is_app_mp_page( $product ) && is_array( $product_detail ) && is_array( $var_names ) ) {
-					foreach( $product_detail as $var_id=>$var_val ) {
-						// Find variation = app id
-						if ( isset( $var_names[$var_id] ) && $var_names[$var_id] == $app->ID ) {
-							unset( $cart[$product_id] );
-							$changed = true;
-						}
-					}
-				}
-			}
-		}
-		// Update cart only if something has changed
-		if ( $changed )
-			$mp->set_cart_cookie($cart);
-	}
-
-	/**
-	 * Clear appointment that is removed from the cart also from the database
-	 * This is called before MP
-	 * @Since 1.0.1
-	 */
-	function remove_from_cart_manual( ) {
-
-		if (isset($_POST['update_cart_submit'])) {
-			if (isset($_POST['remove']) && is_array($_POST['remove'])) {
-				foreach ($_POST['remove'] as $pbid) {
-					list($bid, $product_id, $var_id) = split(':', $pbid);
-					$product = get_post( $product_id );
-					// Check if this is an app product page
-					if ( $this->is_app_mp_page( $product ) ) {
-						// We need to find var name = app_id
-						$var_names = get_post_meta( $product_id, 'mp_var_name', true );
-						if ( isset( $var_names[$var_id] ) ) {
-							$this->change_status( 'removed', (int)trim( $var_names[$var_id] ) );
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Add the appointment to the cart
-	 * This is called before MP
-	 * @Since 1.0.1
-	 */
-	function pre_update_cart( ) {
-		global $mp;
-
-		if ( isset( $_POST['product_id'] )  && isset( $_POST['variation'] ) && $_POST['product_id'] && $_POST['variation'] ) {
-			$product_id = $_POST['product_id'];
-			$product = get_post( $product_id );
-			// Check if this is an app product page
-			if ( $this->is_app_mp_page( $product ) ) {
-				$variation = $_POST['variation'];
-
-				$cart = $mp->get_cart_cookie();
-				if ( !is_array( $cart ) )
-					$cart = array();
-
-				// Make quantity 0 so that MP can set it to 1
-				$cart[$product_id][$variation] = 0;
-
-				//save items to cookie
-				$mp->set_cart_cookie($cart);
-
-				// Set email to SESSION variables if not set before
-				if ( !isset( $_SESSION['mp_shipping_info']['email'] ) && isset( $_COOKIE["wpmudev_appointments_userdata"] ) ) {
-					$data = unserialize( stripslashes( $_COOKIE["wpmudev_appointments_userdata"] ) );
-					if ( is_array( $data ) && isset( $data["e"] ) )
-						@$_SESSION['mp_shipping_info']['email'] = $data["e"];
-				}
-			}
-		}
-	}
 
 /*******************************
 * Methods for inits, styles, js
@@ -4119,12 +3872,14 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$script = '';
 		$this->script = apply_filters( 'app_footer_scripts', $this->script );
 
-		if ( $this->script ) {
-			$script .= '<script type="text/javascript">';
-			$script .= "jQuery(document).ready(function($) {";
-			$script .= $this->script;
-			$script .= "});</script>";
-		}
+        if ( $this->script ) {
+            $script .= "<script type='text/javascript'>";
+            $script .= "var appDocReadyHandler = function($){";
+            $script .= $this->script;
+            $script .= "};";
+            $script .= "jQuery(document).ready(appDocReadyHandler)";
+            $script .= "</script>";
+        }
 
 		echo $this->esc_rn( $script );
 		do_action('app-footer_scripts-after');
@@ -4143,12 +3898,8 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 			if ( is_object( $post ) && stripos( $post->post_content, '[app_' ) !== false ) {
 				$this->shortcode_found = true;
 				$this->add_to_cache( $post->ID );
-				// Don't go further if MP is not active, this may save some time for archive pages
-				if ( !$this->mp )
-					break;
-				// Also add to A+ product posts
-				if ( 'product' == $post->post_type )
-					$this->add_to_mp( $post->ID );
+
+				do_action('app-shortcodes-shortcode_found', $post);
 			}
 		}
 
@@ -4659,20 +4410,47 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 					$_REQUEST["app_provider_id"] = $r->worker;
 
 					$messages[] = array(
-								'ID'		=> $r->ID,
-								'to'		=> $r->email,
-								'subject'	=> $this->_replace( $this->options["reminder_subject"], $r->name, $this->get_service_name( $r->service),
-									$this->get_worker_name( $r->worker), $r->start, $r->price, $this->get_deposit($r->price), $r->phone, $r->note, $r->address, $r->email, $r->city ),
-								'message'	=> apply_filters( 'app_reminder_message', $this->add_cancel_link( $this->_replace( $this->options["reminder_message"],
-									$r->name, $this->get_service_name( $r->service), $this->get_worker_name( $r->worker), $r->start,
-									$r->price, $this->get_deposit($r->price), $r->phone, $r->note, $r->address, $r->email, $r->city ), $r->ID ), $r, $r->ID )
-							);
+						'ID' => $r->ID,
+						'to' => $r->email,
+						'subject' => $this->_replace(
+							$this->options["reminder_subject"],
+							$r->name,
+							$this->get_service_name($r->service),
+							$this->get_worker_name($r->worker),
+							$r->start,
+							$r->price,
+							$this->get_deposit($r->price),
+							$r->phone,
+							$r->note,
+							$r->address,
+							$r->email,
+							$r->city
+						),
+						'message' => apply_filters('app_reminder_message', $this->add_cancel_link(
+							$this->_replace(
+								$this->options["reminder_message"],
+								$r->name,
+								$this->get_service_name($r->service),
+								$this->get_worker_name($r->worker),
+								$r->start,
+								$r->price,
+								$this->get_deposit($r->price),
+								$r->phone,
+								$r->note,
+								$r->address,
+								$r->email,
+								$r->city
+							),
+							$r->ID),
+						$r, $r->ID)
+					);
 					// Update "sent" field
-					$wpdb->update( $this->app_table,
-									array( 'sent'	=> rtrim( $r->sent, ":" ) . ":" . trim( $hour ) . ":" ),
-									array( 'ID'		=> $r->ID ),
-									array ( '%s' )
-								);
+					$wpdb->update(
+						$this->app_table,
+						array('sent' => rtrim($r->sent, ":") . ":" . trim($hour) . ":"),
+						array('ID' => $r->ID),
+						array('%s')
+					);
 				}
 			}
 		}
@@ -4739,20 +4517,45 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 					$_REQUEST["app_provider_id"] = $r->worker;
 
 					$messages[] = array(
-								'ID'		=> $r->ID,
-								'to'		=> $this->get_worker_email( $r->worker ),
-								'subject'	=> $this->_replace( $this->options["reminder_subject"], $r->name, $this->get_service_name($r->service),
-									$this->get_worker_name($r->worker), $r->start, $r->price, $this->get_deposit($r->price), $r->phone, $r->note, $r->address, $r->email ),
-								'message'	=> $provider_add_text . $this->_replace( $this->options["reminder_message"], $r->name,
-									$this->get_service_name( $r->service), $this->get_worker_name( $r->worker), $r->start, $r->price,
-									$this->get_deposit($r->price), $r->phone, $r->note, $r->address, $r->email )
-							);
+						'ID' => $r->ID,
+						'to' => $this->get_worker_email( $r->worker ),
+						'subject' => $this->_replace(
+							$this->options["reminder_subject"],
+							$r->name,
+							$this->get_service_name($r->service),
+							$this->get_worker_name($r->worker),
+							$r->start,
+							$r->price,
+							$this->get_deposit($r->price),
+							$r->phone,
+							$r->note,
+							$r->address,
+							$r->email
+						),
+						'message' => apply_filters('app_reminder_message', $provider_add_text . $this->add_cancel_link(
+							$this->_replace(
+								$this->options["reminder_message"],
+								$r->name,
+								$this->get_service_name($r->service),
+								$this->get_worker_name($r->worker),
+								$r->start,
+								$r->price,
+								$this->get_deposit($r->price),
+								$r->phone,
+								$r->note,
+								$r->address,
+								$r->email
+							),
+							$r->ID),
+						$r, $r->ID),
+					);
 					// Update "sent" field
-					$wpdb->update( $this->app_table,
-									array( 'sent_worker' => rtrim( $r->sent_worker, ":" ) . ":" . trim( $hour ) . ":" ),
-									array( 'ID'		=> $r->ID ),
-									array ( '%s' )
-								);
+					$wpdb->update(
+						$this->app_table,
+						array('sent_worker' => rtrim($r->sent_worker, ":") . ":" . trim($hour) . ":"),
+						array('ID' => $r->ID),
+						array('%s')
+					);
 				}
 			}
 		}
@@ -4798,7 +4601,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 			'CITY' => $city,
 		);
 		foreach($replacement as $macro => $repl) {
-			$text = preg_replace('/' . preg_quote($macro, '/') . '/U', $repl, $text);
+			$text = preg_replace('/\b' . preg_quote($macro, '/') . '\b/U', $repl, $text);
 		}
 		return $text;
 	}
@@ -4879,8 +4682,6 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 								);
 					if ( $update ) {
 						do_action( 'app_remove_pending', $expired );
-						if ( $this->mp )
-							$this->remove_from_cart( $expired );
 					}
 				}
 			}
@@ -6235,7 +6036,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		else
 			$min_time = $this->get_min_time();
 
-		$min_secs = 60 * $min_time;
+		$min_secs = 60 * apply_filters( 'app_admin_min_time', $min_time );
 
 		$wb = $this->get_work_break( $this->location, $this->worker, $status );
 		if ( $wb )
@@ -6686,10 +6487,11 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 
 		$html = '';
 		$html .= '<tr class="inline-edit-row inline-edit-row-post quick-edit-row-post">';
-		if ( isset( $_POST["col_len"] ) )
-			$html .= '<td colspan="'.$_POST["col_len"].'" class="colspanchange">';
-		else
-			$html .= '<td colspan="6" class="colspanchange">';
+
+		$html .= isset($_POST['col_len']) && is_numeric($_POST['col_len'])
+			? '<td colspan="' . (int)$_POST["col_len"] . '" class="colspanchange">'
+			: '<td colspan="6" class="colspanchange">'
+		;
 
 		$html .= '<fieldset class="inline-edit-col-left" style="width:33%">';
 		$html .= '<div class="inline-edit-col">';
@@ -6703,35 +6505,35 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$html .= '<label>';
 		$html .= '<span class="title">'.$this->get_field_name('name'). '</span>';
 		$html .= '<span class="input-text-wrap">';
-		$html .= '<input type="text" name="cname" class="ptitle" value="'.stripslashes( $app->name ).'" />';
+		$html .= '<input type="text" name="cname" class="ptitle" value="' . esc_attr(stripslashes($app->name)) . '" />';
 		$html .= '</span>';
 		$html .= '</label>';
 		/* Client email */
 		$html .= '<label>';
 		$html .= '<span class="title">'.$this->get_field_name('email'). '</span>';
 		$html .= '<span class="input-text-wrap">';
-		$html .= '<input type="text" name="email" class="ptitle" value="'.$app->email.'" />';
+		$html .= '<input type="text" name="email" class="ptitle" value="' . esc_attr($app->email) . '" />';
 		$html .= '</span>';
 		$html .= '</label>';
 		/* Client Phone */
 		$html .= '<label>';
 		$html .= '<span class="title">'.$this->get_field_name('phone'). '</span>';
 		$html .= '<span class="input-text-wrap">';
-		$html .= '<input type="text" name="phone" class="ptitle" value="'.stripslashes( $app->phone ).'" />';
+		$html .= '<input type="text" name="phone" class="ptitle" value="' . esc_attr(stripslashes($app->phone)) . '" />';
 		$html .= '</span>';
 		$html .= '</label>';
 		/* Client Address */
 		$html .= '<label>';
 		$html .= '<span class="title">'.$this->get_field_name('address'). '</span>';
 		$html .= '<span class="input-text-wrap">';
-		$html .= '<input type="text" name="address" class="ptitle" value="'.stripslashes( $app->address ).'" />';
+		$html .= '<input type="text" name="address" class="ptitle" value="' . esc_attr(stripslashes($app->address)) . '" />';
 		$html .= '</span>';
 		$html .= '</label>';
 		/* Client City */
 		$html .= '<label>';
 		$html .= '<span class="title">'.$this->get_field_name('city'). '</span>';
 		$html .= '<span class="input-text-wrap">';
-		$html .= '<input type="text" name="city" class="ptitle" value="'.stripslashes( $app->city ).'" />';
+		$html .= '<input type="text" name="city" class="ptitle" value="' . esc_attr(stripslashes($app->city)) . '" />';
 		$html .= '</span>';
 		$html .= '</label>';
 		$html .= apply_filters('app-appointments_list-edit-client', '', $app);
@@ -6752,7 +6554,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 					$sel = ' selected="selected"';
 				else
 					$sel = '';
-				$html .= '<option value="'.$service->ID.'"'.$sel.'>'. stripslashes( $service->name ) . '</option>';
+				$html .= '<option value="' . esc_attr($service->ID) . '"'.$sel.'>'. stripslashes( $service->name ) . '</option>';
 			}
 		}
 		$html .= '</select>';
@@ -6771,7 +6573,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 				}
 				else
 					$sel = '';
-				$html .= '<option value="'.$worker->ID.'"'.$sel.'>'. $this->get_worker_name( $worker->ID, false ) . '</option>';
+				$html .= '<option value="' . esc_attr($worker->ID) . '"'.$sel.'>'. $this->get_worker_name( $worker->ID, false ) . '</option>';
 			}
 		}
 		$html .= '</select>';
@@ -6780,7 +6582,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$html .= '<label>';
 		$html .= '<span class="title">'.__('Price', 'appointments'). '</span>';
 		$html .= '<span class="input-text-wrap">';
-		$html .= '<input type="text" name="price" style="width:50%" class="ptitle" value="'.$app->price.'" />';
+		$html .= '<input type="text" name="price" style="width:50%" class="ptitle" value="' . esc_attr($app->price) . '" />';
 		$html .= '</span>';
 		$html .= '</label>';
 		$html .= '</label>';
@@ -6804,7 +6606,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$html .= '<label style="float:left;width:65%">';
 		$html .= '<span class="title">'.__('Start', 'appointments'). '</span>';
 		$html .= '<span class="input-text-wrap" >';
-		$html .= '<input type="text" name="date" class="datepicker" size="12" value="'.$start_date.'" data-timestamp="' . esc_attr($start_date_timestamp) . '"  />';
+		$html .= '<input type="text" name="date" class="datepicker" size="12" value="' . esc_attr($start_date) . '" data-timestamp="' . esc_attr($start_date_timestamp) . '"  />';
 		$html .= '</label>';
 		$html .= '<label style="float:left;width:30%; padding-left:5px;">';
 
@@ -6817,12 +6619,16 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$min_secs = 60 * apply_filters( 'app_admin_min_time', $min_time );
 		$html .= '<select name="time" >';
 		for ( $t=0; $t<3600*24; $t=$t+$min_secs ) {
+			$s = array();
 			$dhours = $this->secs2hours( $t ); // Hours in 08:30 format
-			if ( $dhours == $start_time )
-				$s = " selected='selected'";
-			else $s = '';
 
-			$html .= '<option'.$s.'>';
+			$s[] = $dhours == $start_time
+				? 'selected="selected"'
+				: ''
+			;
+			$s[] = 'value="' . esc_attr($this->secs2hours($t, 'H:i')) . '"';
+
+			$html .= '<option ' . join(' ', array_values(array_filter($s))) . '>';
 			$html .= $dhours;
 			$html .= '</option>';
 		}
@@ -6843,7 +6649,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$html .= '<label>';
 		$html .= '<span class="title">'.$this->get_field_name('note'). '</span>';
 		$html .= '<textarea cols="22" rows=1">';
-		$html .= stripslashes( $app->note );
+		$html .= esc_textarea(stripslashes($app->note));
 		$html .= '</textarea>';
 		$html .= '</label>';
 		/* Status */
@@ -6896,9 +6702,9 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 			$js = 'href="javascript:void(0)"';
 			$title = __('Click to save or update', 'appointments');
 		}
-		$html .= '<a '.$js.' title="'.$title.'" class="button-primary save alignright">'.__('Save / Update','appointments').'</a>';
+		$html .= '<a '.$js.' title="' . esc_attr($title) . '" class="button-primary save alignright">'.__('Save / Update','appointments').'</a>';
 		$html .= '<img class="waiting" style="display:none;" src="'.admin_url('images/wpspin_light.gif').'" alt="">';
-		$html .= '<input type="hidden" name="app_id" value="'.$app->ID.'">';
+		$html .= '<input type="hidden" name="app_id" value="' . esc_attr($app->ID) . '">';
 		$html .= '<span class="error" style="display:none"></span>';
 		$html .= '<br class="clear">';
 		$html .= '</p>';
@@ -6914,36 +6720,52 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		$app_id = $_POST["app_id"];
 		$email_sent = false;
 		global $wpdb, $current_user;
-		$app = $wpdb->get_row( $wpdb->prepare("SELECT * FROM {$this->app_table} WHERE ID=%d", $app_id) );
-
+		$app = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$this->app_table} WHERE ID=%d", $app_id));
 		$data = array();
-		if ( $app != null )
+
+		if ($app != null) {
 			$data['ID'] = $app_id;
-		else {
-			$data['created']	= date("Y-m-d H:i:s", $this->local_time );
-			$data['ID'] 		= 'NULL';
+		} else {
+			$data['created'] = date("Y-m-d H:i:s", $this->local_time );
+			$data['ID'] = 'NULL';
 		}
-		$data['user']		= $_POST['user'];
-		$data['email']		= $_POST['email'];
-		$data['name']		= $_POST['name'];
-		$data['phone']		= $_POST['phone'];
-		$data['address'] 	= $_POST['address'];
-		$data['city']		= $_POST['city'];
-		$data['service']	= $_POST['service'];
-		$service			= $this->get_service( $_POST['service'] );
-		$data['worker']		= $_POST['worker'];
-		$data['price']		= $_POST['price'];
+
+		$data['user'] = $_POST['user'];
+		$data['email'] = !empty($_POST['email']) && is_email($_POST['email']) ? $_POST['email'] : '';
+		$data['name'] = $_POST['name'];
+		$data['phone'] = $_POST['phone'];
+		$data['address'] = $_POST['address'];
+		$data['city'] = $_POST['city'];
+		$data['service'] = $_POST['service'];
+		$service = $this->get_service( $_POST['service'] );
+		$data['worker'] = $_POST['worker'];
+		$data['price'] = $_POST['price'];
 		// Clear comma from date format. It creates problems for php5.2
-		$data['start']		= date( 'Y-m-d H:i:s', strtotime( str_replace( ',','', $this->to_us( $_POST['date'] ) ). " " . $this->to_military( $_POST['time'] ) ) );
-		$data['end']		= date( 'Y-m-d H:i:s', strtotime( str_replace( ',','', $this->to_us( $_POST['date'] ) ). " " . $this->to_military( $_POST['time'] ) ) + $service->duration *60 );
-		$data['note']		= $_POST['note'];
-		$data['status']		= $_POST['status'];
-		$resend				= $_POST["resend"];
+		$data['start']	= date(
+			'Y-m-d H:i:s',
+			strtotime(
+				str_replace(',', '', $this->to_us($_POST['date'])) .
+				" " .
+				date('H:i', strtotime($_POST['time']))
+			)
+		);
+		$data['end'] = date(
+			'Y-m-d H:i:s',
+			strtotime(
+				str_replace(',', '', $this->to_us($_POST['date'])) .
+				" " .
+				date('H:i', strtotime($_POST['time']))
+			)
+			+ ($service->duration * 60)
+		);
+		$data['note'] = $_POST['note'];
+		$data['status'] = $_POST['status'];
+		$resend = $_POST["resend"];
 
 		$data = apply_filters('app-appointment-inline_edit-save_data', $data);
 
 		$update_result = $insert_result = false;
-		if( $app != null ) {
+		if ($app != null) {
 			// Update
 			$update_result = $wpdb->update( $this->app_table, $data, array('ID' => $app_id) );
 			if ( $update_result ) {
@@ -6958,24 +6780,27 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 				if ('removed' == $data['status']) do_action( 'app_removed', $app_id );
 				//else $this->send_confirmation( $app_id );
 			}
-		}
-		else {
+		} else {
 			// Insert
 			$insert_result = $wpdb->insert( $this->app_table, $data );
+			/*
+// Moved
 			if ( $insert_result && $resend && empty($email_sent) ) {
 				$email_sent = $this->send_confirmation( $wpdb->insert_id );
 			}
 			if ( $insert_result && is_object($this->gcal_api) && $this->gcal_api->is_syncable_status($data['status'])) {
-				$this->gcal_api->insert( $app_id );
+				$this->gcal_api->insert( $wpdb->insert_id );
 			}
+			*/
 		}
 
 		do_action('app-appointment-inline_edit-after_save', ($update_result ? $app_id : $wpdb->insert_id), $data);
-
+/*
+// Moved
 		if ($resend && 'removed' != $data['status'] && empty($email_sent) ) {
 			$email_sent = $this->send_confirmation( $app_id );
 		}
-
+*/
 		if ( ( $update_result || $insert_result ) && $data['user'] && defined('APP_USE_LEGACY_USERDATA_OVERWRITING') && APP_USE_LEGACY_USERDATA_OVERWRITING ) {
 			if ( $data['name'] )
 				update_user_meta( $data['user'], 'app_name',  $data['name'] );
@@ -6992,6 +6817,17 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		}
 
 		do_action('app-appointment-inline_edit-before_response', ($update_result ? $app_id : $wpdb->insert_id), $data);
+
+		// Move mail sending here so the fields can expand
+		if ( $insert_result && $resend && empty($email_sent) ) {
+			$email_sent = $this->send_confirmation( $wpdb->insert_id );
+		}
+		if ( $insert_result && is_object($this->gcal_api) && $this->gcal_api->is_syncable_status($data['status'])) {
+			$this->gcal_api->insert( $wpdb->insert_id );
+		}
+		if ($resend && !empty($app_id) && 'removed' != $data['status'] && empty($email_sent) ) {
+			$email_sent = $this->send_confirmation( $app_id );
+		}
 
 		$result = array(
 			'app_id' => 0,
@@ -7012,7 +6848,7 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 				'message' => __('<span style="color:green;font-weight:bold">Changes saved.</span>', 'appointments'),
 			);
 		} else {
-			$message = $resend && !empty($data['status']) && $removed != $data['status']
+			$message = $resend && !empty($data['status']) && 'removed' != $data['status']
 				? sprintf('<span style="color:green;font-weight:bold">%s</span>', __('Confirmation message (re)sent', 'appointments'))
 				: sprintf('<span style="color:red;font-weight:bold">%s</span>', __('Record could not be saved OR you did not make any changes!', 'appointments'))
 			;
@@ -7098,166 +6934,12 @@ if ($this->worker && $this->service && ($app->service != $this->service)) {
 		return $this->db->get_var( "SELECT FOUND_ROWS();" );
 	}
 
-	function transactions() {
-
-		global $page, $action, $type;
-
-		wp_reset_vars( array('type') );
-
-		if(empty($type)) $type = 'past';
-
-		?>
-		<div class='wrap'>
-			<div class="icon32" style="margin:8px 0 0 0"><img src="<?php echo $this->plugin_url . '/images/transactions.png'; ?>" /></div>
-			<h2><?php echo __('Transactions','appointments'); ?></h2>
-
-			<ul class="subsubsub">
-				<li><a href="<?php echo add_query_arg('type', 'past'); ?>" class="rbutton <?php if($type == 'past') echo 'current'; ?>"><?php  _e('Recent transactions', 'appointments'); ?></a> | </li>
-				<li><a href="<?php echo add_query_arg('type', 'pending'); ?>" class="rbutton <?php if($type == 'pending') echo 'current'; ?>"><?php  _e('Pending transactions', 'appointments'); ?></a> | </li>
-				<li><a href="<?php echo add_query_arg('type', 'future'); ?>" class="rbutton <?php if($type == 'future') echo 'current'; ?>"><?php  _e('Future transactions', 'appointments'); ?></a></li>
-			</ul>
-
-			<?php
-				$this->mytransactions($type);
-
-			?>
-		</div> <!-- wrap -->
-		<?php
-
+	function transactions () {
+		App_Template::admin_transactions_list($type);
 	}
 
-	function mytransactions($type = 'past') {
-
-		if(empty($_GET['paged'])) {
-			$paged = 1;
-		} else {
-			$paged = ((int) $_GET['paged']);
-		}
-
-		$startat = ($paged - 1) * 50;
-
-		$transactions = $this->get_transactions($type, $startat, 50);
-		$total = $this->get_total();
-
-		$columns = array();
-
-		$columns['subscription'] = __('App ID','appointments');
-		$columns['user'] = __('User','appointments');
-		$columns['date'] = __('Date/Time','appointments');
-		$columns['service'] = __('Service','appointments');
-		$columns['amount'] = __('Amount','appointments');
-		$columns['transid'] = __('Transaction id','appointments');
-		$columns['status'] = __('Status','appointments');
-
-		$trans_navigation = paginate_links( array(
-			'base' => add_query_arg( 'paged', '%#%' ),
-			'format' => '',
-			'total' => ceil($total / 50),
-			'current' => $paged
-		));
-
-		echo '<div class="tablenav">';
-		if ( $trans_navigation ) echo "<div class='tablenav-pages'>$trans_navigation</div>";
-		echo '</div>';
-		?>
-
-			<table cellspacing="0" class="widefat fixed">
-				<thead>
-				<tr>
-				<?php
-					foreach($columns as $key => $col) {
-						?>
-						<th class="manage-column column-<?php echo $key; ?>" id="<?php echo $key; ?>" scope="col"><?php echo $col; ?></th>
-						<?php
-					}
-				?>
-				</tr>
-				</thead>
-
-				<tfoot>
-				<tr>
-				<?php
-					reset($columns);
-					foreach($columns as $key => $col) {
-						?>
-						<th style="" class="manage-column column-<?php echo $key; ?>" id="<?php echo $key; ?>" scope="col"><?php echo $col; ?></th>
-						<?php
-					}
-				?>
-				</tr>
-				</tfoot>
-
-				<tbody>
-					<?php
-					if($transactions) {
-						foreach($transactions as $key => $transaction) {
-							?>
-							<tr valign="middle" class="alternate">
-								<td class="column-subscription">
-									<?php
-										echo $transaction->transaction_app_ID;
-									?>
-
-								</td>
-								<td class="column-user">
-									<?php
-										echo $this->get_client_name( $transaction->transaction_app_ID );
-									?>
-								</td>
-								<td class="column-date">
-									<?php
-										echo date_i18n($this->datetime_format, $transaction->transaction_stamp);
-
-									?>
-								</td>
-								<td class="column-service">
-								<?php
-								$service_id = $this->db->get_var($this->db->prepare("SELECT service FROM {$this->app_table} WHERE ID=%d",$transaction->transaction_app_ID));
-								echo $this->get_service_name( $service_id );
-								?>
-								</td>
-								<td class="column-amount">
-									<?php
-										$amount = $transaction->transaction_total_amount / 100;
-
-										echo $transaction->transaction_currency;
-										echo "&nbsp;" . number_format($amount, 2, '.', ',');
-									?>
-								</td>
-								<td class="column-transid">
-									<?php
-										if(!empty($transaction->transaction_paypal_ID)) {
-											echo $transaction->transaction_paypal_ID;
-										} else {
-											echo __('None yet','appointments');
-										}
-									?>
-								</td>
-								<td class="column-status">
-									<?php
-										if(!empty($transaction->transaction_status)) {
-											echo $transaction->transaction_status;
-										} else {
-											echo __('None yet','appointments');
-										}
-									?>
-								</td>
-							</tr>
-							<?php
-						}
-					} else {
-						$columncount = count($columns);
-						?>
-						<tr valign="middle" class="alternate" >
-							<td colspan="<?php echo $columncount; ?>" scope="row"><?php _e('No Transactions have been found, patience is a virtue.','appointments'); ?></td>
-						</tr>
-						<?php
-					}
-					?>
-
-				</tbody>
-			</table>
-		<?php
+	function mytransactions ($type = 'past') {
+		App_Template::admin_my_transactions_list($type);
 	}
 
 	function reached_ceiling () {
@@ -7294,7 +6976,7 @@ if (is_admin()) {
 	App_AdminHelp::serve();
 
 	// Setup dashboard notices
-	if (file_exists(APP_PLUGIN_DIR . '/includes/wpmudev-dash-notification.php')) {
+	if (file_exists(APP_PLUGIN_DIR . '/includes/external/wpmudev-dash-notification.php')) {
 		global $wpmudev_notices;
 		if (!is_array($wpmudev_notices)) $wpmudev_notices = array();
 		$wpmudev_notices[] = array(
@@ -7306,7 +6988,7 @@ if (is_admin()) {
 				'appointments_page_app_faq',
 			),
 		);
-		require_once APP_PLUGIN_DIR . '/includes/wpmudev-dash-notification.php';
+		require_once APP_PLUGIN_DIR . '/includes/external/wpmudev-dash-notification.php';
 	}
 	// End dash bootstrap
 }
