@@ -233,7 +233,14 @@ function calculate_bundle_price( $cart_object ) {
     global $woocommerce;
 	$additionalPrice = 100;
     foreach ( $cart_object->cart_contents as $key => $value ) {       
-        if( WC()->session->__isset( $key.'_cart_price' ) ) {
+        $productID=$value['product_id'];
+		$totalPrice=get_post_meta($productID,'_selling_price',true);
+		if($totalPrice !='') {
+			$bundle_price=$totalPrice;
+            $quantity = intval( $value['quantity'] );
+            $orgPrice = intval( $value['data']->price );
+			$value['data']->price = $bundle_price;
+		} else if( WC()->session->__isset( $key.'_cart_price' ) ) {
 			$bundle_price=WC()->session->get( $key.'_cart_price' ) + WC()->session->get( $key.'_additional_price' ) + WC()->session->get( $key.'_service_fee' );
             $quantity = intval( $value['quantity'] );
             $orgPrice = intval( $value['data']->price );
@@ -246,7 +253,14 @@ add_action( 'woocommerce_before_calculate_totals', 'calculate_bundle_price', 1, 
 /* Function to add meta value size on cart item list */
 function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_key = null ) {
 	if( $cart_item_key && is_cart() ) {
-        if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
+		$productID=$cart_item['product_id'];	
+		$size=get_post_meta($productID,'_selling_size',true);
+        if( $size !='') {
+            echo $title. '<dl class="variation">
+                <dt class="variation-Size">Size: </dt>
+                <dd class="variation-Size">'.trim($size).'</dd>            
+              </dl>';
+        } else if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
             echo $title. '<dl class="variation">
                  <dt class="variation-Size">Size: </dt>
                  <dd class="variation-Size">'.trim(WC()->session->get($cart_item_key.'_cart_size')).'</dd>            
@@ -263,7 +277,14 @@ function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_
 add_filter( 'woocommerce_cart_item_name', 'render_meta_on_cart_item', 1, 3 );
 function render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null ) {
     if( $cart_item_key ) {
-        if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
+        $productID=$cart_item['product_id'];	
+		$size=get_post_meta($productID,'_selling_size',true);
+        if( $size !='') {
+            echo $quantity. '<dl class="variation">
+                 <dt class="variation-Size">Size : </dt>
+                 <dd class="variation-Size">'.$size.'</dd>            
+              </dl>';
+        } else if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
 			$size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
             echo $quantity. '<dl class="variation">
                  <dt class="variation-Size">Size : </dt>
@@ -288,7 +309,12 @@ function bundle_order_meta_handler( $item_id, $values, $cart_item_key ) {
 		if($product_type=='bundle') {
 			$compound_id=$product_id;
 			$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
-			$herbs=get_bundle_info($compound_id,$total_size);
+			$size=get_post_meta($compound_id,'_selling_size',true);
+			if($size!='') {
+				$herbs=get_bundle_info($compound_id,$size);
+			} else {
+				$herbs=get_bundle_info($compound_id,$total_size);
+			}
 			wc_add_order_item_meta( $item_id, "Herbs ", $herbs ); 
 		}
     }
