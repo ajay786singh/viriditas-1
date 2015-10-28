@@ -90,17 +90,18 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 		<div class="herbs">
 			<?php 
 				$herbs=get_post_meta($post->ID,'_bundle_data',true);
-				if($herbs) {
-					$herbsHtml='';	
-					foreach($herbs as $herb) {
-						$herb_id=$herb['product_id'];
-						$herbName=get_the_title($herb_id);
-						$expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
-						$required_size=$herb['bundle_required_size'];
-						$herbsHtml[]=$herbName.$expensive_herb." - ".$required_size."%";
-					}
-					echo "<div class='herbs-name'>".implode(", ", $herbsHtml)."</div>";
-				}
+				echo get_bundle_info($post->ID,$size);	
+				// if($herbs) {
+					// $herbsHtml='';	
+					// foreach($herbs as $herb) {
+						// $herb_id=$herb['product_id'];
+						// $herbName=get_the_title($herb_id);
+						// $expensive_herb = get_post_meta($herb_id,'_product_details_expensive_herb',true);	
+						// $required_size=$herb['bundle_required_size'];
+						// $herbsHtml[]=$herbName.$expensive_herb." - ".$required_size."%";
+					// }
+					// echo "<div class='herbs-name'>".implode(", ", $herbsHtml)."</div>";
+				// }
 			?>
 		</div>
 		<div class="cart-action">

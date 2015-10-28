@@ -69,7 +69,12 @@ do_action( 'woocommerce_before_cart' ); ?>
 							if($_product->product_type=='bundle') {
 								$compound_id=$_product->id;
 								$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
-									echo get_bundle_info($compound_id,$total_size);
+									$size=get_post_meta($compound_id,'_selling_size',true);
+									if($size!='') {
+										echo get_bundle_info($compound_id,$size);
+									} else {
+										echo get_bundle_info($compound_id,$total_size);	
+									}
 								}
 							}
                				// Backorder notification
@@ -83,8 +88,13 @@ do_action( 'woocommerce_before_cart' ); ?>
 							// if($_product->product_type=='bundle') {
 								// echo "$".number_format($cart_item['cart_price'],2);
 							// } else {
+								$totalPrice=get_post_meta($_product->id,'_selling_price',true);
 								echo "<span style='display:none;' class='product_type' data-id='".$_product->id."'>".$_product->product_type."</span>";
-								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );
+								if($totalPrice!=''){
+									echo '$'.number_format($totalPrice,2);
+								} else {
+									echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );	
+								}
 							//}
 						?>
 					</td>
@@ -111,7 +121,13 @@ do_action( 'woocommerce_before_cart' ); ?>
 							// if($_product->product_type=='bundle') {
 								// echo "$".$cart_item['quantity']*number_format($cart_item['cart_price'],2);
 							// } else {
-								echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
+								$totalPrice=get_post_meta($_product->id,'_selling_price',true);
+								if($totalPrice!=''){
+									echo "$".number_format(($cart_item['quantity']*$totalPrice),2);
+								} else {
+									echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key );
+								}
+								
 							//}	
 						?>
 					</td>
