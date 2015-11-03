@@ -99,10 +99,24 @@ get_header();
 						<?php
 								$sizes=get_option('wc_settings_tab_compound_sizes');
 								if($compound_id !='') {
+									$orderby = "name";
 									$compound_sizes = get_the_terms( $compound_id, 'pa_size');
 									sort($compound_sizes);
 									$compound_prices = get_the_terms( $compound_id, 'pa_price');
-									sort($compound_prices);
+									//sort($compound_prices);
+									$sortArray = array(); 
+									foreach($compound_prices as $sortprice){ 
+										foreach($sortprice as $key=>$value){ 
+											if(!isset($sortArray[$key])){ 
+												$sortArray[$key] = array(); 
+											} 
+											$sortArray[$key][] = $value; 
+										} 
+									}		
+									array_multisort($sortArray[$orderby],SORT_ASC,$compound_prices);
+									// echo "<pre>";
+									// print_r($compound_prices);
+									// echo "</pre>";
 								}
 								if($sizes) {
 									$sizes=explode(",",$sizes);								
