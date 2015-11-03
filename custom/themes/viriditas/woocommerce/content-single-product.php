@@ -81,6 +81,17 @@ global $product;
 						if($unit=='') {
 							$unit="mL";
 						}
+						$sortArray = array(); 
+						foreach($prices as $sortprice){ 
+							foreach($sortprice as $key=>$value){ 
+								if(!isset($sortArray[$key])){ 
+									$sortArray[$key] = array(); 
+								} 
+								$sortArray[$key][] = $value; 
+							} 
+						}		
+						$orderby = "name";
+						array_multisort($sortArray[$orderby],SORT_ASC,$prices); 	
 						if(count($sizes) == count($prices)) {
 							$size_price="";
 							for($i=0;$i<count($sizes);$i++) {

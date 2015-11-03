@@ -117,7 +117,17 @@ get_header();
 									}	
 									$compound_prices = get_the_terms( $compound_id, 'pa_price');
 									if($compound_prices !='') {
-										sort($compound_prices);
+										$orderby = "name";
+										$sortArray = array(); 
+										foreach($compound_prices as $sortprice){ 
+											foreach($sortprice as $key=>$value){ 
+												if(!isset($sortArray[$key])){ 
+													$sortArray[$key] = array(); 
+												} 
+												$sortArray[$key][] = $value; 
+											} 
+										}		
+										array_multisort($sortArray[$orderby],SORT_ASC,$compound_prices);
 									}
 								}
 								if($sizes) {
