@@ -12,15 +12,16 @@
 				<div class="newsletter-box">
 					<h5>Viriditas</h5>
 					<p>Be the first to learn about changes to our clinic schedule, products and class info.</p>
-					<form action="#" method="post">
-						<input type="hidden" value="2" name="group[2][2]" id="mce-group[2]-2-1">
-						<fieldset>
-							<ol>
-								<li><input name="EMAIL" placeholder="you@yourdomain.com" type="email" value=""  id="mce-EMAIL" required></li>
-								<li><input type="submit" value="Submit"></li>
-							</ol>
-						</fieldset>
-					</form>
+					<div class="newsletter newsletter-subscription">
+						<form method="post" action="http://localhost/hypenotic/viriditas/?na=s" onsubmit="return newsletter_check(this)">
+							<fieldset>
+								<ol>
+									<li><input class="newsletter-email" placeholder="you@yourdomain.com" type="email" name="ne" size="30" required></li>
+									<li class="newsletter-td-submit"><input class="newsletter-submit" type="submit" value="Submit"/></li>
+								</ol>
+							</fieldset>
+						</form>
+					</div>
 					<div class="copyright">
 						<p>copyright Viriditas <?php echo date('Y');?></p>
 						<p><a href="<?php echo get_permalink($privacy_policy_page_id);?>">Privacy policy</a> | <a href="<?php echo get_permalink($terms_conditions_page_id);?>">Terms of condition</a></p>
@@ -56,5 +57,29 @@
 		</div>
     </footer>
 <?php wp_footer(); ?>
+<script type="text/javascript">
+//<![CDATA[
+	if (typeof newsletter_check !== "function") {
+		window.newsletter_check = function (f) {
+			var re = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-]{1,})+\.)+([a-zA-Z0-9]{2,})+$/;
+			if (!re.test(f.elements["ne"].value)) {
+				alert("The email is not correct");
+				return false;
+			}
+			for (var i=1; i<20; i++) {
+			if (f.elements["np" + i] && f.elements["np" + i].required && f.elements["np" + i].value == "") {
+				alert("");
+				return false;
+			}
+			}
+			if (f.elements["ny"] && !f.elements["ny"].checked) {
+				alert("You must accept the privacy statement");
+				return false;
+			}
+			return true;
+		}
+	}
+//]]>
+</script>
 </body>
 </html>

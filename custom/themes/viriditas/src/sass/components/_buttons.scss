@@ -11,10 +11,14 @@ button {
 
 .button {
 	background: $button-bg;
-	padding: 8px 15px;
-	float: left;
-	margin: 20px 0;
 	color:$white;
+	float: left;
+	font-family:$sans-serif;
+	font-size:1em;
+	font-weight:normal;
+	margin: 20px 0;
+	padding: 8px 15px;
+	text-transform:uppercase;
 	&:hover, &:focus {
 		background: $button-bg-hover;
 		border-color: $light-purple;
@@ -108,7 +112,10 @@ input[type="button"] {
 	box-shadow:none;
 	margin-top:0;
 	font-size:1em;
-	@include border-radius(5px);
+	@include border-radius(0px);
+	&:hover {
+		background:$button-bg-hover;
+	}
 }
 
 .woocommerce #respond input#submit, 
@@ -148,7 +155,7 @@ input[type="button"] {
 	.button {
 		padding:10px 20px;
 		text-transform:uppercase;
-		@include border-radius(5px);
+		@include border-radius(0px);
 			&.edit-formula {
 				background:none;
 				border:1px solid $button-bg;
