@@ -833,4 +833,10 @@ section[role=content] {
 .hypenotic-slug {
 	margin-top:50px;
 	text-align:center;
+	a {
+		border-bottom:1px solid $white;
+		&:hover {
+			border-bottom:none;
+		}
+	}
 }
