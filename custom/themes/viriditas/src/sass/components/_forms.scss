@@ -632,9 +632,11 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	overflow:hidden;
 	& .widget_wysija_cont .updated, & .widget_wysija_cont .login .message {
 		background:none;
-		border:none;
+		border:none;		font-size: 1em;
+		padding-left: 0;
 	}
 	& .widget_wysija_cont .allmsgs li {
+		color:$white;
 		margin:0;
 		text-align:left;
 	}
