@@ -295,7 +295,10 @@ article {
 		}
 		padding-top:20px;
 		ul {
-			padding-left:0;
+			padding-left:2em;
+			@include media($bp-large) {
+				padding-left:3.5em;
+			}
 			li {
 				margin-left:1em;
 			}
