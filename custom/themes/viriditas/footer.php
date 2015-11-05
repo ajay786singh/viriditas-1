@@ -13,7 +13,7 @@
 					<h5>Viriditas</h5>
 					<p>Be the first to learn about changes to our clinic schedule, products and class info.</p>
 					<div class="newsletter newsletter-subscription">
-						<form method="post" action="http://localhost/hypenotic/viriditas/?na=s" onsubmit="return newsletter_check(this)">
+						<form method="post" action="<?php bloginfo('url');?>?na=s" onsubmit="return newsletter_check(this)">
 							<fieldset>
 								<ol>
 									<li><input class="newsletter-email" placeholder="you@yourdomain.com" type="email" name="ne" size="30" required></li>
