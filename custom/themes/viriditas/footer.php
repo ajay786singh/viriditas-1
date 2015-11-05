@@ -11,7 +11,7 @@
 				<img src="<?php bloginfo('template_url');?>/dist/images/footer-logo.png">
 				<div class="newsletter-box">
 					<h5>Viriditas</h5>
-					<p>Stay up to date on our clinic schedule, products, and class info.</p>
+					<p>Be the first to learn about changes to our clinic schedule, products and class info.</p>
 					<form action="#" method="post">
 						<input type="hidden" value="2" name="group[2][2]" id="mce-group[2]-2-1">
 						<fieldset>
