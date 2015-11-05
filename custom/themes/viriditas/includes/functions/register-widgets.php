@@ -25,7 +25,7 @@
 		'id'=>'sidebar-3',
 		'before_widget' => '<div class="newsletter">',
 		'after_widget' => '</div>',
-		'before_title' => '<h5>',
-		'after_title' => '</h5>',
+		'before_title' => '',
+		'after_title' => '',
 	));
 ?>
