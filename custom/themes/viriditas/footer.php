@@ -12,9 +12,7 @@
 				<div class="newsletter-box">
 					<h5>Viriditas</h5>
 					<p>Be the first to learn about changes to our clinic schedule, products and class info.</p>
-					<div class="newsletter newsletter-subscription">
-						<?php dynamic_sidebar('sidebar-3');?>
-					</div>
+					<?php dynamic_sidebar('sidebar-3');?>
 					<div class="copyright">
 						<p>copyright Viriditas <?php echo date('Y');?></p>
 						<p><a href="<?php echo get_permalink($privacy_policy_page_id);?>">Privacy policy</a> | <a href="<?php echo get_permalink($terms_conditions_page_id);?>">Terms of condition</a></p>

@@ -626,3 +626,30 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		content:"";
 	}
 }
+
+.newsletter {
+	margin-bottom:20px;
+	overflow:hidden;
+	& .widget_wysija_cont .updated, & .widget_wysija_cont .login .message {
+		background:none;
+		border:none;
+	}
+	& .widget_wysija_cont .allmsgs li {
+		margin:0;
+		text-align:left;
+	}
+	& .widget_wysija_cont .error, & .widget_wysija_cont .xdetailed-errors {
+		border:none;
+		width:100%;
+	}
+	form {
+		p {
+			width:74%;
+			float:left;
+		}
+		input[type="submit"] {
+			float:left;
+			margin-top:14px;
+ 		}
+	}
+}
