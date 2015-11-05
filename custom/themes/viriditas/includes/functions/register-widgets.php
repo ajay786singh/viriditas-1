@@ -20,4 +20,12 @@
 		'before_title' => '<h5>',
 		'after_title' => '</h5>',
 	));
+	register_sidebar(array(
+		'name'=>'Sidebar: Footer For Newsletter',
+		'id'=>'sidebar-3',
+		'before_widget' => '<div class="newsletter">',
+		'after_widget' => '</div>',
+		'before_title' => '<h5>',
+		'after_title' => '</h5>',
+	));
 ?>
