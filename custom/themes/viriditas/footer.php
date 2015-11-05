@@ -51,6 +51,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="container">
+			<p class="hypenotic-slug">Made with Purpose by B Corp Certified <a href="http://www.hypenotic.com/" target="_blank">Hypenotic</a></p>
+		</div>
     </footer>
 <?php wp_footer(); ?>
 </body>
