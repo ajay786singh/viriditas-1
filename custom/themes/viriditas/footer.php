@@ -14,7 +14,7 @@
 					<p>Be the first to learn about changes to our clinic schedule, products and class info.</p>
 					<?php if(dynamic_sidebar('sidebar-3'));?>
 					<div class="copyright">
-						<p>copyright Viriditas <?php echo date('Y');?></p>
+						<p>Copyright Viriditas <?php echo date('Y');?></p>
 						<p><a href="<?php echo get_permalink($privacy_policy_page_id);?>">Privacy policy</a> | <a href="<?php echo get_permalink($terms_conditions_page_id);?>">Terms of condition</a></p>
 					</div>
 				</div>
