@@ -296,3 +296,10 @@
 	font-weight:normal;
 	text-decoration:none;
 }
+
+.your-formulas h6 a {
+	border-bottom:1px solid;
+	&:hover {
+		border-bottom:none;
+	}
+}
