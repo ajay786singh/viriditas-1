@@ -96,7 +96,7 @@ function load_products () {
 			$args['s'] = $keyword;	
 		}
 	}
-	$compound_ids='';	
+	$bundle_ids='';	
 	//if($cat_id==1391) {	
 		$post_type='product';
 		$no_of_posts='-1';
@@ -113,15 +113,15 @@ function load_products () {
 				'terms' => '1391'
 			),
 		);	
-		$results =get_posts( $argss ); 
-		if($results): 
-			foreach($results as $result) {
-				$hide_user= get_post_meta($result->ID,'_allowed_bundle_user',true);
-				if($hide_user != '' && $current_user->ID!=$hide_user) {
-					$compound_ids[] = $result->ID;
+		$bundles =get_posts( $argss ); 
+		if($bundles): 
+			foreach($bundles as $bundle) {
+				$hide_user= get_post_meta($bundle->ID,'_allowed_bundle_user',true);
+				if($hide_user != '') {
+					$bundle_ids[] = $bundle->ID;
 				}
 			}
-			$args['post__not_in']=$compound_ids;
+			$args['post__not_in']=$bundle_ids;
 		endif;
 	// } else {
 	// }
@@ -147,8 +147,8 @@ function load_products () {
 			);
 		}	
 		unset($args['post__in']);
-		if($postids !='' && $compound_ids!='') {
-			$args['post__in']=array_diff($postids,$compound_ids);
+		if($postids !='' && $bundle_ids!='') {
+			$args['post__in']=array_diff($postids,$bundle_ids);
 		} else { 
 			if($postids !='') {
 				$args['post__in'] = $postids;
