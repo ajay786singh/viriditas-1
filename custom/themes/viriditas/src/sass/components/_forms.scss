@@ -80,7 +80,7 @@ input[type="submit"] {
     cursor: pointer;
     font-family: $sans-serif;
     font-size: $base-font-size;
-    font-size: 1.2em;
+    //font-size: 1.2em;
     padding: 6px 15px 7px;
     text-decoration: none;
     user-select: none;
@@ -265,7 +265,7 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		margin-top:0;
 		margin-bottom: 0;
 		font-weight: normal;
-		padding: 10px 25px;
+		padding: 9px 20px;
 	}
 	& #{$all-text-inputs} , & select{
 		@include border-radius(0px);
@@ -657,4 +657,16 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 			margin-top:0px;
  		}
 	}
+}
+.accordion-panel-content .gform_wrapper form .top_label label {
+	@include media($bp-large) {
+		margin-bottom:0;
+	}
+}
+.accordion-panel-content .gform_wrapper form .top_label .name_first label {
+	display:block;
+}
+
+.accordion-panel-content .gform_wrapper form .top_label .name_last input {
+	margin-bottom:0;
 }
