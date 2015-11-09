@@ -75,7 +75,7 @@ get_header();
 					endwhile;
 					echo "</ul></div>";
 				else:
-					$yourFormulasURL= get_bloginfo('url').'/your-custom-formulas/';
+					$yourFormulasURL= get_bloginfo('url').'/make-your-compound/';
 					echo "<h6>You haven't made any custom formulas yet. <a href='".$yourFormulasURL."'>Click here</a> to get started.</h6>";
 				endif;
 			?>
