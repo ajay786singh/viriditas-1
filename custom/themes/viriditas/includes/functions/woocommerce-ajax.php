@@ -283,7 +283,7 @@ function get_product_info($id) {
 	$product_page_url=get_bloginfo('url')."/products"; 
 	if($post_query->have_posts()): while( $post_query->have_posts() ) : $post_query->the_post();
 		$id=get_the_ID();
-		$single_product_url=$product_page_url."?show_product=".$id;
+		//$single_product_url=$product_page_url."?show_product=".$id;
 		//$html.="<a href='".get_the_permalink($id)."'><i>".get_the_title()."</i></a>";
 		$html.="<span><i>".get_the_title()."</i></span>";
 	endwhile; endif; wp_reset_query();
