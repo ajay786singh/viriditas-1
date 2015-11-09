@@ -1,7 +1,7 @@
 <?php 
 function get_faqs() {
 	$html='';
-	$html.='<h5>FAQ</h5>';
+	$html.='<h4 class="faq-title">FAQ</h4>';
 	$args=array(
 		'post_type' => 'faq',
 		'post_status' => 'publish',
@@ -32,7 +32,7 @@ function get_faqs() {
 function get_worksheets() {
 	$html='';
 	$tax='worksheet_category';
-	$html.='<h5>Worksheets</h5>';
+	$html.='<h4 class="faq-title">Worksheets</h4>';
 	
 	$args=array(
 		'post_type' => 'worksheet',
@@ -80,7 +80,7 @@ function get_monographs() {
 	global $wpdb,$wp_query;
 	$html='';
 	$letter="A";
-		$html.='<h5>Monographs</h5>';	
+		$html.='<h4 class="faq-title">Monographs</h4>';	
 		$html.='<div class="accordion">';
 			$html.="<div class='accordion-panel'>";
 				$html.='<h5 class="accordion-panel-header monograph-header" data-rel="single-herb-tincture">Single Herb Tincture</h5>';		
@@ -157,9 +157,9 @@ function get_faqs_box_content() {
 	$html.='<h2>Ordering Support</h2>';
 		$html.='<div class="column-9">';
 				$html.='<div class="faq-content">';
-				$html.= "<section>".get_faqs()."</section>";
 				$html.= "<section>".get_worksheets()."</section>";
 				$html.= "<section>".get_monographs()."</section>";
+				$html.= "<section>".get_faqs()."</section>";
 				$html.= "<a href='".$contact_page_url."' class='button'>Contact Us</a>";
 				$html.= "<section id='faq-contact-form'>";
 				$contact_form_id=9;
