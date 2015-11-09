@@ -67,7 +67,6 @@ input[type="button"] {
 		@extend .button;
 		border:none;
 		@include border-radius(0);
-		font-size:0.8em;
 		font-weight:normal;
 		text-transform:uppercase;
 	}
@@ -153,14 +152,14 @@ input[type="button"] {
 
 .cart-actions {
 	.button {
-		padding:10px 20px;
+		padding:9px 20px;
 		text-transform:uppercase;
 		@include border-radius(0px);
 			&.edit-formula {
 				background:none;
 				border:1px solid $button-bg;
 				color:$heading;
-				font-weight:bold;
+				text-shadow:none;
 				&:hover {
 					border-color:$button-bg-hover;
 					text-shadow:none;
