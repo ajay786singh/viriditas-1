@@ -181,7 +181,12 @@ global $product;
 								$compositions="";
 								foreach($product_bundled_data as $key=>$value) {
 									$id = $value['product_id'];
-									$compositions[]=get_product_info($id);
+									$required_size = $value['bundle_required_size'];
+									$title="<span><i>".get_the_title($id)."</i></span>";
+									if($required_size!='') {
+										$title="<span><i>".get_the_title($id)." - ".$required_size."%</i></span>";
+									}
+									$compositions[]=$title;
 								}
 								echo implode(', ', $compositions );
 							?>
