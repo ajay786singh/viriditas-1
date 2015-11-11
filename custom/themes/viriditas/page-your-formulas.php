@@ -64,7 +64,7 @@ get_header();
 					)
 				);
 				$formulas=new WP_Query($args);
-				if($formulas->have_posts()):
+				if(!$formulas->have_posts()):
 					echo '<div class="product-list"><ul class="thumb_view">';
 					while($formulas->have_posts()):$formulas->the_post();
 						?>
