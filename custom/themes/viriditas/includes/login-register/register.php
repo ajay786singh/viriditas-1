@@ -81,14 +81,15 @@ class Hype_registration_form {
                 
 				<div class="form-group">
 					<label for="reg-country">Country</label>
-					<select name="billing_country" onchange="print_state('billing_state', this.selectedIndex);" id="reg-country">
-						<?php if(isset($_POST['billing_country'])){ ?>
-							<option value="<?php echo $_POST['billing_country'];?>"><?php echo $_POST['billing_country'];?></option>
-						<?php } ?>
+					<select name="billing_country" id="reg-country">
+						<?php if(!isset($_POST['billing_country'])){ ?>
+							<option value="">Select Country</option>
+							<option value="Canada">Canada</option>
+						<?php }else {
+							echo '<option value="Canada">Canada</option>';
+						} 
+						?>	
 					</select>
-					<?php if(!isset($_POST['billing_country'])){ ?>
-						<script language="javascript">print_country("reg-country");</script>
-					 <?php } ?>
                 </div>
 				
 				<div class="form-group">
@@ -101,6 +102,19 @@ class Hype_registration_form {
 						<div class="secondary">
 							<label for="reg-province">Province/State</label>
 							<select name="billing_state" id="billing_state">
+								<?php 
+									$states=array("Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland","Northwest Territories","Nova Scotia","Nunavut","Ontario","Prince Edward Island","Quebec","Saskatchewan","Yukon Territory");
+									if(!isset($_POST['billing_state'])){
+										echo '<option value="">Select Province/State</option>';
+									}
+									foreach($states as $province){
+										if(isset($_POST['billing_state']) && $_POST['billing_state']==$province){	
+											echo '<option selected value="'.$province.'">'.$province.'</option>';
+										} else {
+											echo '<option value="'.$province.'">'.$province.'</option>';
+										}
+									} 
+								?>
 								<?php if(isset($_POST['billing_state'])){ ?>
 									<option value="<?php echo $_POST['billing_state'];?>"><?php echo $_POST['billing_state'];?></option>
 								<?php } ?>
@@ -224,8 +238,8 @@ class Hype_registration_form {
 		);
 		
         if (is_wp_error($this->validation())) {
-            echo '<div style="margin-bottom: 6px" class="btn btn-block btn-lg btn-danger">';
-            echo '<strong>' . $this->validation()->get_error_message() . '</strong>';
+            echo '<div class="btn btn-block btn-lg btn-danger">';
+            echo '<p>' . $this->validation()->get_error_message() . '</p>';
             echo '</div>';
         } else {
             $register_user = wp_insert_user($userdata);
@@ -234,15 +248,15 @@ class Hype_registration_form {
 			}
 			
             if (!is_wp_error($register_user)) {
-				
-                echo '<div style="margin-bottom: 6px" class="btn btn-block btn-lg btn-danger">';
-                echo '<strong>Registration complete. Goto <a href="' .get_bloginfo('url'). '/login">login page</a></strong>';
-                echo '</div>';
+				// $contactPage=get_bloginfo('url')."/contact";
+                // echo '<div class="btn btn-block btn-lg">';
+                // echo '<strong>We will verify your account, and get back to you within two business days to confirm your registration. Once you receive confirmation, you are ready to order! IF you do not receive a confirmation from us within two business days, please <a href="'.$contactPage.'">contact our office</a>.</strong>';
+                // echo '</div>';
 				wp_redirect( home_url('/welcome')); exit;
 				$_POST = array();
             } else {
-                echo '<div style="margin-bottom: 6px" class="btn btn-block btn-lg btn-danger">';
-                echo '<strong>' . $register_user->get_error_message() . '</strong>';
+                echo '<div class="btn btn-block btn-lg btn-danger">';
+                echo '<p>' . $register_user->get_error_message() . '</p>';
                 echo '</div>';
             }
         }
