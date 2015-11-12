@@ -17,6 +17,7 @@ class Hype_registration_form {
     }
     public function registration_form()	{
 	?>
+		
         <form method="post" class="account-form"  autocomplete="off" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
             <div class="login-form">
 				<div class="form-heading">
@@ -200,16 +201,14 @@ class Hype_registration_form {
 				add_user_meta( $register_user, $key, $value, true ); 
 			}
             if (!is_wp_error($register_user)) {
-				// $contactPage=get_bloginfo('url')."/contact";
-                // echo '<div class="btn btn-block btn-lg">';
-                // echo '<strong>We will verify your account, and get back to you within two business days to confirm your registration. Once you receive confirmation, you are ready to order! IF you do not receive a confirmation from us within two business days, please <a href="'.$contactPage.'">contact our office</a>.</strong>';
-                // echo '</div>';
+					echo '<div class="btn btn-block btn-lg small-loader">';
+						//echo '<p><span class="">Please wait, We are processing you request..</span> </p>';
+					echo '</div>';
 				?>
 				<script>
-					window.location(welcomePageURL);
+					window.location=welcomePageURL;
 				</script>
 				<?php
-				//wp_redirect(home_url('/welcome'));
 				$_POST = array();
             } else {
                 echo '<div class="btn btn-block btn-lg btn-danger">';
