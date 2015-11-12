@@ -206,7 +206,7 @@ class Hype_registration_form {
                 // echo '</div>';
 				?>
 				<script>
-					alert(1);
+					window.location(welcomePageURL);
 				</script>
 				<?php
 				//wp_redirect(home_url('/welcome'));
