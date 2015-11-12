@@ -171,6 +171,9 @@ cite {
 }
 .btn-danger {
 	@extend .error;
+	width: 100%;
+	border-radius: 0;
+	padding: 10px;
 }
 .compound-error {
 	//display:none;
