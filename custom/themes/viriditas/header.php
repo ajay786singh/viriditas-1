@@ -30,6 +30,7 @@
 		var formulas_page = '<?php echo get_bloginfo('url');?>/your-custom-formulas/';
 		var limitHerbForNewCompound = '<?php echo get_option('wc_settings_tab_compound_limit_herb_new');?>';
 		var limitHerbForEditCompound = '<?php echo get_option('wc_settings_tab_compound_limit_herb_edit');?>';
+		var welcomePageURL = '<?php echo get_bloginfo('home').'/welcome/';?>';
 	</script>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
