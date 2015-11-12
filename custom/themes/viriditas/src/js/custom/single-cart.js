@@ -34,21 +34,21 @@ jQuery(document).ready(function($) {
 		$('#cart_price').val(price);
 		$("#additional_price").calculateAdditionalPrice();
 	});
-	$('table.shop_table.cart .cart_item').each(function(){
-		var ProductType=$(this).find('td.product-price span.product_type');
-		if(ProductType.html()=='bundle') {
-			var ProductID=$(this).find('td.product-price span.product_type').attr("data-id");
-			var ProductPrice=$(this).find('td.product-price span.amount').html();
-			if(ProductPrice=='$1.00') {
-				var data= {'action':'remove_bundle_product_from_cart','product_id':ProductID};		
-				$.ajax({		
-					type: 'POST',		
-					url: ajaxurl,		
-					data:data,	
-					success: function(html) {									
-					}		
-				});	
-			}
-		}
-	});
+	// $('table.shop_table.cart .cart_item').each(function(){
+		// var ProductType=$(this).find('td.product-price span.product_type');
+		// if(ProductType.html()=='bundle') {
+			// var ProductID=$(this).find('td.product-price span.product_type').attr("data-id");
+			// var ProductPrice=$(this).find('td.product-price span.amount').html();
+			// if(ProductPrice=='$1.00') {
+				// var data= {'action':'remove_bundle_product_from_cart','product_id':ProductID};		
+				// $.ajax({		
+					// type: 'POST',		
+					// url: ajaxurl,		
+					// data:data,	
+					// success: function(html) {									
+					// }		
+				// });	
+			// }
+		// }
+	// });
 });

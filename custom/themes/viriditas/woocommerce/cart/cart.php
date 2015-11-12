@@ -77,9 +77,9 @@ do_action( 'woocommerce_before_cart' ); ?>
 								$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
 									$size=get_post_meta($compound_id,'_selling_size',true);
 									if($size!='') {
-										echo get_bundle_info($compound_id,$size);
+										echo "<br>".get_bundle_info($compound_id,$size);
 									} else {
-										echo get_bundle_info($compound_id,$total_size);	
+										echo "<br>".get_bundle_info($compound_id,$total_size);	
 									}
 								}
 							}
