@@ -204,7 +204,12 @@ class Hype_registration_form {
                 // echo '<div class="btn btn-block btn-lg">';
                 // echo '<strong>We will verify your account, and get back to you within two business days to confirm your registration. Once you receive confirmation, you are ready to order! IF you do not receive a confirmation from us within two business days, please <a href="'.$contactPage.'">contact our office</a>.</strong>';
                 // echo '</div>';
-				wp_redirect( home_url('/welcome')); exit;
+				?>
+				<script>
+					alert(1);
+				</script>
+				<?php
+				//wp_redirect(home_url('/welcome'));
 				$_POST = array();
             } else {
                 echo '<div class="btn btn-block btn-lg btn-danger">';
