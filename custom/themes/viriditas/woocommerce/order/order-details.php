@@ -45,7 +45,25 @@ $order = wc_get_order( $order_id );
 
 								// Allow other plugins to add additional product information here
 								do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order );
-								$item_meta->display();
+								// echo "<pre>";
+								// print_r($item);
+								// echo "</pre>";
+								$product_id=$item_meta->meta['_product_id'][0];
+								$hide_user= get_post_meta($product_id,'_allowed_bundle_user',true);
+								if($hide_user!='') {
+									$size= get_post_meta($product_id,'_selling_size',true);
+									if($size!='') {
+										echo '<dl class="variation">
+												<dt class="variation-Size">Size :</dt>
+												<dd class="variation-Size"><p>'.$size.'</p></dd>';															
+										echo '<dt class="variation-Herbs">Herbs :</dt>
+												<dd class="variation-Herbs"><p>'.get_bundle_info($product_id,$size).'</small></p></dd>
+											 </dl>';
+									}
+								} else {
+									$item_meta->display();	
+								}
+								
 
 								if ( $_product && $_product->exists() && $_product->is_downloadable() && $order->is_download_permitted() ) {
 
@@ -160,7 +178,10 @@ $order = wc_get_order( $order_id );
 	</tfoot>
 </table>
 
-<?php do_action( 'woocommerce_order_details_after_order_table', $order ); ?>
+<?php //do_action( 'woocommerce_order_details_after_order_table', $order ); ?>
+<p class="order-again">
+	<a id="order-<?php echo $order->id;?>" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'orderagain', $order->id ) , 'woocommerce-order_again' ) ); ?>" class="button button-order-again"><?php _e( 'Order Again', 'woocommerce' ); ?></a>
+</p>
 
 <header>
 	<h2><?php _e( 'Customer details', 'woocommerce' ); ?></h2>

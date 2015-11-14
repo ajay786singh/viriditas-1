@@ -33,6 +33,9 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 		<?php
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+			// echo "<pre>";
+			// print_r($cart_item);
+			// echo "</pre>";
 			$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 			$product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
@@ -67,8 +70,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 									echo apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s </a>', '#', $_product->get_title() ), $cart_item, $cart_item_key );
 								}else {
 									echo apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s </a>', $_product->get_permalink( $cart_item ), $_product->get_title() ), $cart_item, $cart_item_key );	
-								}
-								
+								}					
 							}
 							// Meta data
 							echo WC()->cart->get_item_data( $cart_item );
@@ -76,11 +78,15 @@ do_action( 'woocommerce_before_cart' ); ?>
 								$compound_id=$_product->id;
 								$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
 									$size=get_post_meta($compound_id,'_selling_size',true);
+									echo '<dl class="variation">';
+									echo '<dt class="variation-Herbs">Herbs:</dt>';
+									echo '<dd class="variation-Herbs">';//<p><small><i>Glycerrhiza glabra</i></small>, <small><i>Bupleurum falcatum</i></small>, <small><i>Dioscorea villosa</i></small></p>
 									if($size!='') {
-										echo "<br>".get_bundle_info($compound_id,$size);
+										echo get_bundle_info($compound_id,$size);
 									} else {
-										echo "<br>".get_bundle_info($compound_id,$total_size);	
+										echo get_bundle_info($compound_id,$total_size);	
 									}
+									echo "</dd></dl>";
 								}
 							}
                				// Backorder notification
