@@ -29,6 +29,7 @@ require_once('includes/functions/add-woocommerce-support.php');
 require_once('includes/functions/woocommerce-compound-product-settings.php');
 require_once('includes/functions/woocommerce-compound.php');
 require_once('includes/functions/woocommerce-add-to-cart.php');
+require_once('includes/functions/woocommerce-order-again.php');
 require_once('includes/functions/add-cart-link-header.php');
 require_once('includes/functions/get-term-top-level-parent.php');
 require_once('includes/functions/register-widgets.php');

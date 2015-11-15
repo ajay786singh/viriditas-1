@@ -35,8 +35,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php 
 								if($_product->product_type=='bundle') {
 									$compound_id=$_product->id;
-									$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
-									echo get_bundle_info($compound_id,$total_size);
+									$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));
+									$size=get_post_meta($compound_id,'_selling_size',true);
+									echo '<dl class="variation">';
+									echo '<dt class="variation-Herbs">Herbs :</dt>';
+									echo '<dd class="variation-Herbs">';//<p><small><i>Glycerrhiza glabra</i></small>, <small><i>Bupleurum falcatum</i></small>, <small><i>Dioscorea villosa</i></small></p>
+									if($size!='') {
+										echo get_bundle_info($compound_id,$size);
+									} else {
+										echo get_bundle_info($compound_id,$total_size);	
+									}
+									echo "</dd></dl>";
 								}
 							?>
 						</td>

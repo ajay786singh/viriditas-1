@@ -45,6 +45,7 @@ var scriptList = [
 	'src/js/custom/faq.js',
 	'src/js/custom/scroll-to-url-hash.js',
 	'src/js/custom/equal-height.js',
+	'src/js/custom/woocommerce-order-again.js',
 ];
 
 var fontIcons = [
