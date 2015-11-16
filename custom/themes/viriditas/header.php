@@ -24,6 +24,7 @@
 	<script type="text/javascript">
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 		var redirect = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+		var accountPageURL = '<?php echo get_bloginfo('url');?>/my-account/';
 		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
 		var cart_page = '<?php echo get_permalink( woocommerce_get_page_id( 'cart' ) );?>';
 		var compound_page = '<?php echo get_permalink(2219);?>';
@@ -74,7 +75,7 @@
 									if(get_faqs_box_content()) echo get_faqs_box_content();
 								} 
 								?>
-								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('Profile ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
+								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('My Account ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
 								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 
 							else { ?>
