@@ -75,13 +75,13 @@
 									if(get_faqs_box_content()) echo get_faqs_box_content();
 								} 
 								?>
-								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>" title="<?php _e('My Account ','woothemes'); ?>"><?php _e('Profile','woothemes'); ?></a> |  
-								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" title="<?php _e('Sign out ','woothemes'); ?>"><?php _e('Sign out','woothemes'); ?></a></li>
+								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account ','woothemes'); ?></a> |  
+								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" ><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 
 							else { ?>
 								<li>
 									<div>
-									<a href="#" class="login_button" id="show_login" title="<?php _e('Login','woothemes'); ?>"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register" title="<?php _e('Register','woothemes'); ?>"><?php _e('Sign up','woothemes'); ?></a>
+									<a href="#" class="login_button" id="show_login"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register"><?php _e('Sign up','woothemes'); ?></a>
 									<?php form_login();?>
 									</div>
 								</li>
