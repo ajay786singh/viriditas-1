@@ -2,6 +2,7 @@
 /*
 * Function to redirect not logged in user to login page
 */
+add_action('template_redirect', 'user_redirect_woocommerce');
 function user_redirect_woocommerce() {
     if (
         ! is_user_logged_in()
@@ -12,7 +13,6 @@ function user_redirect_woocommerce() {
         exit;
     }
 }
-
 add_filter('woocommerce_login_redirect', 'woocommerce_after_login_redirect');
 function woocommerce_after_login_redirect( $redirect_to ) {
 	$redirect_to=$_REQUEST['redirect_to'];
