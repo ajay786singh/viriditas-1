@@ -12,5 +12,23 @@ function user_redirect_woocommerce() {
         exit;
     }
 }
-add_action('template_redirect', 'user_redirect_woocommerce');
+
+add_filter('woocommerce_login_redirect', 'woocommerce_after_login_redirect');
+function woocommerce_after_login_redirect( $redirect_to ) {
+	$redirect_to=$_REQUEST['redirect_to'];
+     return $redirect_to;
+}
+
+function wp_login_screen_redirect() {
+    global $pagenow;
+    if ($pagenow == 'wp-login.php' && !is_user_logged_in()) {
+		$redirect_to=$_REQUEST['redirect_to'];
+		$loginPageURL=get_bloginfo('url')."/my-account/";
+		if($redirect_to!='') {
+			$loginPageURL.="?redirect_to=".$redirect_to;
+		}
+        wp_redirect($loginPageURL);
+    }
+}
+add_action('init', 'wp_login_screen_redirect');
 ?>
