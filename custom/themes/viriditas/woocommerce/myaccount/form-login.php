@@ -21,37 +21,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="col2-set" id="customer_login">
 
-	<div class="col-1">
+	<div class="login-form">
 
 <?php endif; ?>
 
 		<h2><?php _e( 'Login', 'woocommerce' ); ?></h2>
 
-		<form method="post" class="login">
+		<form method="post" class="account-form">
 
 			<?php do_action( 'woocommerce_login_form_start' ); ?>
 
-			<p class="form-row form-row-wide">
+			<div class="form-group">
 				<label for="username"><?php _e( 'Username or email address', 'woocommerce' ); ?> <span class="required">*</span></label>
 				<input type="text" class="input-text" name="username" id="username" value="<?php if ( ! empty( $_POST['username'] ) ) echo esc_attr( $_POST['username'] ); ?>" />
-			</p>
-			<p class="form-row form-row-wide">
+			</div>
+			<div class="form-group">
 				<label for="password"><?php _e( 'Password', 'woocommerce' ); ?> <span class="required">*</span></label>
-				<input class="input-text" type="password" name="password" id="password" />
-			</p>
+				<input class="form-control" type="password" name="password" id="password" />
+			</div>
 
 			<?php do_action( 'woocommerce_login_form' ); ?>
 
-			<p class="form-row">
+			<div class="form-group">
+				<br>
 				<?php wp_nonce_field( 'woocommerce-login' ); ?>
 				<input type="submit" class="button" name="login" value="<?php _e( 'Login', 'woocommerce' ); ?>" />
+			</div>
+			
+			<div class="form-group">
 				<label for="rememberme" class="inline">
 					<input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <?php _e( 'Remember me', 'woocommerce' ); ?>
 				</label>
-			</p>
-			<p class="lost_password">
+			</div>
+			<div class="form-group lost_password">
 				<a href="<?php echo esc_url( wc_lostpassword_url() ); ?>"><?php _e( 'Lost your password?', 'woocommerce' ); ?></a>
-			</p>
+			</div>
 
 			<?php do_action( 'woocommerce_login_form_end' ); ?>
 
