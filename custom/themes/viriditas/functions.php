@@ -41,6 +41,7 @@ require_once('includes/functions/add-favicon.php');
 //Remove Emoji Script From Site
 require_once('includes/functions/remove-wordpress-emoji.php');
 // Woocommerce Functions
+require_once('includes/functions/woocommerce-edit-user-details.php');
 require_once('includes/functions/woocommerce-ajax.php');
 require_once('includes/functions/add-single-cart.php');
 
