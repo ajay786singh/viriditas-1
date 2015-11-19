@@ -28,6 +28,11 @@ $oddeven-background: $grey;
     }	
 	float: none;
 	margin: 0 auto;
+	.woocommerce-edit-account & {
+		@include media($bp-large) {
+			width:60%;
+		}
+	}
 }
 
 .secondary {

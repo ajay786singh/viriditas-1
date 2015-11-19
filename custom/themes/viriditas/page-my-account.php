@@ -7,8 +7,14 @@
 		?>		
 		<div class="content-grid">
 			<?php
-				//the_title("<h1>","</h1>");
-				echo "<h1>My Account</h1>";
+				global $wp;
+				if(isset( $wp->query_vars['edit-account'] )){
+					echo "<h1>Edit Account Details</h1>";	
+				} else if(isset( $wp->query_vars['view-order'] )){
+					echo "<h1>View Order</h1>";	
+				} else {
+					echo "<h1>My Account</h1>";	
+				}
 				the_content();
 			?>
 		</div>

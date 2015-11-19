@@ -253,6 +253,11 @@ footer {
 }
 .content-grid {
 	text-align:center;
+	.woocommerce-edit-account &{
+		.login-form {
+			text-align:left;
+		}
+	}
 	.sub-heading { 
 		color: $sub_heading;
 		margin-top:0;
