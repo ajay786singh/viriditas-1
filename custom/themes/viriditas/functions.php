@@ -38,7 +38,7 @@ require_once('includes/functions/appointments.php');
 require_once('includes/functions/faq.php');
 require_once('includes/functions/edit-tag-cloud.php');
 require_once('includes/functions/add-favicon.php');
-require_once('includes/functions/user-email-message-change.php');
+//require_once('includes/functions/user-email-message-change.php');
 //Remove Emoji Script From Site
 require_once('includes/functions/remove-wordpress-emoji.php');
 // Woocommerce Functions

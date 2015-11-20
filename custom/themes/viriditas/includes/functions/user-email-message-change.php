@@ -7,6 +7,7 @@
  * @return string the updated message.
  */
 function my_custom_message( $message, $user ) {
+	
     $message = 'Custom message here';
     
     return $message;
