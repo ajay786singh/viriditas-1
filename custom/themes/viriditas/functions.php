@@ -38,6 +38,7 @@ require_once('includes/functions/appointments.php');
 require_once('includes/functions/faq.php');
 require_once('includes/functions/edit-tag-cloud.php');
 require_once('includes/functions/add-favicon.php');
+require_once('includes/functions/user-email-message-change.php');
 //Remove Emoji Script From Site
 require_once('includes/functions/remove-wordpress-emoji.php');
 // Woocommerce Functions
@@ -52,13 +53,8 @@ require_once('includes/login-register/login.php');
 //Load shortcodes
 require_once('includes/widgets/appointment-forms.php');
 
-
 //Load Theme Options
 require_once('includes/theme-options/theme-options.php');
 //Load shortcodes
-//require_once('includes/shortcodes/button.php');
-//require_once('includes/shortcodes/content.php');
-//require_once('includes/shortcodes/content-sidebar.php');
-//require_once('includes/shortcodes/readmore.php');
 require_once('includes/shortcodes/tab.php');
 ?>
