@@ -13,9 +13,4 @@ function user_redirect_woocommerce() {
         exit;
     }
 }
-add_filter('woocommerce_login_redirect', 'woocommerce_after_login_redirect');
-function woocommerce_after_login_redirect( $redirect_to ) {
-	$redirect_to=$_REQUEST['redirect_to'];
-     return $redirect_to;
-}
 ?>
