@@ -49,12 +49,10 @@
 			$dosage = get_post_meta($post->ID,'_monograph_details_dosage',true);
 			$synergy = get_post_meta($post->ID,'_monograph_details_synergy',true);
 			$product_ids="";
-			$indications="";
 			$actions="";
 			$product_page_url=get_bloginfo('url')."/products"; 
 			
 			if($composition!='') {
-				$indications = wp_get_object_terms( $composition, 'indication' );
 				$actions = wp_get_object_terms( $composition, 'actions' );
 			}
 			if($composition!='') {
@@ -63,14 +61,16 @@
 					echo "<h5>Composition</h5>";
 					echo "<ul class='list composition-list'>";	
 						for($i=0;$i<count($composition);$i++) {
-							$herburl=get_permalink($composition[$i]);
-							echo "<li><a href='".$herburl."'>";
+							//$herburl=get_permalink($composition[$i]);
 							$folk_name=get_post_meta($composition[$i],'_product_details_folk_name',true);
+							echo "<li>";
+							//echo "<a href='#'>";
 							if($folk_name) {
 								echo $folk_name."<br>";
 							} 
 							echo get_product_info($composition[$i]);
-							echo "</a></li>";
+							//echo "</a>";
+							echo "</li>";
 						}
 					echo "</ul>";	
 				echo "</section>";	
@@ -89,17 +89,6 @@
 					echo apply_filters('the_content', $synthesis);
 				echo "</section>";	
 			}
-			// if($indications) {
-				// echo "<section class='column-7'>";
-					// echo "<h5>Indications</h5>";
-					// echo "<ul class='list composition-list'>";	
-						// foreach($indications as $indication) {
-							// $indication_url=$product_page_url."?pi=".$indication->term_id;
-							// echo "<li>".$indication->name."</li>";
-						// }
-					// echo "</ul>";	
-				// echo "</section>";	
-			// }
 			if($contradictions) {
 				echo "<section class='column-7'>";
 					echo "<h5>Contraindications, Warnings and Interactions</h5>";
