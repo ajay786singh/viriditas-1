@@ -16,9 +16,9 @@ add_action( 'init', 'register_my_menus' );
 /*Add Shop Page url*/
 add_filter( 'wp_nav_menu_items', 'your_custom_menu_item', 10, 2 );
 function your_custom_menu_item ( $items, $args ) {
-    if (is_user_logged_in() && $args->theme_location == 'header-menu' ) {
+    if(is_user_logged_in() && $args->theme_location == 'header-menu' ) {
 		$shopPage=get_permalink( woocommerce_get_page_id( 'shop' ) );
-        $items.= '<li><a href="'.$shopPage.'">Products</a></li>';
+        $items.= '<li><b><a href="'.$shopPage.'">Products</a></b></li>';
     }
     return $items;
 }

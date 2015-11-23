@@ -24,6 +24,7 @@
 	<script type="text/javascript">
 		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 		var redirect = '<?php echo $_SERVER['REQUEST_URI']; ?>';
+		var AfterLoginRedirect = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
 		var accountPageURL = '<?php echo get_bloginfo('url');?>/my-account/';
 		var shop_page = '<?php echo get_permalink( woocommerce_get_page_id( 'shop' ) );?>';
 		var cart_page = '<?php echo get_permalink( woocommerce_get_page_id( 'cart' ) );?>';

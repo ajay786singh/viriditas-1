@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
             success: function(data){
                 $('form#login-form .status').text(data.message);
                 if (data.loggedin == true){
-					document.location.href = redirect;
+					document.location.href = AfterLoginRedirect;
                 }
             }
         });
