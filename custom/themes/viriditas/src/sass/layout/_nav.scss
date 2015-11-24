@@ -140,6 +140,9 @@ body.mm-menu-open {
 		font-size:em(16px);
 		a {
 			color:$white;
+			&:hover {
+				color:$menu-color-hover;
+			}
 		}
 	}
 }
