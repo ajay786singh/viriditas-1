@@ -40,7 +40,7 @@ body.mm-menu-open {
 
 .mm-menu-toggle {
 	position: fixed;
-	top: 38px; 
+	top: 42px; 
 	@include media($bp-large) {
 		display:none;
 	}
@@ -51,14 +51,12 @@ body.mm-menu-open {
 		}
 	}
 	right: 30px;
-	padding-right: 35px;
+	padding-right: 28px;
+	padding-top: 0px;
 	z-index: 21001;
 	cursor:pointer;
-	width: $menu-toggle-width;
 	height: $menu-toggle-height;
 	color:$white;
-	font-size: 1.25em;
-	line-height: 1.5em;
 	&:after {
 		background: url(dist/images/menu-buttons.png) 0 0 no-repeat;
 		.active-header & {
@@ -69,9 +67,9 @@ body.mm-menu-open {
 		height:26px;
 		position:absolute;
 		right:0;
-		top: 4px;
+		top: 0px;
 		@include transition(0.5s all);
-		width: 27px;
+		width: 28px;
 	}
 	/* active states */
 	&.active { 

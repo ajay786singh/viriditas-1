@@ -46,7 +46,7 @@
 </head>
 <body <?php body_class();?>>
 <?php global $woocommerce; ?> 
-<div id="mm-menu-toggle" class="mm-menu-toggle">Menu</div>
+<div id="mm-menu-toggle" class="mm-menu-toggle"></div>
   <nav id="mm-menu" class="mm-menu">
     <div class="mm-menu__header">
       <h2 class="mm-menu__title"><a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""><span>Viriditas</span></a></h2>
