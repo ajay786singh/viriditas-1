@@ -138,14 +138,14 @@ footer {
 		color: $form-submit-button-color;
 		height:35px;
 		padding:7px 15px 7px;
-		margin-left:-4px;
+		margin-left:0px;
 		&:hover {
 			background: $hover-button-color;
 			color: $form-submit-button-color;
 		}
 		@include border-radius(0);
-		@include media($bp-small) {
-			margin-left:0px;
+		@include media($bp-large) {
+			//margin-left:-4px;
 		}
 		text-transform:uppercase;
 	}
@@ -649,9 +649,12 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 	}
 	form {
 		p {
-			width:74%;
+			width:100%;
 			float:left;
 			margin-top:0;
+			@include media($bp-large) {
+				width:74%;
+			}
 		}
 		input[type="submit"] {
 			float:left;
