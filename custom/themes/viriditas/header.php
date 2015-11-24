@@ -82,7 +82,7 @@
 							else { ?>
 								<li>
 									<div>
-									<a href="#" class="login_button" id="show_login"><?php _e('Login ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register"><?php _e('Sign up','woothemes'); ?></a>
+									<a href="#" class="login_button" id="show_login"><?php _e('Login to order ','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register"><?php _e('Sign up','woothemes'); ?></a>
 									<?php form_login();?>
 									</div>
 								</li>
