@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-		<h2><?php _e( 'Login', 'woocommerce' ); ?></h2>
+		<h2><?php _e( 'Login to order', 'woocommerce' ); ?></h2>
 
 		<form method="post" class="account-form">
 
@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</label>
 			</div>
 			<div class="form-group lost_password">
-				<a href="<?php echo esc_url( wc_lostpassword_url() ); ?>"><?php _e( 'Lost your password?', 'woocommerce' ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/register' ) ); ?>"><?php _e( 'Register', 'woocommerce' ); ?></a> | <a href="<?php echo esc_url( wc_lostpassword_url() ); ?>"><?php _e( 'Lost your password?', 'woocommerce' ); ?></a>
 			</div>
 
 			<?php do_action( 'woocommerce_login_form_end' ); ?>
