@@ -45,11 +45,23 @@
 	</script>
 </head>
 <body <?php body_class();?>>
-<?php global $woocommerce; ?> 
-<div id="mm-menu-toggle" class="mm-menu-toggle">Menu</div>
+<?php global $woocommerce; global $current_user; ?> 
+<div id="mm-menu-toggle" class="mm-menu-toggle"></div>
   <nav id="mm-menu" class="mm-menu">
     <div class="mm-menu__header">
-      <h2 class="mm-menu__title"><a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""><span>Viriditas</span></a></h2>
+		<div class="mm-menu__title">
+			<a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_url');?>/dist/images/logo.png" alt=""></a>
+			<?php if ( !is_user_logged_in() ) { ?>
+				<span><a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('Login','woothemes'); ?></a> | <a href="<?php echo get_bloginfo('url');?>/register"><?php _e('Sign up','woothemes'); ?></a></span>
+			<?php } else { ?>
+				<span>
+					Hello, <?php echo ucfirst($current_user->display_name); ?> <br>
+					<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account ','woothemes'); ?></a> |  
+					<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" ><?php _e('Sign out','woothemes'); ?></a>
+				</span>
+			<?php } ?>
+		</div>
+		
     </div>
 	<?php wp_nav_menu( array( 'theme_location' => 'header-menu', 'container' => false, 'items_wrap' => '<ul>%3$s</ul>') ); ?>      
   </nav><!-- /nav -->
