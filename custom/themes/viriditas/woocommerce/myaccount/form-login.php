@@ -46,6 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<br>
 				<?php wp_nonce_field( 'woocommerce-login' ); ?>
 				<input type="submit" class="button" name="login" value="<?php _e( 'Login', 'woocommerce' ); ?>" />
+				<input type="hidden" name="redirect_to" value="<?php if($_REQUEST['redirect_to']) { echo $_REQUEST['redirect_to'];}?>" />
 			</div>
 			
 			<div class="form-group">
