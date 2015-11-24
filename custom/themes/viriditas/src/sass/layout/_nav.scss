@@ -127,18 +127,20 @@ body.mm-menu-open {
 	margin: 0;
 	padding: 0;
 	color: $white;
-	font-size: em(22px);
+	font-family:$sans-serif;
 	img {
 		float: left;
 	}
 	span {
 		display:block;
-		vertical-align: top;
-		margin-top:25px;
+		margin-top:40px;
 		margin-left:10px;
 		color:$white;
 		float: left;
 		font-size:em(16px);
+		a {
+			color:$white;
+		}
 	}
 }
 
