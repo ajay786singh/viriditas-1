@@ -12,6 +12,7 @@ function nua_default_approve_user_message() {
 	$message.= "<p>{username}</p>";
 	$message.= "<p>{password}</p>";
 	$message.= "<p>To login, Please go to: https://viriditasherbalproducts.com/my-account/</p>";
+	$message.= "</p>If you have any questions, you may contact us at: info@viriditasherbalproducts.com</p>";
 	$message.= "<br /><br />";
 	$message.= "Best Regards, <br />";
 	$message.= "Viriditas";
