@@ -6,10 +6,15 @@
  * @return string
  */
 function nua_default_approve_user_message() {
-	$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
-	$message .= "{username}\r\n";
-	$message .= "{password}\r\n\r\n";
-	$message .= "{login_url}";
+	$message= "<p>Hello,</p>";
+	$message.= __( '<p>We welcome you to {sitename} and are glad that your registration has been approved.</p>', 'new-user-approve' ) . "\r\n\r\n";
+	$message.= "<p><b>Your login details:</b></p>";
+	$message.= "<p>{username}</p>";
+	$message.= "<p>{password}</p>";
+	$message.= "<p>To login, Please go to: https://viriditasherbalproducts.com/my-account/</p>";
+	$message.= "<br /><br />";
+	$message.= "Best Regards, <br />";
+	$message.= "Viriditas";
 
 	$message = apply_filters( 'new_user_approve_approve_user_message_default', $message );
 

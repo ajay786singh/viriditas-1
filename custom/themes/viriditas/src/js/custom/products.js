@@ -571,7 +571,7 @@ jQuery(document).ready(function($){
 		var pi=getUrlVars().pi || '';
 		$('select.by-category').dropkick({
 			mobile: true,
-			change:function() {
+			change: function() {
 				var dk = this;
 				if(dk.value=="") {
 						if($('body').hasClass('single-product')==true) {
@@ -589,9 +589,9 @@ jQuery(document).ready(function($){
 							$(".by-indication").dropkick();
 							$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 							$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-							//alert('a');
-							//product_container.empty();
-							//product_container.showProducts();
+							//alert(1);							
+							product_container.empty();
+							product_container.showProducts();
 						}	
 				} else if(dk.value=='your-formulas') {
 					window.location = formulas_page;
@@ -611,9 +611,6 @@ jQuery(document).ready(function($){
 						$('section[role="category"]').filterSelectTerms('pc',dk.value);
 						$('section[role="body-systems"]').fetchSelectTerms('body_system','pb',pb);
 						$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
-						//alert('B');
-						//product_container.empty();
-						//product_container.showProducts();
 					}
 				}	
 			}

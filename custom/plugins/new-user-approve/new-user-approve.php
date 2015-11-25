@@ -576,10 +576,14 @@ class pw_new_user_approve {
 
 		$from_name = get_option( 'blogname' );
 
-		$headers = array(
-			"From: \"{$from_name}\" <{$admin_email}>\n",
-			"Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n",
-		);
+		// $headers = array(
+			// "From: \"{$from_name}\" <{$admin_email}>\n",
+			// "Content-Type: text/plain; charset=\"" . get_option( 'blog_charset' ) . "\"\n",
+		// );
+		
+		$headers = "From: \"{$from_name}\" <{$admin_email}>\n\r\n";
+		$headers.= "MIME-Version: 1.0\r\n";
+		$headers.= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 		$headers = apply_filters( 'new_user_approve_email_header', $headers );
 
