@@ -455,6 +455,9 @@ function toParams(searchUrl) {
 						mobile: true,
 						change:function() {
 							var dk = this;
+							var url=removeURLParameter('sort_by_alpha');					
+							window.history.pushState({path:url},'',url);							
+							$('.sort_by_alpha').prop('selectedIndex',0);
 							if($('body').hasClass('single-product')==true) {
 								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
 								window.location = shop_page_url;
@@ -528,6 +531,9 @@ function toParams(searchUrl) {
 						mobile: true,
 						change:function() {
 							var dk = this;
+							var url=removeURLParameter('sort_by_alpha');					
+							window.history.pushState({path:url},'',url);							
+							$('.sort_by_alpha').prop('selectedIndex',0);
 							if($('body').hasClass('single-product')==true) {
 								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
 								window.location = shop_page_url;
@@ -573,6 +579,9 @@ jQuery(document).ready(function($){
 			mobile: true,
 			change: function() {
 				var dk = this;
+				var url=removeURLParameter('sort_by_alpha');					
+				window.history.pushState({path:url},'',url);							
+				$('.sort_by_alpha').prop('selectedIndex',0);
 				if(dk.value=="") {
 						if($('body').hasClass('single-product')==true) {
 							var shop_page_url=shop_page;

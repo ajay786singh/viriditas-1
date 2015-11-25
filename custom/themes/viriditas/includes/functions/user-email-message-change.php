@@ -1,5 +1,4 @@
 <?php
-
 function user_deny_message( $message, $user ) {
 	$user_login = ucfirst(stripslashes( $user->data->user_login ));
     
