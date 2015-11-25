@@ -574,6 +574,10 @@ section[role=content] {
 				&:hover {
 					color: $hover-link-color;
 				}
+				&.current-term {
+					color:$heading;
+					font-weight:500;
+				}
 			}
 		}
 	}	
