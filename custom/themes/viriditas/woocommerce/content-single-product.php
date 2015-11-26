@@ -182,9 +182,10 @@ global $product;
 								foreach($product_bundled_data as $key=>$value) {
 									$id = $value['product_id'];
 									$required_size = $value['bundle_required_size'];
-									$title="<span><i>".get_the_title($id)."</i></span>";
+									$herburl=get_permalink($id);
+									$title="<span><a class='compound-product' href='{$herburl}'><i>".get_the_title($id)."</i></a></span>";
 									if($required_size!='') {
-										$title="<span><i>".get_the_title($id)." - ".$required_size."%</i></span>";
+										$title="<span><a class='compound-product' href='{$herburl}'><i>".get_the_title($id)." - ".$required_size."%</i></a></span>";
 									}
 									$compositions[]=$title;
 								}

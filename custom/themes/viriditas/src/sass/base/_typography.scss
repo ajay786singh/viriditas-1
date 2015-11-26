@@ -720,9 +720,16 @@ section[role=content] {
 		}
 	}
 }
+.compound-product {
+	color:$base-font-color;	
+	&:hover {
+		color:$hover-link-color;
+	}
+}
 .composition-list {
 	li {
 		margin-bottom:1.5em;
+		cursor:pointer;
 		a {
 			color:$base-font-color;	
 			span {
