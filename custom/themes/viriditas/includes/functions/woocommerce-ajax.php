@@ -410,6 +410,7 @@ function show_compound_products() {
 	if($mono_compound_id!="") {
 		$bundle_data=get_post_meta($mono_compound_id,'_monograph_details_composition',true);
 		if($bundle_data !='') {
+			$bundle_data=explode(",", $bundle_data);
 			foreach($bundle_data as $bundle_herb_id) {
 				$bundle_herbs[]= $bundle_herb_id;
 			}
