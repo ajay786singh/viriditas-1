@@ -4,6 +4,12 @@
 
 <section role="content">
     <div class="container">
+		<?php 
+			$class="";
+			if(is_page('terms-of-condition')) {
+				$class="content-left";
+			} 
+		?>
 		<div class="content-grid">
 			<?php the_title("<h1>","</h1>");?>
 			<?php 
@@ -15,7 +21,9 @@
 						the_content();
 					}
 				} else {
+					echo "<div class='{$class}'>";
 					the_content();
+					echo "</div>";
 				}	
 			?>
 		</div>	
