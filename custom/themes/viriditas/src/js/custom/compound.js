@@ -290,4 +290,10 @@ jQuery(document).ready(function($) {
 			return true;
 		}
 	});
+	$('.composition-list li').click(function(){
+		var productURL=$(this).attr('data-href');
+		if(productURL!='') {
+			window.location = productURL;	
+		}
+	});
 });
