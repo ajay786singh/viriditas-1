@@ -12,7 +12,7 @@ function get_product_categories($exclude=false) {
 			//$result.='<h6 class="heading">Filter by category</h6>';
 		//$result.='</div>';
 		$result.='<select class="by-category filter">';
-		$result.='<option value="" class="hidden-option">PRODUCT CATEGORY</option>';
+		$result.='<option value="" class="hidden-option">PRODUCT CATEGORIES</option>';
 		$result.="<option value=''>Show all products</option>";
 			foreach($product_categories as $product_category) {
 				$category_name = $product_category->name;	
