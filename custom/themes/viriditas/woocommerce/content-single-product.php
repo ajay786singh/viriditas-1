@@ -168,6 +168,30 @@ global $product;
 				}
 			?>
 			<div class="accordion">
+				<?php
+					$warnings=get_post_meta($post->ID,'_product_details_warnings',true);
+					$ingredients = get_the_terms( $post->ID, 'product_tag' );
+					//print_r($ingredients);
+					if($ingredients!='') {
+				?>
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Ingredients</h5>
+						<div class="accordion-panel-content">
+							<?php
+								
+								$tags="";
+								foreach($ingredients as $ingredient) {
+									$tag = $ingredient->name;
+									$required_size = $value['bundle_required_size'];
+									$herburl=get_permalink($id);
+									$tag="<span><i>".$tag."</i></span>";
+									$tags[]=$tag;
+								}
+								echo implode(', ', $tags );
+							?>
+						</div>
+					</div>
+				<?php } ?>
 				<?php 
 					//Composition list will be for bundled data (Professional Herbal Combination or Make your own compound Products)
 					if($product->product_type=='bundle') {

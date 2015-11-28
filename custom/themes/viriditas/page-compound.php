@@ -182,9 +182,12 @@ get_header();
 								}
 								if($mono_compound_id!='') {
 									$bundle_data=get_post_meta($mono_compound_id,'_monograph_details_composition',true);
-									foreach($bundle_data as $bundle_herb_id ) {
-										$bundle_herbs[]= "<small><i>".get_the_title($bundle_herb_id)."</i></small>";
-										$bundle_herb_ids[]=$bundle_herb_id;
+									if($bundle_data!='') {
+										$bundle_data=explode(",", $bundle_data);
+										foreach($bundle_data as $bundle_herb_id ) {
+											$bundle_herbs[]= "<small><i>".get_the_title($bundle_herb_id)."</i></small>";
+											$bundle_herb_ids[]=$bundle_herb_id;
+										}
 									}
 								}		
 									if(count($bundle_herbs) > 1) {
