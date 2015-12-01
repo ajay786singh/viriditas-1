@@ -30,12 +30,12 @@
 			$whatwedo_page_id=1105;
 			query_posts('post_type=page&p='.$whatwedo_page_id);
 			if(have_posts()):while(have_posts()):the_post();
-			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), array(500,500) );
 			$redirect_url=get_post_meta($post->ID,'_content_block_redirect_url',true);
 			if($image) {
 		?>
 		<div class="secondary">
-			<img src="<?php echo $image[0];?>">
+			<img src="<?php echo $image[0];?>"  width="" height="">
 		</div>
 		<?php } ?>
 		<div class="secondary">
@@ -72,7 +72,7 @@
 		?>
 						<div class="thumb">
 							<a href="<?php echo $redirect_url;?>">
-								<div class="img"><img src="<?php echo $img;?>"></div>
+								<div class="img"><img src="<?php echo $img;?>" width="" height=""></div>
 								<h5><?php echo $page->post_title;?></h5>
 								<?php echo $content;?>
 							</a>
