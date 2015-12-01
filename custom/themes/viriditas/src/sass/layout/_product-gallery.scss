@@ -138,21 +138,34 @@
 			}
 		}
 		&.list_view {
+			@include outer-container;
 			&:nth-of-type(1) {
 				margin-top:0.5em;
 			}
 			li {
 				height:auto;
-				margin-bottom:10px;
+				margin-bottom:10px;			
 				@include media($bp-large) {
-					@include span-columns(12);
-					margin-right:0;
+					@include span-columns(3 of 12);
+					@include omega(4n);
+				}
+				.product-meta {
+					padding-right:0;
+					overflow:hidden;
 				}
 				.product-title {
 					display: block;
 					float: left;
 					min-height:1px;
 					padding-bottom:0;
+					padding-right:0;
+					a {
+						overflow:hidden;
+						&:hover {
+							border-bottom:1px solid $heading;
+							color:$heading;
+						}
+					}
 				}
 				.product-img {
 					display:none;

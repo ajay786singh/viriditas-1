@@ -45,7 +45,7 @@ body.mm-menu-open {
 		display:none;
 	}
 	.admin-bar & {
-		top: 83px; 		 
+		top: 55px; 		 
 		@include media($bp-large) {
 			top: 50px; 
 		}
