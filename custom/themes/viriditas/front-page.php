@@ -35,7 +35,7 @@
 			if($image) {
 		?>
 		<div class="secondary">
-			<img src="<?php echo $image[0];?>">
+			<img src="<?php echo $image[0];?>"  width="" height="">
 		</div>
 		<?php } ?>
 		<div class="secondary">
@@ -72,7 +72,7 @@
 		?>
 						<div class="thumb">
 							<a href="<?php echo $redirect_url;?>">
-								<div class="img"><img src="<?php echo $img;?>"></div>
+								<div class="img"><img src="<?php echo $img;?>" width="" height=""></div>
 								<h5><?php echo $page->post_title;?></h5>
 								<?php echo $content;?>
 							</a>
