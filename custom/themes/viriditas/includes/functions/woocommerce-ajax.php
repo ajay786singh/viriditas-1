@@ -46,18 +46,20 @@ function load_products () {
 	$order=$_POST['order'];
 	$paged = $_POST['paged'];
 	$view_mode = $_POST['view_mode'];
+	$showPosts=224;
 	if($action_id !='') {
 		$body_system_id=$action_id;
 	}
 	if($view_mode=='') {
 		$view_mode='thumb_view';
+		$showPosts=36;
 	}
 	$args=array(
 		'post_type' =>'product',
 		'orderby' => 'title',
 		'order' => 'ASC',
 		'paged'=>$paged,
-		'posts_per_page'=>36,
+		'posts_per_page'=>$showPosts,
 		'post_status'=>array('publish')
 	);
 	if($order !='') {
