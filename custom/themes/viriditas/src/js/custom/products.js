@@ -486,7 +486,6 @@ function toParams(searchUrl) {
 											$('.product-list').empty();
 											$('.product-list').showProducts({page:1});
 										}
-										//$this.filterSelectTerms(filter,dk.value);
 									}
 								} else {	
 									if(taxonomy =='body_system') {
