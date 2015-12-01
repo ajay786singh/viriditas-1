@@ -142,7 +142,7 @@ else
 							$selected = " selected='selected' ";
 						else
 							$selected = "";
-						echo '<option '.$selected.' value="' . esc_attr($service->ID) . '">'. $appointments->get_service_name( $service->ID ) .'</option>';
+						echo '<option '.$selected.' value="' . esc_attr($service->ID) . '">'. $appointments->get_service_name( $service->ID ) .'</option>';					 	 		  		 	  	 
 					}
 				}
 				?>

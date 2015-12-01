@@ -79,7 +79,7 @@ class App_Google_Logger_File extends App_Google_Logger_Abstract
     if (is_string($this->file)) {
       $this->open();
     } elseif (!is_resource($this->file)) {
-      throw new App_Google_Logger_Exception('File pointer is no longer available');					 	 		  		 	  	 
+      throw new App_Google_Logger_Exception('File pointer is no longer available');
     }
 
     if ($this->lock) {
