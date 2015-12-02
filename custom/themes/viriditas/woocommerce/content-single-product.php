@@ -225,6 +225,7 @@ global $product;
 					//$dosage=get_post_meta($post->ID,'_product_details_dosage',true);
 					$dosage = get_option( "theme_options" );
 					$dosage_chart=$dosage['dosage_chart'];
+					$safety_chart=$dosage['safety_chart'];
 					$dosage_permission=$dosage['dosage_permission'];
 					$post_categories = wp_get_post_terms($post->ID, 'product_cat', array("fields" => "ids"));
 					$categories=explode(",",$dosage_permission);
@@ -251,8 +252,22 @@ global $product;
 							?>
 						</div>
 					</div>
-				<?php } ?>
+				
 				<?php 
+					}
+					$singleHerbTincture=327;
+					$safetyChartPermission=array($singleHerbTincture);
+					$safetyChartDiff=array_diff($post_categories ,$safetyChartPermission);
+					if($safety_chart!='' && count($safetyChartDiff)==0) {
+				?>	
+					<div class="accordion-panel">
+						<h5 class="accordion-panel-header">Safety</h5>
+						<div class="accordion-panel-content">
+							<a href="<?php echo $safety_chart;?>" target="_blank">View safety chart</a>
+						</div>
+					</div>
+				<?php 
+					}
 					$body_systems = get_the_terms( $post->ID, 'body_system' ); 
 					$body_systems_ids="";
 					if($body_systems) {

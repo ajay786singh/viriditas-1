@@ -46,6 +46,7 @@ function hype_save_theme_settings() {
 			case 'settings' : 
 				$settings['dosage_chart']	  = stripslashes($_POST['dosage_chart']);
 				$settings['dosage_permission']	  = stripslashes($_POST['dosage_permission']);
+				$settings['safety_chart']	  = stripslashes($_POST['safety_chart']);
 			break;
 	    }
 	}
@@ -57,6 +58,10 @@ function hype_save_theme_settings() {
 			
 		if ( $settings['dosage_permission'] ) {
 			$settings['dosage_permission'] = stripslashes( esc_textarea( wp_filter_post_kses( $settings['dosage_permission'] ) ) );
+		}
+		
+		if ( $settings['safety_chart'] ) {
+			$settings['safety_chart'] = stripslashes( esc_textarea( wp_filter_post_kses( $settings['safety_chart'] ) ) );
 		}
 			
 		
@@ -129,6 +134,14 @@ function hype_settings_page() {
 										}
 									?>
 								</td>	
+							</tr>
+							
+							<tr>
+								<th><label for="safety_chart">Safety Chart URL</label></th>
+								<td>
+									<input type="text" size="50" name="safety_chart" id="safety_chart" value="<?php echo esc_html( stripslashes( $settings["safety_chart"] ) ); ?>"/><br>
+									<span class="description">Enter safety chart url.</span>
+								</td>
 							</tr>
 							<?php
 						break;
