@@ -71,7 +71,7 @@
     <?php wp_reset_postdata(); ?>
     <?php endwhile; ?>
 
-    <!--//////////////////////////////-->
+    <!-- Upcoming Courses-->
 
     <?php
         $args2 =  array(
@@ -110,7 +110,7 @@
     <?php wp_reset_postdata(); ?>
     <?php endwhile; ?>
 
-    <!--//////////////////////////////-->
+    <!--Past Courses-->
 
     <?php
         $args3 =  array(
