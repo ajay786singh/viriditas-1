@@ -45,6 +45,7 @@ var scriptList = [
 	'src/js/custom/faq.js',
 	'src/js/custom/scroll-to-url-hash.js',
 	'src/js/custom/equal-height.js',
+	'src/js/custom/tables.js',
 	'src/js/custom/woocommerce-order-again.js',
 ];
 
@@ -93,9 +94,9 @@ gulp.task('js', function() {
 
 
 // Create fonticons compile task
-gulp.task('icons', function() { 
-    return gulp.src(fontIcons) 
-        .pipe(gulp.dest(outputDir + '/fonts')); 
+gulp.task('icons', function() {
+    return gulp.src(fontIcons)
+        .pipe(gulp.dest(outputDir + '/fonts'));
 });
 
 // Create watch task
