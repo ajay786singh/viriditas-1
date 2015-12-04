@@ -20,6 +20,7 @@ function plugins_deregister_styles() {
 	wp_deregister_style('wc-bundle-style');
 	wp_dequeue_style( "appointments" ); 
 	wp_deregister_style('tablepress-default');
+	wp_deregister_style('tablepress-responsive-tables');
 }
 add_action('wp_print_styles', 'plugins_deregister_styles',100);
 

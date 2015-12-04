@@ -5,21 +5,18 @@ $table-cell-border-color: $base-border-color;
 
 /* Table description */
 .tablepress-table-description {
-	clear: both;
-	display: none;
+	clear: both;   
+    display: block;
+	margin-bottom: 1.5em;
 }
 
 .tablepress {
 	border: none;
 	border-collapse: collapse;
 	border-spacing: 0;
-	//display: block;
 	margin-bottom: 1em;
-	overflow-x:auto;
+	overflow-x: auto;
 	width: 100%;
-	@include media($bp-large) {
-		//width: 150%;
-	}
 }
 
 .tablepress th,
@@ -28,7 +25,7 @@ $table-cell-border-color: $base-border-color;
 	border: 1px solid $table-cell-border-color;
 	display: table-cell;
 	float: none;
-	padding: 20px 30px;
+	padding: 15px 20px;
 	text-align: left;
 	width: auto;
 }
@@ -89,6 +86,16 @@ $table-cell-border-color: $base-border-color;
 }
 
 /* Table wrapper */
+.tablepress-container {
+	overflow-x:auto;
+	overflow-y:hidden;
+	width:100%;
+	@include media($bp-large) {
+		.single-monograph & {
+			width: 180%;
+		}
+	}
+}
 .dataTables_wrapper {
 	clear: both;
 	margin-bottom: 1em;
