@@ -18,7 +18,7 @@ $table-cell-border-color: $base-border-color;
 	overflow-x:auto;
 	width: 100%;
 	@include media($bp-large) {
-		width: 150%;
+		//width: 150%;
 	}
 }
 
