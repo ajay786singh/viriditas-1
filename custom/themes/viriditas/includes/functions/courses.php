@@ -44,7 +44,7 @@ function past_courses() {
 		</div>
 	</div>	
 <?php	
-	wp_reset_query();
+	//wp_reset_query();
 }
 function get_sidebar_courses(){
 		$args=array(
@@ -127,14 +127,6 @@ function get_courses() {
 	?>
 			<div class="course-heading">
 				<h2><?php echo $course;?></h2>
-				<?php 
-					/*if($register_on_off['_register_on_off']=='on') {
-					$course_register_url=get_bloginfo('url').'/course-registration?form=8';	
-				?>
-				<a href="<?php echo $course_register_url;?>" class="button">Register Now</a>
-				<?php 
-					}*/
-				?>
 			</div>
 			<?php 
 				while($query->have_posts()):$query->the_post();
@@ -144,8 +136,6 @@ function get_courses() {
 					$dateFormat     = 'F j, Y';
 					$timeFormat     =  'g:i a';
 					// Get custom meta values
-					//$imageID        = get_post_meta($id, '_course_details_image', true);
-					//$imageUrl       = wp_get_attachment_image_src($imageID,'banner', true);
 					$description    = wpautop(get_post_meta($id, '_course_details_description', true));
 					$price          = get_post_meta($id, '_course_details_price', true);
 					$course_in_week       = get_post_meta($id, '_course_details_course_in_week', true);

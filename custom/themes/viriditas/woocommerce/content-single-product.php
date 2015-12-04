@@ -249,21 +249,13 @@ global $product;
 						<div class="accordion-panel-content">
 							<?php
 								echo apply_filters('the_content', $warnings);
+								$singleHerbTincture=327;
+								$safetyChartPermission=array($singleHerbTincture);
+								$safetyChartDiff=array_diff($post_categories ,$safetyChartPermission);
+								if($safety_chart!='' && count($safetyChartDiff)==0) {
+									echo '<a href="'.$safety_chart.'" target="_blank">View safety chart</a>';	
+								}
 							?>
-						</div>
-					</div>
-				
-				<?php 
-					}
-					$singleHerbTincture=327;
-					$safetyChartPermission=array($singleHerbTincture);
-					$safetyChartDiff=array_diff($post_categories ,$safetyChartPermission);
-					if($safety_chart!='' && count($safetyChartDiff)==0) {
-				?>	
-					<div class="accordion-panel">
-						<h5 class="accordion-panel-header">Safety</h5>
-						<div class="accordion-panel-content">
-							<a href="<?php echo $safety_chart;?>" target="_blank">View safety chart</a>
 						</div>
 					</div>
 				<?php 
