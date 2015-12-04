@@ -91,6 +91,9 @@ $table-cell-border-color: $base-border-color;
 	overflow-y:hidden;
 	width:100%;
 	@include media($bp-large) {
+		.single & {
+			width: 140%;
+		}
 		.single-monograph & {
 			width: 180%;
 		}

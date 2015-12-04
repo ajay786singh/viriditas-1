@@ -8,7 +8,7 @@ get_header(); ?>
 
 <section role="content">
     <div class="container">
-		<div class="content-grid content-left">
+		<div class="inner content-left">
 			<?php the_title("<h1>","</h1>");?>
 			<?php the_content();?>
 		</div>	
