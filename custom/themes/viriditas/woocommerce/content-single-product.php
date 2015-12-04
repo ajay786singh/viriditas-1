@@ -248,7 +248,7 @@ global $product;
 						<h5 class="accordion-panel-header">Warnings & Interactions</h5>
 						<div class="accordion-panel-content">
 							<?php
-								echo apply_filters('the_content', $warnings);
+								echo "<div class='warnings-content'>".apply_filters('the_content', $warnings)."</div>";
 								$singleHerbTincture=327;
 								$safetyChartPermission=array($singleHerbTincture);
 								$safetyChartDiff=array_diff($post_categories ,$safetyChartPermission);
