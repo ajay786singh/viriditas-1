@@ -23,13 +23,16 @@ get_header( 'shop' );
 				<div class="shop-header">
 					<h6 class="heading">Shop</h6>
 					<div class="filter-side">	
+						<?php 
+							$sort_by = $_REQUEST['sort_by'];
+						?>
 						<ul>
 							<li>
 								<div class="search-box-filter"><input type="text" name="by_folk_name" class="search-box" id="by_folk_name" value="<?php if($_REQUEST['keyword']) { echo $_REQUEST['keyword'];} ?>" placeholder="Search products" /></div>
 								<div class="search-box-filter clear-search"><a href="">X</a></div>
 							</li>
-							<li><a href="#" class="sort_by" id="title">Sort by Latin Name</a></li>
-							<li><a href="#" class="sort_by" id="folk_name">Sort by Folk Name</a></li>
+							<li><a href="#" class="sort_by <?php if($sort_by=='' || $sort_by=='title') { echo "active";}?>" id="title">Sort by Latin Name</a></li>
+							<li><a href="#" class="sort_by <?php if($sort_by=='folk_name') { echo "active" ;}?>" id="folk_name">Sort by Folk Name</a></li>
 							<li>
 								<label>Alphabetical:</label>
 								<?php 

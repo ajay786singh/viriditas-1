@@ -83,11 +83,11 @@
 									$cart_url = $woocommerce->cart->get_cart_url();
 								?>
 								<a class="icon-cart" href="<?php echo $cart_url;?>">Cart</a>
-								<a class="popup-modal" href="#faq-box">*FAQ*</a>								
 								<?php 
 									if(get_faqs_box_content()) echo get_faqs_box_content();
 								} 
 								?>
+								<a class="popup-modal" href="#faq-box">*FAQ*</a>								
 								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account ','woothemes'); ?></a> |  
 								<a href="<?php echo wp_logout_url( $_SERVER['REQUEST_URI'] ); ?>" ><?php _e('Sign out','woothemes'); ?></a></li>
 							<?php } 
