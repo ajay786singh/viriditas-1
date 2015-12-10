@@ -60,26 +60,71 @@ jQuery(document).ready(function($) {
 		$('#by_folk_name').keypress(function (e) {
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
+				var url=removeURLParameter('sort_by_alpha');					
+				window.history.pushState({path:url},'',url);
+				var url=removeURLParameter('sort_by');					
+				window.history.pushState({path:url},'',url);				
+				$('a.sort_by').each(function(){
+					if(($(this).attr("id"))=='title'){
+						$(this).addClass('active');	
+					} else {
+						$(this).removeClass('active');
+					}					
+				});	
 				if(keyword !='') {
 					var url = replaceParam('keyword', keyword);
-					window.history.pushState({path:url},'',url);	
+					window.history.pushState({path:url},'',url);
+					$('#clear-search').css("display",'block');
+					$('#compound-search').css("display",'none');
 				} else {
 					var url=removeURLParameter('keyword');					
 					window.history.pushState({path:url},'',url);
+					$('#clear-search').css("display",'none');
+					$('#compound-search').css("display",'block');
 				}
 				$('.compound-list .product-list').showCompound();
 				e.preventDefault();
 			}
 		});
-		
+		$('#clear-search').click(function(){
+			$(this).css("display",'none');
+			$('#compound-search').css("display",'block');
+			$('#by_folk_name').val('');
+			var url=removeURLParameter('keyword');					
+			window.history.pushState({path:url},'',url);
+			$('.compound-list .product-list').showCompound();
+			return false;
+		});
+		if($('#by_folk_name').val()=='') {
+			$('#clear-search').css("display",'none');
+			$('#compound-search').css("display",'block');
+		}else {
+			$('#clear-search').css("display",'block');
+			$('#compound-search').css("display",'none');
+		}
 		$('#compound-search').on('click',function (e) {
-			var keyword=$('#by_folk_name').val();
+			var keyword=$('#by_folk_name').val();			
+			var url=removeURLParameter('sort_by_alpha');					
+			window.history.pushState({path:url},'',url);
+			var url=removeURLParameter('sort_by');					
+			window.history.pushState({path:url},'',url);				
+			$('a.sort_by').each(function(){
+				if(($(this).attr("id"))=='title'){
+					$(this).addClass('active');	
+				} else {
+					$(this).removeClass('active');
+				}					
+			});	
 			if(keyword !='') {
 				var url = replaceParam('keyword', keyword);
 				window.history.pushState({path:url},'',url);	
+				$('#clear-search').css("display",'block');
+				$(this).css("display",'none');
 			} else {
 				var url=removeURLParameter('keyword');					
 				window.history.pushState({path:url},'',url);
+				$('#clear-search').css("display",'none');	
+				$(this).css("display",'block');						
 			}
 			$('.compound-list .product-list').showCompound();
 			return false;

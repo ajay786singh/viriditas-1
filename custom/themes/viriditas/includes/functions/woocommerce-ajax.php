@@ -463,23 +463,45 @@ function show_compound_products() {
 		}
 	}
 	if($keyword !='') {
-		if($sort_by != '' && $sort_by == 'folk_name') {
-			$args['meta_query'] = array(
-				array(
-				   'key' => '_product_details_folk_name',
-				   'value' => $keyword ,
-				   'compare' => 'LIKE'
-				)
-			);
-		} else {
-			$args['s'] = $keyword;	
+		// if($sort_by != '' && $sort_by == 'folk_name') {
+			// $args['meta_query'] = array(
+				// array(
+				   // 'key' => '_product_details_folk_name',
+				   // 'value' => $keyword ,
+				   // 'compare' => 'LIKE'
+				// )
+			// );
+		// } else {
+			// $args['s'] = $keyword;	
+		// }
+		
+		$q1 = get_posts(array(
+				'post_type' => 'product',
+				's' => $keyword
+		));
+		$q2 = get_posts(array(
+				'post_type' => 'product',
+				'meta_query' => array(
+					array(
+					   'key' => '_product_details_folk_name',
+					   'value' => $keyword,
+					   'compare' => 'LIKE'
+					)
+				 )
+		));
+		$merged = array_merge( $q1, $q2 );
+		$post_ids = array();
+		$searchResults="";
+		foreach( $merged as $item ) {
+			$post_ids[] = $item->ID;
 		}
+		$searchResults = array_unique($post_ids);
 	}
 	$filter=array(
 		'body_system'=>array_filter(array($body_system_id)),
 		'product_cat'=>array_filter(array(327)),
 	);
-	if($sort_by_alpha !='') {
+	if($sort_by_alpha !='' && $keyword=='') {
 		if($sort_by!='' && $sort_by=='folk_name') {
 			$postids = $wpdb->get_col("
 				SELECT wposts.ID 
@@ -531,6 +553,11 @@ function show_compound_products() {
 				);				
 		}
 		$args['tax_query'] = $tax_query;
+	}
+	if($searchResults !='' && $args['post__in']!='') {
+		$args['post__in']=array_intersect($args['post__in'],$searchResults);
+	} else if ($searchResults !='' && $args['post__in']==''){
+		$args['post__in']=$searchResults;
 	}
 	ob_start ();
 	$query=new WP_Query($args);
