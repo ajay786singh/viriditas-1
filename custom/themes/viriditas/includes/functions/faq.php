@@ -189,9 +189,13 @@ add_action( 'wp_ajax_manage_monograph', 'manage_monograph' );
 add_action( 'wp_ajax_nopriv_manage_monograph', 'manage_monograph' );
 
 function alphabets_filter($active=false,$id=false) {
-	//echo $active;
 	$html='<ul class="alphabets-list" id="'.$id.'">';
 			$alphas = range('A', 'Z');
+			if($_REQUEST['sort_by_alpha'] == '') {
+				$html.="<li><a href='#' data-sort='sort-all' id='sort-all' class='alphabet-active'>--</li>";
+			}else {
+				$html.="<li><a href='#' data-sort='sort-all' id='sort-all'>--</li>";
+			}
 			foreach($alphas as $alphabet) {
 				if(($_REQUEST['sort_by_alpha'] == lcfirst($alphabet)) || ($active==$alphabet)) {
 					$html.="<li><a href='#' data-sort='".lcfirst($alphabet)."' id='sort-".lcfirst($alphabet)."' class='alphabet-active'>".$alphabet."</li>";

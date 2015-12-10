@@ -143,15 +143,14 @@ function toParams(searchUrl) {
 							$(this).removeClass('alphabet-active ');
 						});
 						$(this).addClass('alphabet-active ');
-						if(id!='') {
+						if(id!='' && id!='all') {
 							var url = replaceParam('sort_by_alpha', id);
 							window.history.pushState({path:url},'',url);				
-						}else {
+						} else {
 							var url=removeURLParameter('sort_by_alpha');					
 							window.history.pushState({path:url},'',url);
 						}
 						$('.compound-list .product-list').showCompound();
-						
 					});
 				} else if(html==1) {
 					settings.container.empty().html("<h6>No records found.</h6>");
@@ -360,11 +359,15 @@ function toParams(searchUrl) {
 			loader    	 : $('.message')
         }, options);
 		settings.loader.empty().loaderShow();
+		var action="load_products";
+		// if(settings.search_folk!='') {
+			// action="searchProducts";
+		// }
 		$.ajax({
 			type: 'POST',
 			url: ajaxurl,
 			data:{
-				action: 'load_products',
+				action: action,
 				'filter_type_category':settings.category,
 				'filter_type_body_system':settings.body_system,
 				'filter_type_action':settings.action,
@@ -634,7 +637,11 @@ jQuery(document).ready(function($){
 		$('section[role="indications"]').fetchSelectTerms('indication','pi',pi);
 		
 		$('a.sort_by').click(function(){
-			var id=$(this).attr('id');			
+			var id=$(this).attr('id');	
+			$('a.sort_by').each(function(){
+				$(this).removeClass('active');
+			});	
+			$(this).addClass('active');				
 			var url = replaceParam('sort_by', id);
 			window.history.pushState({path:url},'',url);
 			product_container.empty();
@@ -688,6 +695,18 @@ jQuery(document).ready(function($){
 		}
 		$('#by_folk_name').keypress(function (e) {
 			if(e.keyCode == '13'){
+				var url=removeURLParameter('sort_by_alpha');					
+				window.history.pushState({path:url},'',url);
+				var url=removeURLParameter('sort_by');					
+				window.history.pushState({path:url},'',url);				
+				$('a.sort_by').each(function(){
+					if(($(this).attr("id"))=='title'){
+						$(this).addClass('active');	
+					} else {
+						$(this).removeClass('active');
+					}					
+				});	
+			
 				var keyword=$(this).val();
 				if(keyword !='') {
 					var url = replaceParam('keyword', keyword);

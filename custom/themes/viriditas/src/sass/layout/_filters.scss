@@ -135,3 +135,11 @@ section[role="actions"] {
 .search-box-filter {
 	display:inline-block;
 }
+
+.sort_by {
+	color:$base-font-color;
+	&.active {
+		border-bottom:1px solid $heading;
+		color:$heading;
+	}
+}

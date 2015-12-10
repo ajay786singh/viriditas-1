@@ -601,10 +601,22 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		font-size: 0;
 		height: 30px;
 		position: absolute;
-		right: 1px;
+		right: 0px;
 		top: 1px;
 		width: 30px;
 		outline:none;
+		display:none;
+	}
+	#clear-search {
+		height: 31px;
+		outline:none;
+		padding-top: 5px;
+		position: absolute;
+		right: 0px;
+		text-align: center;
+		top: 0px;
+		width: 30px;
+		display:none;
 	}
 }
 .gform_wrapper .top_label .gfield_list {
