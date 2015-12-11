@@ -137,6 +137,11 @@ function toParams(searchUrl) {
 					
 					jQuery(".alphabets-list li a").unbind('click').bind("click", function(e){
 						e.preventDefault();
+						var url=removeURLParameter('keyword');					
+						window.history.pushState({path:url},'',url);
+						$("#by_folk_name").val('');
+						$("#clear-search").css('display','none');
+						$("#compound-search").css('display','block');
 						var id=$(this).attr('id');
 						id=id.replace('sort-','');
 						jQuery(".alphabets-list li a").each(function(e){
@@ -460,6 +465,13 @@ function toParams(searchUrl) {
 							var dk = this;
 							var url=removeURLParameter('sort_by_alpha');					
 							window.history.pushState({path:url},'',url);							
+							
+							$('.clear-search a').css("display",'none');
+							$('#clear-search').css("display",'none');
+							$('#compound-search').css("display",'block');
+							$('#by_folk_name').val('');
+							var url=removeURLParameter('keyword');
+							window.history.pushState({path:url},'',url);							
 							$('.sort_by_alpha').prop('selectedIndex',0);
 							if($('body').hasClass('single-product')==true) {
 								var shop_page_url=shop_page+'?'+filter+'='+dk.value;
@@ -659,10 +671,14 @@ jQuery(document).ready(function($){
 		
 		$('select.sort_by_alpha').change(function(){
 			var val=$(this).val();			
+			$('#by_folk_name').val('');
+			$('.clear-search a').css('display','none');
+			var url=removeURLParameter('keyword');					
+			window.history.pushState({path:url},'',url);
 			if(val!='') {
 				var url = replaceParam('sort_by_alpha', val);
 				window.history.pushState({path:url},'',url);				
-			}else {
+			} else {
 				var url=removeURLParameter('sort_by_alpha');					
 				window.history.pushState({path:url},'',url);
 			}
@@ -695,6 +711,7 @@ jQuery(document).ready(function($){
 		}
 		$('#by_folk_name').keypress(function (e) {
 			if(e.keyCode == '13'){
+				$('.sort_by_alpha').prop('selectedIndex',0);
 				var url=removeURLParameter('sort_by_alpha');					
 				window.history.pushState({path:url},'',url);
 				var url=removeURLParameter('sort_by');					
@@ -706,6 +723,13 @@ jQuery(document).ready(function($){
 						$(this).removeClass('active');
 					}					
 				});	
+			
+				var url=removeURLParameter('pb');				
+				window.history.pushState({path:url},'',url);				
+				$('section[role="body-systems"]').fetchSelectTerms('body_system','pb','');
+				var url=removeURLParameter('pa');					
+				window.history.pushState({path:url},'',url);				
+				$('section[role="actions"]').fetchActions('body_system','','pa','');
 			
 				var keyword=$(this).val();
 				if(keyword !='') {
