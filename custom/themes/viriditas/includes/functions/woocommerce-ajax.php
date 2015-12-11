@@ -149,7 +149,7 @@ function load_products () {
 		endif;
 	// } else {
 	// }
-	if($sort_by_alpha !='' & $keyword=='') {
+	if($sort_by_alpha !='') {
 		if($sort_by!='' && $sort_by=='folk_name') {
 			$postids = $wpdb->get_col("
 				SELECT wposts.ID 
@@ -208,7 +208,7 @@ function load_products () {
 		$args['tax_query'] = $tax_query;
 	}
 		if($searchResults !='' && $args['post__in']!='') {
-			$args['post__in']=array_intersect($args['post__in'],$searchResults);
+			$args['post__in']=array_diff($args['post__in'],$searchResults);
 		} else if ($searchResults !='' && $args['post__in']==''){
 			$args['post__in']=$searchResults;
 		}
@@ -501,7 +501,7 @@ function show_compound_products() {
 		'body_system'=>array_filter(array($body_system_id)),
 		'product_cat'=>array_filter(array(327)),
 	);
-	if($sort_by_alpha !='' && $keyword=='') {
+	if($sort_by_alpha !='') {
 		if($sort_by!='' && $sort_by=='folk_name') {
 			$postids = $wpdb->get_col("
 				SELECT wposts.ID 
@@ -555,7 +555,7 @@ function show_compound_products() {
 		$args['tax_query'] = $tax_query;
 	}
 	if($searchResults !='' && $args['post__in']!='') {
-		$args['post__in']=array_intersect($args['post__in'],$searchResults);
+		$args['post__in']=array_diff($args['post__in'],$searchResults);
 	} else if ($searchResults !='' && $args['post__in']==''){
 		$args['post__in']=$searchResults;
 	}

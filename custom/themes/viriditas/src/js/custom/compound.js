@@ -61,9 +61,23 @@ jQuery(document).ready(function($) {
 			if(e.keyCode == '13'){
 				var keyword=$(this).val();
 				var url=removeURLParameter('sort_by_alpha');					
-				window.history.pushState({path:url},'',url);
-				var url=removeURLParameter('sort_by');					
 				window.history.pushState({path:url},'',url);				
+				jQuery(".alphabets-list li a").each(function(e){
+					if($(this).attr("id")=='sort-all'){
+						$(this).addClass('alphabet-active ');			
+					}else {
+						$(this).removeClass('alphabet-active ');
+					}
+				});
+				
+				var url=removeURLParameter('sort_by');					
+				window.history.pushState({path:url},'',url);
+				var url=removeURLParameter('pb');				
+				window.history.pushState({path:url},'',url);				
+				$('section[role="body-systems"]').fetchSelectTerms('body_system','pb','');
+				var url=removeURLParameter('pa');					
+				window.history.pushState({path:url},'',url);				
+				$('section[role="actions"]').fetchActions('body_system','','pa','');
 				$('a.sort_by').each(function(){
 					if(($(this).attr("id"))=='title'){
 						$(this).addClass('active');	
@@ -106,8 +120,22 @@ jQuery(document).ready(function($) {
 			var keyword=$('#by_folk_name').val();			
 			var url=removeURLParameter('sort_by_alpha');					
 			window.history.pushState({path:url},'',url);
+			jQuery(".alphabets-list li a").each(function(e){
+				if($(this).attr("id")=='sort-all'){
+					$(this).addClass('alphabet-active ');			
+				}else {
+					$(this).removeClass('alphabet-active ');
+				}
+			});
+			
 			var url=removeURLParameter('sort_by');					
 			window.history.pushState({path:url},'',url);				
+			var url=removeURLParameter('pb');				
+			window.history.pushState({path:url},'',url);				
+			$('section[role="body-systems"]').fetchSelectTerms('body_system','pb','');
+			var url=removeURLParameter('pa');					
+			window.history.pushState({path:url},'',url);				
+			$('section[role="actions"]').fetchActions('body_system','','pa','');			
 			$('a.sort_by').each(function(){
 				if(($(this).attr("id"))=='title'){
 					$(this).addClass('active');	
