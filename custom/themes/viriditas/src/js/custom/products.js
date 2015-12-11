@@ -470,6 +470,13 @@ function toParams(searchUrl) {
 							$('#clear-search').css("display",'none');
 							$('#compound-search').css("display",'block');
 							$('#by_folk_name').val('');
+							jQuery(".alphabets-list li a").each(function(e){
+								if($(this).attr("id")=='sort-all'){
+									$(this).addClass('alphabet-active ');			
+								}else {
+									$(this).removeClass('alphabet-active ');
+								}
+							});
 							var url=removeURLParameter('keyword');
 							window.history.pushState({path:url},'',url);							
 							$('.sort_by_alpha').prop('selectedIndex',0);
