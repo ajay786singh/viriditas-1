@@ -221,7 +221,7 @@ jQuery(document).ready(function($) {
 					}
 				}
 			} else {
-				$('.pop-up-error').empty().show().html("Please enter size of herb for recipe.");
+				$('.pop-up-error').empty().show().html("Please enter size of herb for formula.");
 			}
 			return false;
 		});
@@ -277,7 +277,7 @@ jQuery(document).ready(function($) {
 			if(title == '') {
 				message.empty();
 				message.loaderHide();
-				message.html("Please enter recipe name.");
+				message.html("Please enter formula name.");
 			} else if(totalSizes < total_size) {
 				message.empty();
 				message.loaderHide();
@@ -299,7 +299,7 @@ jQuery(document).ready(function($) {
 						$(this).css("border-color",'red');
 						message.empty();
 						message.loaderHide();	
-						message.append("Please specify the percent of herb(s) or remove it from your recipe.");	
+						message.append("Please specify the percent of herb(s) or remove it from your formula.");	
 						error++;
 					}else {
 						$(this).css("border-color",'none');
@@ -319,7 +319,7 @@ jQuery(document).ready(function($) {
 							message.loaderHide();		
 							message.empty();		
 							if(html=='done') {
-								var msg="<div class='error-header'>Thank you, this recipe has been added to your cart. <a href='"+cart_page+"'>View cart/ checkout</a></div>";
+								var msg="<div class='error-header'>Thank you, this formula has been added to your cart. <a href='"+cart_page+"'>View cart/ checkout</a></div>";
 								$("#compound-products").val('');
 								$("#recipe-name").val('');
 								$('#additional_price').val('');
