@@ -245,7 +245,7 @@ get_header();
 						</section>
 						<input type="submit" name="" value="ADD TO CART" id="add-recipe" class="button">
 					</div>
-					<section class="compound-info hide-info">Please add herbs to make your recipe.</section>
+					<section class="compound-info hide-info">Please add herbs to make your formula.</section>
 					<div class="errors"></div>
 				</form>
 			</div>

@@ -22,7 +22,7 @@ function manage_compound() {
 		$totalPrice = $price+$expenses+$serviceFee;
 		//check for title not blank
 		if (strlen($title) == 0) {
-			array_push($errors, "Please enter your recipe name."); 
+			array_push($errors, "Please enter your formula name."); 
 		}	
 		$herbs = array();
 		if(count($compound_herbs)>0) {
@@ -55,7 +55,7 @@ function manage_compound() {
 				}	
 			}			
 		} else {
-			array_push($errors, "Please add herbs to your recipe."); 
+			array_push($errors, "Please add herbs to your formula."); 
 		}
 		if($bundle_herbs !='') {
 			$bundle_herbs=explode(",",$bundle_herbs);	
@@ -170,14 +170,14 @@ function manage_compound() {
 				$msg = "done";
 			}
 			else {
-				$msg = '*Error occurred while adding the recipe';
+				$msg = '*Error occurred while adding the formula';
 			}
 		} else {
 			$msg="Check Errors*";
 		}
 	} else {
 		//Not Logged in.
-		$msg="Please login to add your recipe to cart.";
+		$msg="Please login to add your formula to cart.";
 	} 		
 	//Prepare errors for output
 	$output='';
