@@ -84,8 +84,8 @@
 								?>
 								<a class="icon-cart" href="<?php echo $cart_url;?>">Cart</a>
 								<?php 
+								}
 									if(get_faqs_box_content()) echo get_faqs_box_content();
-								} 
 								?>
 								<a class="popup-modal" href="#faq-box">*FAQ*</a>								
 								<a href="<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ); ?>"><?php _e('My Account ','woothemes'); ?></a> |  
