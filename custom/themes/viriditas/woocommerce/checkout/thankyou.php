@@ -34,6 +34,7 @@ if ( $order ) : ?>
 	<?php else : ?>
 
 		<p><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></p>
+		<p><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'If you have made an error on your purchase please call: 416-767-3428 or email John: <a href="mailto://redden@viriditasherbalproducts.com">redden@viriditasherbalproducts.com</a> right away to adjust your order or cancel it. Include your order number and any other relevant details. We will try to address it ASAP.', 'woocommerce' ), $order ); ?></p>
 
 		<ul class="order_details">
 			<li class="order">
