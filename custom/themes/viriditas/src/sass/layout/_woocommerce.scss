@@ -67,6 +67,9 @@
 	}
 	table {
 		width:100%;
+		@include media($bp-large) {
+			width:55%;
+		}
 	}
 }
 div[itemprop="offers"] {

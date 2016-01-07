@@ -557,12 +557,12 @@ li.gfield+li.gfield.gfield_creditcard_warning {
 		}
 	}
 }
-.cart_totals table {
+/*.cart_totals table {
 	width:100%;
 	@include media($bp-large) {
 		width:50%;
 	}
-}
+}*/
 .woocommerce #content table.cart td.actions,
 .woocommerce table.cart td.actions,
 .woocommerce-page #content table.cart td.actions, 

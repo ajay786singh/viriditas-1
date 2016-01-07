@@ -6,7 +6,6 @@
 
 function theme_styles() {
 	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');
-//	wp_enqueue_style( 'fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
  	wp_register_style('style', get_template_directory_uri() . '/style.css');
  	wp_enqueue_style( 'style' );
 }
