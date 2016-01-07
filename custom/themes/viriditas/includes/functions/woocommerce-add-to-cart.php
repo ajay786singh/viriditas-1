@@ -227,9 +227,8 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
     } else {
         WC()->session->__unset( $cart_item_key.'_service_fee' );
     } 	
-	if( $_POST['orderID'] ) {
+	if( $_POST['orderID'] !='' ) {
 		WC()->session->set( $cart_item_key.'_order_id', $_POST['orderID']);
-		//WC()->session->set( $cart_item_key.'_cart_size', '200 mL');
 		$orderID=$_POST['orderID'];
 		$order = new WC_Order($orderID);
 		$items = $order->get_items();
@@ -255,11 +254,11 @@ function save_cart_data_bundle_price( $cart_item_key, $product_id = null, $quant
 						$_size=$meta->value;	
 					}
 				}
-				if($product_id==$_product_id) {
+				
+				if($product_id==$_product_id ) {
 					WC()->session->set( $cart_item_key.'_cart_size', $_size);
 					WC()->session->set( $cart_item_key.'_cart_price', $_price);
 				}
-				//WC()->cart->add_to_cart($_product_id,1);
 			}
 		}
 	} else {
@@ -272,6 +271,7 @@ function calculate_bundle_price( $cart_object ) {
 	$additionalPrice = 100;
     foreach ( $cart_object->cart_contents as $key => $value ) {       
         $productID=$value['product_id'];
+		$cartPrice=$value['cart_price'];
 		$totalPrice=get_post_meta($productID,'_selling_price',true);
 		if($totalPrice !='') {
 			$bundle_price=$totalPrice;
@@ -282,8 +282,10 @@ function calculate_bundle_price( $cart_object ) {
 			$bundle_price=WC()->session->get( $key.'_cart_price' ) + WC()->session->get( $key.'_additional_price' ) + WC()->session->get( $key.'_service_fee' );
             $quantity = intval( $value['quantity'] );
             $orgPrice = intval( $value['data']->price );
-			$value['data']->price =  $bundle_price ;
-        }           
+			$value['data']->price =  $bundle_price;
+        } else if($cartPrice !='') {
+			$value['data']->price = $cartPrice;
+		}          
     }
 	$woocommerce->cart->persistent_cart_update();
 }
@@ -293,10 +295,8 @@ function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_
 	if( $cart_item_key && is_cart() ) {
 		$productID=$cart_item['product_id'];	
 		$size=get_post_meta($productID,'_selling_size',true);
-		// echo "<pre>";
-		// print_r($cart_item);
-		// echo "</pre>";
-        if( $size !='') {
+		$cartSize=$cart_item['cart_size'];
+		if( $size !='') {
             echo $title. '<dl class="variation">
                 <dt class="variation-Size">Size: </dt>
                 <dd class="variation-Size">'.trim($size).'</dd>            
@@ -306,24 +306,35 @@ function render_meta_on_cart_item( $title = null, $cart_item = null, $cart_item_
                  <dt class="variation-Size">Size: </dt>
                  <dd class="variation-Size">'.trim(WC()->session->get($cart_item_key.'_cart_size')).'</dd>            
               </dl>';
+        } 
+		else if( $cartSize !='' ) {
+			echo $title. '<dl class="variation">
+                 <dt class="variation-Size">Size: </dt>
+                 <dd class="variation-Size">'.trim($cartSize).'</dd>            
+              </dl>';
         } else {
-			//$unit=trim(WC()->session->get($cart_item_key.'_unit'));
-            echo $title;
-			//echo "<span id='size-unit' style='display:none;'>".$unit."</span>";
-        }
+		    echo $title;
+		}
     } else {
         echo $title;
     }
 }
 add_filter( 'woocommerce_cart_item_name', 'render_meta_on_cart_item', 1, 3 );
+
 function render_meta_on_checkout_order_review_item( $quantity = null, $cart_item = null, $cart_item_key = null ) {
     if( $cart_item_key ) {
         $productID=$cart_item['product_id'];	
 		$size=get_post_meta($productID,'_selling_size',true);
-        if( $size !='') {
+        $cartSize=$cart_item['cart_size'];
+		if( $size !='') {
             echo $quantity. '<dl class="variation">
                  <dt class="variation-Size">Size : </dt>
                  <dd class="variation-Size">'.$size.'</dd>            
+              </dl>';
+        } else if( $cartSize !='') {
+            echo $quantity. '<dl class="variation">
+                 <dt class="variation-Size">Size : </dt>
+                 <dd class="variation-Size">'.$cartSize.'</dd>            
               </dl>';
         } else if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
 			$size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
@@ -340,7 +351,6 @@ add_filter( 'woocommerce_checkout_cart_item_quantity', 'render_meta_on_checkout_
 /* Function to add meta value size on order item list */
 function bundle_order_meta_handler( $item_id, $values, $cart_item_key ) {
 	global $woocommerce;	
-	
 	if( WC()->session->__isset( $cart_item_key.'_product_id' ) ) {
 		$product_id=trim(WC()->session->get($cart_item_key.'_product_id'));	
 		$product_type=trim(WC()->session->get($cart_item_key.'_product_type'));	
@@ -356,24 +366,32 @@ function bundle_order_meta_handler( $item_id, $values, $cart_item_key ) {
 			}
 			wc_add_order_item_meta( $item_id, "Herbs", $herbs ); 
 		}
-    }
+    } else {
+		$pid=$values['pid'];
+		$herbs=get_bundle_info($pid,$values['cart_size']);
+		wc_add_order_item_meta( $item_id, "Herbs", $herbs); 
+	} 
 	if( WC()->session->__isset( $cart_item_key.'_cart_size' ) ) {
 		$mainSize=trim(WC()->session->get($cart_item_key.'_cart_size'));	
 		wc_add_order_item_meta( $item_id, "Size", $mainSize); 	
     } else if($size !='') {
 		wc_add_order_item_meta( $item_id, "Size", $size); 
+	} else {
+		wc_add_order_item_meta( $item_id, "Size", $values['cart_size']); 
 	}
+	
 }
 add_action( 'woocommerce_add_order_item_meta', 'bundle_order_meta_handler', 1, 3 );
 //Store the custom field
 add_filter( 'woocommerce_add_cart_item_data', 'add_cart_item_custom_data_vase', 10, 2 );
 function add_cart_item_custom_data_vase( $cart_item_meta, $product_id ) {
 	global $woocommerce;
+	$cart_item_meta['pid'] = $_POST['product_id'];
 	$cart_item_meta['cart_price'] = $_POST['cart_price'];
 	$cart_item_meta['cart_size'] = $_POST['cart_size'];
 	$cart_item_meta['additional_price'] = $_POST['additional_price'];
 	if($_POST['orderID']!='') {
-		$cart_item_meta['order_id'] = $_POST['orderID'];
+		$cart_item_meta['order_id'] = $_POST['orderID'];			
 	}
 	return $cart_item_meta; 
 }
@@ -430,5 +448,23 @@ function add_to_cart_formula() {
 	$post_id=$_POST['product_id'];
 	$woocommerce->cart->add_to_cart($post_id,1);
 	die();
+}
+
+add_action( 'template_redirect', 'remove_product_from_cart' );
+function remove_product_from_cart() {
+	//global $woocommerce;	
+	$WC = WC();
+    // Run only in the Cart or Checkout Page
+    if( is_cart() || is_checkout() ) {
+        // Cycle through each product in the cart
+        foreach( $WC->cart->get_cart() as $cart_item_key => $cart_item ) {
+			$qty=$cart_item['quantity'];
+			$subtotal=$cart_item['line_subtotal'];
+			$diff=$subtotal/$qty;
+			if($diff==1) {
+				$WC->cart->empty_cart();
+			}
+        }
+	}
 }
 ?>
