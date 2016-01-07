@@ -53,6 +53,7 @@ $order = wc_get_order( $order_id );
 								if($hide_user!='') {
 									$size= get_post_meta($product_id,'_selling_size',true);
 									if($size!='') {
+										
 										echo '<dl class="variation">
 												<dt class="variation-Size">Size :</dt>
 												<dd class="variation-Size"><p>'.$size.'</p></dd>';															

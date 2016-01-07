@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									$size=get_post_meta($compound_id,'_selling_size',true);
 									echo '<dl class="variation">';
 									echo '<dt class="variation-Herbs">Herbs :</dt>';
-									echo '<dd class="variation-Herbs">';//<p><small><i>Glycerrhiza glabra</i></small>, <small><i>Bupleurum falcatum</i></small>, <small><i>Dioscorea villosa</i></small></p>
+									echo '<dd class="variation-Herbs">';
 									if($size!='') {
 										echo get_bundle_info($compound_id,$size);
 									} else {

@@ -33,9 +33,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 		<?php
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			// echo "<pre>";
-			// print_r($cart_item);
-			// echo "</pre>";
 			$_product     = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
 			$product_id   = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
@@ -74,13 +71,16 @@ do_action( 'woocommerce_before_cart' ); ?>
 							}
 							// Meta data
 							echo WC()->cart->get_item_data( $cart_item );
+							// echo "<pre>";
+							// print_r($cart_item);
+							// echo "</pre>";
 							if($_product->product_type=='bundle') {
 								$compound_id=$_product->id;
-								$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
+									$total_size=trim(WC()->session->get($cart_item_key.'_cart_size'));	
 									$size=get_post_meta($compound_id,'_selling_size',true);
 									echo '<dl class="variation">';
 									echo '<dt class="variation-Herbs">Herbs:</dt>';
-									echo '<dd class="variation-Herbs">';//<p><small><i>Glycerrhiza glabra</i></small>, <small><i>Bupleurum falcatum</i></small>, <small><i>Dioscorea villosa</i></small></p>
+									echo '<dd class="variation-Herbs">';
 									if($size!='') {
 										echo get_bundle_info($compound_id,$size);
 									} else {
@@ -97,17 +97,13 @@ do_action( 'woocommerce_before_cart' ); ?>
 
 					<td class="product-price">
 						<?php
-							// if($_product->product_type=='bundle') {
-								// echo "$".number_format($cart_item['cart_price'],2);
-							// } else {
-								$totalPrice=get_post_meta($_product->id,'_selling_price',true);
-								echo "<span style='display:none;' class='product_type' data-id='".$_product->id."'>".$_product->product_type."</span>";
-								if($totalPrice!=''){
-									echo '$'.number_format($totalPrice,2);
-								} else {
-									echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );	
-								}
-							//}
+							$totalPrice=get_post_meta($_product->id,'_selling_price',true);
+							echo "<span style='display:none;' class='product_type' data-id='".$_product->id."'>".$_product->product_type."</span>";
+							if($totalPrice!=''){
+								echo '$'.number_format($totalPrice,2);
+							} else {
+								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key );	
+							}
 						?>
 					</td>
 
