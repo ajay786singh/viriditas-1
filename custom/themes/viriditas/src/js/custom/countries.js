@@ -284,7 +284,7 @@ s_a[1]="Alberta|British Columbia|Manitoba|New Brunswick|Newfoundland|Northwest T
 
 function print_country(country_id){
 	// given the id of the <select> tag as function argument, it inserts <option> tags
-	alert(1);
+	//alert(1);
 	var option_str = document.getElementById(country_id);
 	option_str.length=0;
 	option_str.options[0] = new Option('Select Country','');

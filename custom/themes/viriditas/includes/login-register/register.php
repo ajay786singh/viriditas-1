@@ -156,7 +156,7 @@ class Hype_registration_form {
             return new WP_Error('email_invalid', 'Email is not valid');
         }
         if (email_exists($this->email)) {
-            return new WP_Error('email', 'Email Already in use');
+            return new WP_Error('email', 'Email already in use');
         }
 		if ($this->email !='' && ($this->email != $this->c_email)) {
             return new WP_Error('email_invalid', "Email doesn't match with confirm email.");
