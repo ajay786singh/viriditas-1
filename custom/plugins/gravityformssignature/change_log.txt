@@ -1,4 +1,19 @@
 -------------------------------------------------------------------------------------------------------------------
+Version 2.4
+    - Added drag and drop support to the field button in the form editor (GF 1.9).
+	- Added Spanish (es_ES) translation.
+	- Updated POT file.
+	- Updated GFSignature::maybe_save_signature() to public
+	- Updated signature script to latest version.
+    - Fixed a fatal error if Browser.php was already included by another plugin.
+	- Fixed an issue with the delete signature confirmation message.
+	- Fixed signature appearing as a black image in some email clients.
+	- Fixed issue a JavaScript error in the form editor in some languages.
+	- Fixed issue with causing mixed content warning when Force SSL was enabled in the admin.
+	- Fixed issue when multiple Html2RGB() functions were defined.
+	- Fixed issue with folder path causing signature not to be saved correctly on same servers.
+
+-------------------------------------------------------------------------------------------------------------------
 Version 2.3
 	- Added function gf_signature to easily get a Signature instance.
 	- Added text domain/path to header.

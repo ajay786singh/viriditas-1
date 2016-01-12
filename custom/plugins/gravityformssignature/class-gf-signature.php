@@ -34,7 +34,7 @@ class GFSignature extends GFAddOn {
 		$scripts = array(
 			array(
 				'handle'  => 'maskedinput',
-				'src'     => GFCommon::get_base_url() . '/js/jquery.maskedinput-1.3.1.min.js',
+				'src'     => GFCommon::get_base_url() . '/js/jquery.maskedinput.min.js',
 				'version' => GFCommon::$version,
 				'deps'    => array( 'jquery' ),
 				'enqueue' => array(
@@ -112,14 +112,14 @@ class GFSignature extends GFAddOn {
 		add_action( 'gform_submission_values_pre_save', array( $this, 'submission_values_pre_save' ), 10, 2 );
 	}
 
-	private function maybe_save_signature() {
+	public function maybe_save_signature() {
 
 		//see if this is an entry and it needs to be updated. abort if not
 		if ( ! ( RG_CURRENT_VIEW == 'entry' && rgpost( 'save' ) == 'Update' ) ) {
 			return;
 		}
 
-		$lead_id = rgget( 'lid' );
+		$lead_id = rgpost( 'entry_id' ) ? absint( rgpost( 'entry_id' ) ) : absint( rgget( 'lid' ) );
 		$form    = RGFormsModel::get_form_meta( rgget( 'id' ) );
 		if ( empty( $lead_id ) ) {
 			//lid is not always in the querystring when paging through entries, use same logic from entry detail page
@@ -424,7 +424,7 @@ class GFSignature extends GFAddOn {
 
 			$path_info      = pathinfo( $value );
 			$filename       = $path_info['filename'];
-			$signature_path = home_url() . "?page=gf_signature&signature={$filename}";
+			$signature_path = site_url() . "?page=gf_signature&signature={$filename}";
 
 			$value = $signature_path;
 
@@ -439,7 +439,7 @@ class GFSignature extends GFAddOn {
 		if ( $field['type'] == 'signature' && ! empty( $value ) ) {
 			$path_info      = pathinfo( $value );
 			$filename       = $path_info['filename'];
-			$signature_path = home_url() . "?page=gf_signature&signature={$filename}";
+			$signature_path = site_url() . "?page=gf_signature&signature={$filename}";
 			$thumb          = GFCommon::get_base_url() . '/images/doctypes/icon_image.gif';
 			$newvalue       = "<a href='$signature_path' target='_blank' title='" . __( 'Click to view', 'gravityformssignature' ) . "'><img src='$thumb'/></a>";
 
@@ -453,7 +453,7 @@ class GFSignature extends GFAddOn {
 		$path_info = pathinfo( $filename );
 		$filename  = $path_info['filename'];
 
-		return home_url() . "?page=gf_signature&signature={$filename}";
+		return site_url() . "?page=gf_signature&signature={$filename}";
 	}
 
 	public function signature_entry_detail( $value, $field, $lead, $form ) {
@@ -481,15 +481,21 @@ class GFSignature extends GFAddOn {
 			exit();
 		}
 
-		$image = imagecreatefrompng( $folder . $imagename );
+		$signature_image = imagecreatefrompng( $folder . $imagename );
+		$return_image    = imagecreatetruecolor( imagesx( $signature_image ), imagesy( $signature_image ) );
+		
+		imagealphablending( $return_image, false );
+		imagesavealpha( $return_image, true );
+		imagecopyresampled( $return_image, $signature_image, 0, 0, 0, 0, imagesx( $signature_image ), imagesy( $signature_image ), imagesx( $signature_image ), imagesy( $signature_image ) );
 
 		if ( ob_get_length() > 0 ) {
 			ob_clean();
 		}
 
 		header( 'Content-type: image/png' );
-		imagepng( $image );
-		imagedestroy( $image );
+		imagepng( $return_image );
+		imagedestroy( $return_image );
+		imagedestroy( $signature_image );
 
 		exit();
 	}
@@ -501,6 +507,7 @@ class GFSignature extends GFAddOn {
 					'class'   => 'button',
 					'value'   => __( 'Signature', 'gravityformssignature' ),
 					'onclick' => "StartAddField('signature');",
+					'data-type' => 'signature',
 				);
 				break;
 			}
@@ -519,7 +526,10 @@ class GFSignature extends GFAddOn {
 
 		$supports_canvas = true;
 
-		require_once( 'super_signature/Browser.php' );
+		if ( ! class_exists( 'Browser' ) ) {
+			require_once( 'super_signature/Browser.php' );
+		}
+
 		$browser = new Browser();
 		if ( $browser->getBrowser() == Browser::BROWSER_IE ) {
 			$supports_canvas = $browser->getVersion() >= 9;
@@ -609,7 +619,7 @@ class GFSignature extends GFAddOn {
 		<script type="text/javascript">
 			function deleteSignature(leadId, fieldId) {
 
-				if (!confirm(<?php _e( "'Would you like to delete this file? \'Cancel\' to stop. \'OK\' to delete'", 'gravityformssignature' ); ?>))
+				if (!confirm(<?php echo json_encode( __( "Would you like to delete this file? 'Cancel' to stop. 'OK' to delete", 'gravityformssignature' ) ); ?>))
 					return;
 
 				jQuery.post(ajaxurl, {
@@ -666,7 +676,7 @@ class GFSignature extends GFAddOn {
 			} else {
 				//rename signature file
 				$new_name = str_replace( 'temp_', '', $filename );
-				$folder   = RGFormsModel::get_upload_root() . '/signatures/';
+				$folder   = trailingslashit( RGFormsModel::get_upload_root() ) . 'signatures/';
 
 				rename( $folder . $filename, $folder . $new_name );
 				$_POST[ "input_{$field['id']}" ] = $new_name;
