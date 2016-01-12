@@ -78,11 +78,7 @@ class App_Locations_ServiceLocations {
 		$location_id = self::service_to_location_id($appointment->service);
 		if (!$location_id) return false;
 
-		return $wpdb->update(
-			$appointments->app_table,
-			array('location' => $location_id),
-			array('ID' => $appointment_id)
-		);
+		appointments_update_appointment( $appointment_id, array( 'location' => $location_id ) );
 	}
 
 	public function show_settings () {
@@ -190,6 +186,10 @@ class App_Locations_ServiceLocations {
 				'service' => $service_id,
 			), '%s', '%s'
 		);
+
+		if ( $res ) {
+			appointments_clear_appointment_cache();
+		}
 	}
 
 	private function _get_service_location_markup ($service_id, $fallback='', $rich_content=true) {
@@ -206,9 +206,11 @@ class App_Locations_ServiceLocations {
 	}
 
 	private function _map_description_post_to_service_id ($post_id) {
-		global $appointments, $wpdb;
-		$sql = $wpdb->prepare("SELECT ID FROM {$appointments->services_table} WHERE page=%d", $post_id);
-		return $wpdb->get_var($sql);
+		$services = appointments_get_services( array( 'page' => $post_id, 'fields' => 'ID' ) );
+		if ( ! empty( $services ) )
+			return $services[0];
+
+		return '';
 	}
 }
 App_Locations_ServiceLocations::serve();

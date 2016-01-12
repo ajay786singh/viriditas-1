@@ -84,7 +84,7 @@ else
 			<input type="hidden" value="1" name="app_status_change" />
 			<select name="app_new_status" style='float:none;'>
 				<option value=""><?php _e('Bulk status change','appointments'); ?></option>
-				<?php foreach ( $appointments->get_statuses() as $value=>$name ) {
+				<?php foreach ( appointments_get_statuses() as $value=>$name ) {
 					echo '<option value="' . esc_attr($value) . '" class="hide-if-no-js">'.$name.'</option>';
 				} ?>
 			</select>
@@ -142,7 +142,7 @@ else
 							$selected = " selected='selected' ";
 						else
 							$selected = "";
-						echo '<option '.$selected.' value="' . esc_attr($service->ID) . '">'. $appointments->get_service_name( $service->ID ) .'</option>';					 	 		  		 	  	 
+						echo '<option '.$selected.' value="' . esc_attr($service->ID) . '">'. $appointments->get_service_name( $service->ID ) .'</option>';
 					}
 				}
 				?>
@@ -159,7 +159,7 @@ else
 				<select name="app_provider_id" style='float:none;'>
 					<option value=""><?php _e('Filter by service provider','appointments'); ?></option>
 				<?php
-				$workers = $appointments->get_workers();
+				$workers = appointments_get_workers();
 				if ( $workers ) {
 					foreach ( $workers as $worker ) {
 						if ( $worker_id == $worker->ID )

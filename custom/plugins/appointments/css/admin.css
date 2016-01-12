@@ -77,4 +77,17 @@ a.app-remove_break, a.app-remove_break:hover, a.app-remove_break:active { color:
 }
 
 
-/* 347441-1448965510 */
+#dashboard_right_now a.app-pending:before,
+#dashboard_right_now a.app-active:before {
+	content: '\f469';
+}
+
+#dashboard_right_now a.app-active:before {
+	color: #56b086;
+}
+#dashboard_right_now a.app-pending:before {
+	color: #ffa26d;
+}
+
+
+/* 347441-1452574126 */
