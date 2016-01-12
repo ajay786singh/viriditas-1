@@ -78,11 +78,7 @@ class App_Locations_WorkerLocations {
 		$location_id = self::worker_to_location_id($appointment->worker);
 		if (!$location_id) return false;
 
-		return $wpdb->update(
-			$appointments->app_table,
-			array('location' => $location_id),
-			array('ID' => $appointment_id)
-		);
+		appointments_update_appointment( $appointment_id, array('location' => $location_id) );
 	}
 
 	public function show_settings () {
@@ -190,6 +186,10 @@ class App_Locations_WorkerLocations {
 				'worker' => $worker_id,
 			), '%s', '%s'
 		);
+
+		if ( $res ) {
+			appointments_clear_appointment_cache();
+		}
 	}
 
 	private function _get_worker_location_markup ($worker_id, $fallback='', $rich_content=true) {
@@ -207,8 +207,11 @@ class App_Locations_WorkerLocations {
 
 	private function _map_description_post_to_worker_id ($post_id) {
 		global $appointments, $wpdb;
-		$sql = $wpdb->prepare("SELECT ID FROM {$appointments->workers_table} WHERE page=%d", $post_id);
-		return $wpdb->get_var($sql);
+		$workers = appointments_get_workers( array( 'page' => $post_id ) );
+		if ( ! empty( $workers ) )
+			return $workers[0]->ID;
+
+		return false;
 	}
 }
 App_Locations_WorkerLocations::serve();
